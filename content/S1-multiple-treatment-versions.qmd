@@ -1,6 +1,6 @@
 ---
 title: "Causal Consistency"
-date: "2025-AUG-12"
+date: "2025-NOV-19"
 bibliography: /Users/joseph/GIT/templates/bib/references.bib
 editor_options: 
   chunk_output_type: console

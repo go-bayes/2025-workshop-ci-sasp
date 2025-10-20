@@ -1,6 +1,6 @@
 ---
 title: "Causal Diagrammes & Measurement"
-date: "2025-AUG-12"
+date: "2025-NOV-19"
 format:
   html:
     warnings: false

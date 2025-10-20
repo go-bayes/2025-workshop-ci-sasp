@@ -2,13 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.18">
+<meta name="generator" content="quarto-1.8.25">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2025-05-01">
 
-<title>Understanding the Synthetic NZAVS Data – Day 2: SPARCC Causal Inference Workshop</title>
+<title>data-tutorial – Beyond Correlation: Causal Inference Workshop</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -73,14 +72,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-f98ea211b99fe8356d6469e598480a52.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-5c1f7a6a2802c248a2ccc243aab7b5c3.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-f98ea211b99fe8356d6469e598480a52.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-707d8167ce6003fca903bfe2be84ab7f.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-b1feb1a0902d666fd80953a92c5c0b1f.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../site_libs/bootstrap/bootstrap-dark-acb479e9156c0391e8ae9500026fddbd.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../site_libs/bootstrap/bootstrap-b1feb1a0902d666fd80953a92c5c0b1f.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-253b0e15ebbf836a1468929553f9aea9.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark-c13eb3e20237a6ad3462e67b8e6af18a.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-253b0e15ebbf836a1468929553f9aea9.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -285,7 +284,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <a href="../index.html" class="navbar-brand navbar-brand-logo">
     </a>
     <a class="navbar-brand" href="../index.html">
-    <span class="navbar-title">Day 2: SPARCC Causal Inference Workshop</span>
+    <span class="navbar-title">Beyond Correlation: Causal Inference Workshop</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -296,16 +295,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
     <a class="nav-link" href="../index.html"> 
-<span class="menu-text">🏠 Home</span></a>
+<span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-content" role="link" data-bs-toggle="dropdown" aria-expanded="false">
- <span class="menu-text">📚 CONTENT</span>
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-workshop-content" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Workshop Content</span>
     </a>
-    <ul class="dropdown-menu" aria-labelledby="nav-menu-content">    
-        <li class="dropdown-header">Core Materials</li>
-        <li><hr class="dropdown-divider"></li>
-        <li class="dropdown-header">Workshop Sessions</li>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-workshop-content">    
         <li>
     <a class="dropdown-item" href="../content/00-background.html">
  <span class="dropdown-text">1. What is Causality?</span></a>
@@ -323,62 +319,33 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="dropdown-text">4. Average and Conditional Average Treatment Effects</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../content/05-measurement.html">
- <span class="dropdown-text">5. Measurement Matters</span></a>
-  </li>  
-        <li><hr class="dropdown-divider"></li>
-        <li>
     <a class="dropdown-item" href="../workshop-scripts/06-interpretation-2.html">
- <span class="dropdown-text">6. Code Review</span></a>
+ <span class="dropdown-text">5. Code Review</span></a>
   </li>  
-        <li class="dropdown-header">Simulations</li>
         <li>
     <a class="dropdown-item" href="../simulations/01-simulation-population.html">
- <span class="dropdown-text">Simulation: Population Estimate</span></a>
+ <span class="dropdown-text">Simulations</span></a>
   </li>  
-        <li class="dropdown-header">ggdag</li>
-        <li>
-    <a class="dropdown-item" href="../content/ggdag-examples.html">
- <span class="dropdown-text">Causal Diagrams: The Structures of Interaction/Effect Modification, Measurement Bias, Selection Bias</span></a>
-  </li>  
-        <li class="dropdown-header">References</li>
         <li>
     <a class="dropdown-item" href="../pdfs/bulbulia-hand-outs/S2-glossary.pdf">
  <span class="dropdown-text">Glossary (PDF)</span></a>
-  </li>  
-        <li><hr class="dropdown-divider"></li>
-        <li>
-    <a class="dropdown-item" href="../quiz/sparcc_day_2_short_quiz.pdf">
- <span class="dropdown-text">Short Quiz</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../quiz/sparcc_day_2_short_quiz-answer-key.pdf">
- <span class="dropdown-text">Short Quiz Answer Key</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../quiz/2025-SPARCC-DAY-2-TEST.pdf">
- <span class="dropdown-text">Test</span></a>
   </li>  
     </ul>
   </li>
   <li class="nav-item">
     <a class="nav-link" href="../glossary-and-dags.html"> 
-<span class="menu-text">📊 Glossary &amp; DAGs</span></a>
+<span class="menu-text">Glossary &amp; DAGs</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="../reading.html"> 
-<span class="menu-text">📚 Reading</span></a>
+<span class="menu-text">Reading</span></a>
   </li>  
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="https://go-bayes.github.io/sparcc-day-1/"> 
-<span class="menu-text">Day 1 Workshop led by B.G. Purzycki</span></a>
-  </li>  
-  <li class="nav-item">
     <a class="nav-link" href="https://github.com/go-bayes"> <i class="bi bi-github" role="img">
 </i> 
-<span class="menu-text">Research Code</span></a>
+<span class="menu-text">Go-Bayes</span></a>
   </li>  
 </ul>
           </div> <!-- /navcollapse -->
@@ -392,453 +359,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
-   
-  <ul>
-  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="header-section-number">1</span> Introduction</a></li>
-  <li><a href="#data-structure" id="toc-data-structure" class="nav-link" data-scroll-target="#data-structure"><span class="header-section-number">2</span> Data Structure</a>
-  <ul class="collapse">
-  <li><a href="#panel-design" id="toc-panel-design" class="nav-link" data-scroll-target="#panel-design"><span class="header-section-number">2.1</span> Panel Design</a></li>
-  <li><a href="#sample-size" id="toc-sample-size" class="nav-link" data-scroll-target="#sample-size"><span class="header-section-number">2.2</span> Sample Size</a></li>
-  </ul></li>
-  <li><a href="#loading-and-exploring-the-data" id="toc-loading-and-exploring-the-data" class="nav-link" data-scroll-target="#loading-and-exploring-the-data"><span class="header-section-number">3</span> Loading and Exploring the Data</a>
-  <ul class="collapse">
-  <li><a href="#setup" id="toc-setup" class="nav-link" data-scroll-target="#setup"><span class="header-section-number">3.1</span> Setup</a></li>
-  <li><a href="#basic-data-exploration" id="toc-basic-data-exploration" class="nav-link" data-scroll-target="#basic-data-exploration"><span class="header-section-number">3.2</span> Basic Data Exploration</a></li>
-  </ul></li>
-  <li><a href="#key-variables" id="toc-key-variables" class="nav-link" data-scroll-target="#key-variables"><span class="header-section-number">4</span> Key Variables</a>
-  <ul class="collapse">
-  <li><a href="#demographics-baseline" id="toc-demographics-baseline" class="nav-link" data-scroll-target="#demographics-baseline"><span class="header-section-number">4.1</span> Demographics (Baseline)</a></li>
-  <li><a href="#exposure-variable-religious-service" id="toc-exposure-variable-religious-service" class="nav-link" data-scroll-target="#exposure-variable-religious-service"><span class="header-section-number">4.2</span> Exposure Variable: Religious Service</a></li>
-  <li><a href="#outcome-variables-cooperation-measures" id="toc-outcome-variables-cooperation-measures" class="nav-link" data-scroll-target="#outcome-variables-cooperation-measures"><span class="header-section-number">4.3</span> Outcome Variables: Cooperation Measures</a></li>
-  </ul></li>
-  <li><a href="#understanding-the-simulation" id="toc-understanding-the-simulation" class="nav-link" data-scroll-target="#understanding-the-simulation"><span class="header-section-number">5</span> Understanding the Simulation</a>
-  <ul class="collapse">
-  <li><a href="#realistic-features" id="toc-realistic-features" class="nav-link" data-scroll-target="#realistic-features"><span class="header-section-number">5.1</span> Realistic Features</a></li>
-  <li><a href="#causal-structure" id="toc-causal-structure" class="nav-link" data-scroll-target="#causal-structure"><span class="header-section-number">5.2</span> Causal Structure</a></li>
-  </ul></li>
-  <li><a href="#practical-workshop-applications" id="toc-practical-workshop-applications" class="nav-link" data-scroll-target="#practical-workshop-applications"><span class="header-section-number">6</span> Practical Workshop Applications</a>
-  <ul class="collapse">
-  <li><a href="#research-question" id="toc-research-question" class="nav-link" data-scroll-target="#research-question"><span class="header-section-number">6.1</span> Research Question</a></li>
-  <li><a href="#key-analysis-steps" id="toc-key-analysis-steps" class="nav-link" data-scroll-target="#key-analysis-steps"><span class="header-section-number">6.2</span> Key Analysis Steps</a></li>
-  <li><a href="#expected-findings" id="toc-expected-findings" class="nav-link" data-scroll-target="#expected-findings"><span class="header-section-number">6.3</span> Expected Findings</a></li>
-  </ul></li>
-  <li><a href="#data-quality-checks" id="toc-data-quality-checks" class="nav-link" data-scroll-target="#data-quality-checks"><span class="header-section-number">7</span> Data Quality Checks</a>
-  <ul class="collapse">
-  <li><a href="#missing-data-patterns" id="toc-missing-data-patterns" class="nav-link" data-scroll-target="#missing-data-patterns"><span class="header-section-number">7.1</span> Missing Data Patterns</a></li>
-  <li><a href="#longitudinal-consistency" id="toc-longitudinal-consistency" class="nav-link" data-scroll-target="#longitudinal-consistency"><span class="header-section-number">7.2</span> Longitudinal Consistency</a></li>
-  </ul></li>
-  <li><a href="#working-with-the-data" id="toc-working-with-the-data" class="nav-link" data-scroll-target="#working-with-the-data"><span class="header-section-number">8</span> Working with the Data</a>
-  <ul class="collapse">
-  <li><a href="#creating-analysis-datasets" id="toc-creating-analysis-datasets" class="nav-link" data-scroll-target="#creating-analysis-datasets"><span class="header-section-number">8.1</span> Creating Analysis Datasets</a></li>
-  <li><a href="#common-data-operations" id="toc-common-data-operations" class="nav-link" data-scroll-target="#common-data-operations"><span class="header-section-number">8.2</span> Common Data Operations</a></li>
-  </ul></li>
-  <li><a href="#key-takeaways" id="toc-key-takeaways" class="nav-link" data-scroll-target="#key-takeaways"><span class="header-section-number">9</span> Key Takeaways</a>
-  <ul class="collapse">
-  <li><a href="#for-workshop-participants" id="toc-for-workshop-participants" class="nav-link" data-scroll-target="#for-workshop-participants"><span class="header-section-number">9.1</span> For Workshop Participants</a></li>
-  <li><a href="#for-analysis" id="toc-for-analysis" class="nav-link" data-scroll-target="#for-analysis"><span class="header-section-number">9.2</span> For Analysis</a></li>
-  </ul></li>
-  <li><a href="#technical-notes" id="toc-technical-notes" class="nav-link" data-scroll-target="#technical-notes"><span class="header-section-number">10</span> Technical Notes</a>
-  <ul class="collapse">
-  <li><a href="#data-generation-process" id="toc-data-generation-process" class="nav-link" data-scroll-target="#data-generation-process"><span class="header-section-number">10.1</span> Data Generation Process</a></li>
-  <li><a href="#file-format" id="toc-file-format" class="nav-link" data-scroll-target="#file-format"><span class="header-section-number">10.2</span> File Format</a></li>
-  </ul></li>
-  <li><a href="#next-steps" id="toc-next-steps" class="nav-link" data-scroll-target="#next-steps"><span class="header-section-number">11</span> Next Steps</a></li>
-  </ul>
-</nav>
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+        
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
-
-
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<div class="quarto-title-block"><div><h1 class="title">Understanding the Synthetic NZAVS Data</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
-<p class="subtitle lead">A Guide to the Workshop Dataset</p>
-</div>
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><h1 class="title display-7"></h1></header><div class="quarto-title-block"><div class="quarto-title-tools-only"><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
 
 
 
-<div class="quarto-title-meta">
-
-    
-    <div>
-    <div class="quarto-title-meta-heading">Published</div>
-    <div class="quarto-title-meta-contents">
-      <p class="date">May 1, 2025</p>
-    </div>
-  </div>
-  
-    
-  </div>
-  
 
 
-</header>
-
-
-<section id="introduction" class="level2" data-number="1">
-<h2 data-number="1" class="anchored" data-anchor-id="introduction"><span class="header-section-number">1</span> Introduction</h2>
-<p>This tutorial introduces the synthetic New Zealand Attitudes and Values Study (NZAVS) dataset used in the SPARCC Day 2 workshop. The data simulates a three-wave longitudinal study examining how religious service attendance affects cooperative behaviour.</p>
-<div class="callout callout-style-default callout-important callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Important</span>Key Point
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>This is <strong>synthetic data</strong> created specifically for educational purposes. While it mimics real NZAVS patterns, all observations are simulated and no real participant data is used.</p>
-</div>
-</div>
-</section>
-<section id="data-structure" class="level2" data-number="2">
-<h2 data-number="2" class="anchored" data-anchor-id="data-structure"><span class="header-section-number">2</span> Data Structure</h2>
-<section id="panel-design" class="level3" data-number="2.1">
-<h3 data-number="2.1" class="anchored" data-anchor-id="panel-design"><span class="header-section-number">2.1</span> Panel Design</h3>
-<p>The synthetic dataset follows a <strong>three-wave longitudinal panel</strong>:</p>
-<ul>
-<li><strong>Wave 10 (2018)</strong>: Baseline measurements</li>
-<li><strong>Wave 11 (2019)</strong>: Exposure period<br>
-</li>
-<li><strong>Wave 12 (2020)</strong>: Outcome measurements</li>
-</ul>
-</section>
-<section id="sample-size" class="level3" data-number="2.2">
-<h3 data-number="2.2" class="anchored" data-anchor-id="sample-size"><span class="header-section-number">2.2</span> Sample Size</h3>
-<ul>
-<li><strong>Total participants</strong>: 20,000</li>
-<li><strong>Analysis sample</strong>: ~15,500 after accounting for panel attrition</li>
-<li><strong>Attrition rate</strong>: Realistic 22% dropout typical of longitudinal studies</li>
-</ul>
-</section>
-</section>
-<section id="loading-and-exploring-the-data" class="level2" data-number="3">
-<h2 data-number="3" class="anchored" data-anchor-id="loading-and-exploring-the-data"><span class="header-section-number">3</span> Loading and Exploring the Data</h2>
-<section id="setup" class="level3" data-number="3.1">
-<h3 data-number="3.1" class="anchored" data-anchor-id="setup"><span class="header-section-number">3.1</span> Setup</h3>
-<div class="cell">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load required packages</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(qs)</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># load the synthetic data (after running setup script)</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>df_nz_long <span class="ot">&lt;-</span> <span class="fu">qread</span>(<span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"df_nz_long.qs"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-</div>
-</section>
-<section id="basic-data-exploration" class="level3" data-number="3.2">
-<h3 data-number="3.2" class="anchored" data-anchor-id="basic-data-exploration"><span class="header-section-number">3.2</span> Basic Data Exploration</h3>
-<div class="cell">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># check dimensions</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(df_nz_long)</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># view first few rows</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(df_nz_long)</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co"># check column names</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(df_nz_long) <span class="sc">|&gt;</span> <span class="fu">head</span>(<span class="dv">20</span>)</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="co"># check time structure</span></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(df_nz_long<span class="sc">$</span>time_factor)</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="co"># participants per wave</span></span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>df_nz_long <span class="sc">|&gt;</span> </span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(time_factor) <span class="sc">|&gt;</span> </span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n_participants =</span> <span class="fu">n_distinct</span>(id))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-</div>
-</section>
-</section>
-<section id="key-variables" class="level2" data-number="4">
-<h2 data-number="4" class="anchored" data-anchor-id="key-variables"><span class="header-section-number">4</span> Key Variables</h2>
-<section id="demographics-baseline" class="level3" data-number="4.1">
-<h3 data-number="4.1" class="anchored" data-anchor-id="demographics-baseline"><span class="header-section-number">4.1</span> Demographics (Baseline)</h3>
-<div class="cell">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># age distribution</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(df_nz_long<span class="sc">$</span>age[df_nz_long<span class="sc">$</span>time_factor <span class="sc">==</span> <span class="st">"Time 10"</span>])</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># gender distribution</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(df_nz_long<span class="sc">$</span>male_binary[df_nz_long<span class="sc">$</span>time_factor <span class="sc">==</span> <span class="st">"Time 10"</span>])</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co"># ethnicity distribution</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(df_nz_long<span class="sc">$</span>eth_cat[df_nz_long<span class="sc">$</span>time_factor <span class="sc">==</span> <span class="st">"Time 10"</span>])</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co"># education levels</span></span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(df_nz_long<span class="sc">$</span>education_level_coarsen[df_nz_long<span class="sc">$</span>time_factor <span class="sc">==</span> <span class="st">"Time 10"</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-</div>
-</section>
-<section id="exposure-variable-religious-service" class="level3" data-number="4.2">
-<h3 data-number="4.2" class="anchored" data-anchor-id="exposure-variable-religious-service"><span class="header-section-number">4.2</span> Exposure Variable: Religious Service</h3>
-<div class="cell">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># religious service attendance distribution</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>baseline_religion <span class="ot">&lt;-</span> df_nz_long <span class="sc">|&gt;</span> </span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(time_factor <span class="sc">==</span> <span class="st">"Time 10"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(religion_church)</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co"># view distribution</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(baseline_religion, </span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Religious Service Attendance (Baseline)"</span>,</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Frequency (0=never, 8=weekly+)"</span>)</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="co"># binary version</span></span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(df_nz_long<span class="sc">$</span>religion_church_binary[df_nz_long<span class="sc">$</span>time_factor <span class="sc">==</span> <span class="st">"Time 11"</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-</div>
-</section>
-<section id="outcome-variables-cooperation-measures" class="level3" data-number="4.3">
-<h3 data-number="4.3" class="anchored" data-anchor-id="outcome-variables-cooperation-measures"><span class="header-section-number">4.3</span> Outcome Variables: Cooperation Measures</h3>
-<div class="cell">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># cooperation outcomes at Time 12</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>cooperation_outcomes <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"log_charity_donate"</span>, <span class="st">"log_hours_charity"</span>, <span class="st">"support"</span>, <span class="st">"belong"</span>)</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co"># summary statistics for outcomes</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>df_outcomes <span class="ot">&lt;-</span> df_nz_long <span class="sc">|&gt;</span> </span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(time_factor <span class="sc">==</span> <span class="st">"Time 12"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="fu">all_of</span>(cooperation_outcomes))</span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(df_outcomes)</span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="co"># correlation between cooperation measures</span></span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(df_outcomes, <span class="at">use =</span> <span class="st">"complete.obs"</span>) <span class="sc">|&gt;</span> <span class="fu">round</span>(<span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-</div>
-</section>
-</section>
-<section id="understanding-the-simulation" class="level2" data-number="5">
-<h2 data-number="5" class="anchored" data-anchor-id="understanding-the-simulation"><span class="header-section-number">5</span> Understanding the Simulation</h2>
-<section id="realistic-features" class="level3" data-number="5.1">
-<h3 data-number="5.1" class="anchored" data-anchor-id="realistic-features"><span class="header-section-number">5.1</span> Realistic Features</h3>
-<p>The synthetic data incorporates realistic features of longitudinal survey data:</p>
-<ol type="1">
-<li><strong>Missing data patterns</strong> - realistic dropout and item non-response</li>
-<li><strong>Correlated variables</strong> - demographics predict both religion and cooperation</li>
-<li><strong>Time trends</strong> - variables show plausible change over waves</li>
-<li><strong>Scale properties</strong> - variables maintain proper ranges and distributions</li>
-</ol>
-</section>
-<section id="causal-structure" class="level3" data-number="5.2">
-<h3 data-number="5.2" class="anchored" data-anchor-id="causal-structure"><span class="header-section-number">5.2</span> Causal Structure</h3>
-<p>The data was simulated with a realistic causal structure:</p>
-<div class="cell">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># check exposure-outcome correlation (not causal!)</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>religion_t11 <span class="ot">&lt;-</span> df_nz_long<span class="sc">$</span>religion_church_binary[df_nz_long<span class="sc">$</span>time_factor <span class="sc">==</span> <span class="st">"Time 11"</span>]</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>support_t12 <span class="ot">&lt;-</span> df_nz_long<span class="sc">$</span>support[df_nz_long<span class="sc">$</span>time_factor <span class="sc">==</span> <span class="st">"Time 12"</span>]</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(religion_t11, support_t12, <span class="at">use =</span> <span class="st">"complete.obs"</span>)</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="co"># but confounders matter!</span></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>age_t10 <span class="ot">&lt;-</span> df_nz_long<span class="sc">$</span>age[df_nz_long<span class="sc">$</span>time_factor <span class="sc">==</span> <span class="st">"Time 10"</span>]</span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(age_t10, religion_t11, <span class="at">use =</span> <span class="st">"complete.obs"</span>)  <span class="co"># age → religion</span></span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(age_t10, support_t12, <span class="at">use =</span> <span class="st">"complete.obs"</span>)   <span class="co"># age → cooperation</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-</div>
-</section>
-</section>
-<section id="practical-workshop-applications" class="level2" data-number="6">
-<h2 data-number="6" class="anchored" data-anchor-id="practical-workshop-applications"><span class="header-section-number">6</span> Practical Workshop Applications</h2>
-<section id="research-question" class="level3" data-number="6.1">
-<h3 data-number="6.1" class="anchored" data-anchor-id="research-question"><span class="header-section-number">6.1</span> Research Question</h3>
-<blockquote class="blockquote">
-<p><strong>Does weekly religious service attendance increase cooperative behaviour?</strong></p>
-</blockquote>
-</section>
-<section id="key-analysis-steps" class="level3" data-number="6.2">
-<h3 data-number="6.2" class="anchored" data-anchor-id="key-analysis-steps"><span class="header-section-number">6.2</span> Key Analysis Steps</h3>
-<ol type="1">
-<li><strong>Define exposure</strong>: Religious service (binary: weekly vs.&nbsp;less than weekly)</li>
-<li><strong>Define outcomes</strong>: Four cooperation measures (donations, volunteering, support, belonging)</li>
-<li><strong>Control confounding</strong>: 32 baseline variables including demographics, personality, prior cooperation</li>
-<li><strong>Estimate effects</strong>: Causal forests with sample splitting for heterogeneity</li>
-</ol>
-</section>
-<section id="expected-findings" class="level3" data-number="6.3">
-<h3 data-number="6.3" class="anchored" data-anchor-id="expected-findings"><span class="header-section-number">6.3</span> Expected Findings</h3>
-<p>The simulated data includes realistic effect sizes:</p>
-<ul>
-<li><strong>Social outcomes</strong> (support, belonging): Moderate positive effects (~0.15 SD)</li>
-<li><strong>Behavioural outcomes</strong> (donations, volunteering): Smaller positive effects (~0.10 SD)</li>
-<li><strong>Heterogeneity</strong>: Larger effects for older adults, parents, agreeable individuals</li>
-</ul>
-</section>
-</section>
-<section id="data-quality-checks" class="level2" data-number="7">
-<h2 data-number="7" class="anchored" data-anchor-id="data-quality-checks"><span class="header-section-number">7</span> Data Quality Checks</h2>
-<section id="missing-data-patterns" class="level3" data-number="7.1">
-<h3 data-number="7.1" class="anchored" data-anchor-id="missing-data-patterns"><span class="header-section-number">7.1</span> Missing Data Patterns</h3>
-<div class="cell">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># visualise missing data</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(naniar)</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co"># missing data by wave</span></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>df_nz_long <span class="sc">|&gt;</span> </span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(time_factor) <span class="sc">|&gt;</span> </span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">pct_missing_religion =</span> <span class="fu">mean</span>(<span class="fu">is.na</span>(religion_church)) <span class="sc">*</span> <span class="dv">100</span>,</span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">pct_missing_support =</span> <span class="fu">mean</span>(<span class="fu">is.na</span>(support)) <span class="sc">*</span> <span class="dv">100</span>,</span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">pct_missing_belong =</span> <span class="fu">mean</span>(<span class="fu">is.na</span>(belong)) <span class="sc">*</span> <span class="dv">100</span></span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="co"># pattern of missingness</span></span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="fu">vis_miss</span>(df_nz_long <span class="sc">|&gt;</span> <span class="fu">select</span>(id, time_factor, religion_church, support, belong))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-</div>
-</section>
-<section id="longitudinal-consistency" class="level3" data-number="7.2">
-<h3 data-number="7.2" class="anchored" data-anchor-id="longitudinal-consistency"><span class="header-section-number">7.2</span> Longitudinal Consistency</h3>
-<div class="cell">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># check same individuals across waves</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>id_counts <span class="ot">&lt;-</span> df_nz_long <span class="sc">|&gt;</span> </span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(id) <span class="sc">|&gt;</span> </span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n_waves =</span> <span class="fu">n_distinct</span>(time_factor)) <span class="sc">|&gt;</span> </span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(n_waves)</span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(id_counts)</span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="co"># stability of demographics over time (should be stable)</span></span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>df_nz_long <span class="sc">|&gt;</span> </span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(id) <span class="sc">|&gt;</span> </span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">age_stable =</span> <span class="fu">n_distinct</span>(age, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">&lt;=</span> <span class="dv">1</span>,</span>
-<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">gender_stable =</span> <span class="fu">n_distinct</span>(male_binary, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">&lt;=</span> <span class="dv">1</span></span>
-<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span> </span>
-<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
-<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">pct_age_stable =</span> <span class="fu">mean</span>(age_stable) <span class="sc">*</span> <span class="dv">100</span>,</span>
-<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">pct_gender_stable =</span> <span class="fu">mean</span>(gender_stable) <span class="sc">*</span> <span class="dv">100</span></span>
-<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-</div>
-</section>
-</section>
-<section id="working-with-the-data" class="level2" data-number="8">
-<h2 data-number="8" class="anchored" data-anchor-id="working-with-the-data"><span class="header-section-number">8</span> Working with the Data</h2>
-<section id="creating-analysis-datasets" class="level3" data-number="8.1">
-<h3 data-number="8.1" class="anchored" data-anchor-id="creating-analysis-datasets"><span class="header-section-number">8.1</span> Creating Analysis Datasets</h3>
-<p>The workshop scripts demonstrate how to:</p>
-<ol type="1">
-<li><strong>Filter to eligible participants</strong> (those with baseline religion data)</li>
-<li><strong>Create binary exposures</strong> with theory-driven cutpoints</li>
-<li><strong>Handle missing data</strong> through multiple imputation</li>
-<li><strong>Create wide format</strong> for causal analysis</li>
-<li><strong>Apply IPCW weights</strong> for attrition bias</li>
-</ol>
-</section>
-<section id="common-data-operations" class="level3" data-number="8.2">
-<h3 data-number="8.2" class="anchored" data-anchor-id="common-data-operations"><span class="header-section-number">8.2</span> Common Data Operations</h3>
-<div class="cell">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create baseline dataset</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>baseline_data <span class="ot">&lt;-</span> df_nz_long <span class="sc">|&gt;</span> </span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(time_factor <span class="sc">==</span> <span class="st">"Time 10"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(id, age, male_binary, education_level_coarsen, religion_church, support, belong)</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="co"># create change scores</span></span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>change_data <span class="ot">&lt;-</span> df_nz_long <span class="sc">|&gt;</span> </span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(time_factor <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Time 10"</span>, <span class="st">"Time 12"</span>)) <span class="sc">|&gt;</span> </span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(id, time_factor, support, belong) <span class="sc">|&gt;</span> </span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> time_factor, <span class="at">values_from =</span> <span class="fu">c</span>(support, belong)) <span class="sc">|&gt;</span> </span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">support_change =</span> <span class="st">`</span><span class="at">support_Time 12</span><span class="st">`</span> <span class="sc">-</span> <span class="st">`</span><span class="at">support_Time 10</span><span class="st">`</span>,</span>
-<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">belong_change =</span> <span class="st">`</span><span class="at">belong_Time 12</span><span class="st">`</span> <span class="sc">-</span> <span class="st">`</span><span class="at">belong_Time 10</span><span class="st">`</span></span>
-<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-</div>
-</section>
-</section>
-<section id="key-takeaways" class="level2" data-number="9">
-<h2 data-number="9" class="anchored" data-anchor-id="key-takeaways"><span class="header-section-number">9</span> Key Takeaways</h2>
-<section id="for-workshop-participants" class="level3" data-number="9.1">
-<h3 data-number="9.1" class="anchored" data-anchor-id="for-workshop-participants"><span class="header-section-number">9.1</span> For Workshop Participants</h3>
-<ol type="1">
-<li><strong>Realistic complexity</strong> - The data includes realistic confounding and missing data patterns</li>
-<li><strong>Educational focus</strong> - Effects are large enough to detect but require proper causal methods</li>
-<li><strong>Reproducible</strong> - Same synthetic data ensures consistent workshop results</li>
-<li><strong>Safe to share</strong> - No privacy concerns as all data is simulated</li>
-</ol>
-</section>
-<section id="for-analysis" class="level3" data-number="9.2">
-<h3 data-number="9.2" class="anchored" data-anchor-id="for-analysis"><span class="header-section-number">9.2</span> For Analysis</h3>
-<ol type="1">
-<li><strong>Three-wave minimum</strong> - Necessary for temporal ordering (confounder → exposure → outcome)</li>
-<li><strong>Rich confounders</strong> - 32 baseline variables provide strong confounding control</li>
-<li><strong>Multiple outcomes</strong> - Allows investigation of domain-specific effects</li>
-<li><strong>Realistic heterogeneity</strong> - Some participants respond more than others</li>
-</ol>
-</section>
-</section>
-<section id="technical-notes" class="level2" data-number="10">
-<h2 data-number="10" class="anchored" data-anchor-id="technical-notes"><span class="header-section-number">10</span> Technical Notes</h2>
-<section id="data-generation-process" class="level3" data-number="10.1">
-<h3 data-number="10.1" class="anchored" data-anchor-id="data-generation-process"><span class="header-section-number">10.1</span> Data Generation Process</h3>
-<p>The synthetic data was created using: - Marginal distributions matching real NZAVS data - Realistic correlation structures between variables - Appropriate temporal dependencies - Missing data mechanisms consistent with survey research</p>
-</section>
-<section id="file-format" class="level3" data-number="10.2">
-<h3 data-number="10.2" class="anchored" data-anchor-id="file-format"><span class="header-section-number">10.2</span> File Format</h3>
-<ul>
-<li><strong>Format</strong>: Parquet/QS for efficient storage and loading</li>
-<li><strong>Size</strong>: ~50MB compressed</li>
-<li><strong>Structure</strong>: Long format (one row per person-wave)</li>
-<li><strong>Encoding</strong>: UTF-8 with proper factor level labels</li>
-</ul>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Getting Help
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>If you encounter issues with the synthetic data:</p>
-<ol type="1">
-<li><strong>Check the setup script</strong> - Ensure all packages are installed</li>
-<li><strong>Verify file paths</strong> - Use <code>here()</code> for project-relative paths</li>
-<li><strong>Examine data structure</strong> - Use <code>str()</code> and <code>summary()</code> for exploration</li>
-<li><strong>Review workshop scripts</strong> - See how data is processed step-by-step</li>
-</ol>
-</div>
-</div>
-</section>
-</section>
-<section id="next-steps" class="level2" data-number="11">
-<h2 data-number="11" class="anchored" data-anchor-id="next-steps"><span class="header-section-number">11</span> Next Steps</h2>
-<p>After understanding the data structure:</p>
-<ol type="1">
-<li><strong>Run the setup script</strong> (00-setup.R) to download and prepare data</li>
-<li><strong>Follow the data import tutorial</strong> (01-data-import.R) for variable selection</li>
-<li><strong>Work through the analysis pipeline</strong> (02-data-processing.R, 03-causal-forests.R)</li>
-<li><strong>Explore the worked example</strong> for interpretation</li>
-</ol>
-<p>The synthetic NZAVS data provides a realistic foundation for learning modern causal inference methods while avoiding the complexity and restrictions of working with real sensitive survey data.</p>
 
 
 <!-- -->
 
-</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -905,13 +439,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy
@@ -1311,324 +846,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     }
   });
   </script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Understanding the Synthetic NZAVS Data"</span></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="an">subtitle:</span><span class="co"> "A Guide to the Workshop Dataset"</span></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="an">date:</span><span class="co"> "May 2025"</span></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span></span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="co">  html:</span></span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="co">    code-overflow: scroll</span></span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="co">    code-tools:</span></span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="co">      source: true</span></span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="co">      toggle: false</span></span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="co">    toc: true</span></span>
-<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a><span class="co">    toc-depth: 3</span></span>
-<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a><span class="co">    number-sections: true</span></span>
-<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a><span class="an">warning:</span><span class="co"> false</span></span>
-<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a><span class="an">error:</span><span class="co"> false</span></span>
-<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a><span class="fu">## Introduction</span></span>
-<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>This tutorial introduces the synthetic New Zealand Attitudes and Values Study (NZAVS) dataset used in the SPARCC Day 2 workshop. The data simulates a three-wave longitudinal study examining how religious service attendance affects cooperative behaviour.</span>
-<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a>::: {.callout-important}</span>
-<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a><span class="fu">## Key Point</span></span>
-<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a>This is **synthetic data** created specifically for educational purposes. While it mimics real NZAVS patterns, all observations are simulated and no real participant data is used.</span>
-<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a><span class="fu">## Data Structure</span></span>
-<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a><span class="fu">### Panel Design</span></span>
-<span id="cb10-30"><a href="#cb10-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-31"><a href="#cb10-31" aria-hidden="true" tabindex="-1"></a>The synthetic dataset follows a **three-wave longitudinal panel**:</span>
-<span id="cb10-32"><a href="#cb10-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-33"><a href="#cb10-33" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Wave 10 (2018)**: Baseline measurements</span>
-<span id="cb10-34"><a href="#cb10-34" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Wave 11 (2019)**: Exposure period  </span>
-<span id="cb10-35"><a href="#cb10-35" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Wave 12 (2020)**: Outcome measurements</span>
-<span id="cb10-36"><a href="#cb10-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-37"><a href="#cb10-37" aria-hidden="true" tabindex="-1"></a><span class="fu">### Sample Size</span></span>
-<span id="cb10-38"><a href="#cb10-38" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-39"><a href="#cb10-39" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Total participants**: 20,000</span>
-<span id="cb10-40"><a href="#cb10-40" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Analysis sample**: ~15,500 after accounting for panel attrition</span>
-<span id="cb10-41"><a href="#cb10-41" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Attrition rate**: Realistic 22% dropout typical of longitudinal studies</span>
-<span id="cb10-42"><a href="#cb10-42" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-43"><a href="#cb10-43" aria-hidden="true" tabindex="-1"></a><span class="fu">## Loading and Exploring the Data</span></span>
-<span id="cb10-44"><a href="#cb10-44" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-45"><a href="#cb10-45" aria-hidden="true" tabindex="-1"></a><span class="fu">### Setup</span></span>
-<span id="cb10-46"><a href="#cb10-46" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-49"><a href="#cb10-49" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb10-50"><a href="#cb10-50" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb10-51"><a href="#cb10-51" aria-hidden="true" tabindex="-1"></a><span class="co"># load required packages</span></span>
-<span id="cb10-52"><a href="#cb10-52" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb10-53"><a href="#cb10-53" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)</span>
-<span id="cb10-54"><a href="#cb10-54" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(qs)</span>
-<span id="cb10-55"><a href="#cb10-55" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-56"><a href="#cb10-56" aria-hidden="true" tabindex="-1"></a><span class="co"># load the synthetic data (after running setup script)</span></span>
-<span id="cb10-57"><a href="#cb10-57" aria-hidden="true" tabindex="-1"></a>df_nz_long <span class="ot">&lt;-</span> <span class="fu">qread</span>(<span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"df_nz_long.qs"</span>))</span>
-<span id="cb10-58"><a href="#cb10-58" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb10-59"><a href="#cb10-59" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-60"><a href="#cb10-60" aria-hidden="true" tabindex="-1"></a><span class="fu">### Basic Data Exploration</span></span>
-<span id="cb10-61"><a href="#cb10-61" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-64"><a href="#cb10-64" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb10-65"><a href="#cb10-65" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb10-66"><a href="#cb10-66" aria-hidden="true" tabindex="-1"></a><span class="co"># check dimensions</span></span>
-<span id="cb10-67"><a href="#cb10-67" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(df_nz_long)</span>
-<span id="cb10-68"><a href="#cb10-68" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-69"><a href="#cb10-69" aria-hidden="true" tabindex="-1"></a><span class="co"># view first few rows</span></span>
-<span id="cb10-70"><a href="#cb10-70" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(df_nz_long)</span>
-<span id="cb10-71"><a href="#cb10-71" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-72"><a href="#cb10-72" aria-hidden="true" tabindex="-1"></a><span class="co"># check column names</span></span>
-<span id="cb10-73"><a href="#cb10-73" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(df_nz_long) <span class="sc">|&gt;</span> <span class="fu">head</span>(<span class="dv">20</span>)</span>
-<span id="cb10-74"><a href="#cb10-74" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-75"><a href="#cb10-75" aria-hidden="true" tabindex="-1"></a><span class="co"># check time structure</span></span>
-<span id="cb10-76"><a href="#cb10-76" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(df_nz_long<span class="sc">$</span>time_factor)</span>
-<span id="cb10-77"><a href="#cb10-77" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-78"><a href="#cb10-78" aria-hidden="true" tabindex="-1"></a><span class="co"># participants per wave</span></span>
-<span id="cb10-79"><a href="#cb10-79" aria-hidden="true" tabindex="-1"></a>df_nz_long <span class="sc">|&gt;</span> </span>
-<span id="cb10-80"><a href="#cb10-80" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(time_factor) <span class="sc">|&gt;</span> </span>
-<span id="cb10-81"><a href="#cb10-81" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n_participants =</span> <span class="fu">n_distinct</span>(id))</span>
-<span id="cb10-82"><a href="#cb10-82" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb10-83"><a href="#cb10-83" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-84"><a href="#cb10-84" aria-hidden="true" tabindex="-1"></a><span class="fu">## Key Variables</span></span>
-<span id="cb10-85"><a href="#cb10-85" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-86"><a href="#cb10-86" aria-hidden="true" tabindex="-1"></a><span class="fu">### Demographics (Baseline)</span></span>
-<span id="cb10-87"><a href="#cb10-87" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-90"><a href="#cb10-90" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb10-91"><a href="#cb10-91" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb10-92"><a href="#cb10-92" aria-hidden="true" tabindex="-1"></a><span class="co"># age distribution</span></span>
-<span id="cb10-93"><a href="#cb10-93" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(df_nz_long<span class="sc">$</span>age[df_nz_long<span class="sc">$</span>time_factor <span class="sc">==</span> <span class="st">"Time 10"</span>])</span>
-<span id="cb10-94"><a href="#cb10-94" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-95"><a href="#cb10-95" aria-hidden="true" tabindex="-1"></a><span class="co"># gender distribution</span></span>
-<span id="cb10-96"><a href="#cb10-96" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(df_nz_long<span class="sc">$</span>male_binary[df_nz_long<span class="sc">$</span>time_factor <span class="sc">==</span> <span class="st">"Time 10"</span>])</span>
-<span id="cb10-97"><a href="#cb10-97" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-98"><a href="#cb10-98" aria-hidden="true" tabindex="-1"></a><span class="co"># ethnicity distribution</span></span>
-<span id="cb10-99"><a href="#cb10-99" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(df_nz_long<span class="sc">$</span>eth_cat[df_nz_long<span class="sc">$</span>time_factor <span class="sc">==</span> <span class="st">"Time 10"</span>])</span>
-<span id="cb10-100"><a href="#cb10-100" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-101"><a href="#cb10-101" aria-hidden="true" tabindex="-1"></a><span class="co"># education levels</span></span>
-<span id="cb10-102"><a href="#cb10-102" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(df_nz_long<span class="sc">$</span>education_level_coarsen[df_nz_long<span class="sc">$</span>time_factor <span class="sc">==</span> <span class="st">"Time 10"</span>])</span>
-<span id="cb10-103"><a href="#cb10-103" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb10-104"><a href="#cb10-104" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-105"><a href="#cb10-105" aria-hidden="true" tabindex="-1"></a><span class="fu">### Exposure Variable: Religious Service</span></span>
-<span id="cb10-106"><a href="#cb10-106" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-109"><a href="#cb10-109" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb10-110"><a href="#cb10-110" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb10-111"><a href="#cb10-111" aria-hidden="true" tabindex="-1"></a><span class="co"># religious service attendance distribution</span></span>
-<span id="cb10-112"><a href="#cb10-112" aria-hidden="true" tabindex="-1"></a>baseline_religion <span class="ot">&lt;-</span> df_nz_long <span class="sc">|&gt;</span> </span>
-<span id="cb10-113"><a href="#cb10-113" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(time_factor <span class="sc">==</span> <span class="st">"Time 10"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb10-114"><a href="#cb10-114" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(religion_church)</span>
-<span id="cb10-115"><a href="#cb10-115" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-116"><a href="#cb10-116" aria-hidden="true" tabindex="-1"></a><span class="co"># view distribution</span></span>
-<span id="cb10-117"><a href="#cb10-117" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(baseline_religion, </span>
-<span id="cb10-118"><a href="#cb10-118" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Religious Service Attendance (Baseline)"</span>,</span>
-<span id="cb10-119"><a href="#cb10-119" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Frequency (0=never, 8=weekly+)"</span>)</span>
-<span id="cb10-120"><a href="#cb10-120" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-121"><a href="#cb10-121" aria-hidden="true" tabindex="-1"></a><span class="co"># binary version</span></span>
-<span id="cb10-122"><a href="#cb10-122" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(df_nz_long<span class="sc">$</span>religion_church_binary[df_nz_long<span class="sc">$</span>time_factor <span class="sc">==</span> <span class="st">"Time 11"</span>])</span>
-<span id="cb10-123"><a href="#cb10-123" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb10-124"><a href="#cb10-124" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-125"><a href="#cb10-125" aria-hidden="true" tabindex="-1"></a><span class="fu">### Outcome Variables: Cooperation Measures</span></span>
-<span id="cb10-126"><a href="#cb10-126" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-129"><a href="#cb10-129" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb10-130"><a href="#cb10-130" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb10-131"><a href="#cb10-131" aria-hidden="true" tabindex="-1"></a><span class="co"># cooperation outcomes at Time 12</span></span>
-<span id="cb10-132"><a href="#cb10-132" aria-hidden="true" tabindex="-1"></a>cooperation_outcomes <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"log_charity_donate"</span>, <span class="st">"log_hours_charity"</span>, <span class="st">"support"</span>, <span class="st">"belong"</span>)</span>
-<span id="cb10-133"><a href="#cb10-133" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-134"><a href="#cb10-134" aria-hidden="true" tabindex="-1"></a><span class="co"># summary statistics for outcomes</span></span>
-<span id="cb10-135"><a href="#cb10-135" aria-hidden="true" tabindex="-1"></a>df_outcomes <span class="ot">&lt;-</span> df_nz_long <span class="sc">|&gt;</span> </span>
-<span id="cb10-136"><a href="#cb10-136" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(time_factor <span class="sc">==</span> <span class="st">"Time 12"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb10-137"><a href="#cb10-137" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="fu">all_of</span>(cooperation_outcomes))</span>
-<span id="cb10-138"><a href="#cb10-138" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-139"><a href="#cb10-139" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(df_outcomes)</span>
-<span id="cb10-140"><a href="#cb10-140" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-141"><a href="#cb10-141" aria-hidden="true" tabindex="-1"></a><span class="co"># correlation between cooperation measures</span></span>
-<span id="cb10-142"><a href="#cb10-142" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(df_outcomes, <span class="at">use =</span> <span class="st">"complete.obs"</span>) <span class="sc">|&gt;</span> <span class="fu">round</span>(<span class="dv">2</span>)</span>
-<span id="cb10-143"><a href="#cb10-143" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb10-144"><a href="#cb10-144" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-145"><a href="#cb10-145" aria-hidden="true" tabindex="-1"></a><span class="fu">## Understanding the Simulation</span></span>
-<span id="cb10-146"><a href="#cb10-146" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-147"><a href="#cb10-147" aria-hidden="true" tabindex="-1"></a><span class="fu">### Realistic Features</span></span>
-<span id="cb10-148"><a href="#cb10-148" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-149"><a href="#cb10-149" aria-hidden="true" tabindex="-1"></a>The synthetic data incorporates realistic features of longitudinal survey data:</span>
-<span id="cb10-150"><a href="#cb10-150" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-151"><a href="#cb10-151" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Missing data patterns** - realistic dropout and item non-response</span>
-<span id="cb10-152"><a href="#cb10-152" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>**Correlated variables** - demographics predict both religion and cooperation</span>
-<span id="cb10-153"><a href="#cb10-153" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>**Time trends** - variables show plausible change over waves</span>
-<span id="cb10-154"><a href="#cb10-154" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>**Scale properties** - variables maintain proper ranges and distributions</span>
-<span id="cb10-155"><a href="#cb10-155" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-156"><a href="#cb10-156" aria-hidden="true" tabindex="-1"></a><span class="fu">### Causal Structure</span></span>
-<span id="cb10-157"><a href="#cb10-157" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-158"><a href="#cb10-158" aria-hidden="true" tabindex="-1"></a>The data was simulated with a realistic causal structure:</span>
-<span id="cb10-159"><a href="#cb10-159" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-162"><a href="#cb10-162" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb10-163"><a href="#cb10-163" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb10-164"><a href="#cb10-164" aria-hidden="true" tabindex="-1"></a><span class="co"># check exposure-outcome correlation (not causal!)</span></span>
-<span id="cb10-165"><a href="#cb10-165" aria-hidden="true" tabindex="-1"></a>religion_t11 <span class="ot">&lt;-</span> df_nz_long<span class="sc">$</span>religion_church_binary[df_nz_long<span class="sc">$</span>time_factor <span class="sc">==</span> <span class="st">"Time 11"</span>]</span>
-<span id="cb10-166"><a href="#cb10-166" aria-hidden="true" tabindex="-1"></a>support_t12 <span class="ot">&lt;-</span> df_nz_long<span class="sc">$</span>support[df_nz_long<span class="sc">$</span>time_factor <span class="sc">==</span> <span class="st">"Time 12"</span>]</span>
-<span id="cb10-167"><a href="#cb10-167" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-168"><a href="#cb10-168" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(religion_t11, support_t12, <span class="at">use =</span> <span class="st">"complete.obs"</span>)</span>
-<span id="cb10-169"><a href="#cb10-169" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-170"><a href="#cb10-170" aria-hidden="true" tabindex="-1"></a><span class="co"># but confounders matter!</span></span>
-<span id="cb10-171"><a href="#cb10-171" aria-hidden="true" tabindex="-1"></a>age_t10 <span class="ot">&lt;-</span> df_nz_long<span class="sc">$</span>age[df_nz_long<span class="sc">$</span>time_factor <span class="sc">==</span> <span class="st">"Time 10"</span>]</span>
-<span id="cb10-172"><a href="#cb10-172" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(age_t10, religion_t11, <span class="at">use =</span> <span class="st">"complete.obs"</span>)  <span class="co"># age → religion</span></span>
-<span id="cb10-173"><a href="#cb10-173" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(age_t10, support_t12, <span class="at">use =</span> <span class="st">"complete.obs"</span>)   <span class="co"># age → cooperation</span></span>
-<span id="cb10-174"><a href="#cb10-174" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb10-175"><a href="#cb10-175" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-176"><a href="#cb10-176" aria-hidden="true" tabindex="-1"></a><span class="fu">## Practical Workshop Applications</span></span>
-<span id="cb10-177"><a href="#cb10-177" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-178"><a href="#cb10-178" aria-hidden="true" tabindex="-1"></a><span class="fu">### Research Question</span></span>
-<span id="cb10-179"><a href="#cb10-179" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-180"><a href="#cb10-180" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; **Does weekly religious service attendance increase cooperative behaviour?**</span></span>
-<span id="cb10-181"><a href="#cb10-181" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-182"><a href="#cb10-182" aria-hidden="true" tabindex="-1"></a><span class="fu">### Key Analysis Steps</span></span>
-<span id="cb10-183"><a href="#cb10-183" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-184"><a href="#cb10-184" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Define exposure**: Religious service (binary: weekly vs. less than weekly)</span>
-<span id="cb10-185"><a href="#cb10-185" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>**Define outcomes**: Four cooperation measures (donations, volunteering, support, belonging)</span>
-<span id="cb10-186"><a href="#cb10-186" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>**Control confounding**: 32 baseline variables including demographics, personality, prior cooperation</span>
-<span id="cb10-187"><a href="#cb10-187" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>**Estimate effects**: Causal forests with sample splitting for heterogeneity</span>
-<span id="cb10-188"><a href="#cb10-188" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-189"><a href="#cb10-189" aria-hidden="true" tabindex="-1"></a><span class="fu">### Expected Findings</span></span>
-<span id="cb10-190"><a href="#cb10-190" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-191"><a href="#cb10-191" aria-hidden="true" tabindex="-1"></a>The simulated data includes realistic effect sizes:</span>
-<span id="cb10-192"><a href="#cb10-192" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-193"><a href="#cb10-193" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Social outcomes** (support, belonging): Moderate positive effects (~0.15 SD)</span>
-<span id="cb10-194"><a href="#cb10-194" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Behavioural outcomes** (donations, volunteering): Smaller positive effects (~0.10 SD)</span>
-<span id="cb10-195"><a href="#cb10-195" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Heterogeneity**: Larger effects for older adults, parents, agreeable individuals</span>
-<span id="cb10-196"><a href="#cb10-196" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-197"><a href="#cb10-197" aria-hidden="true" tabindex="-1"></a><span class="fu">## Data Quality Checks</span></span>
-<span id="cb10-198"><a href="#cb10-198" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-199"><a href="#cb10-199" aria-hidden="true" tabindex="-1"></a><span class="fu">### Missing Data Patterns</span></span>
-<span id="cb10-200"><a href="#cb10-200" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-203"><a href="#cb10-203" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb10-204"><a href="#cb10-204" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb10-205"><a href="#cb10-205" aria-hidden="true" tabindex="-1"></a><span class="co"># visualise missing data</span></span>
-<span id="cb10-206"><a href="#cb10-206" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(naniar)</span>
-<span id="cb10-207"><a href="#cb10-207" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-208"><a href="#cb10-208" aria-hidden="true" tabindex="-1"></a><span class="co"># missing data by wave</span></span>
-<span id="cb10-209"><a href="#cb10-209" aria-hidden="true" tabindex="-1"></a>df_nz_long <span class="sc">|&gt;</span> </span>
-<span id="cb10-210"><a href="#cb10-210" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(time_factor) <span class="sc">|&gt;</span> </span>
-<span id="cb10-211"><a href="#cb10-211" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
-<span id="cb10-212"><a href="#cb10-212" aria-hidden="true" tabindex="-1"></a>    <span class="at">pct_missing_religion =</span> <span class="fu">mean</span>(<span class="fu">is.na</span>(religion_church)) <span class="sc">*</span> <span class="dv">100</span>,</span>
-<span id="cb10-213"><a href="#cb10-213" aria-hidden="true" tabindex="-1"></a>    <span class="at">pct_missing_support =</span> <span class="fu">mean</span>(<span class="fu">is.na</span>(support)) <span class="sc">*</span> <span class="dv">100</span>,</span>
-<span id="cb10-214"><a href="#cb10-214" aria-hidden="true" tabindex="-1"></a>    <span class="at">pct_missing_belong =</span> <span class="fu">mean</span>(<span class="fu">is.na</span>(belong)) <span class="sc">*</span> <span class="dv">100</span></span>
-<span id="cb10-215"><a href="#cb10-215" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb10-216"><a href="#cb10-216" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-217"><a href="#cb10-217" aria-hidden="true" tabindex="-1"></a><span class="co"># pattern of missingness</span></span>
-<span id="cb10-218"><a href="#cb10-218" aria-hidden="true" tabindex="-1"></a><span class="fu">vis_miss</span>(df_nz_long <span class="sc">|&gt;</span> <span class="fu">select</span>(id, time_factor, religion_church, support, belong))</span>
-<span id="cb10-219"><a href="#cb10-219" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb10-220"><a href="#cb10-220" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-221"><a href="#cb10-221" aria-hidden="true" tabindex="-1"></a><span class="fu">### Longitudinal Consistency</span></span>
-<span id="cb10-222"><a href="#cb10-222" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-225"><a href="#cb10-225" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb10-226"><a href="#cb10-226" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb10-227"><a href="#cb10-227" aria-hidden="true" tabindex="-1"></a><span class="co"># check same individuals across waves</span></span>
-<span id="cb10-228"><a href="#cb10-228" aria-hidden="true" tabindex="-1"></a>id_counts <span class="ot">&lt;-</span> df_nz_long <span class="sc">|&gt;</span> </span>
-<span id="cb10-229"><a href="#cb10-229" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(id) <span class="sc">|&gt;</span> </span>
-<span id="cb10-230"><a href="#cb10-230" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n_waves =</span> <span class="fu">n_distinct</span>(time_factor)) <span class="sc">|&gt;</span> </span>
-<span id="cb10-231"><a href="#cb10-231" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(n_waves)</span>
-<span id="cb10-232"><a href="#cb10-232" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-233"><a href="#cb10-233" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(id_counts)</span>
-<span id="cb10-234"><a href="#cb10-234" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-235"><a href="#cb10-235" aria-hidden="true" tabindex="-1"></a><span class="co"># stability of demographics over time (should be stable)</span></span>
-<span id="cb10-236"><a href="#cb10-236" aria-hidden="true" tabindex="-1"></a>df_nz_long <span class="sc">|&gt;</span> </span>
-<span id="cb10-237"><a href="#cb10-237" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(id) <span class="sc">|&gt;</span> </span>
-<span id="cb10-238"><a href="#cb10-238" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
-<span id="cb10-239"><a href="#cb10-239" aria-hidden="true" tabindex="-1"></a>    <span class="at">age_stable =</span> <span class="fu">n_distinct</span>(age, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">&lt;=</span> <span class="dv">1</span>,</span>
-<span id="cb10-240"><a href="#cb10-240" aria-hidden="true" tabindex="-1"></a>    <span class="at">gender_stable =</span> <span class="fu">n_distinct</span>(male_binary, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">&lt;=</span> <span class="dv">1</span></span>
-<span id="cb10-241"><a href="#cb10-241" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span> </span>
-<span id="cb10-242"><a href="#cb10-242" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
-<span id="cb10-243"><a href="#cb10-243" aria-hidden="true" tabindex="-1"></a>    <span class="at">pct_age_stable =</span> <span class="fu">mean</span>(age_stable) <span class="sc">*</span> <span class="dv">100</span>,</span>
-<span id="cb10-244"><a href="#cb10-244" aria-hidden="true" tabindex="-1"></a>    <span class="at">pct_gender_stable =</span> <span class="fu">mean</span>(gender_stable) <span class="sc">*</span> <span class="dv">100</span></span>
-<span id="cb10-245"><a href="#cb10-245" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb10-246"><a href="#cb10-246" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb10-247"><a href="#cb10-247" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-248"><a href="#cb10-248" aria-hidden="true" tabindex="-1"></a><span class="fu">## Working with the Data</span></span>
-<span id="cb10-249"><a href="#cb10-249" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-250"><a href="#cb10-250" aria-hidden="true" tabindex="-1"></a><span class="fu">### Creating Analysis Datasets</span></span>
-<span id="cb10-251"><a href="#cb10-251" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-252"><a href="#cb10-252" aria-hidden="true" tabindex="-1"></a>The workshop scripts demonstrate how to:</span>
-<span id="cb10-253"><a href="#cb10-253" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-254"><a href="#cb10-254" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Filter to eligible participants** (those with baseline religion data)</span>
-<span id="cb10-255"><a href="#cb10-255" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>**Create binary exposures** with theory-driven cutpoints</span>
-<span id="cb10-256"><a href="#cb10-256" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>**Handle missing data** through multiple imputation</span>
-<span id="cb10-257"><a href="#cb10-257" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>**Create wide format** for causal analysis</span>
-<span id="cb10-258"><a href="#cb10-258" aria-hidden="true" tabindex="-1"></a><span class="ss">5. </span>**Apply IPCW weights** for attrition bias</span>
-<span id="cb10-259"><a href="#cb10-259" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-260"><a href="#cb10-260" aria-hidden="true" tabindex="-1"></a><span class="fu">### Common Data Operations</span></span>
-<span id="cb10-261"><a href="#cb10-261" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-264"><a href="#cb10-264" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb10-265"><a href="#cb10-265" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb10-266"><a href="#cb10-266" aria-hidden="true" tabindex="-1"></a><span class="co"># create baseline dataset</span></span>
-<span id="cb10-267"><a href="#cb10-267" aria-hidden="true" tabindex="-1"></a>baseline_data <span class="ot">&lt;-</span> df_nz_long <span class="sc">|&gt;</span> </span>
-<span id="cb10-268"><a href="#cb10-268" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(time_factor <span class="sc">==</span> <span class="st">"Time 10"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb10-269"><a href="#cb10-269" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(id, age, male_binary, education_level_coarsen, religion_church, support, belong)</span>
-<span id="cb10-270"><a href="#cb10-270" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-271"><a href="#cb10-271" aria-hidden="true" tabindex="-1"></a><span class="co"># create change scores</span></span>
-<span id="cb10-272"><a href="#cb10-272" aria-hidden="true" tabindex="-1"></a>change_data <span class="ot">&lt;-</span> df_nz_long <span class="sc">|&gt;</span> </span>
-<span id="cb10-273"><a href="#cb10-273" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(time_factor <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Time 10"</span>, <span class="st">"Time 12"</span>)) <span class="sc">|&gt;</span> </span>
-<span id="cb10-274"><a href="#cb10-274" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(id, time_factor, support, belong) <span class="sc">|&gt;</span> </span>
-<span id="cb10-275"><a href="#cb10-275" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> time_factor, <span class="at">values_from =</span> <span class="fu">c</span>(support, belong)) <span class="sc">|&gt;</span> </span>
-<span id="cb10-276"><a href="#cb10-276" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb10-277"><a href="#cb10-277" aria-hidden="true" tabindex="-1"></a>    <span class="at">support_change =</span> <span class="st">`</span><span class="at">support_Time 12</span><span class="st">`</span> <span class="sc">-</span> <span class="st">`</span><span class="at">support_Time 10</span><span class="st">`</span>,</span>
-<span id="cb10-278"><a href="#cb10-278" aria-hidden="true" tabindex="-1"></a>    <span class="at">belong_change =</span> <span class="st">`</span><span class="at">belong_Time 12</span><span class="st">`</span> <span class="sc">-</span> <span class="st">`</span><span class="at">belong_Time 10</span><span class="st">`</span></span>
-<span id="cb10-279"><a href="#cb10-279" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb10-280"><a href="#cb10-280" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb10-281"><a href="#cb10-281" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-282"><a href="#cb10-282" aria-hidden="true" tabindex="-1"></a><span class="fu">## Key Takeaways</span></span>
-<span id="cb10-283"><a href="#cb10-283" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-284"><a href="#cb10-284" aria-hidden="true" tabindex="-1"></a><span class="fu">### For Workshop Participants</span></span>
-<span id="cb10-285"><a href="#cb10-285" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-286"><a href="#cb10-286" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Realistic complexity** - The data includes realistic confounding and missing data patterns</span>
-<span id="cb10-287"><a href="#cb10-287" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>**Educational focus** - Effects are large enough to detect but require proper causal methods</span>
-<span id="cb10-288"><a href="#cb10-288" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>**Reproducible** - Same synthetic data ensures consistent workshop results</span>
-<span id="cb10-289"><a href="#cb10-289" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>**Safe to share** - No privacy concerns as all data is simulated</span>
-<span id="cb10-290"><a href="#cb10-290" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-291"><a href="#cb10-291" aria-hidden="true" tabindex="-1"></a><span class="fu">### For Analysis</span></span>
-<span id="cb10-292"><a href="#cb10-292" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-293"><a href="#cb10-293" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Three-wave minimum** - Necessary for temporal ordering (confounder → exposure → outcome)</span>
-<span id="cb10-294"><a href="#cb10-294" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>**Rich confounders** - 32 baseline variables provide strong confounding control</span>
-<span id="cb10-295"><a href="#cb10-295" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>**Multiple outcomes** - Allows investigation of domain-specific effects</span>
-<span id="cb10-296"><a href="#cb10-296" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>**Realistic heterogeneity** - Some participants respond more than others</span>
-<span id="cb10-297"><a href="#cb10-297" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-298"><a href="#cb10-298" aria-hidden="true" tabindex="-1"></a><span class="fu">## Technical Notes</span></span>
-<span id="cb10-299"><a href="#cb10-299" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-300"><a href="#cb10-300" aria-hidden="true" tabindex="-1"></a><span class="fu">### Data Generation Process</span></span>
-<span id="cb10-301"><a href="#cb10-301" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-302"><a href="#cb10-302" aria-hidden="true" tabindex="-1"></a>The synthetic data was created using:</span>
-<span id="cb10-303"><a href="#cb10-303" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Marginal distributions matching real NZAVS data</span>
-<span id="cb10-304"><a href="#cb10-304" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Realistic correlation structures between variables</span>
-<span id="cb10-305"><a href="#cb10-305" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Appropriate temporal dependencies</span>
-<span id="cb10-306"><a href="#cb10-306" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Missing data mechanisms consistent with survey research</span>
-<span id="cb10-307"><a href="#cb10-307" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-308"><a href="#cb10-308" aria-hidden="true" tabindex="-1"></a><span class="fu">### File Format</span></span>
-<span id="cb10-309"><a href="#cb10-309" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-310"><a href="#cb10-310" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Format**: Parquet/QS for efficient storage and loading</span>
-<span id="cb10-311"><a href="#cb10-311" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Size**: ~50MB compressed</span>
-<span id="cb10-312"><a href="#cb10-312" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Structure**: Long format (one row per person-wave)</span>
-<span id="cb10-313"><a href="#cb10-313" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Encoding**: UTF-8 with proper factor level labels</span>
-<span id="cb10-314"><a href="#cb10-314" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-315"><a href="#cb10-315" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip}</span>
-<span id="cb10-316"><a href="#cb10-316" aria-hidden="true" tabindex="-1"></a><span class="fu">## Getting Help</span></span>
-<span id="cb10-317"><a href="#cb10-317" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-318"><a href="#cb10-318" aria-hidden="true" tabindex="-1"></a>If you encounter issues with the synthetic data:</span>
-<span id="cb10-319"><a href="#cb10-319" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-320"><a href="#cb10-320" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Check the setup script** - Ensure all packages are installed</span>
-<span id="cb10-321"><a href="#cb10-321" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>**Verify file paths** - Use <span class="in">`here()`</span> for project-relative paths</span>
-<span id="cb10-322"><a href="#cb10-322" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>**Examine data structure** - Use <span class="in">`str()`</span> and <span class="in">`summary()`</span> for exploration</span>
-<span id="cb10-323"><a href="#cb10-323" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>**Review workshop scripts** - See how data is processed step-by-step</span>
-<span id="cb10-324"><a href="#cb10-324" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb10-325"><a href="#cb10-325" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-326"><a href="#cb10-326" aria-hidden="true" tabindex="-1"></a><span class="fu">## Next Steps</span></span>
-<span id="cb10-327"><a href="#cb10-327" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-328"><a href="#cb10-328" aria-hidden="true" tabindex="-1"></a>After understanding the data structure:</span>
-<span id="cb10-329"><a href="#cb10-329" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-330"><a href="#cb10-330" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Run the setup script** (00-setup.R) to download and prepare data</span>
-<span id="cb10-331"><a href="#cb10-331" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>**Follow the data import tutorial** (01-data-import.R) for variable selection</span>
-<span id="cb10-332"><a href="#cb10-332" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>**Work through the analysis pipeline** (02-data-processing.R, 03-causal-forests.R)</span>
-<span id="cb10-333"><a href="#cb10-333" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>**Explore the worked example** for interpretation</span>
-<span id="cb10-334"><a href="#cb10-334" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-335"><a href="#cb10-335" aria-hidden="true" tabindex="-1"></a>The synthetic NZAVS data provides a realistic foundation for learning modern causal inference methods while avoiding the complexity and restrictions of working with real sensitive survey data.</span>
-</code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 

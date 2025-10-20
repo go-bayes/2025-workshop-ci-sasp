@@ -2,6 +2,9 @@
 title: "Worked Example: Religion → Cooperation"
 subtitle: "A Complete Causal Analysis Using Casual Forests"
 date: "May 2025"
+draft: true
+execute:
+  eval: false
 format:
   html:
     code-overflow: scroll
@@ -213,5 +216,4 @@ The **margot** workflow showcases how **modern causal inference methods** can pr
 
 Wager, S., & Athey, S. (2018). Estimation and inference of heterogeneous treatment effects using random forests. *Journal of the American Statistical Association*, 113(523), 1228-1242.
 
-Bulbulia, J. A. (2025). margot: An R package for causal inference using machine learning. *Journal of Open Source Software* (In press).
-
+Bulbulia, J. A. (2025). *margot*: An R package for causal inference using machine learning. Retrieved from <https://github.com/go-bayes/margot>.

@@ -12,7 +12,7 @@ author:
         id: "VUW"
 format:
   html:
-    highlight-style: kate
+    highlight-style: dracula
     code-fold: true
     code-overflow: scroll
     code-line-numbers: true
@@ -34,13 +34,13 @@ editor_options:
 ## Overview
 
 Social psychological theories aim for causal explanations, yet our evidence is often associational. This full-day, practice-oriented workshop introduces modern causal inference for observational data, with an emphasis on discovering for whom effects are strongest.
-j
+
 Here, we will:
 
-- Diagnose confounding and other threats to causal claims in observational studies.  
-- Use the potential outcomes framework and causal diagrams to keep assumptions explicit.  
-- Demonstrate state-of-the-art estimators: doubly robust machine learning using causal forests.
-- Translate workflow principles into hands-on R practice.  
+- diagnose confounding and other threats to causal claims in observational studies.  
+- use the potential outcomes framework and causal diagrams to keep assumptions explicit.  
+- demonstrate state-of-the-art estimators: doubly robust machine learning using causal forests.
+- translate workflow principles into hands-on R practice.  
 
 
 ## Objectives
@@ -54,7 +54,12 @@ Participants will leave with:
 
 The workshop assumes familiarity with regression and R, but no prior training in causal inference.
 
-## Technical setup
+::: callout-tip
+### A note on pace
+Please do not worry if the math or code looks intimidating at first glance. We'll slow everything down, build each idea together from first principles, and keep the focus on intuition before symbols. Bring your curiosity, bring coffee, and if you want to do the R exercise at the end, bring your laptop preloaded with twhe workshop package (see below). By the end of the day you'll see that the machinery is manageable -- and even fun -- when we unpack it step by step.
+:::
+
+## Setup
 
 1. Install the current version of R (free) from <https://cran.r-project.org/>.  
 2. Install RStudio Desktop (free) from <https://posit.co/download/rstudio-desktop/>.  
@@ -67,9 +72,8 @@ if (!requireNamespace("devtools", quietly = TRUE)) {
 
 devtools::install_github("go-bayes/causalworkshop")
 
-# Optional packages for extended demonstrations
+# optional packages for extended demonstrations
 devtools::install_github("go-bayes/margot")
-devtools::install_github("go-bayes/boilerplate")
 ```
 
 Once installed, run:
@@ -79,7 +83,7 @@ library(causalworkshop)
 check_workshop_prerequisites()
 ```
 
-Download the reproducible scripts:
+Download the R scripts:
 
 ```r
 library(causalworkshop)
@@ -88,13 +92,12 @@ get_workshop_scripts()  # copies scripts into ./workshop-scripts
 list_workshop_scripts()
 ```
 
-Work through scripts 01–05 in order to rehearse the workflow we will cover together.
+Work through scripts 01–05 **Prior to the workshop** (06 is optional).
 
 ## Workshop materials
 
-- Case study PDFs and handouts live in the `pdfs/` directory.  
-- Lecture notes are in `content/` and `glossary-and-dags.qmd`.  
-- Student presentations will be posted here after the workshop.  
+- The lectures are somewhat technical at the moment. I'll be simplifying them before the workshop and posting YouTube videos prior to the workshop. So *dDon't worry if the material seems technical** the basic concepts are not.
+- Student presentations will be posted here **after** the workshop.  
 - Previous talks and examples remain available for reference; we will link to them from the relevant sections.
 
 ## Agenda
@@ -154,6 +157,6 @@ schedule %>%
   )
 ```
 
-## Stay in touch
+## Contact
 
-Questions before the workshop? Email me at [joseph.bulbulia@vuw.ac.nz](mailto:joseph.bulbulia@vuw.ac.nz). Updates will follow via the conference mailing list and this page.
+Questions before the workshop? Email me at [joseph.bulbulia@vuw.ac.nz](mailto:joseph.bulbulia@vuw.ac.nz). 

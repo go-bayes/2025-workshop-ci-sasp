@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.18">
+<meta name="generator" content="quarto-1.8.25">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>jb-notes – Day 2: SPARCC Causal Inference Workshop</title>
+<title>jb-notes – Beyond Correlation: Causal Inference Workshop</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -72,14 +72,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-f98ea211b99fe8356d6469e598480a52.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-5c1f7a6a2802c248a2ccc243aab7b5c3.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-f98ea211b99fe8356d6469e598480a52.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-707d8167ce6003fca903bfe2be84ab7f.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-0f727f8079eb407a334684dd841bf50a.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark-9eb9af4601e8206e6a9c4f19f9f50f8c.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="site_libs/bootstrap/bootstrap-0f727f8079eb407a334684dd841bf50a.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-253b0e15ebbf836a1468929553f9aea9.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-c13eb3e20237a6ad3462e67b8e6af18a.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-253b0e15ebbf836a1468929553f9aea9.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -313,7 +313,7 @@ window.Quarto = {
     <a href="./index.html" class="navbar-brand navbar-brand-logo">
     </a>
     <a class="navbar-brand" href="./index.html">
-    <span class="navbar-title">Day 2: SPARCC Causal Inference Workshop</span>
+    <span class="navbar-title">Beyond Correlation: Causal Inference Workshop</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -324,16 +324,13 @@ window.Quarto = {
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
     <a class="nav-link" href="./index.html"> 
-<span class="menu-text">🏠 Home</span></a>
+<span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-content" role="link" data-bs-toggle="dropdown" aria-expanded="false">
- <span class="menu-text">📚 CONTENT</span>
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-workshop-content" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Workshop Content</span>
     </a>
-    <ul class="dropdown-menu" aria-labelledby="nav-menu-content">    
-        <li class="dropdown-header">Core Materials</li>
-        <li><hr class="dropdown-divider"></li>
-        <li class="dropdown-header">Workshop Sessions</li>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-workshop-content">    
         <li>
     <a class="dropdown-item" href="./content/00-background.html">
  <span class="dropdown-text">1. What is Causality?</span></a>
@@ -351,62 +348,33 @@ window.Quarto = {
  <span class="dropdown-text">4. Average and Conditional Average Treatment Effects</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./content/05-measurement.html">
- <span class="dropdown-text">5. Measurement Matters</span></a>
-  </li>  
-        <li><hr class="dropdown-divider"></li>
-        <li>
     <a class="dropdown-item" href="./workshop-scripts/06-interpretation-2.html">
- <span class="dropdown-text">6. Code Review</span></a>
+ <span class="dropdown-text">5. Code Review</span></a>
   </li>  
-        <li class="dropdown-header">Simulations</li>
         <li>
     <a class="dropdown-item" href="./simulations/01-simulation-population.html">
- <span class="dropdown-text">Simulation: Population Estimate</span></a>
+ <span class="dropdown-text">Simulations</span></a>
   </li>  
-        <li class="dropdown-header">ggdag</li>
-        <li>
-    <a class="dropdown-item" href="./content/ggdag-examples.html">
- <span class="dropdown-text">Causal Diagrams: The Structures of Interaction/Effect Modification, Measurement Bias, Selection Bias</span></a>
-  </li>  
-        <li class="dropdown-header">References</li>
         <li>
     <a class="dropdown-item" href="./pdfs/bulbulia-hand-outs/S2-glossary.pdf">
  <span class="dropdown-text">Glossary (PDF)</span></a>
-  </li>  
-        <li><hr class="dropdown-divider"></li>
-        <li>
-    <a class="dropdown-item" href="./quiz/sparcc_day_2_short_quiz.pdf">
- <span class="dropdown-text">Short Quiz</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="./quiz/sparcc_day_2_short_quiz-answer-key.pdf">
- <span class="dropdown-text">Short Quiz Answer Key</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="./quiz/2025-SPARCC-DAY-2-TEST.pdf">
- <span class="dropdown-text">Test</span></a>
   </li>  
     </ul>
   </li>
   <li class="nav-item">
     <a class="nav-link" href="./glossary-and-dags.html"> 
-<span class="menu-text">📊 Glossary &amp; DAGs</span></a>
+<span class="menu-text">Glossary &amp; DAGs</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./reading.html"> 
-<span class="menu-text">📚 Reading</span></a>
+<span class="menu-text">Reading</span></a>
   </li>  
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="https://go-bayes.github.io/sparcc-day-1/"> 
-<span class="menu-text">Day 1 Workshop led by B.G. Purzycki</span></a>
-  </li>  
-  <li class="nav-item">
     <a class="nav-link" href="https://github.com/go-bayes"> <i class="bi bi-github" role="img">
 </i> 
-<span class="menu-text">Research Code</span></a>
+<span class="menu-text">Go-Bayes</span></a>
   </li>  
 </ul>
           </div> <!-- /navcollapse -->
@@ -574,13 +542,14 @@ Y(k) \coprod K | L
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy

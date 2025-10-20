@@ -1,7 +1,7 @@
 ---
 title: "Heterogeneity"
 subtitle: "Moderation (as Effect Modification: Conditional Average Treatment Effects)"
-date: "2025-AUG-12"
+date: "2025-NOV-19"
 bibliography: /Users/joseph/GIT/templates/bib/references.bib
 editor_options: 
   chunk_output_type: console
@@ -43,10 +43,12 @@ cap-location: margin
 ```{r setup, include=FALSE}
 #| include: false
 # libraries and functions (ensure these are accessible)
-# library("tinytex")
-# library(extrafont)
-# loadfonts(device = "win") # Adjust device based on OS if using extrafont
-# source("/Users/joseph/GIT/templates/functions/funs.R") 
+library("tinytex")
+library(extrafont)
+loadfonts(device = "win") # Adjust device based on OS if using extrafont
+source("/Users/joseph/GIT/templates/functions/funs.R") 
+
+
 ```
 
 ::: {.callout-note}
@@ -154,6 +156,7 @@ We compare:
   • Sum of individual effects: $\big(\mathbb{E}[Y(1,0)] - \mathbb{E}[Y(0,0)]\big) + \big(\mathbb{E}[Y(0,1)] - \mathbb{E}[Y(0,0)]\big)$.
 
 #### Additive interaction exists if:
+
 $$
 \mathbb{E}[Y(1,1)] - \mathbb{E}[Y(1,0)] - \mathbb{E}[Y(0,1)] + \mathbb{E}[Y(0,0)] \neq 0.
 $$

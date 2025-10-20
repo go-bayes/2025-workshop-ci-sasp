@@ -2,13 +2,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.18">
+<meta name="generator" content="quarto-1.8.25">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2025-08-12">
+<meta name="dcterms.date" content="2025-11-19">
 
-<title>Causal Diagrammes &amp; Measurement – Day 2: SPARCC Causal Inference Workshop</title>
+<title>Causal Diagrammes &amp; Measurement – Beyond Correlation: Causal Inference Workshop</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -73,14 +73,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-3093d61113649c6a7049b7a5dcf186b4.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-0eb7924ecc8bf9a85b83eff7fafeffc4.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-3093d61113649c6a7049b7a5dcf186b4.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-29987c632d9c708eba81ba88d1291502.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-1df33b310b25e824b5acc70bcebddb02.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-29987c632d9c708eba81ba88d1291502.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-0ed94031a29975fead07021e53b97c54.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../site_libs/bootstrap/bootstrap-dark-2dce174802e107ce2a29065059e2a967.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../site_libs/bootstrap/bootstrap-0ed94031a29975fead07021e53b97c54.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-41eb41ebec47cde7d6e34488d139ad0a.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark-71e677b001e2b203ee4eca291d0f02e7.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-41eb41ebec47cde7d6e34488d139ad0a.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -285,7 +285,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <a href="../index.html" class="navbar-brand navbar-brand-logo">
     </a>
     <a class="navbar-brand" href="../index.html">
-    <span class="navbar-title">Day 2: SPARCC Causal Inference Workshop</span>
+    <span class="navbar-title">Beyond Correlation: Causal Inference Workshop</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -296,16 +296,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
     <a class="nav-link" href="../index.html"> 
-<span class="menu-text">🏠 Home</span></a>
+<span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-content" role="link" data-bs-toggle="dropdown" aria-expanded="false">
- <span class="menu-text">📚 CONTENT</span>
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-workshop-content" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Workshop Content</span>
     </a>
-    <ul class="dropdown-menu" aria-labelledby="nav-menu-content">    
-        <li class="dropdown-header">Core Materials</li>
-        <li><hr class="dropdown-divider"></li>
-        <li class="dropdown-header">Workshop Sessions</li>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-workshop-content">    
         <li>
     <a class="dropdown-item" href="../content/00-background.html">
  <span class="dropdown-text">1. What is Causality?</span></a>
@@ -323,62 +320,33 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="dropdown-text">4. Average and Conditional Average Treatment Effects</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../content/05-measurement.html">
- <span class="dropdown-text">5. Measurement Matters</span></a>
-  </li>  
-        <li><hr class="dropdown-divider"></li>
-        <li>
     <a class="dropdown-item" href="../workshop-scripts/06-interpretation-2.html">
- <span class="dropdown-text">6. Code Review</span></a>
+ <span class="dropdown-text">5. Code Review</span></a>
   </li>  
-        <li class="dropdown-header">Simulations</li>
         <li>
     <a class="dropdown-item" href="../simulations/01-simulation-population.html">
- <span class="dropdown-text">Simulation: Population Estimate</span></a>
+ <span class="dropdown-text">Simulations</span></a>
   </li>  
-        <li class="dropdown-header">ggdag</li>
-        <li>
-    <a class="dropdown-item" href="../content/ggdag-examples.html">
- <span class="dropdown-text">Causal Diagrams: The Structures of Interaction/Effect Modification, Measurement Bias, Selection Bias</span></a>
-  </li>  
-        <li class="dropdown-header">References</li>
         <li>
     <a class="dropdown-item" href="../pdfs/bulbulia-hand-outs/S2-glossary.pdf">
  <span class="dropdown-text">Glossary (PDF)</span></a>
-  </li>  
-        <li><hr class="dropdown-divider"></li>
-        <li>
-    <a class="dropdown-item" href="../quiz/sparcc_day_2_short_quiz.pdf">
- <span class="dropdown-text">Short Quiz</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../quiz/sparcc_day_2_short_quiz-answer-key.pdf">
- <span class="dropdown-text">Short Quiz Answer Key</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../quiz/2025-SPARCC-DAY-2-TEST.pdf">
- <span class="dropdown-text">Test</span></a>
   </li>  
     </ul>
   </li>
   <li class="nav-item">
     <a class="nav-link" href="../glossary-and-dags.html"> 
-<span class="menu-text">📊 Glossary &amp; DAGs</span></a>
+<span class="menu-text">Glossary &amp; DAGs</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="../reading.html"> 
-<span class="menu-text">📚 Reading</span></a>
+<span class="menu-text">Reading</span></a>
   </li>  
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="https://go-bayes.github.io/sparcc-day-1/"> 
-<span class="menu-text">Day 1 Workshop led by B.G. Purzycki</span></a>
-  </li>  
-  <li class="nav-item">
     <a class="nav-link" href="https://github.com/go-bayes"> <i class="bi bi-github" role="img">
 </i> 
-<span class="menu-text">Research Code</span></a>
+<span class="menu-text">Go-Bayes</span></a>
   </li>  
 </ul>
           </div> <!-- /navcollapse -->
@@ -423,7 +391,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">August 12, 2025</p>
+      <p class="date">November 19, 2025</p>
     </div>
   </div>
   
@@ -547,13 +515,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy
@@ -955,7 +924,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" data-shortcodes="false"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1"></a><span class="co">---</span></span>
 <span id="cb1-2"><a href="#cb1-2"></a><span class="an">title:</span><span class="co"> "Causal Diagrammes &amp; Measurement"</span></span>
-<span id="cb1-3"><a href="#cb1-3"></a><span class="an">date:</span><span class="co"> "2025-AUG-12"</span></span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="an">date:</span><span class="co"> "2025-NOV-19"</span></span>
 <span id="cb1-4"><a href="#cb1-4"></a><span class="an">format:</span></span>
 <span id="cb1-5"><a href="#cb1-5"></a><span class="co">  html:</span></span>
 <span id="cb1-6"><a href="#cb1-6"></a><span class="co">    warnings: false</span></span>

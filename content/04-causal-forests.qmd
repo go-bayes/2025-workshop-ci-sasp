@@ -1,6 +1,9 @@
 ---
 title: "Estimation of ATE and CATE Using Machine Learning"
-date: "2025-AUG-12"
+date: "2025-NOV-19"
+draft: true
+execute:
+  eval: false
 format:
   html:
     warnings: false
@@ -610,4 +613,3 @@ The upshot, we anchor our causal inquiries within a multi-step framework of data
 2. clarifying assumptions, & especially identification assumptions, 
 3. describing a statistical strategy for extracting this estimand from the data, and then 
 4. applying an algorithm that embodies this statistical method.
-

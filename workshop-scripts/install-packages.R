@@ -76,7 +76,7 @@ if (all(installation_status)) {
   cat("\n")
   cat("🎉 SUCCESS! All workshop packages installed correctly.\n")
   cat("\n")
-  cat("You're ready for the Workshop!\n")
+  cat("You're ready for the6 Workshop!\n")
   cat("To get started, run: library(causalworkshop)\n")
   cat("\n")
 } else {
