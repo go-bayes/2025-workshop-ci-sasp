@@ -51,6 +51,7 @@ laboratory/**/*.png
 *_files/
 !docs/**/*_files/
 !docs/**/*_files/**
+docs/content/04-causal-forests_files/
 
 # knitr and r markdown default cache directories
 /*_cache/
