@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.18">
+<meta name="generator" content="quarto-1.8.25">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Readings – Day 2: SPARCC Causal Inference Workshop</title>
+<title>Readings – Beyond Correlation: Causal Inference Workshop</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -72,14 +72,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-f98ea211b99fe8356d6469e598480a52.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-5c1f7a6a2802c248a2ccc243aab7b5c3.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-f98ea211b99fe8356d6469e598480a52.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-707d8167ce6003fca903bfe2be84ab7f.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-9a561819ff74aad2ab40388d4c38caba.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark-4eb46bd46e32e1bd242b0484e08bc052.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="site_libs/bootstrap/bootstrap-9a561819ff74aad2ab40388d4c38caba.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-253b0e15ebbf836a1468929553f9aea9.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-c13eb3e20237a6ad3462e67b8e6af18a.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-253b0e15ebbf836a1468929553f9aea9.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -284,7 +284,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <a href="./index.html" class="navbar-brand navbar-brand-logo">
     </a>
     <a class="navbar-brand" href="./index.html">
-    <span class="navbar-title">Day 2: SPARCC Causal Inference Workshop</span>
+    <span class="navbar-title">Beyond Correlation: Causal Inference Workshop</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -295,13 +295,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
     <a class="nav-link" href="./index.html"> 
-<span class="menu-text">🏠 Home</span></a>
+<span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-content-sparcc-day-2-(bulbulia" role="link" data-bs-toggle="dropdown" aria-expanded="false">
- <span class="menu-text">📚 CONTENT: SPARCC Day 2 (Bulbulia)</span>
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-workshop-content" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Workshop Content</span>
     </a>
-    <ul class="dropdown-menu" aria-labelledby="nav-menu-content-sparcc-day-2-(bulbulia">    
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-workshop-content">    
         <li>
     <a class="dropdown-item" href="./content/00-background.html">
  <span class="dropdown-text">1. What is Causality?</span></a>
@@ -319,62 +319,33 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="dropdown-text">4. Average and Conditional Average Treatment Effects</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./content/05-measurement.html">
- <span class="dropdown-text">5. Measurement Matters</span></a>
-  </li>  
-        <li><hr class="dropdown-divider"></li>
-        <li>
     <a class="dropdown-item" href="./workshop-scripts/06-interpretation-2.html">
- <span class="dropdown-text">6. Code Review</span></a>
+ <span class="dropdown-text">5. Code Review</span></a>
   </li>  
-        <li class="dropdown-header">Simulations</li>
         <li>
     <a class="dropdown-item" href="./simulations/01-simulation-population.html">
- <span class="dropdown-text">Simulation: Population Estimate</span></a>
+ <span class="dropdown-text">Simulations</span></a>
   </li>  
-        <li class="dropdown-header">ggdag</li>
-        <li>
-    <a class="dropdown-item" href="./content/ggdag-examples.html">
- <span class="dropdown-text">Causal Diagrams: The Structures of Interaction/Effect Modification, Measurement Bias, Selection Bias</span></a>
-  </li>  
-        <li class="dropdown-header">References</li>
         <li>
     <a class="dropdown-item" href="./pdfs/bulbulia-hand-outs/S2-glossary.pdf">
  <span class="dropdown-text">Glossary (PDF)</span></a>
-  </li>  
-        <li><hr class="dropdown-divider"></li>
-        <li>
-    <a class="dropdown-item" href="./quiz/sparcc_day_2_short_quiz.pdf">
- <span class="dropdown-text">Short Quiz</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="./quiz/sparcc_day_2_short_quiz-answer-key.pdf">
- <span class="dropdown-text">Short Quiz Answer Key</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="./quiz/2025-SPARCC-DAY-2-TEST.pdf">
- <span class="dropdown-text">Test</span></a>
   </li>  
     </ul>
   </li>
   <li class="nav-item">
     <a class="nav-link" href="./glossary-and-dags.html"> 
-<span class="menu-text">📊 Glossary &amp; DAGs</span></a>
+<span class="menu-text">Glossary &amp; DAGs</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link active" href="./reading.html" aria-current="page"> 
-<span class="menu-text">📚 Reading</span></a>
+<span class="menu-text">Reading</span></a>
   </li>  
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="https://go-bayes.github.io/sparcc-day-1/"> 
-<span class="menu-text">Link to Day 1 Workshop (by B.G. Purzycki)</span></a>
-  </li>  
-  <li class="nav-item">
     <a class="nav-link" href="https://github.com/go-bayes"> <i class="bi bi-github" role="img">
 </i> 
-<span class="menu-text">Research Code</span></a>
+<span class="menu-text">Go-Bayes</span></a>
   </li>  
 </ul>
           </div> <!-- /navcollapse -->
@@ -393,7 +364,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#suggested-readings" id="toc-suggested-readings" class="nav-link active" data-scroll-target="#suggested-readings">Suggested readings</a></li>
+  <li><a href="#methods-articles" id="toc-methods-articles" class="nav-link active" data-scroll-target="#methods-articles">Methods Articles</a></li>
   </ul>
 </nav>
     </div>
@@ -420,9 +391,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="suggested-readings" class="level2">
-<h2 class="anchored" data-anchor-id="suggested-readings">Suggested readings</h2>
-<p>(Stuff I’ll review)</p>
+<section id="methods-articles" class="level2">
+<h2 class="anchored" data-anchor-id="methods-articles">Methods Articles</h2>
+<p>I’ve written four methods articles. Check the links for further readings. Also my lab resouces at the bottom 👇.</p>
 <div class="column" style="width:50%;">
 <p><strong>Part 1: <a href="https://www.cambridge.org/core/journals/evolutionary-human-sciences/article/methods-in-causal-inference-part-1-causal-diagrams-and-confounding/E734F72109F1BE99836E268DF3AA0359">Causal Diagrams and Confounding</a></strong></p>
 <p><strong>Part 2: <a href="https://www.cambridge.org/core/journals/evolutionary-human-sciences/article/methods-in-causal-inference-part-2-interaction-mediation-and-timevarying-treatments/D7FD95D3ED64FE0FBBEC37AC6CEAFBC1">Interaction, Mediation, and Time-Varying Treatments</a></strong></p>
@@ -430,7 +401,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><strong>Part 4: <a href="https://www.cambridge.org/core/journals/evolutionary-human-sciences/article/methods-in-causal-inference-part-4-confounding-in-experiments/570D60A5FCCA007B55427384818C368E">Experiments: What Randomisation Ensures and Does not Ensure</a></strong></p>
 <section id="additional-lab-resources" class="level2">
 <h2 class="anchored" data-anchor-id="additional-lab-resources">Additional lab resources</h2>
-<p>For more comprehensive resources on causal inference, practical workflows, and data visualisation, visit the <a href="https://go-bayes.github.io/epic-lab/resources.html">EPIC Lab Resources page</a>.</p>
+<p>For more resources on causal inference, visit the <a href="https://go-bayes.github.io/epic-lab/resources.html">EPIC Lab Resources page</a>.</p>
 
 
 <!-- -->
@@ -504,13 +475,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy
@@ -915,24 +887,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">## Suggested readings </span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>(Stuff I'll review)</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>::: {.column width="50%"}</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>**Part 1: [Causal Diagrams and Confounding](https://www.cambridge.org/core/journals/evolutionary-human-sciences/article/methods-in-causal-inference-part-1-causal-diagrams-and-confounding/E734F72109F1BE99836E268DF3AA0359)**  </span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>**Part 2: [Interaction, Mediation, and Time-Varying Treatments](https://www.cambridge.org/core/journals/evolutionary-human-sciences/article/methods-in-causal-inference-part-2-interaction-mediation-and-timevarying-treatments/D7FD95D3ED64FE0FBBEC37AC6CEAFBC1)**  </span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">## Methods Articles</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>I've written four methods articles. Check the links for further readings.  Also my lab resouces at the bottom 👇.</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>::: {.column width="50%"}</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>**Part 1: [Causal Diagrams and Confounding](https://www.cambridge.org/core/journals/evolutionary-human-sciences/article/methods-in-causal-inference-part-1-causal-diagrams-and-confounding/E734F72109F1BE99836E268DF3AA0359)**  </span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>**Part 2: [Interaction, Mediation, and Time-Varying Treatments](https://www.cambridge.org/core/journals/evolutionary-human-sciences/article/methods-in-causal-inference-part-2-interaction-mediation-and-timevarying-treatments/D7FD95D3ED64FE0FBBEC37AC6CEAFBC1)**  </span>
 <span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>**Part 3: [Measurement, Measurement Error, Cultural Comparisons](https://www.cambridge.org/core/journals/evolutionary-human-sciences/article/methods-in-causal-inference-part-3-measurement-error-and-external-validity-threats/4D35FFDECF32B2EFF7557EC26075175F)**</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>**Part 3: [Measurement, Measurement Error, Cultural Comparisons](https://www.cambridge.org/core/journals/evolutionary-human-sciences/article/methods-in-causal-inference-part-3-measurement-error-and-external-validity-threats/4D35FFDECF32B2EFF7557EC26075175F)**</span>
 <span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>**Part 4: [Experiments: What Randomisation Ensures and Does not Ensure](https://www.cambridge.org/core/journals/evolutionary-human-sciences/article/methods-in-causal-inference-part-4-confounding-in-experiments/570D60A5FCCA007B55427384818C368E)**</span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>**Part 4: [Experiments: What Randomisation Ensures and Does not Ensure](https://www.cambridge.org/core/journals/evolutionary-human-sciences/article/methods-in-causal-inference-part-4-confounding-in-experiments/570D60A5FCCA007B55427384818C368E)**</span>
 <span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="fu">## Additional lab resources</span></span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>For more comprehensive resources on causal inference, practical workflows, and data visualisation, visit the <span class="co">[</span><span class="ot">EPIC Lab Resources page</span><span class="co">](https://go-bayes.github.io/epic-lab/resources.html)</span>.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="fu">## Additional lab resources</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>For more resources on causal inference, visit the <span class="co">[</span><span class="ot">EPIC Lab Resources page</span><span class="co">](https://go-bayes.github.io/epic-lab/resources.html)</span>.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 

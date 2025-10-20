@@ -3,8 +3,9 @@ title: "Readings"
 ---
 
 
-## Suggested readings 
-(Stuff I'll review)
+## Methods Articles
+
+I've written four methods articles. Check the links for further readings.  Also my lab resouces at the bottom 👇.
 
 ::: {.column width="50%"}
 **Part 1: [Causal Diagrams and Confounding](https://www.cambridge.org/core/journals/evolutionary-human-sciences/article/methods-in-causal-inference-part-1-causal-diagrams-and-confounding/E734F72109F1BE99836E268DF3AA0359)**  
@@ -20,4 +21,4 @@ title: "Readings"
 
 ## Additional lab resources
 
-For more comprehensive resources on causal inference, practical workflows, and data visualisation, visit the [EPIC Lab Resources page](https://go-bayes.github.io/epic-lab/resources.html).
+For more resources on causal inference, visit the [EPIC Lab Resources page](https://go-bayes.github.io/epic-lab/resources.html).
