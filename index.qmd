@@ -56,7 +56,7 @@ The workshop assumes familiarity with regression and R, but no prior training in
 
 ::: callout-tip
 ### A note on pace
-Please do not worry if the math or code looks intimidating at first glance. We'll slow everything down, build each idea together from first principles, and keep the focus on intuition before symbols. Bring your curiosity, bring coffee, and if you want to do the R exercise at the end, bring your laptop preloaded with twhe workshop package (see below). By the end of the day you'll see that the machinery is manageable -- and even fun -- when we unpack it step by step.
+Please do not worry if the math or code looks intimidating at first glance. We'll slow everything down, build each idea together from first principles, and keep the focus on intuition before symbols. Bring your curiosity, bring coffee, and if you want to do the R exercise at the end, bring your laptop preloaded with twhe workshop package (see below). By the end of the day you'll see that the machinery is manageable -- and even fun (really!) -- when we unpack it step by step.
 :::
 
 ## Setup
@@ -96,7 +96,7 @@ Work through scripts 01–05 **Prior to the workshop** (06 is optional).
 
 ## Workshop materials
 
-- The lectures are somewhat technical at the moment. I'll be simplifying them before the workshop and posting YouTube videos prior to the workshop. So *dDon't worry if the material seems technical** the basic concepts are not.
+- The lectures are somewhat technical at the moment. I'll be simplifying them before the workshop and posting YouTube videos prior to the workshop. Stay tuned here for updates.
 - Student presentations will be posted here **after** the workshop.  
 - Previous talks and examples remain available for reference; we will link to them from the relevant sections.
 
@@ -127,7 +127,7 @@ schedule <- tibble(
     "How to ask a causal question",
     "The causal workflow: from question to answer",
     "Causal diagrams and the identification problem",
-    "Coffee break & discussion",
+    "Coffee break & discussion (you might need to bring a your own coffee)",
     "Worked example: employer gratitude and worker wellbeing (Zahle Wisely)",
     "Worked example: religious service attendance and personality change (Hannah Robinson)",
     "Lunch",
@@ -137,15 +137,15 @@ schedule <- tibble(
   ),
   `Learning goals & activities` = c(
     "State precise causal questions with the potential outcomes framework; focus on the average treatment effect (ATE).",
-    "Trace the causal workflow: define populations, build diagrams, assess assumptions, analyse data, conduct sensitivity analysis, and communicate results.",
+    "Trace the causal workflow: define populations, build causal diagrams, assess assumptions, analyse data, conduct sensitivity analysis, and communicate results.",
     "Use causal diagrams (DAGs) to identify bias from confounding, colliders, and mediators.",
     "Informal space for questions, clarifying assumptions, and networking.",
-    "Presenter: Zahle Wisely. Apply the workflow to estimate the effect of gratitude on wellbeing; Q&A follows.",
-    "Presenter: Hannah Robinson. Define contrasts, tackle confounding, and present ATE results; Q&A follows.",
+    "Presenter: Zahle Wisely. Apply the workflow to estimate the effect of employer gratitude on employee wellbeing; Q&A follows.",
+    "Presenter: Hannah Robinson. Apply the workflow to estimate the effect of religious service attendance on personality; Q&A follows.",
     "Break.",
     "Introduce heterogeneous treatment effects (HTE), conditional ATEs, and policy trees; discuss when effects differ across people.",
-    "Analyse heterogeneity in the Zahle and Hannah case studies; interpret tree-based decision rules.",
-    "Small-group activity plus live R demonstration using causal forests; interpret simulated ATEs and HTEs for multiple audiences."
+    "Analyse heterogeneity in Zahle and Hannah's case studies; interpret tree-based decision rules useful for obtaining *policies*.",
+    "R demonstration using causal forests; interpret simulated ATEs and HTEs, graphs, reporting & etc."
   )
 )
 
