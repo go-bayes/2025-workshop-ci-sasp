@@ -66,12 +66,14 @@ leaflet() %>%
 
 Suppose you observe that psychology graduate students who own expensive espresso machines publish more papers. Should your department invest in high-end coffee equipment for all incoming students?
 
-Probably not. This is the difference between prognostic and causal knowledge.
+Probably not. **This is the difference between prognostic and causal knowledge**.  
 
-Observational psychology typically recovers prognostic information -- which factors predict which others. The word 'predictor' is engrained in our vocabulary. But predictions don't tell us what would happen if we intervened. Owning an expensive coffee machine predicts publication success, but giving someone an expensive machine wouldn't cause their productivity to increase. The machine is likely a marker for other factors: being further along in candidature, having more disposable income, or possessing pre-existing caffeinated ambition. Of course the machines might help, but how much?  
+Observational psychology typically recovers prognostic knowledge -- which factors predict which others. The word 'predictor' is engrained in our vocabulary. And we have a great tolerance for it. Should we?  Predictions don't tell us what would happen if we intervened. 
+
+Consider: Owning an expensive coffee machine predicts publication success, but giving someone an expensive machine wouldn't cause their productivity to increase. The machine is likely a marker for other factors: being further along in candidature, having more disposable income, or possessing pre-existing caffeinated ambition. Of course the machines might help, but how much?  
 
 
-This distinction between **prediction** and **causation** has serious implications for intervention design:
+**The distinction between prediction and causation**, which is often stated only to be ignored, **has serious implications for conduct in psychological science**
 
 1) We might observe that adolescents with higher self-esteem have better academic outcomes. But if we were to intervene to boost self-esteem directly (through positive affirmations or praise), would grades improve? Or is self-esteem mostly a marker for other causal factors like stable family environments or prior academic success?  
 
@@ -89,8 +91,8 @@ We will:
 
 - Unveil a **causal workflow** that starts with asking a clearly formulated causal question. 
 - Before answering a causal question we must consider and explicate **identification assumptions**. We will consider these assumptions and introduce graphical tools for addressing them. You will discover that clarifying assumptions is not a statistical task. 
-- Only after stating our questions and assumptions can we turn to the data and its analysis. By the end of the workshop, you will conduct an analysis using doubly robust machine learning -- which has many advantages over standard estimators.  
-- After estimation there is communication.  I'll describe how to graphical tools to clarify results audiences with applied interests.  
+- **Only after stating our questions and assumptions do we turn to the data and their analysis**. By the end of the workshop, you will conduct an analysis using doubly robust machine learning -- which has many advantages over standard estimators.  
+- After estimation there is **communication**.  I'll describe how to graphical tools to clarify results audiences with applied interests.  
 
 
 ### Objectives
