@@ -10,7 +10,7 @@ format:
     error: FALSE
     messages: FALSE
     code-overflow: scroll
-    highlight-style: kate
+    highlight-style: dracula
     code-tools:
       source: true
       toggle: FALSE
@@ -434,6 +434,8 @@ ggplot(lifelines) +
 #| label: tbl-target-trial
 #| tbl-cap: "Target-trial specification for the hormone-therapy example."
 #| echo: false
+#| warning: false
+#| messages: false
 
 library(tidyverse)
 library(kableExtra)
@@ -452,10 +454,6 @@ tribble(
 
 
 
-
-
-
-
 <!-- ## What is Causality? -->
 <!-- ## David Hume's Two Definitions in *Enquiries* (1751) -->
 <!-- ### Definition 1: -->
@@ -465,102 +463,72 @@ tribble(
 <!-- *Enquiries Concerning Human Understanding, and Concerning the Principles of Morals* 1751 -->
 <!-- ## Our lives are filled with "What If?" questions -->
 <!-- ## **The Fundamental Problem of Causal Inference** -->
-
 <!-- To **quantify** a causal effect requires a **counterfactual** contrast: -->
-
 <!-- $$\tau_{you} = \Big[Y_{\text{you}}(a =1) - Y_{\text{you}}(a=0)\Big]$$ -->
-
 <!-- Where, $Y(a)$ denotes the potential outcome under an intervention $A = a$. Here, we assume a binary intervention. At any time, we may observe the outcome of only \textcolor{red}{one intervention, not both.} -->
-
 <!-- ## However, we only observe *facts* not *counterfactuals* -->
-
 <!-- $$ -->
 <!-- Y_i|A_i = 1 \implies Y_i(0)|A_i = 1~ \textcolor{red}{\text{is counterfactual}} -->
 <!-- $$ -->
-
 <!-- ::: footer -->
 <!-- "**And sorry I could not travel both. And be one traveller, long I stood** $\dots$" -->
 <!-- ::: -->
-
 <!-- ## Average Treatment Effect in randomised controlled experiments work from assumptions -->
-
 <!-- $$ -->
 <!-- \text{Average Treatment Effect} = \left[ \begin{aligned} -->
 <!-- &\left( \underbrace{\mathbb{E}[Y(1)|A = 1]}_{\text{observed}} + \textcolor{cyan}{\underbrace{\mathbb{E}[Y(1)|A = 0]}_{\text{unobserved}}} \right) \\ -->
 <!-- &- \left( \underbrace{\mathbb{E}[Y(0)|A = 0]}_{\text{observed}} + \textcolor{cyan}{\underbrace{\mathbb{E}[Y(0)|A = 1]}_{\text{unobserved}}} \right) -->
 <!-- \end{aligned} \right] -->
 <!-- $$ -->
-
 <!-- ## Under identifying assumptions, we may infer causal effects from associations -->
-
 <!-- $$ -->
 <!-- \text{ATE} = \sum_{l} \left( \mathbb{E}[Y|A=1, \textcolor{cyan}{L=l}] - \mathbb{E}[Y|A=0, \textcolor{cyan}{L=l}] \right) \times \textcolor{cyan}{\Pr(L=l)} -->
 <!-- $$ -->
-
 <!-- Where $L$ is a set of measured covariates and $A\coprod Y(a)|L$ -->
-
 <!-- # **Part 2: The First Self-Inflicted Error: The *What* Error** -->
-
 <!-- ## Paradigmatic Concern: Confounding by Common Cause -->
-
 <!-- $$\commoncauseT$$ -->
-
 <!-- ## Where assumptions justify, we may condition on measured confounders to obtain balance. -->
-
 <!-- ::: columns -->
 <!-- ::: {.column width="50%"} -->
 <!-- $$ -->
 <!-- L \to A; L \to Y -->
 <!-- $$ -->
 <!-- ::: -->
-
 <!-- ::: {.column width="50%"} -->
 <!-- $$ -->
 <!-- \boxed{L} -->
 <!-- $$ -->
 <!-- ::: -->
 <!-- ::: -->
-
 <!-- # Error 1 – What (over-adjustment) -->
-
 <!-- ## "What Error #1": **Mediator Bias**  -->
-
 <!-- $$A \to \boxed{L} \to Y$$ -->
-
 <!-- ## Data Generating Process  -->
-
 <!-- ```{r} -->
 <!-- #| label: sim1-dgp -->
 <!-- #| echo: true -->
 <!-- #| eval: true -->
 <!-- #| tbl-cap: "Religious Service (A) → Wealth (L) → Charity (Y). The true direct effect of A on Y is zero." -->
-
 <!-- library(tidyverse) -->
-
 <!-- set.seed(123)                           # reproducibility -->
 <!-- n        <- 1000 -->
 <!-- service  <- rbinom(n, 1, 0.5)          # A -->
 <!-- wealth   <- 2 * service + rnorm(n)     # L -->
 <!-- charity  <- 1.5 * wealth + rnorm(n, sd = 1.5)  # Y -->
-
 <!-- sim1 <- tibble(service, wealth, charity) -->
 <!-- ``` -->
-
 <!-- ## Model comparison -->
-
 <!-- ```{r} -->
 <!-- #| label: sim1-table -->
 <!-- #| echo: false -->
 <!-- #| message: false -->
 <!-- #| warning: false -->
 <!-- #| tbl-cap: "Controlling for the mediator reverses the sign of the service coefficient." -->
-
 <!-- library(gtsummary) -->
 <!-- library(broom.helpers) -->
-
 <!-- fit_omit   <- lm(charity ~ service, data = sim1)           # correct -->
 <!-- fit_adjust <- lm(charity ~ service + wealth, data = sim1)  # biased -->
-
 <!-- tbl_merge( -->
 <!--   list(tbl_regression(fit_omit), -->
 <!--        tbl_regression(fit_adjust)), -->
@@ -568,50 +536,36 @@ tribble(
 <!--                   "Model B: Control for L") -->
 <!-- ) -->
 <!-- ``` -->
-
 <!-- ## Which model looks better? -->
-
 <!-- ```{r} -->
 <!-- #| label: sim1-metrics -->
 <!-- #| echo: true -->
 <!-- #| eval: true -->
 <!-- #| tbl-cap: "Model B wins on BIC and R² – yet its causal estimate is wrong." -->
-
 <!-- library(performance) -->
-
 <!-- compare_performance(fit_adjust, fit_omit, rank = TRUE) -->
 <!-- # BIC(fit_adjust) - BIC(fit_omit)  # negative → "better" fit -->
 <!-- ``` -->
-
 <!-- ## "What Error #2": Collider Bias  -->
-
 <!-- $$A\to \boxed{L} \leftarrow Y$$ -->
-
 <!-- ## Data Generating Process  -->
-
 <!-- ```{r} -->
 <!-- #| label: sim2-dgp -->
 <!-- #| echo: true -->
 <!-- #| eval: true -->
 <!-- #| tbl-cap: "Religious service (A) ← wealth (L) → donations (Y). A and Y are _independent_ in truth." -->
-
 <!-- set.seed(2025) -->
-
 <!-- n          <- 1000 -->
 <!-- service    <- rbinom(n, 1, 0.5)                            # A -->
 <!-- donations  <- rnorm(n)                                     # Y -->
 <!-- wealth     <- rnorm(n, mean = service + donations, sd = 1) # collider L -->
-
 <!-- sim2 <- tibble(service, wealth, donations) -->
 <!-- ``` -->
-
 <!-- ## Model Comparison  -->
-
 <!-- ```{r} -->
 <!-- #| label: sim2-table -->
 <!-- #| echo: false -->
 <!-- #| tbl-cap: "Adding the collider creates a spurious, significant effect of A." -->
-
 <!-- fit_correct <- lm(donations ~ service, data = sim2)           # correct -->
 <!-- fit_biased  <- lm(donations ~ service + wealth, data = sim2)  # biased -->
 
@@ -647,58 +601,41 @@ tribble(
 
 <!-- -   "About **1 in 4 drop cases or subset the data based on post-treatment criteria,** and **nearly a third include post-treatment variables as covariates**" -->
 
-<!-- -   "Most tellingly, **nearly 1 in 8 articles directly conditions on variables that the authors themselves show as being an outcome of the experiment** -- an unambiguous indicator of **a fundamental lack of understanding ... that conditioning on posttreatment variables can invalidate results from randomized experiments.**" -->
-
-<!-- -   "Empirically, then, the answer to the question of **whether the discipline already understands posttreatment bias is clear: It does not.**" [@montgomery2018] -->
-
+<!--   "Most tellingly, **nearly 1 in 8 articles directly conditions on variables that the authors themselves show as being an outcome of the experiment** -- an unambiguous indicator of **a fundamental lack of understanding ... that conditioning on posttreatment variables can invalidate results from randomized experiments.**" -->
+<!--    "Empirically, then, the answer to the question of **whether the discipline already understands posttreatment bias is clear: It does not.**" [@montgomery2018] -->
 <!-- ## Mediator Bias control strategy: **Longitudinal Hygiene** -->
-
 <!-- ::: columns -->
 <!-- ::: {.column width="50%"} -->
 <!-- $$ -->
 <!-- A\to L \to Y -->
 <!-- $$ -->
 <!-- ::: -->
-
 <!-- ::: {.column width="50%"} -->
 <!-- $$ -->
 <!-- A\to Y -->
 <!-- $$ -->
 <!-- ::: -->
 <!-- Don't include $L$ -->
-
 <!-- ::: -->
-
 <!-- ## How to Tame The What Error? **Hide your future** -->
-
 <!-- Use Repeated Measures on the Same Individuals -->
-
 <!-- ## Collider bias control strategy: **Hide your future** -->
-
 <!-- ## Collider bias by proxy control strategy: **Hide your future** -->
-
 <!-- ## Post-exposure collider bias control strategy: **Hide your future** -->
-
-<!-- <!-- The E-value is the minimum strength of association, on the risk ratio scale, that an unmeasured confounder would need to have with both the treatment and the outcome, conditional on the measured covariates, to explain away treatment–outcome association. --> -->
-
+<!-- The E-value is the minimum strength of association, on the risk ratio scale, that an unmeasured confounder would need to have with both the treatment and the outcome, conditional on the measured covariates, to explain away treatment–outcome association. --> -->
 <!-- ## Are longitudinal data + sensitivity analysis enough? -->
-
 <!-- ::: columns -->
 <!-- ::: {.column width="50%"} -->
 <!-- If the data we collect were like this: $$Y_{\text{time 0}} ~~...~~ A_{\text{time 1}}$$ -->
 <!-- ::: -->
-
 <!-- ::: {.column width="50%"} -->
 <!-- We should not be tempted to model this. -->
-
 <!-- $$Y \to A$$ -->
 <!-- ::: -->
 <!-- ::: -->
-
 <!-- ## Are longitudinal data + sensitivity analysis enough? -->
-
 <!-- {Too obvious} this is wrong? -->
-
-
 <!-- $$Y \to A$$ -->
+
+
 

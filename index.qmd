@@ -27,9 +27,18 @@ editor_options:
 ::: callout-note
 ### Workshop location
 **Date:** Wednesday, 19 November 2025, 09:00–16:00  
+
 **Location:** University of Melbourne (Parkville campus), Redmond Barry Building (Building 115), Level 5 Room 516  
-**Format:** Registration via SASP abstract submission; in-person. Before lunch we'll cover average treatment effects.  This module is self-sufficient, and will culminate with student presentations. If you just want to get a sense of causal inference, and learn about causal graphs, the morning will be sufficient. After lunch we'll get into estimation of heterogeneous treatment effects, and walk through a data exercise that will show you how to estimate such effects, as well as average treatment effects. You'll do so using **causal machine learning** which is -- well -- *empowering*.  So I think it'll be worth sticking around. That said, there are a lot of great workshops, so feel free to shop around.
-**Preparation**: Bring your curiosity and attention. If you want to do the data exercise, download R and Rstudio (or your favourite IDE) and then download the workshop R package. We'll work through it together but will not pause to work on your package installation. Bring a writing instrument and some paper, or software that allows free hand writing, as we'll draw graphs together. 
+
+**Format:** Registration via SASP abstract submission; in-person. Before lunch we'll cover average treatment effects.  This module is self-sufficient, and will culminate with student presentations. If you just want to get a sense of causal inference, and learn about causal graphs, the morning will be sufficient. After lunch we'll get into estimation of heterogeneous treatment effects, and walk through a data exercise that will show you how to estimate such effects, as well as average treatment effects. You will estimate effects using **causal machine learning**.  Building knowledge and skills in this area will be empowering.
+
+**Preparation**: Bring your curiosity and attention. If you want to do the data exercise, download R and Rstudio (or your favourite IDE) and then download the workshop R package. (Make sure you install the package first, and run through the scripts as we will not pause to work on your package installation). Bring a writing instrument and some paper, or software that allows free hand writing, as we'll draw graphs together. 
+:::
+
+
+::: {.callout-important}
+## Links to Lectures 
+In the weeks before the workshop, I'll be **simplifying the background lectures** and adding some background videos.  Updates will be described here. 
 :::
 
 ## Venue Location
@@ -99,13 +108,17 @@ The workshop assumes familiarity with regression and R, but no prior training in
 
 ::: callout-tip
 ### A note on pace
-Please do not worry if the math or code looks intimidating at first glance. We'll slow everything down, build each idea together from first principles, and keep the focus on intuition before symbols. Bring your curiosity, and a computer pre-loaded with the workshop R package if you want to work through the data exercises. By the end of the day you'll see that the machinery is manageable, and even fun (really!), when we unpack it step by step.
+Please do not worry if the math or code looks intimidating at first glance. We'll slow everything down, build each idea together from first principles, and keep the focus on intuition before symbols. Bring your curiosity. If you want to do the data exercise, bring a computer pre-loaded with the workshop R (see👇).  By the end of the day you'll understand that causal workflow is manageable, and even fun, when we unpack it step by step.
 :::
 
 ## Setup
 
-1. Install the current version of R (free) from <https://cran.r-project.org/>.  
-2. Install RStudio Desktop (free) from <https://posit.co/download/rstudio-desktop/>.  
+1. Install the current version of R (free) from <https://cran.r-project.org/>
+
+2. Install RStudio Desktop (free) from <https://posit.co/download/rstudio-desktop/>  
+
+(Or pick your favourite IDE -- I use neovim Lazy -- the code doesn't care.)
+
 3. Install the workshop packages:
 
 ```r
@@ -142,6 +155,7 @@ Work through scripts 01–05 **Prior to the workshop** (06 is optional).
 - The lectures are somewhat technical at the moment. I'll be simplifying them before the workshop and posting YouTube videos prior to the workshop. Stay tuned here for updates.
 - Student presentations will be posted here **after** the workshop.  
 - Previous talks and examples remain available for reference; we will link to them from the relevant sections.
+
 
 ## Agenda
 

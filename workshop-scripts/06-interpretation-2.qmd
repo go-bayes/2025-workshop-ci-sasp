@@ -3,15 +3,12 @@ title: "Estimating ATE and CATE using Causal Forests"
 subtitle: ""
 format:
   html:
-    warnings: false
-    error: false
-    message: false
     echo: true
     output: true
     code-overflow: scroll
-    highlight-style: Ayu
+    highlight-style: gruvbox
     code-line-numbers: true
-    code-fold: false
+    code-fold: true
     code-tools:
       source: true
       toggle: false
@@ -21,8 +18,10 @@ citation-location: margin
 cap-location: margin
 code-block-border-left: true
 bibliography: /Users/joseph/GIT/templates/bib/references.bib
-editor_options: 
-  chunk_output_type: console
+warnings: false
+error: false
+message: false
+
 ---
 
 ```{r}
@@ -30,9 +29,11 @@ editor_options:
 #| echo: false
 #| include: false
 #| eval: true
+#| warnings: false
+#| error: false
+#| message: false
 
 # ── initialisation and setup ──────────────────────────────────────────────────
-
 # save this file in your project root (e.g. 'quarto/1_setup.R')
 # load here to manage paths
 dep <- requireNamespace("here", quietly = TRUE)
@@ -480,7 +481,7 @@ global_vars <- list(
   # value_exposure             = value_exposure,
   appendix_positivity        = "3",
   appendix_rate              = "4",
-  appendix_qini_curve        = "4",
+  appendix_qini_curve        = "2",
   appendix_explain_grf       = "6",
   train_proportion_decision_tree = "50 percent",
   training_proportion        = "50 percent",
@@ -490,7 +491,8 @@ global_vars <- list(
   # exposure_waves             = exposure_waves,
   # outcome_wave               = outcome_wave,
   protocol_url               = "https://osf.io/ce4t9/", # if used
-  appendix_timeline          = "S1" # if used
+  appendix_timeline          = "S0", # if used
+  appendix_explain_grf       = "S1"
 )
 
 
@@ -508,10 +510,12 @@ The following briefly walks through the results of ATE and CATE estimation and r
 #| eval: true # <- set to false, copy, delete, modify, and extend text as needed
 #| include: true
 #| echo: true
-
-
+#| warnings: false
+#| error: false
+#| message: false
 cat(boilerplate_generate_text(
   category = "method",
+  global_vars =  global_vars,
   sections = c("statistical_models.grf_short_explanation"),
   # global_vars = list(
   #   name_outcomes_lower = name_outcomes_lower,
@@ -537,6 +541,11 @@ cat(boilerplate_generate_text(
 #| include: true
 #| fig-height: 12
 #| fig-width: 12
+#| warnings: false
+#| error: false
+#| message: false
+
+
 ate_results$plot
 ```
 :::
@@ -549,7 +558,10 @@ ate_results$plot
 #| eval: true # - set to false/ copy and change 
 #| echo: false
 #| include: true
-
+#| warnings: false
+#| error: false
+#| message: false
+#| 
 margot_bind_tables_markdown
 ```
 
@@ -557,6 +569,10 @@ margot_bind_tables_markdown
 #| eval: true # - set to false/ copy and change 
 #| echo: false
 #| include: true
+#| warnings: false
+#| error: false
+#| message: false
+
 cat(ate_results$interpretation)
 ```
 
@@ -574,6 +590,9 @@ We begin by examining the distribution of individual treatment effects ($\tau) a
 #| fig-cap: "Distribution of Individual Treatment Effects (τᵢ) Across Outcomes"
 #| eval: true
 #| echo: true
+#| warnings: false
+#| error: false
+#| message: false
 
 # create tau plots showing individual treatment effect distributions
 tau_plots <- margot_plot_tau(
@@ -591,6 +610,8 @@ The histograms above show considerable heterogeneity in treatment effects across
 ```{r, results='asis'}
 #| eval: true  # <- copy and modify text as needed
 #| echo: false
+#| warnings: false
+#| error: false
 #| message: false
 
 # copy and paste into your text
@@ -625,6 +646,10 @@ if (length(model_groups$autoc) > 0) {
 #| echo: true
 #| fig-height: 12
 #| fig-width: 12
+#| warnings: false
+#| error: false
+#| message: false
+
 
 # display autoc plots if they exist
 if (length(autoc_plots) > 0) {
@@ -675,6 +700,7 @@ if (length(autoc_plots) > 0) {
 
 ```{r, results = 'asis'}
 #| eval: true  # <- set to true and use if you have reliable results
+#| message: false
 
 # only use if you have reliable qini results
 if (length(reliable_ids) > 0) {
@@ -688,6 +714,8 @@ if (length(reliable_ids) > 0) {
 ```{r}
 #| tbl-cap: "Qini Curve Results"
 #| eval: true  # <- set to true if you have qini results
+#| message: false
+
 # only use if you have multiple qini results
 if (length(reliable_ids) > 0) {
   knitr::kable(
@@ -709,6 +737,8 @@ if (length(reliable_ids) > 0) {
 #| echo: false
 #| fig-height: 8
 #| fig-width: 12
+#| message: false
+
 # only run if you have qini plots
 if (length(qini_plots) > 0) {
   # create blank plot for spacing
@@ -760,6 +790,7 @@ if (length(qini_plots) > 0) {
 
 ```{r, results='asis'}
 #| eval: true  # <- set to true and modify text as needed
+#| message: false
 
 cat(
   boilerplate::boilerplate_generate_text(
@@ -781,6 +812,7 @@ The following pages present policy trees for each outcome with reliable heteroge
 #| echo: true
 #| fig-height: 12
 #| fig-width: 18
+#| message: false
 
 # display policy trees if they exist - one per page
 if (length(policy_plots) > 0) {
@@ -809,6 +841,8 @@ if (length(policy_plots) > 0) {
 
 ```{r, results = 'asis'}
 #| eval: true # <- copy and paste text a insert jsust below graph
+#| message: false
+
 # use this text below your decision tree graphs
 if (length(reliable_ids) > 0) {
   cat(policy_text, "\n")
@@ -828,6 +862,7 @@ if (length(reliable_ids) > 0) {
 #| echo: true
 #| fig-height: 12
 #| fig-width: 18
+#| message: false
 
  policy_results_nL <- margot_policy(
     models_for_analysis,
@@ -860,6 +895,7 @@ if (length(reliable_ids) > 0) {
 #| echo: true
 #| fig-height: 12
 #| fig-width: 18
+#| message: false
 
  policy_results_2LL <- margot_policy(
     models_for_analysis,
@@ -879,6 +915,11 @@ if (length(reliable_ids) > 0) {
 
 
 #### No Treatment Variation: 2L Policy Tree
+
+
+As indicated in @fig-policy-trees-no-variation-none there is no genuine treatment variation. Prediction are at the margins of the population, reflecting noise in the data generating process. 
+
+
 ::: {.column-screen}
 ```{r}
 #| label: fig-policy-trees-no-variation-none
@@ -887,7 +928,7 @@ if (length(reliable_ids) > 0) {
 #| echo: true
 #| fig-height: 12
 #| fig-width: 18
-
+#| message: false
 
  policy_results_2LL[[2]]
  
@@ -900,6 +941,7 @@ if (length(reliable_ids) > 0) {
 ```{r,  results='asis'}
 #| eval: false  # <- set to true and modify text as needed
 #| echo: false
+#| message: false
 
 cat(boilerplate_generate_text(
   category = "discussion",
@@ -924,6 +966,8 @@ cat(boilerplate_generate_text(
 ```{r, results='asis'}
 #| eval: false # <- set to true as needed
 #| echo: false
+#| message: false
+
 
 cat(
   boilerplate::boilerplate_generate_text(
@@ -946,6 +990,7 @@ The Qini curve shows the cumulative **gain** as we expand a targeting rule down 
 
 ```{r, results='asis'}
 #| eval: true # <- set to true and modify text as needed
+#| message: false
 
 cat(
   boilerplate::boilerplate_generate_text(

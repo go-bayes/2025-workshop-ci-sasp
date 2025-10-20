@@ -1,8 +1,9 @@
 ---
-title: "Worked Example: Religion → Cooperation"
+title: "Worked Example: Religion $\\to$ Cooperation"
 subtitle: "A Complete Causal Analysis Using Casual Forests"
 date: "May 2025"
-draft: true
+draft: false
+bibliography: /Users/joseph/GIT/templates/bib/references.bib
 execute:
   eval: false
 format:
@@ -16,6 +17,7 @@ format:
     number-sections: true
 warning: false
 error: false
+messages: false
 ---
 
 ## Introduction

@@ -137,7 +137,7 @@ $$
 \mathbb{E}[Y(a^*) - Y(a)]
 $$
 
-is the average change in scores if the whole population switched from $a$ to $a^$.
+is the average change in scores if the whole population switched from $a$ to $a^*$.
 
 Confounding—common causes of $A$ and $Y$—must be addressed for valid inference.
 
@@ -465,8 +465,8 @@ Thus ,it is essential to understand that when we control for confounding along t
 
 
 
-:::{.callout-note appearance="minimal"}
-© 2025 Joseph Bulbulia. This work is licensed under a [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License](https://creativecommons.org/licenses/by-nc-sa/4.0/).
-:::
+<!-- :::{.callout-note appearance="minimal"} -->
+<!-- © 2025 Joseph Bulbulia. This work is licensed under a [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License](https://creativecommons.org/licenses/by-nc-sa/4.0/). -->
+<!-- ::: -->
 
 
