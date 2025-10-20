@@ -393,25 +393,8 @@ window.Quarto = {
  <span class="dropdown-text">Simulations</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../content/ggdag-examples.html">
- <span class="dropdown-text">ggdag</span></a>
-  </li>  
-        <li>
     <a class="dropdown-item" href="../pdfs/bulbulia-hand-outs/S2-glossary.pdf">
  <span class="dropdown-text">Glossary (PDF)</span></a>
-  </li>  
-        <li><hr class="dropdown-divider"></li>
-        <li>
-    <a class="dropdown-item" href="../quiz/sparcc_day_2_short_quiz.pdf">
- <span class="dropdown-text">Short Quiz</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../quiz/sparcc_day_2_short_quiz-answer-key.pdf">
- <span class="dropdown-text">Quiz Answer Key</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../quiz/2025-SPARCC-DAY-2-TEST.pdf">
- <span class="dropdown-text">Test</span></a>
   </li>  
     </ul>
   </li>
@@ -905,9 +888,9 @@ Table&nbsp;1: Target-trial specification for the hormone-therapy example.
 <!-- ## What is Causality? -->
 <!-- ## David Hume's Two Definitions in *Enquiries* (1751) -->
 <!-- ### Definition 1: -->
-<!-- > We may define a cause to be an object followed by another, and where all the objects, similar to the first, are followed by objects similar to the second... -->
+<!-- We may define a cause to be an object followed by another, and where all the objects, similar to the first, are followed by objects similar to the second... -->
 <!-- ### Definition 2: -->
-<!-- > Or, in other words, where, if the first object had not been, the second never would have existed -->
+<!-- Or, in other words, where, if the first object had not been, the second never would have existed -->
 <!-- *Enquiries Concerning Human Understanding, and Concerning the Principles of Morals* 1751 -->
 <!-- ## Our lives are filled with "What If?" questions -->
 <!-- ## **The Fundamental Problem of Causal Inference** -->
@@ -2007,285 +1990,279 @@ Westreich, Daniel, and Stephen R. Cole. 2010. <span>“Invited commentary: posit
 <span id="cb3-432"><a href="#cb3-432" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-433"><a href="#cb3-433" aria-hidden="true" tabindex="-1"></a><span class="fu">### Key Take Home: Set Up Your Study Like an Experiment</span></span>
 <span id="cb3-434"><a href="#cb3-434" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-437"><a href="#cb3-437" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb3-438"><a href="#cb3-438" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: tbl-target-trial</span></span>
-<span id="cb3-439"><a href="#cb3-439" aria-hidden="true" tabindex="-1"></a><span class="co">#| tbl-cap: "Target-trial specification for the hormone-therapy example."</span></span>
-<span id="cb3-440"><a href="#cb3-440" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
-<span id="cb3-441"><a href="#cb3-441" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-442"><a href="#cb3-442" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb3-443"><a href="#cb3-443" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(kableExtra)</span>
-<span id="cb3-444"><a href="#cb3-444" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-445"><a href="#cb3-445" aria-hidden="true" tabindex="-1"></a><span class="fu">tribble</span>(</span>
-<span id="cb3-446"><a href="#cb3-446" aria-hidden="true" tabindex="-1"></a>  <span class="sc">~</span>element,      <span class="sc">~</span>definition,</span>
-<span id="cb3-447"><a href="#cb3-447" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Eligibility"</span>, <span class="st">"Post-menopausal women aged 50–79, no prior CHD"</span>,</span>
-<span id="cb3-448"><a href="#cb3-448" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Treatment"</span>,   <span class="st">"Initiate oestrogen + progestin on day of Rx pickup"</span>,</span>
-<span id="cb3-449"><a href="#cb3-449" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Comparison"</span>,  <span class="st">"No hormone-therapy initiation on that day"</span>,</span>
-<span id="cb3-450"><a href="#cb3-450" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Outcome"</span>,     <span class="st">"All-cause mortality"</span>,</span>
-<span id="cb3-451"><a href="#cb3-451" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Follow-up"</span>,   <span class="st">"8 years or until death / loss to follow-up"</span></span>
-<span id="cb3-452"><a href="#cb3-452" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
-<span id="cb3-453"><a href="#cb3-453" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kbl</span>(<span class="at">align =</span> <span class="st">"l"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb3-454"><a href="#cb3-454" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>(<span class="fu">c</span>(<span class="st">"striped"</span>, <span class="st">"hold_position"</span>))</span>
-<span id="cb3-455"><a href="#cb3-455" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb3-456"><a href="#cb3-456" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-457"><a href="#cb3-457" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-435"><a href="#cb3-435" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-436"><a href="#cb3-436" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-439"><a href="#cb3-439" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb3-440"><a href="#cb3-440" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: tbl-target-trial</span></span>
+<span id="cb3-441"><a href="#cb3-441" aria-hidden="true" tabindex="-1"></a><span class="co">#| tbl-cap: "Target-trial specification for the hormone-therapy example."</span></span>
+<span id="cb3-442"><a href="#cb3-442" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb3-443"><a href="#cb3-443" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-444"><a href="#cb3-444" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb3-445"><a href="#cb3-445" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(kableExtra)</span>
+<span id="cb3-446"><a href="#cb3-446" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-447"><a href="#cb3-447" aria-hidden="true" tabindex="-1"></a><span class="fu">tribble</span>(</span>
+<span id="cb3-448"><a href="#cb3-448" aria-hidden="true" tabindex="-1"></a>  <span class="sc">~</span>element,      <span class="sc">~</span>definition,</span>
+<span id="cb3-449"><a href="#cb3-449" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Eligibility"</span>, <span class="st">"Post-menopausal women aged 50–79, no prior CHD"</span>,</span>
+<span id="cb3-450"><a href="#cb3-450" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Treatment"</span>,   <span class="st">"Initiate oestrogen + progestin on day of Rx pickup"</span>,</span>
+<span id="cb3-451"><a href="#cb3-451" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Comparison"</span>,  <span class="st">"No hormone-therapy initiation on that day"</span>,</span>
+<span id="cb3-452"><a href="#cb3-452" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Outcome"</span>,     <span class="st">"All-cause mortality"</span>,</span>
+<span id="cb3-453"><a href="#cb3-453" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Follow-up"</span>,   <span class="st">"8 years or until death / loss to follow-up"</span></span>
+<span id="cb3-454"><a href="#cb3-454" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb3-455"><a href="#cb3-455" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kbl</span>(<span class="at">align =</span> <span class="st">"l"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb3-456"><a href="#cb3-456" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>(<span class="fu">c</span>(<span class="st">"striped"</span>, <span class="st">"hold_position"</span>))</span>
+<span id="cb3-457"><a href="#cb3-457" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb3-458"><a href="#cb3-458" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-459"><a href="#cb3-459" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-460"><a href="#cb3-460" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-461"><a href="#cb3-461" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-462"><a href="#cb3-462" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-463"><a href="#cb3-463" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- ## What is Causality? --&gt;</span></span>
+<span id="cb3-463"><a href="#cb3-463" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-464"><a href="#cb3-464" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-465"><a href="#cb3-465" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- ## David Hume's Two Definitions in *Enquiries* (1751) --&gt;</span></span>
-<span id="cb3-466"><a href="#cb3-466" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-465"><a href="#cb3-465" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- ## What is Causality? --&gt;</span></span>
+<span id="cb3-466"><a href="#cb3-466" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- ## David Hume's Two Definitions in *Enquiries* (1751) --&gt;</span></span>
 <span id="cb3-467"><a href="#cb3-467" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- </span><span class="al">###</span><span class="co"> Definition 1: --&gt;</span></span>
-<span id="cb3-468"><a href="#cb3-468" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-469"><a href="#cb3-469" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- &gt; We may define a cause to be an object followed by another, and where all the objects, similar to the first, are followed by objects similar to the second... --&gt;</span></span>
-<span id="cb3-470"><a href="#cb3-470" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-471"><a href="#cb3-471" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- </span><span class="al">###</span><span class="co"> Definition 2: --&gt;</span></span>
-<span id="cb3-472"><a href="#cb3-472" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-473"><a href="#cb3-473" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- &gt; Or, in other words, where, if the first object had not been, the second never would have existed --&gt;</span></span>
+<span id="cb3-468"><a href="#cb3-468" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- We may define a cause to be an object followed by another, and where all the objects, similar to the first, are followed by objects similar to the second... --&gt;</span></span>
+<span id="cb3-469"><a href="#cb3-469" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- </span><span class="al">###</span><span class="co"> Definition 2: --&gt;</span></span>
+<span id="cb3-470"><a href="#cb3-470" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- Or, in other words, where, if the first object had not been, the second never would have existed --&gt;</span></span>
+<span id="cb3-471"><a href="#cb3-471" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- *Enquiries Concerning Human Understanding, and Concerning the Principles of Morals* 1751 --&gt;</span></span>
+<span id="cb3-472"><a href="#cb3-472" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- ## Our lives are filled with "What If?" questions --&gt;</span></span>
+<span id="cb3-473"><a href="#cb3-473" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- ## **The Fundamental Problem of Causal Inference** --&gt;</span></span>
 <span id="cb3-474"><a href="#cb3-474" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-475"><a href="#cb3-475" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- *Enquiries Concerning Human Understanding, and Concerning the Principles of Morals* 1751 --&gt;</span></span>
+<span id="cb3-475"><a href="#cb3-475" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- To **quantify** a causal effect requires a **counterfactual** contrast: --&gt;</span></span>
 <span id="cb3-476"><a href="#cb3-476" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-477"><a href="#cb3-477" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- ## Our lives are filled with "What If?" questions --&gt;</span></span>
+<span id="cb3-477"><a href="#cb3-477" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- $$\tau_{you} = \Big[Y_{\text{you}}(a =1) - Y_{\text{you}}(a=0)\Big]$$ --&gt;</span></span>
 <span id="cb3-478"><a href="#cb3-478" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-479"><a href="#cb3-479" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- ## **The Fundamental Problem of Causal Inference** --&gt;</span></span>
+<span id="cb3-479"><a href="#cb3-479" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- Where, $Y(a)$ denotes the potential outcome under an intervention $A = a$. Here, we assume a binary intervention. At any time, we may observe the outcome of only \textcolor{red}{one intervention, not both.} --&gt;</span></span>
 <span id="cb3-480"><a href="#cb3-480" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-481"><a href="#cb3-481" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- To **quantify** a causal effect requires a **counterfactual** contrast: --&gt;</span></span>
+<span id="cb3-481"><a href="#cb3-481" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- ## However, we only observe *facts* not *counterfactuals* --&gt;</span></span>
 <span id="cb3-482"><a href="#cb3-482" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-483"><a href="#cb3-483" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- $$\tau_{you} = \Big[Y_{\text{you}}(a =1) - Y_{\text{you}}(a=0)\Big]$$ --&gt;</span></span>
-<span id="cb3-484"><a href="#cb3-484" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-485"><a href="#cb3-485" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- Where, $Y(a)$ denotes the potential outcome under an intervention $A = a$. Here, we assume a binary intervention. At any time, we may observe the outcome of only \textcolor{red}{one intervention, not both.} --&gt;</span></span>
+<span id="cb3-483"><a href="#cb3-483" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- $$ --&gt;</span></span>
+<span id="cb3-484"><a href="#cb3-484" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- Y_i|A_i = 1 \implies Y_i(0)|A_i = 1~ \textcolor{red}{\text{is counterfactual}} --&gt;</span></span>
+<span id="cb3-485"><a href="#cb3-485" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- $$ --&gt;</span></span>
 <span id="cb3-486"><a href="#cb3-486" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-487"><a href="#cb3-487" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- ## However, we only observe *facts* not *counterfactuals* --&gt;</span></span>
-<span id="cb3-488"><a href="#cb3-488" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-489"><a href="#cb3-489" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- $$ --&gt;</span></span>
-<span id="cb3-490"><a href="#cb3-490" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- Y_i|A_i = 1 \implies Y_i(0)|A_i = 1~ \textcolor{red}{\text{is counterfactual}} --&gt;</span></span>
-<span id="cb3-491"><a href="#cb3-491" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- $$ --&gt;</span></span>
+<span id="cb3-487"><a href="#cb3-487" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- ::: footer --&gt;</span></span>
+<span id="cb3-488"><a href="#cb3-488" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- "**And sorry I could not travel both. And be one traveller, long I stood** $\dots$" --&gt;</span></span>
+<span id="cb3-489"><a href="#cb3-489" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- ::: --&gt;</span></span>
+<span id="cb3-490"><a href="#cb3-490" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-491"><a href="#cb3-491" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- ## Average Treatment Effect in randomised controlled experiments work from assumptions --&gt;</span></span>
 <span id="cb3-492"><a href="#cb3-492" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-493"><a href="#cb3-493" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- ::: footer --&gt;</span></span>
-<span id="cb3-494"><a href="#cb3-494" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- "**And sorry I could not travel both. And be one traveller, long I stood** $\dots$" --&gt;</span></span>
-<span id="cb3-495"><a href="#cb3-495" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- ::: --&gt;</span></span>
-<span id="cb3-496"><a href="#cb3-496" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-497"><a href="#cb3-497" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- ## Average Treatment Effect in randomised controlled experiments work from assumptions --&gt;</span></span>
-<span id="cb3-498"><a href="#cb3-498" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-499"><a href="#cb3-499" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- $$ --&gt;</span></span>
-<span id="cb3-500"><a href="#cb3-500" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- \text{Average Treatment Effect} = \left[ \begin{aligned} --&gt;</span></span>
-<span id="cb3-501"><a href="#cb3-501" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- &amp;\left( \underbrace{\mathbb{E}[Y(1)|A = 1]}_{\text{observed}} + \textcolor{cyan}{\underbrace{\mathbb{E}[Y(1)|A = 0]}_{\text{unobserved</span><span class="re">}}}</span><span class="co"> \right) \\ --&gt;</span></span>
-<span id="cb3-502"><a href="#cb3-502" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- &amp;- \left( \underbrace{\mathbb{E}[Y(0)|A = 0]}_{\text{observed}} + \textcolor{cyan}{\underbrace{\mathbb{E}[Y(0)|A = 1]}_{\text{unobserved</span><span class="re">}}}</span><span class="co"> \right) --&gt;</span></span>
-<span id="cb3-503"><a href="#cb3-503" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- \end{aligned} \right] --&gt;</span></span>
+<span id="cb3-493"><a href="#cb3-493" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- $$ --&gt;</span></span>
+<span id="cb3-494"><a href="#cb3-494" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- \text{Average Treatment Effect} = \left[ \begin{aligned} --&gt;</span></span>
+<span id="cb3-495"><a href="#cb3-495" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- &amp;\left( \underbrace{\mathbb{E}[Y(1)|A = 1]}_{\text{observed}} + \textcolor{cyan}{\underbrace{\mathbb{E}[Y(1)|A = 0]}_{\text{unobserved</span><span class="re">}}}</span><span class="co"> \right) \\ --&gt;</span></span>
+<span id="cb3-496"><a href="#cb3-496" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- &amp;- \left( \underbrace{\mathbb{E}[Y(0)|A = 0]}_{\text{observed}} + \textcolor{cyan}{\underbrace{\mathbb{E}[Y(0)|A = 1]}_{\text{unobserved</span><span class="re">}}}</span><span class="co"> \right) --&gt;</span></span>
+<span id="cb3-497"><a href="#cb3-497" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- \end{aligned} \right] --&gt;</span></span>
+<span id="cb3-498"><a href="#cb3-498" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- $$ --&gt;</span></span>
+<span id="cb3-499"><a href="#cb3-499" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-500"><a href="#cb3-500" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- ## Under identifying assumptions, we may infer causal effects from associations --&gt;</span></span>
+<span id="cb3-501"><a href="#cb3-501" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-502"><a href="#cb3-502" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- $$ --&gt;</span></span>
+<span id="cb3-503"><a href="#cb3-503" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- \text{ATE} = \sum_{l} \left( \mathbb{E}[Y|A=1, \textcolor{cyan}{L=l}] - \mathbb{E}[Y|A=0, \textcolor{cyan}{L=l}] \right) \times \textcolor{cyan}{\Pr(L=l)} --&gt;</span></span>
 <span id="cb3-504"><a href="#cb3-504" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- $$ --&gt;</span></span>
 <span id="cb3-505"><a href="#cb3-505" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-506"><a href="#cb3-506" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- ## Under identifying assumptions, we may infer causal effects from associations --&gt;</span></span>
+<span id="cb3-506"><a href="#cb3-506" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- Where $L$ is a set of measured covariates and $A\coprod Y(a)|L$ --&gt;</span></span>
 <span id="cb3-507"><a href="#cb3-507" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-508"><a href="#cb3-508" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- $$ --&gt;</span></span>
-<span id="cb3-509"><a href="#cb3-509" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- \text{ATE} = \sum_{l} \left( \mathbb{E}[Y|A=1, \textcolor{cyan}{L=l}] - \mathbb{E}[Y|A=0, \textcolor{cyan}{L=l}] \right) \times \textcolor{cyan}{\Pr(L=l)} --&gt;</span></span>
-<span id="cb3-510"><a href="#cb3-510" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- $$ --&gt;</span></span>
+<span id="cb3-508"><a href="#cb3-508" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- # **Part 2: The First Self-Inflicted Error: The *What* Error** --&gt;</span></span>
+<span id="cb3-509"><a href="#cb3-509" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-510"><a href="#cb3-510" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- ## Paradigmatic Concern: Confounding by Common Cause --&gt;</span></span>
 <span id="cb3-511"><a href="#cb3-511" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-512"><a href="#cb3-512" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- Where $L$ is a set of measured covariates and $A\coprod Y(a)|L$ --&gt;</span></span>
+<span id="cb3-512"><a href="#cb3-512" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- $$\commoncauseT$$ --&gt;</span></span>
 <span id="cb3-513"><a href="#cb3-513" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-514"><a href="#cb3-514" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- # **Part 2: The First Self-Inflicted Error: The *What* Error** --&gt;</span></span>
+<span id="cb3-514"><a href="#cb3-514" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- ## Where assumptions justify, we may condition on measured confounders to obtain balance. --&gt;</span></span>
 <span id="cb3-515"><a href="#cb3-515" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-516"><a href="#cb3-516" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- ## Paradigmatic Concern: Confounding by Common Cause --&gt;</span></span>
-<span id="cb3-517"><a href="#cb3-517" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-518"><a href="#cb3-518" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- $$\commoncauseT$$ --&gt;</span></span>
-<span id="cb3-519"><a href="#cb3-519" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-520"><a href="#cb3-520" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- ## Where assumptions justify, we may condition on measured confounders to obtain balance. --&gt;</span></span>
-<span id="cb3-521"><a href="#cb3-521" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-522"><a href="#cb3-522" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- ::: columns --&gt;</span></span>
+<span id="cb3-516"><a href="#cb3-516" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- ::: columns --&gt;</span></span>
+<span id="cb3-517"><a href="#cb3-517" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- ::: {.column width="50%"} --&gt;</span></span>
+<span id="cb3-518"><a href="#cb3-518" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- $$ --&gt;</span></span>
+<span id="cb3-519"><a href="#cb3-519" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- L \to A; L \to Y --&gt;</span></span>
+<span id="cb3-520"><a href="#cb3-520" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- $$ --&gt;</span></span>
+<span id="cb3-521"><a href="#cb3-521" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- ::: --&gt;</span></span>
+<span id="cb3-522"><a href="#cb3-522" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-523"><a href="#cb3-523" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- ::: {.column width="50%"} --&gt;</span></span>
 <span id="cb3-524"><a href="#cb3-524" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- $$ --&gt;</span></span>
-<span id="cb3-525"><a href="#cb3-525" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- L \to A; L \to Y --&gt;</span></span>
+<span id="cb3-525"><a href="#cb3-525" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- \boxed{L} --&gt;</span></span>
 <span id="cb3-526"><a href="#cb3-526" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- $$ --&gt;</span></span>
 <span id="cb3-527"><a href="#cb3-527" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- ::: --&gt;</span></span>
-<span id="cb3-528"><a href="#cb3-528" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-529"><a href="#cb3-529" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- ::: {.column width="50%"} --&gt;</span></span>
-<span id="cb3-530"><a href="#cb3-530" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- $$ --&gt;</span></span>
-<span id="cb3-531"><a href="#cb3-531" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- \boxed{L} --&gt;</span></span>
-<span id="cb3-532"><a href="#cb3-532" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- $$ --&gt;</span></span>
-<span id="cb3-533"><a href="#cb3-533" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- ::: --&gt;</span></span>
-<span id="cb3-534"><a href="#cb3-534" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- ::: --&gt;</span></span>
+<span id="cb3-528"><a href="#cb3-528" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- ::: --&gt;</span></span>
+<span id="cb3-529"><a href="#cb3-529" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-530"><a href="#cb3-530" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- # Error 1 – What (over-adjustment) --&gt;</span></span>
+<span id="cb3-531"><a href="#cb3-531" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-532"><a href="#cb3-532" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- ## "What Error #1": **Mediator Bias**  --&gt;</span></span>
+<span id="cb3-533"><a href="#cb3-533" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-534"><a href="#cb3-534" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- $$A \to \boxed{L} \to Y$$ --&gt;</span></span>
 <span id="cb3-535"><a href="#cb3-535" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-536"><a href="#cb3-536" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- # Error 1 – What (over-adjustment) --&gt;</span></span>
+<span id="cb3-536"><a href="#cb3-536" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- ## Data Generating Process  --&gt;</span></span>
 <span id="cb3-537"><a href="#cb3-537" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-538"><a href="#cb3-538" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- ## "What Error #1": **Mediator Bias**  --&gt;</span></span>
-<span id="cb3-539"><a href="#cb3-539" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-540"><a href="#cb3-540" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- $$A \to \boxed{L} \to Y$$ --&gt;</span></span>
-<span id="cb3-541"><a href="#cb3-541" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-542"><a href="#cb3-542" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- ## Data Generating Process  --&gt;</span></span>
+<span id="cb3-538"><a href="#cb3-538" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- ```{r} --&gt;</span></span>
+<span id="cb3-539"><a href="#cb3-539" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- #| label: sim1-dgp --&gt;</span></span>
+<span id="cb3-540"><a href="#cb3-540" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- #| echo: true --&gt;</span></span>
+<span id="cb3-541"><a href="#cb3-541" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- #| eval: true --&gt;</span></span>
+<span id="cb3-542"><a href="#cb3-542" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- #| tbl-cap: "Religious Service (A) → Wealth (L) → Charity (Y). The true direct effect of A on Y is zero." --&gt;</span></span>
 <span id="cb3-543"><a href="#cb3-543" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-544"><a href="#cb3-544" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- ```{r} --&gt;</span></span>
-<span id="cb3-545"><a href="#cb3-545" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- #| label: sim1-dgp --&gt;</span></span>
-<span id="cb3-546"><a href="#cb3-546" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- #| echo: true --&gt;</span></span>
-<span id="cb3-547"><a href="#cb3-547" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- #| eval: true --&gt;</span></span>
-<span id="cb3-548"><a href="#cb3-548" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- #| tbl-cap: "Religious Service (A) → Wealth (L) → Charity (Y). The true direct effect of A on Y is zero." --&gt;</span></span>
-<span id="cb3-549"><a href="#cb3-549" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-550"><a href="#cb3-550" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- library(tidyverse) --&gt;</span></span>
+<span id="cb3-544"><a href="#cb3-544" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- library(tidyverse) --&gt;</span></span>
+<span id="cb3-545"><a href="#cb3-545" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-546"><a href="#cb3-546" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- set.seed(123)                           # reproducibility --&gt;</span></span>
+<span id="cb3-547"><a href="#cb3-547" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- n        &lt;- 1000 --&gt;</span></span>
+<span id="cb3-548"><a href="#cb3-548" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- service  &lt;- rbinom(n, 1, 0.5)          # A --&gt;</span></span>
+<span id="cb3-549"><a href="#cb3-549" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- wealth   &lt;- 2 * service + rnorm(n)     # L --&gt;</span></span>
+<span id="cb3-550"><a href="#cb3-550" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- charity  &lt;- 1.5 * wealth + rnorm(n, sd = 1.5)  # Y --&gt;</span></span>
 <span id="cb3-551"><a href="#cb3-551" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-552"><a href="#cb3-552" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- set.seed(123)                           # reproducibility --&gt;</span></span>
-<span id="cb3-553"><a href="#cb3-553" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- n        &lt;- 1000 --&gt;</span></span>
-<span id="cb3-554"><a href="#cb3-554" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- service  &lt;- rbinom(n, 1, 0.5)          # A --&gt;</span></span>
-<span id="cb3-555"><a href="#cb3-555" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- wealth   &lt;- 2 * service + rnorm(n)     # L --&gt;</span></span>
-<span id="cb3-556"><a href="#cb3-556" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- charity  &lt;- 1.5 * wealth + rnorm(n, sd = 1.5)  # Y --&gt;</span></span>
-<span id="cb3-557"><a href="#cb3-557" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-558"><a href="#cb3-558" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- sim1 &lt;- tibble(service, wealth, charity) --&gt;</span></span>
-<span id="cb3-559"><a href="#cb3-559" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- ``` --&gt;</span></span>
-<span id="cb3-560"><a href="#cb3-560" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-561"><a href="#cb3-561" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- ## Model comparison --&gt;</span></span>
-<span id="cb3-562"><a href="#cb3-562" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-563"><a href="#cb3-563" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- ```{r} --&gt;</span></span>
-<span id="cb3-564"><a href="#cb3-564" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- #| label: sim1-table --&gt;</span></span>
-<span id="cb3-565"><a href="#cb3-565" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- #| echo: false --&gt;</span></span>
-<span id="cb3-566"><a href="#cb3-566" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- #| message: false --&gt;</span></span>
-<span id="cb3-567"><a href="#cb3-567" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- #| warning: false --&gt;</span></span>
-<span id="cb3-568"><a href="#cb3-568" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- #| tbl-cap: "Controlling for the mediator reverses the sign of the service coefficient." --&gt;</span></span>
+<span id="cb3-552"><a href="#cb3-552" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- sim1 &lt;- tibble(service, wealth, charity) --&gt;</span></span>
+<span id="cb3-553"><a href="#cb3-553" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- ``` --&gt;</span></span>
+<span id="cb3-554"><a href="#cb3-554" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-555"><a href="#cb3-555" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- ## Model comparison --&gt;</span></span>
+<span id="cb3-556"><a href="#cb3-556" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-557"><a href="#cb3-557" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- ```{r} --&gt;</span></span>
+<span id="cb3-558"><a href="#cb3-558" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- #| label: sim1-table --&gt;</span></span>
+<span id="cb3-559"><a href="#cb3-559" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- #| echo: false --&gt;</span></span>
+<span id="cb3-560"><a href="#cb3-560" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- #| message: false --&gt;</span></span>
+<span id="cb3-561"><a href="#cb3-561" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- #| warning: false --&gt;</span></span>
+<span id="cb3-562"><a href="#cb3-562" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- #| tbl-cap: "Controlling for the mediator reverses the sign of the service coefficient." --&gt;</span></span>
+<span id="cb3-563"><a href="#cb3-563" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-564"><a href="#cb3-564" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- library(gtsummary) --&gt;</span></span>
+<span id="cb3-565"><a href="#cb3-565" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- library(broom.helpers) --&gt;</span></span>
+<span id="cb3-566"><a href="#cb3-566" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-567"><a href="#cb3-567" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- fit_omit   &lt;- lm(charity ~ service, data = sim1)           # correct --&gt;</span></span>
+<span id="cb3-568"><a href="#cb3-568" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- fit_adjust &lt;- lm(charity ~ service + wealth, data = sim1)  # biased --&gt;</span></span>
 <span id="cb3-569"><a href="#cb3-569" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-570"><a href="#cb3-570" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- library(gtsummary) --&gt;</span></span>
-<span id="cb3-571"><a href="#cb3-571" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- library(broom.helpers) --&gt;</span></span>
-<span id="cb3-572"><a href="#cb3-572" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-573"><a href="#cb3-573" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- fit_omit   &lt;- lm(charity ~ service, data = sim1)           # correct --&gt;</span></span>
-<span id="cb3-574"><a href="#cb3-574" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- fit_adjust &lt;- lm(charity ~ service + wealth, data = sim1)  # biased --&gt;</span></span>
-<span id="cb3-575"><a href="#cb3-575" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-576"><a href="#cb3-576" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- tbl_merge( --&gt;</span></span>
-<span id="cb3-577"><a href="#cb3-577" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!--   list(tbl_regression(fit_omit), --&gt;</span></span>
-<span id="cb3-578"><a href="#cb3-578" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!--        tbl_regression(fit_adjust)), --&gt;</span></span>
-<span id="cb3-579"><a href="#cb3-579" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!--   tab_spanner = c("Model A: Omit L", --&gt;</span></span>
-<span id="cb3-580"><a href="#cb3-580" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!--                   "Model B: Control for L") --&gt;</span></span>
-<span id="cb3-581"><a href="#cb3-581" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- ) --&gt;</span></span>
-<span id="cb3-582"><a href="#cb3-582" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- ``` --&gt;</span></span>
-<span id="cb3-583"><a href="#cb3-583" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-584"><a href="#cb3-584" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- ## Which model looks better? --&gt;</span></span>
+<span id="cb3-570"><a href="#cb3-570" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- tbl_merge( --&gt;</span></span>
+<span id="cb3-571"><a href="#cb3-571" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!--   list(tbl_regression(fit_omit), --&gt;</span></span>
+<span id="cb3-572"><a href="#cb3-572" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!--        tbl_regression(fit_adjust)), --&gt;</span></span>
+<span id="cb3-573"><a href="#cb3-573" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!--   tab_spanner = c("Model A: Omit L", --&gt;</span></span>
+<span id="cb3-574"><a href="#cb3-574" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!--                   "Model B: Control for L") --&gt;</span></span>
+<span id="cb3-575"><a href="#cb3-575" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- ) --&gt;</span></span>
+<span id="cb3-576"><a href="#cb3-576" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- ``` --&gt;</span></span>
+<span id="cb3-577"><a href="#cb3-577" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-578"><a href="#cb3-578" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- ## Which model looks better? --&gt;</span></span>
+<span id="cb3-579"><a href="#cb3-579" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-580"><a href="#cb3-580" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- ```{r} --&gt;</span></span>
+<span id="cb3-581"><a href="#cb3-581" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- #| label: sim1-metrics --&gt;</span></span>
+<span id="cb3-582"><a href="#cb3-582" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- #| echo: true --&gt;</span></span>
+<span id="cb3-583"><a href="#cb3-583" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- #| eval: true --&gt;</span></span>
+<span id="cb3-584"><a href="#cb3-584" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- #| tbl-cap: "Model B wins on BIC and R² – yet its causal estimate is wrong." --&gt;</span></span>
 <span id="cb3-585"><a href="#cb3-585" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-586"><a href="#cb3-586" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- ```{r} --&gt;</span></span>
-<span id="cb3-587"><a href="#cb3-587" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- #| label: sim1-metrics --&gt;</span></span>
-<span id="cb3-588"><a href="#cb3-588" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- #| echo: true --&gt;</span></span>
-<span id="cb3-589"><a href="#cb3-589" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- #| eval: true --&gt;</span></span>
-<span id="cb3-590"><a href="#cb3-590" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- #| tbl-cap: "Model B wins on BIC and R² – yet its causal estimate is wrong." --&gt;</span></span>
+<span id="cb3-586"><a href="#cb3-586" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- library(performance) --&gt;</span></span>
+<span id="cb3-587"><a href="#cb3-587" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-588"><a href="#cb3-588" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- compare_performance(fit_adjust, fit_omit, rank = TRUE) --&gt;</span></span>
+<span id="cb3-589"><a href="#cb3-589" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- # BIC(fit_adjust) - BIC(fit_omit)  # negative → "better" fit --&gt;</span></span>
+<span id="cb3-590"><a href="#cb3-590" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- ``` --&gt;</span></span>
 <span id="cb3-591"><a href="#cb3-591" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-592"><a href="#cb3-592" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- library(performance) --&gt;</span></span>
+<span id="cb3-592"><a href="#cb3-592" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- ## "What Error #2": Collider Bias  --&gt;</span></span>
 <span id="cb3-593"><a href="#cb3-593" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-594"><a href="#cb3-594" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- compare_performance(fit_adjust, fit_omit, rank = TRUE) --&gt;</span></span>
-<span id="cb3-595"><a href="#cb3-595" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- # BIC(fit_adjust) - BIC(fit_omit)  # negative → "better" fit --&gt;</span></span>
-<span id="cb3-596"><a href="#cb3-596" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- ``` --&gt;</span></span>
+<span id="cb3-594"><a href="#cb3-594" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- $$A\to \boxed{L} \leftarrow Y$$ --&gt;</span></span>
+<span id="cb3-595"><a href="#cb3-595" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-596"><a href="#cb3-596" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- ## Data Generating Process  --&gt;</span></span>
 <span id="cb3-597"><a href="#cb3-597" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-598"><a href="#cb3-598" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- ## "What Error #2": Collider Bias  --&gt;</span></span>
-<span id="cb3-599"><a href="#cb3-599" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-600"><a href="#cb3-600" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- $$A\to \boxed{L} \leftarrow Y$$ --&gt;</span></span>
-<span id="cb3-601"><a href="#cb3-601" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-602"><a href="#cb3-602" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- ## Data Generating Process  --&gt;</span></span>
+<span id="cb3-598"><a href="#cb3-598" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- ```{r} --&gt;</span></span>
+<span id="cb3-599"><a href="#cb3-599" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- #| label: sim2-dgp --&gt;</span></span>
+<span id="cb3-600"><a href="#cb3-600" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- #| echo: true --&gt;</span></span>
+<span id="cb3-601"><a href="#cb3-601" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- #| eval: true --&gt;</span></span>
+<span id="cb3-602"><a href="#cb3-602" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- #| tbl-cap: "Religious service (A) ← wealth (L) → donations (Y). A and Y are _independent_ in truth." --&gt;</span></span>
 <span id="cb3-603"><a href="#cb3-603" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-604"><a href="#cb3-604" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- ```{r} --&gt;</span></span>
-<span id="cb3-605"><a href="#cb3-605" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- #| label: sim2-dgp --&gt;</span></span>
-<span id="cb3-606"><a href="#cb3-606" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- #| echo: true --&gt;</span></span>
-<span id="cb3-607"><a href="#cb3-607" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- #| eval: true --&gt;</span></span>
-<span id="cb3-608"><a href="#cb3-608" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- #| tbl-cap: "Religious service (A) ← wealth (L) → donations (Y). A and Y are _independent_ in truth." --&gt;</span></span>
-<span id="cb3-609"><a href="#cb3-609" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-610"><a href="#cb3-610" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- set.seed(2025) --&gt;</span></span>
-<span id="cb3-611"><a href="#cb3-611" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-612"><a href="#cb3-612" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- n          &lt;- 1000 --&gt;</span></span>
-<span id="cb3-613"><a href="#cb3-613" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- service    &lt;- rbinom(n, 1, 0.5)                            # A --&gt;</span></span>
-<span id="cb3-614"><a href="#cb3-614" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- donations  &lt;- rnorm(n)                                     # Y --&gt;</span></span>
-<span id="cb3-615"><a href="#cb3-615" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- wealth     &lt;- rnorm(n, mean = service + donations, sd = 1) # collider L --&gt;</span></span>
-<span id="cb3-616"><a href="#cb3-616" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-617"><a href="#cb3-617" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- sim2 &lt;- tibble(service, wealth, donations) --&gt;</span></span>
-<span id="cb3-618"><a href="#cb3-618" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- ``` --&gt;</span></span>
-<span id="cb3-619"><a href="#cb3-619" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-620"><a href="#cb3-620" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- ## Model Comparison  --&gt;</span></span>
-<span id="cb3-621"><a href="#cb3-621" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-622"><a href="#cb3-622" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- ```{r} --&gt;</span></span>
-<span id="cb3-623"><a href="#cb3-623" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- #| label: sim2-table --&gt;</span></span>
-<span id="cb3-624"><a href="#cb3-624" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- #| echo: false --&gt;</span></span>
-<span id="cb3-625"><a href="#cb3-625" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- #| tbl-cap: "Adding the collider creates a spurious, significant effect of A." --&gt;</span></span>
-<span id="cb3-626"><a href="#cb3-626" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-627"><a href="#cb3-627" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- fit_correct &lt;- lm(donations ~ service, data = sim2)           # correct --&gt;</span></span>
-<span id="cb3-628"><a href="#cb3-628" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- fit_biased  &lt;- lm(donations ~ service + wealth, data = sim2)  # biased --&gt;</span></span>
-<span id="cb3-629"><a href="#cb3-629" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-630"><a href="#cb3-630" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- tbl_merge( --&gt;</span></span>
-<span id="cb3-631"><a href="#cb3-631" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!--   list(tbl_regression(fit_correct), --&gt;</span></span>
-<span id="cb3-632"><a href="#cb3-632" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!--        tbl_regression(fit_biased)), --&gt;</span></span>
-<span id="cb3-633"><a href="#cb3-633" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!--   tab_spanner = c("Model A: Omit L", --&gt;</span></span>
-<span id="cb3-634"><a href="#cb3-634" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!--                   "Model B: Control for L (collider)") --&gt;</span></span>
-<span id="cb3-635"><a href="#cb3-635" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- ) --&gt;</span></span>
-<span id="cb3-636"><a href="#cb3-636" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- ``` --&gt;</span></span>
-<span id="cb3-637"><a href="#cb3-637" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-638"><a href="#cb3-638" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- ## Which model looks better?  --&gt;</span></span>
-<span id="cb3-639"><a href="#cb3-639" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-640"><a href="#cb3-640" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- ```{r} --&gt;</span></span>
-<span id="cb3-641"><a href="#cb3-641" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- #| label: sim2-metrics --&gt;</span></span>
-<span id="cb3-642"><a href="#cb3-642" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- #| echo: true --&gt;</span></span>
-<span id="cb3-643"><a href="#cb3-643" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- #| eval: true --&gt;</span></span>
+<span id="cb3-604"><a href="#cb3-604" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- set.seed(2025) --&gt;</span></span>
+<span id="cb3-605"><a href="#cb3-605" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-606"><a href="#cb3-606" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- n          &lt;- 1000 --&gt;</span></span>
+<span id="cb3-607"><a href="#cb3-607" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- service    &lt;- rbinom(n, 1, 0.5)                            # A --&gt;</span></span>
+<span id="cb3-608"><a href="#cb3-608" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- donations  &lt;- rnorm(n)                                     # Y --&gt;</span></span>
+<span id="cb3-609"><a href="#cb3-609" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- wealth     &lt;- rnorm(n, mean = service + donations, sd = 1) # collider L --&gt;</span></span>
+<span id="cb3-610"><a href="#cb3-610" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-611"><a href="#cb3-611" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- sim2 &lt;- tibble(service, wealth, donations) --&gt;</span></span>
+<span id="cb3-612"><a href="#cb3-612" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- ``` --&gt;</span></span>
+<span id="cb3-613"><a href="#cb3-613" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-614"><a href="#cb3-614" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- ## Model Comparison  --&gt;</span></span>
+<span id="cb3-615"><a href="#cb3-615" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-616"><a href="#cb3-616" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- ```{r} --&gt;</span></span>
+<span id="cb3-617"><a href="#cb3-617" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- #| label: sim2-table --&gt;</span></span>
+<span id="cb3-618"><a href="#cb3-618" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- #| echo: false --&gt;</span></span>
+<span id="cb3-619"><a href="#cb3-619" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- #| tbl-cap: "Adding the collider creates a spurious, significant effect of A." --&gt;</span></span>
+<span id="cb3-620"><a href="#cb3-620" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-621"><a href="#cb3-621" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- fit_correct &lt;- lm(donations ~ service, data = sim2)           # correct --&gt;</span></span>
+<span id="cb3-622"><a href="#cb3-622" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- fit_biased  &lt;- lm(donations ~ service + wealth, data = sim2)  # biased --&gt;</span></span>
+<span id="cb3-623"><a href="#cb3-623" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-624"><a href="#cb3-624" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- tbl_merge( --&gt;</span></span>
+<span id="cb3-625"><a href="#cb3-625" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!--   list(tbl_regression(fit_correct), --&gt;</span></span>
+<span id="cb3-626"><a href="#cb3-626" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!--        tbl_regression(fit_biased)), --&gt;</span></span>
+<span id="cb3-627"><a href="#cb3-627" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!--   tab_spanner = c("Model A: Omit L", --&gt;</span></span>
+<span id="cb3-628"><a href="#cb3-628" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!--                   "Model B: Control for L (collider)") --&gt;</span></span>
+<span id="cb3-629"><a href="#cb3-629" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- ) --&gt;</span></span>
+<span id="cb3-630"><a href="#cb3-630" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- ``` --&gt;</span></span>
+<span id="cb3-631"><a href="#cb3-631" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-632"><a href="#cb3-632" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- ## Which model looks better?  --&gt;</span></span>
+<span id="cb3-633"><a href="#cb3-633" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-634"><a href="#cb3-634" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- ```{r} --&gt;</span></span>
+<span id="cb3-635"><a href="#cb3-635" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- #| label: sim2-metrics --&gt;</span></span>
+<span id="cb3-636"><a href="#cb3-636" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- #| echo: true --&gt;</span></span>
+<span id="cb3-637"><a href="#cb3-637" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- #| eval: true --&gt;</span></span>
+<span id="cb3-638"><a href="#cb3-638" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-639"><a href="#cb3-639" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- compare_performance(fit_biased, fit_correct, rank = TRUE) --&gt;</span></span>
+<span id="cb3-640"><a href="#cb3-640" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- BIC(fit_biased) - BIC(fit_correct) --&gt;</span></span>
+<span id="cb3-641"><a href="#cb3-641" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- ``` --&gt;</span></span>
+<span id="cb3-642"><a href="#cb3-642" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-643"><a href="#cb3-643" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- ## Take-Home --&gt;</span></span>
 <span id="cb3-644"><a href="#cb3-644" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-645"><a href="#cb3-645" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- compare_performance(fit_biased, fit_correct, rank = TRUE) --&gt;</span></span>
-<span id="cb3-646"><a href="#cb3-646" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- BIC(fit_biased) - BIC(fit_correct) --&gt;</span></span>
-<span id="cb3-647"><a href="#cb3-647" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- ``` --&gt;</span></span>
-<span id="cb3-648"><a href="#cb3-648" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-649"><a href="#cb3-649" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- ## Take-Home --&gt;</span></span>
-<span id="cb3-650"><a href="#cb3-650" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-651"><a href="#cb3-651" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- ::: callout-important --&gt;</span></span>
-<span id="cb3-652"><a href="#cb3-652" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- Relying on model fit perpetuates the *causality crisis* in psychology [@bulbulia2022].   --&gt;</span></span>
-<span id="cb3-653"><a href="#cb3-653" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- Draw the DAG first; decide what belongs in the model before looking at numbers. --&gt;</span></span>
-<span id="cb3-654"><a href="#cb3-654" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- ::: --&gt;</span></span>
+<span id="cb3-645"><a href="#cb3-645" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- ::: callout-important --&gt;</span></span>
+<span id="cb3-646"><a href="#cb3-646" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- Relying on model fit perpetuates the *causality crisis* in psychology [@bulbulia2022].   --&gt;</span></span>
+<span id="cb3-647"><a href="#cb3-647" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- Draw the DAG first; decide what belongs in the model before looking at numbers. --&gt;</span></span>
+<span id="cb3-648"><a href="#cb3-648" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- ::: --&gt;</span></span>
+<span id="cb3-649"><a href="#cb3-649" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-650"><a href="#cb3-650" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- ## The What Error is widespread in **experimental** studies in the social sciences --&gt;</span></span>
+<span id="cb3-651"><a href="#cb3-651" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-652"><a href="#cb3-652" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- -   "Overall, we find that **46.7% of the experimental studies** published in APSR, AJPS, and JOP from 2012 to 2014 engaged in posttreatment conditioning (35 of 75 studies) ..." --&gt;</span></span>
+<span id="cb3-653"><a href="#cb3-653" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-654"><a href="#cb3-654" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- -   "About **1 in 4 drop cases or subset the data based on post-treatment criteria,** and **nearly a third include post-treatment variables as covariates**" --&gt;</span></span>
 <span id="cb3-655"><a href="#cb3-655" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-656"><a href="#cb3-656" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- ## The What Error is widespread in **experimental** studies in the social sciences --&gt;</span></span>
+<span id="cb3-656"><a href="#cb3-656" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- -   "Most tellingly, **nearly 1 in 8 articles directly conditions on variables that the authors themselves show as being an outcome of the experiment** -- an unambiguous indicator of **a fundamental lack of understanding ... that conditioning on posttreatment variables can invalidate results from randomized experiments.**" --&gt;</span></span>
 <span id="cb3-657"><a href="#cb3-657" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-658"><a href="#cb3-658" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- -   "Overall, we find that **46.7% of the experimental studies** published in APSR, AJPS, and JOP from 2012 to 2014 engaged in posttreatment conditioning (35 of 75 studies) ..." --&gt;</span></span>
+<span id="cb3-658"><a href="#cb3-658" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- -   "Empirically, then, the answer to the question of **whether the discipline already understands posttreatment bias is clear: It does not.**" [@montgomery2018] --&gt;</span></span>
 <span id="cb3-659"><a href="#cb3-659" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-660"><a href="#cb3-660" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- -   "About **1 in 4 drop cases or subset the data based on post-treatment criteria,** and **nearly a third include post-treatment variables as covariates**" --&gt;</span></span>
+<span id="cb3-660"><a href="#cb3-660" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- ## Mediator Bias control strategy: **Longitudinal Hygiene** --&gt;</span></span>
 <span id="cb3-661"><a href="#cb3-661" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-662"><a href="#cb3-662" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- -   "Most tellingly, **nearly 1 in 8 articles directly conditions on variables that the authors themselves show as being an outcome of the experiment** -- an unambiguous indicator of **a fundamental lack of understanding ... that conditioning on posttreatment variables can invalidate results from randomized experiments.**" --&gt;</span></span>
-<span id="cb3-663"><a href="#cb3-663" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-664"><a href="#cb3-664" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- -   "Empirically, then, the answer to the question of **whether the discipline already understands posttreatment bias is clear: It does not.**" [@montgomery2018] --&gt;</span></span>
-<span id="cb3-665"><a href="#cb3-665" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-666"><a href="#cb3-666" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- ## Mediator Bias control strategy: **Longitudinal Hygiene** --&gt;</span></span>
-<span id="cb3-667"><a href="#cb3-667" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-668"><a href="#cb3-668" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- ::: columns --&gt;</span></span>
+<span id="cb3-662"><a href="#cb3-662" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- ::: columns --&gt;</span></span>
+<span id="cb3-663"><a href="#cb3-663" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- ::: {.column width="50%"} --&gt;</span></span>
+<span id="cb3-664"><a href="#cb3-664" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- $$ --&gt;</span></span>
+<span id="cb3-665"><a href="#cb3-665" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- A\to L \to Y --&gt;</span></span>
+<span id="cb3-666"><a href="#cb3-666" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- $$ --&gt;</span></span>
+<span id="cb3-667"><a href="#cb3-667" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- ::: --&gt;</span></span>
+<span id="cb3-668"><a href="#cb3-668" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-669"><a href="#cb3-669" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- ::: {.column width="50%"} --&gt;</span></span>
 <span id="cb3-670"><a href="#cb3-670" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- $$ --&gt;</span></span>
-<span id="cb3-671"><a href="#cb3-671" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- A\to L \to Y --&gt;</span></span>
+<span id="cb3-671"><a href="#cb3-671" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- A\to Y --&gt;</span></span>
 <span id="cb3-672"><a href="#cb3-672" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- $$ --&gt;</span></span>
 <span id="cb3-673"><a href="#cb3-673" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- ::: --&gt;</span></span>
-<span id="cb3-674"><a href="#cb3-674" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-675"><a href="#cb3-675" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- ::: {.column width="50%"} --&gt;</span></span>
-<span id="cb3-676"><a href="#cb3-676" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- $$ --&gt;</span></span>
-<span id="cb3-677"><a href="#cb3-677" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- A\to Y --&gt;</span></span>
-<span id="cb3-678"><a href="#cb3-678" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- $$ --&gt;</span></span>
-<span id="cb3-679"><a href="#cb3-679" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- ::: --&gt;</span></span>
-<span id="cb3-680"><a href="#cb3-680" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- Don't include $L$ --&gt;</span></span>
+<span id="cb3-674"><a href="#cb3-674" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- Don't include $L$ --&gt;</span></span>
+<span id="cb3-675"><a href="#cb3-675" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-676"><a href="#cb3-676" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- ::: --&gt;</span></span>
+<span id="cb3-677"><a href="#cb3-677" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-678"><a href="#cb3-678" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- ## How to Tame The What Error? **Hide your future** --&gt;</span></span>
+<span id="cb3-679"><a href="#cb3-679" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-680"><a href="#cb3-680" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- Use Repeated Measures on the Same Individuals --&gt;</span></span>
 <span id="cb3-681"><a href="#cb3-681" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-682"><a href="#cb3-682" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- ::: --&gt;</span></span>
+<span id="cb3-682"><a href="#cb3-682" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- ## Collider bias control strategy: **Hide your future** --&gt;</span></span>
 <span id="cb3-683"><a href="#cb3-683" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-684"><a href="#cb3-684" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- ## How to Tame The What Error? **Hide your future** --&gt;</span></span>
+<span id="cb3-684"><a href="#cb3-684" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- ## Collider bias by proxy control strategy: **Hide your future** --&gt;</span></span>
 <span id="cb3-685"><a href="#cb3-685" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-686"><a href="#cb3-686" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- Use Repeated Measures on the Same Individuals --&gt;</span></span>
+<span id="cb3-686"><a href="#cb3-686" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- ## Post-exposure collider bias control strategy: **Hide your future** --&gt;</span></span>
 <span id="cb3-687"><a href="#cb3-687" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-688"><a href="#cb3-688" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- ## Collider bias control strategy: **Hide your future** --&gt;</span></span>
+<span id="cb3-688"><a href="#cb3-688" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- &lt;!-- The E-value is the minimum strength of association, on the risk ratio scale, that an unmeasured confounder would need to have with both the treatment and the outcome, conditional on the measured covariates, to explain away treatment–outcome association. --&gt;</span> --&gt;</span>
 <span id="cb3-689"><a href="#cb3-689" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-690"><a href="#cb3-690" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- ## Collider bias by proxy control strategy: **Hide your future** --&gt;</span></span>
+<span id="cb3-690"><a href="#cb3-690" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- ## Are longitudinal data + sensitivity analysis enough? --&gt;</span></span>
 <span id="cb3-691"><a href="#cb3-691" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-692"><a href="#cb3-692" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- ## Post-exposure collider bias control strategy: **Hide your future** --&gt;</span></span>
-<span id="cb3-693"><a href="#cb3-693" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-694"><a href="#cb3-694" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- &lt;!-- The E-value is the minimum strength of association, on the risk ratio scale, that an unmeasured confounder would need to have with both the treatment and the outcome, conditional on the measured covariates, to explain away treatment–outcome association. --&gt;</span> --&gt;</span>
-<span id="cb3-695"><a href="#cb3-695" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-696"><a href="#cb3-696" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- ## Are longitudinal data + sensitivity analysis enough? --&gt;</span></span>
-<span id="cb3-697"><a href="#cb3-697" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-698"><a href="#cb3-698" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- ::: columns --&gt;</span></span>
-<span id="cb3-699"><a href="#cb3-699" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- ::: {.column width="50%"} --&gt;</span></span>
-<span id="cb3-700"><a href="#cb3-700" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- If the data we collect were like this: $$Y_{\text{time 0}} ~~...~~ A_{\text{time 1}}$$ --&gt;</span></span>
+<span id="cb3-692"><a href="#cb3-692" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- ::: columns --&gt;</span></span>
+<span id="cb3-693"><a href="#cb3-693" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- ::: {.column width="50%"} --&gt;</span></span>
+<span id="cb3-694"><a href="#cb3-694" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- If the data we collect were like this: $$Y_{\text{time 0}} ~~...~~ A_{\text{time 1}}$$ --&gt;</span></span>
+<span id="cb3-695"><a href="#cb3-695" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- ::: --&gt;</span></span>
+<span id="cb3-696"><a href="#cb3-696" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-697"><a href="#cb3-697" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- ::: {.column width="50%"} --&gt;</span></span>
+<span id="cb3-698"><a href="#cb3-698" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- We should not be tempted to model this. --&gt;</span></span>
+<span id="cb3-699"><a href="#cb3-699" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-700"><a href="#cb3-700" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- $$Y \to A$$ --&gt;</span></span>
 <span id="cb3-701"><a href="#cb3-701" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- ::: --&gt;</span></span>
-<span id="cb3-702"><a href="#cb3-702" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-703"><a href="#cb3-703" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- ::: {.column width="50%"} --&gt;</span></span>
-<span id="cb3-704"><a href="#cb3-704" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- We should not be tempted to model this. --&gt;</span></span>
+<span id="cb3-702"><a href="#cb3-702" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- ::: --&gt;</span></span>
+<span id="cb3-703"><a href="#cb3-703" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-704"><a href="#cb3-704" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- ## Are longitudinal data + sensitivity analysis enough? --&gt;</span></span>
 <span id="cb3-705"><a href="#cb3-705" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-706"><a href="#cb3-706" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- $$Y \to A$$ --&gt;</span></span>
-<span id="cb3-707"><a href="#cb3-707" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- ::: --&gt;</span></span>
-<span id="cb3-708"><a href="#cb3-708" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- ::: --&gt;</span></span>
-<span id="cb3-709"><a href="#cb3-709" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-710"><a href="#cb3-710" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- ## Are longitudinal data + sensitivity analysis enough? --&gt;</span></span>
-<span id="cb3-711"><a href="#cb3-711" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-712"><a href="#cb3-712" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- {Too obvious} this is wrong? --&gt;</span></span>
-<span id="cb3-713"><a href="#cb3-713" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-714"><a href="#cb3-714" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-715"><a href="#cb3-715" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- $$Y \to A$$ --&gt;</span></span>
+<span id="cb3-706"><a href="#cb3-706" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- {Too obvious} this is wrong? --&gt;</span></span>
+<span id="cb3-707"><a href="#cb3-707" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-708"><a href="#cb3-708" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-709"><a href="#cb3-709" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- $$Y \to A$$ --&gt;</span></span>
 </code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->

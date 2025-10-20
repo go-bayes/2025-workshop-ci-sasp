@@ -428,6 +428,8 @@ ggplot(lifelines) +
 
 ### Key Take Home: Set Up Your Study Like an Experiment
 
+
+
 ```{r}
 #| label: tbl-target-trial
 #| tbl-cap: "Target-trial specification for the hormone-therapy example."
@@ -455,21 +457,13 @@ tribble(
 
 
 <!-- ## What is Causality? -->
-
 <!-- ## David Hume's Two Definitions in *Enquiries* (1751) -->
-
 <!-- ### Definition 1: -->
-
-<!-- > We may define a cause to be an object followed by another, and where all the objects, similar to the first, are followed by objects similar to the second... -->
-
+<!-- We may define a cause to be an object followed by another, and where all the objects, similar to the first, are followed by objects similar to the second... -->
 <!-- ### Definition 2: -->
-
-<!-- > Or, in other words, where, if the first object had not been, the second never would have existed -->
-
+<!-- Or, in other words, where, if the first object had not been, the second never would have existed -->
 <!-- *Enquiries Concerning Human Understanding, and Concerning the Principles of Morals* 1751 -->
-
 <!-- ## Our lives are filled with "What If?" questions -->
-
 <!-- ## **The Fundamental Problem of Causal Inference** -->
 
 <!-- To **quantify** a causal effect requires a **counterfactual** contrast: -->

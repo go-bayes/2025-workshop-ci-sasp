@@ -10,6 +10,9 @@ project:
     - "!content/04-causal-forests.qmd"
     - "!content/04-causal-forests.rmarkdown"
     - "!content/04-worked-example.qmd"
+  resources:
+    - "content/*.pdf"
+    - "content/**/*.pdf"
 
 website:
   title: "Beyond Correlation: Causal Inference Workshop"
