@@ -174,11 +174,11 @@ schedule <- tibble(
     "10:30–11:00",
     "11:00–11:30",
     "11:30–12:00",
-    "12:00–13:00",
-    "13:00–14:00",
-    "14:00–14:45",
-    "14:45–15:15",
-    "15:15–16:00"
+    "12:00–12:30",
+    "12:30–13:45",
+    "13:45–14:30",
+    "14:30–15:00",
+    "15:00–16:00"
   ),
   Session = c(
     "How to ask a causal question",
@@ -197,8 +197,8 @@ schedule <- tibble(
     "Trace the causal workflow: define populations, build causal diagrams, assess assumptions, analyse data, conduct sensitivity analysis, and communicate results.",
     "Use causal diagrams (DAGs) to identify bias from confounding, colliders, and mediators.",
     "Informal space for questions, clarifying assumptions, and networking.",
-    "Presenter: Zahle Wisely. Apply the workflow to estimate the effect of employer gratitude on employee wellbeing; Q&A follows.",
-    "Presenter: Hannah Robinson. Apply the workflow to estimate the effect of religious service attendance on personality; Q&A follows.",
+    "Presenter: Zahle Wisely. Apply the causal workflow to estimate the effects of employer gratitude on employee wellbeing; Q&A follows.",
+    "Presenter: Hannah Robinson. Apply the causal workflow to estimate the effects of religious service attendance on personality; Q&A follows.",
     "Break.",
     "Introduce heterogeneous treatment effects (HTE), conditional ATEs, and policy trees; discuss when effects differ across people.",
     "Analyse heterogeneity in Zahle and Hannah's case studies; interpret tree-based decision rules useful for obtaining *policies*.",
