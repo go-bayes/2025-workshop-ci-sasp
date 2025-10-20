@@ -27,9 +27,30 @@ editor_options:
 ::: callout-note
 ### Workshop logistics
 **Date:** Wednesday, 19 November 2025, 09:00–16:00  
-**Location:** University of Melbourne (Parkville campus), room TBA  
+**Location:** University of Melbourne (Parkville campus), Redmond Barry Building (Building 115), Level 5 Room 516  
 **Format:** In-person pre-conference workshop (registration via SASP abstract submission)
 :::
+
+## Venue Location
+
+We'll meet on Level 5 of the Redmond Barry Building (Building 115). See the campus map for map for detail by clicking the arrow in the centre of the OpenStreetMap
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+#| column: body-outset
+
+library(leaflet)
+
+leaflet() %>%
+  addTiles() %>%
+  addMarkers(
+    lng = 144.9617,
+    lat = -37.7971,
+    popup = "Redmond Barry Building (Building 115)<br>L5 Room 516<br><a href='https://maps.unimelb.edu.au/parkville/building/115' target='_blank'>View on campus map</a>"
+  )
+```
 
 ## Overview
 
@@ -56,7 +77,7 @@ The workshop assumes familiarity with regression and R, but no prior training in
 
 ::: callout-tip
 ### A note on pace
-Please do not worry if the math or code looks intimidating at first glance. We'll slow everything down, build each idea together from first principles, and keep the focus on intuition before symbols. Bring your curiosity, bring coffee, and if you want to do the R exercise at the end, bring your laptop preloaded with twhe workshop package (see below). By the end of the day you'll see that the machinery is manageable -- and even fun (really!) -- when we unpack it step by step.
+Please do not worry if the math or code looks intimidating at first glance. We'll slow everything down, build each idea together from first principles, and keep the focus on intuition before symbols. Bring your curiosity; I'll bring the coffee and the jokes. By the end of the day you'll see that the machinery is manageable—and even fun—when we unpack it step by step.
 :::
 
 ## Setup
