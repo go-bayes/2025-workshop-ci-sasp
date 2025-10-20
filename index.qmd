@@ -1,0 +1,159 @@
+---
+title: "Beyond Correlation: A Practical Introduction to Causal Inference in Observational Social Psychology"
+subtitle: "SASP 2025 Pre-conference Workshop"
+author:
+  - name: "Joseph Bulbulia"
+    id: "JB"
+    orcid: "0000-0002-5861-2056"
+    email: "joseph.bulbulia@vuw.ac.nz"
+    corresponding: true
+    affiliations:
+      - name: "Victoria University of Wellington, New Zealand"
+        id: "VUW"
+format:
+  html:
+    highlight-style: kate
+    code-fold: true
+    code-overflow: scroll
+    code-line-numbers: true
+execute:
+  echo: false
+  warning: false
+  error: false
+editor_options:
+  chunk_output_type: console
+---
+
+::: callout-note
+### Workshop logistics
+**Date:** Wednesday, 19 November 2025, 09:00–16:00  
+**Location:** University of Melbourne (Parkville campus), room TBA  
+**Format:** In-person pre-conference workshop (registration via SASP abstract submission)
+:::
+
+## Overview
+
+Social psychological theories aim for causal explanations, yet our evidence is often associational. This full-day, practice-oriented workshop introduces modern causal inference for observational data, with an emphasis on discovering for whom effects are strongest.
+j
+Here, we will:
+
+- Diagnose confounding and other threats to causal claims in observational studies.  
+- Use the potential outcomes framework and causal diagrams to keep assumptions explicit.  
+- Demonstrate state-of-the-art estimators: doubly robust machine learning using causal forests.
+- Translate workflow principles into hands-on R practice.  
+
+
+## Objectives
+
+Participants will leave with:
+
+- A conceptual toolkit for articulating and evaluating causal claims.  
+- Annotated R code for simulating and estimating average and heterogeneous treatment effects.  
+- A curated reading list for self-study.  
+- Examples of how to communicate causal results to academic, policy, and organisational audiences.
+
+The workshop assumes familiarity with regression and R, but no prior training in causal inference.
+
+## Technical setup
+
+1. Install the current version of R (free) from <https://cran.r-project.org/>.  
+2. Install RStudio Desktop (free) from <https://posit.co/download/rstudio-desktop/>.  
+3. Install the workshop packages:
+
+```r
+if (!requireNamespace("devtools", quietly = TRUE)) {
+  install.packages("devtools")
+}
+
+devtools::install_github("go-bayes/causalworkshop")
+
+# Optional packages for extended demonstrations
+devtools::install_github("go-bayes/margot")
+devtools::install_github("go-bayes/boilerplate")
+```
+
+Once installed, run:
+
+```r
+library(causalworkshop)
+check_workshop_prerequisites()
+```
+
+Download the reproducible scripts:
+
+```r
+library(causalworkshop)
+
+get_workshop_scripts()  # copies scripts into ./workshop-scripts
+list_workshop_scripts()
+```
+
+Work through scripts 01–05 in order to rehearse the workflow we will cover together.
+
+## Workshop materials
+
+- Case study PDFs and handouts live in the `pdfs/` directory.  
+- Lecture notes are in `content/` and `glossary-and-dags.qmd`.  
+- Student presentations will be posted here after the workshop.  
+- Previous talks and examples remain available for reference; we will link to them from the relevant sections.
+
+## Agenda
+
+```{r}
+#| label: tbl-schedule
+#| tbl-cap: "Schedule and Learning Goals"
+#| eval: true
+
+library(tidyverse)
+library(kableExtra)
+
+schedule <- tibble(
+  Time = c(
+    "09:00–09:45",
+    "09:45–10:30",
+    "10:30–11:00",
+    "11:00–11:30",
+    "11:30–12:00",
+    "12:00–13:00",
+    "13:00–14:00",
+    "14:00–14:45",
+    "14:45–15:15",
+    "15:15–16:00"
+  ),
+  Session = c(
+    "How to ask a causal question",
+    "The causal workflow: from question to answer",
+    "Causal diagrams and the identification problem",
+    "Coffee break & discussion",
+    "Worked example: employer gratitude and worker wellbeing (Zahle Wisely)",
+    "Worked example: religious service attendance and personality change (Hannah Robinson)",
+    "Lunch",
+    "Beyond averages: heterogeneous treatment effects and policy trees",
+    "Revisiting our examples: policy tree analyses",
+    "Hands-on demonstration: formulating questions and estimating effects in R"
+  ),
+  `Learning goals & activities` = c(
+    "State precise causal questions with the potential outcomes framework; focus on the average treatment effect (ATE).",
+    "Trace the causal workflow: define populations, build diagrams, assess assumptions, analyse data, conduct sensitivity analysis, and communicate results.",
+    "Use causal diagrams (DAGs) to identify bias from confounding, colliders, and mediators.",
+    "Informal space for questions, clarifying assumptions, and networking.",
+    "Presenter: Zahle Wisely. Apply the workflow to estimate the effect of gratitude on wellbeing; Q&A follows.",
+    "Presenter: Hannah Robinson. Define contrasts, tackle confounding, and present ATE results; Q&A follows.",
+    "Break.",
+    "Introduce heterogeneous treatment effects (HTE), conditional ATEs, and policy trees; discuss when effects differ across people.",
+    "Analyse heterogeneity in the Zahle and Hannah case studies; interpret tree-based decision rules.",
+    "Small-group activity plus live R demonstration using causal forests; interpret simulated ATEs and HTEs for multiple audiences."
+  )
+)
+
+schedule %>%
+  kbl(col.names = c("Time", "Session", "Learning goals & activities")) %>%
+  kable_styling(
+    bootstrap_options = c("striped", "hover"),
+    full_width = TRUE
+  )
+```
+
+## Stay in touch
+
+Questions before the workshop? Email me at [joseph.bulbulia@vuw.ac.nz](mailto:joseph.bulbulia@vuw.ac.nz). Updates will follow via the conference mailing list and this page.

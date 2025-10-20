@@ -1,0 +1,37 @@
+---
+title: "Causal Consistency"
+date: "2025-AUG-12"
+bibliography: /Users/joseph/GIT/templates/bib/references.bib
+editor_options: 
+  chunk_output_type: console
+format:
+  html:
+    warnings: FALSE
+    error: FALSE
+    messages: FALSE
+    code-overflow: scroll
+    highlight-style: kate
+    code-tools:
+      source: true
+      toggle: FALSE
+html-math-method: katex
+cap-location: margin
+code-block-border-left: true
+---
+
+## S1. Causal Consistency Under Multiple Versions of Treatment 
+
+To illustrate how causal consistency can fail, consider a debate in evolutionary human science: do beliefs in “big Gods” influence the development of social complexity? [@whitehouse2023; @slingerland2020coding; @beheim2021; @watts2015; @sheehan2022; @johnson2015; @norenzayan2016]. Such beliefs vary across time and cultures in intensity, interpretation, institutional management, and ritual practice [@decoulanges1903; @wheatley1971; @bulbuliaj.2013; @geertz2013], and this variation could itself affect social complexity. Moreover, the beliefs of one society may influence those of others, producing spill-over effects in the treatments to be compared [@murray2021a; @shiba2023uncovering].
+
+VanderWeele and Hernán’s theory of causal inference under multiple versions of treatment addresses this heterogeneity [@vanderweele2009; @vanderweele2013; @vanderweele2018]. They show that if treatment variations $K$ are conditionally independent of potential outcomes $Y(k)$ given covariates $L$, then conditioning on $L$ yields consistent estimates:
+
+$$
+K \coprod Y(k) \mid L
+$$
+Here, $K$ is a “coarsened indicator” for $A$. While the theory extends to treatment-effect dependencies (i.e., SUTVA violations; @rubin1980randomization), its practical application can be difficult.
+
+For example, whether weight loss affects health [@hernán2008] depends on how it occurs. Weight loss from regular exercise or caloric restriction tends to improve health, whereas loss due to disease, depression, famine, or amputation does not. Even if we could consistently estimate the effect of “weight loss” after adjusting for $L$, interpretation would remain unclear. Precision in defining the intervention—e.g., “weight loss via aerobic exercise sustained for five years, versus no weight loss”—and the outcomes [@hernán2022; @murray2021a; @hernán2008] is essential for both unbiased and interpretable estimates.
+
+A further challenge is that we cannot confirm from data alone whether measured covariates $L$ suffice to make the multiple versions of treatment independent of counterfactual outcomes. This difficulty intensifies under interference, where effects depend on the distribution of treatments in the population [@bulbulia2023a; @ogburn2022; @vanderweele2013].
+
+In sum, the multiple-versions framework offers a formal path to consistent estimation in observational studies, but treatment heterogeneity and interference remain practical threats. Causal consistency should generally be treated as implausible unless justified. It nonetheless provides a theoretical starting point, identifying half the missing counterfactuals needed for causal contrasts; the remaining half can be addressed through conditional exchangeability.

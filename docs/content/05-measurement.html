@@ -1,0 +1,1396 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.25">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Measurement And Selection Biases – Beyond Correlation: Causal Inference Workshop</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-29987c632d9c708eba81ba88d1291502.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-1df33b310b25e824b5acc70bcebddb02.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-29987c632d9c708eba81ba88d1291502.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-41eb41ebec47cde7d6e34488d139ad0a.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark-71e677b001e2b203ee4eca291d0f02e7.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-41eb41ebec47cde7d6e34488d139ad0a.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../index.html" class="navbar-brand navbar-brand-logo">
+    </a>
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">Beyond Correlation: Causal Inference Workshop</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-workshop-content" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Workshop Content</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-workshop-content">    
+        <li>
+    <a class="dropdown-item" href="../content/00-background.html">
+ <span class="dropdown-text">1. What is Causality?</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../content/01-background.html">
+ <span class="dropdown-text">2. Identification Using Causal DAGs</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../content/02-causal-workflow.html">
+ <span class="dropdown-text">3. Causal Workflow</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../content/03-interaction.html">
+ <span class="dropdown-text">4. Average and Conditional Average Treatment Effects</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../workshop-scripts/06-interpretation-2.html">
+ <span class="dropdown-text">5. Code Review</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../simulations/01-simulation-population.html">
+ <span class="dropdown-text">Simulations</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../content/ggdag-examples.html">
+ <span class="dropdown-text">ggdag</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../pdfs/bulbulia-hand-outs/S2-glossary.pdf">
+ <span class="dropdown-text">Glossary (PDF)</span></a>
+  </li>  
+        <li><hr class="dropdown-divider"></li>
+        <li>
+    <a class="dropdown-item" href="../quiz/sparcc_day_2_short_quiz.pdf">
+ <span class="dropdown-text">Short Quiz</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../quiz/sparcc_day_2_short_quiz-answer-key.pdf">
+ <span class="dropdown-text">Quiz Answer Key</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../quiz/2025-SPARCC-DAY-2-TEST.pdf">
+ <span class="dropdown-text">Test</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="../glossary-and-dags.html"> 
+<span class="menu-text">Glossary &amp; DAGs</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../reading.html"> 
+<span class="menu-text">Reading</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="https://github.com/go-bayes"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text">Go-Bayes</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#terminology-and-background" id="toc-terminology-and-background" class="nav-link active" data-scroll-target="#terminology-and-background">Terminology and Background</a></li>
+  <li><a href="#effect-modification-on-causal-directed-acyclic-graphs" id="toc-effect-modification-on-causal-directed-acyclic-graphs" class="nav-link" data-scroll-target="#effect-modification-on-causal-directed-acyclic-graphs">Effect-Modification on Causal Directed Acyclic Graphs</a></li>
+  <li><a href="#part-1-how-measurement-error-bias-makes-your-causal-inferences-weird" id="toc-part-1-how-measurement-error-bias-makes-your-causal-inferences-weird" class="nav-link" data-scroll-target="#part-1-how-measurement-error-bias-makes-your-causal-inferences-weird">Part 1: How Measurement Error Bias Makes Your Causal Inferences <strong>weird</strong></a>
+  <ul class="collapse">
+  <li><a href="#example-1-uncorrelated-non-differential-errors-under-sharp-null-no-treatment-effect" id="toc-example-1-uncorrelated-non-differential-errors-under-sharp-null-no-treatment-effect" class="nav-link" data-scroll-target="#example-1-uncorrelated-non-differential-errors-under-sharp-null-no-treatment-effect">Example 1: Uncorrelated Non-Differential Errors under Sharp Null (No Treatment Effect)</a></li>
+  <li><a href="#example-2-uncorrelated-non-differential-errors-off-the-null-true-effect-present" id="toc-example-2-uncorrelated-non-differential-errors-off-the-null-true-effect-present" class="nav-link" data-scroll-target="#example-2-uncorrelated-non-differential-errors-off-the-null-true-effect-present">Example 2: Uncorrelated Non-Differential Errors “Off the Null” (True Effect Present)</a></li>
+  <li><a href="#example-3-correlated-non-differential-undirected-measurement-errors" id="toc-example-3-correlated-non-differential-undirected-measurement-errors" class="nav-link" data-scroll-target="#example-3-correlated-non-differential-undirected-measurement-errors">Example 3: Correlated Non-Differential (Undirected) Measurement Errors</a></li>
+  <li><a href="#example-4-uncorrelated-differential-measurement-error-exposure-error-in-outcome" id="toc-example-4-uncorrelated-differential-measurement-error-exposure-error-in-outcome" class="nav-link" data-scroll-target="#example-4-uncorrelated-differential-measurement-error-exposure-error-in-outcome">Example 4: Uncorrelated Differential Measurement Error — Exposure → Error in Outcome</a></li>
+  <li><a href="#example-5-uncorrelated-differential-measurement-error-outcome-error-in-exposure" id="toc-example-5-uncorrelated-differential-measurement-error-outcome-error-in-exposure" class="nav-link" data-scroll-target="#example-5-uncorrelated-differential-measurement-error-outcome-error-in-exposure">Example 5: Uncorrelated Differential Measurement Error — Outcome → Error in Exposure</a></li>
+  <li><a href="#example-6-correlated-differential-measurement-error" id="toc-example-6-correlated-differential-measurement-error" class="nav-link" data-scroll-target="#example-6-correlated-differential-measurement-error">Example 6: Correlated Differential Measurement Error</a></li>
+  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary">Summary</a></li>
+  </ul></li>
+  <li><a href="#part-2-target-population-restriction-bias-at-the-end-of-study-id-sec-2" id="toc-part-2-target-population-restriction-bias-at-the-end-of-study-id-sec-2" class="nav-link" data-scroll-target="#part-2-target-population-restriction-bias-at-the-end-of-study-id-sec-2">Part 2: Target Population Restriction Bias at the End of Study {#id-sec-2}</a>
+  <ul class="collapse">
+  <li><a href="#example-1-confounding-by-common-cause-of-treatment-and-attrition" id="toc-example-1-confounding-by-common-cause-of-treatment-and-attrition" class="nav-link" data-scroll-target="#example-1-confounding-by-common-cause-of-treatment-and-attrition">Example 1: Confounding by common cause of treatment and attrition</a></li>
+  <li><a href="#example-2-treatment-affects-censoring" id="toc-example-2-treatment-affects-censoring" class="nav-link" data-scroll-target="#example-2-treatment-affects-censoring">Example 2: Treatment affects censoring</a></li>
+  <li><a href="#example-3-no-treatment-effect-when-outcome-causes-censoring" id="toc-example-3-no-treatment-effect-when-outcome-causes-censoring" class="nav-link" data-scroll-target="#example-3-no-treatment-effect-when-outcome-causes-censoring">Example 3: No treatment effect when outcome causes censoring</a></li>
+  <li><a href="#example-4-treatment-effect-when-outcome-causes-censoring-and-a-true-effect-exists" id="toc-example-4-treatment-effect-when-outcome-causes-censoring-and-a-true-effect-exists" class="nav-link" data-scroll-target="#example-4-treatment-effect-when-outcome-causes-censoring-and-a-true-effect-exists">Example 4: Treatment effect when outcome causes censoring and a true effect exists</a></li>
+  <li><a href="#example-5-treatment-effect-and-effect-modifiers-differ-in-censored-group-restriction-bias-without-confounding" id="toc-example-5-treatment-effect-and-effect-modifiers-differ-in-censored-group-restriction-bias-without-confounding" class="nav-link" data-scroll-target="#example-5-treatment-effect-and-effect-modifiers-differ-in-censored-group-restriction-bias-without-confounding">Example 5: Treatment effect and effect-modifiers differ in censored group (restriction bias without confounding)</a></li>
+  <li><a href="#summary-1" id="toc-summary-1" class="nav-link" data-scroll-target="#summary-1">Summary</a></li>
+  </ul></li>
+  <li><a href="#id-sec-3" id="toc-id-sec-3" class="nav-link" data-scroll-target="#id-sec-3">Part 3: Target Population Restriction Bias at the Start of Study</a>
+  <ul class="collapse">
+  <li><a href="#colliderrestriction-bias-at-baseline" id="toc-colliderrestriction-bias-at-baseline" class="nav-link" data-scroll-target="#colliderrestriction-bias-at-baseline">Collider‐Restriction Bias at Baseline</a></li>
+  <li><a href="#restriction-bias-without-collider-stratification" id="toc-restriction-bias-without-collider-stratification" class="nav-link" data-scroll-target="#restriction-bias-without-collider-stratification">Restriction Bias Without Collider Stratification</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content page-columns page-full" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<div class="quarto-title-block"><div><h1 class="title">Measurement And Selection Biases</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="terminology-and-background" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="terminology-and-background">Terminology and Background</h2>
+<div id="tbl-terminologygeneral" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full">
+<figure class="quarto-float quarto-float-tbl figure page-columns page-full">
+<div aria-describedby="tbl-terminologygeneral-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<p><a href="../pdfs/bulbulia-hand-outs/terminologygeneral.pdf">General Terminology for Causal Directed Acyclic Graphs</a></p>
+</div>
+<figcaption class="quarto-float-caption-margin quarto-float-caption quarto-float-tbl quarto-uncaptioned margin-caption" id="tbl-terminologygeneral-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;1
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="effect-modification-on-causal-directed-acyclic-graphs" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="effect-modification-on-causal-directed-acyclic-graphs">Effect-Modification on Causal Directed Acyclic Graphs</h2>
+<p>The primary function of a causal directed acyclic graph is to allow investigators to apply Pearl’s backdoor adjustment theorem to evaluate whether causal effects may be identified from data, as shown in <a href="#tbl-terminologygeneral" class="quarto-xref">Table&nbsp;1</a>. We have noted that modifying a causal effect within one or more strata of the target population opens the possibility for biased average treatment effect estimates when the distribution of these effect modifiers differs in the analytic sample population <span class="citation" data-cites="bulbulia2024swigstime">(<a href="#ref-bulbulia2024swigstime" role="doc-biblioref">Bulbulia 2024b</a>)</span>.</p>
+<div class="no-row-height column-margin column-container"><div id="ref-bulbulia2024swigstime" class="csl-entry" role="listitem">
+———. 2024b. <span>“Methods in Causal Inference Part 2: Interaction, Mediation, and Time-Varying Treatments.”</span> <em>Evolutionary Human Sciences</em> 6: e41. <a href="https://doi.org/10.1017/ehs.2024.32">https://doi.org/10.1017/ehs.2024.32</a>.
+</div><div id="ref-bulbulia2023" class="csl-entry" role="listitem">
+Bulbulia, J. A. 2024a. <span>“Methods in Causal Inference Part 1: Causal Diagrams and Confounding.”</span> <em>Evolutionary Human Sciences</em> 6: e40. <a href="https://doi.org/10.1017/ehs.2024.35">https://doi.org/10.1017/ehs.2024.35</a>.
+</div></div><p>We do not generally represent non-linearities in causal directed acyclic graphs, which are tools for obtaining relationships of conditional and unconditional independence from assumed structural relationships encoded in a causal diagram that may lead to a non-causal treatment/outcome association <span class="citation" data-cites="bulbulia2023">(<a href="#ref-bulbulia2023" role="doc-biblioref">Bulbulia 2024a</a>)</span>.</p>
+<p><a href="#tbl-effectmodification" class="quarto-xref">Table&nbsp;2</a> presents our convention for highlighting a relationship of effect modification in settings where (1) we assume no confounding of treatment and outcome and (2) there is effect modification such that the effect of <span class="math inline">A</span> on <span class="math inline">Y</span> differs in at least one stratum of the target population.</p>
+<div id="tbl-effectmodification" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full">
+<figure class="quarto-float quarto-float-tbl figure page-columns page-full">
+<div aria-describedby="tbl-effectmodification-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<p><a href="../pdfs/bulbulia-hand-outs/6-effectmodification.pdf">Effect-Modification</a></p>
+</div>
+<figcaption class="quarto-float-caption-margin quarto-float-caption quarto-float-tbl quarto-uncaptioned margin-caption" id="tbl-effectmodification-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;2
+</figcaption>
+</figure>
+</div>
+<p>To focus on effect modification, we do not draw a causal arrow from the direct effect modifier <span class="math inline">F</span> to the outcome <span class="math inline">Y</span>. This convention is specific to this article (refer to <span class="citation" data-cites="hernan2024WHATIF">Hernan and Robins (<a href="#ref-hernan2024WHATIF" role="doc-biblioref">2020</a>)</span>, pp.&nbsp;126–127, for a discussion of ‘non-causal’ arrows).</p>
+<div class="no-row-height column-margin column-container"><div id="ref-hernan2024WHATIF" class="csl-entry" role="listitem">
+Hernan, M. A., and J. M. Robins. 2020. <em>Causal Inference: What If?</em> Chapman &amp; Hall/CRC Monographs on Statistics &amp; Applied Probab. Taylor &amp; Francis. <a href="https://www.hsph.harvard.edu/miguel-hernan/causal-inference-book/">https://www.hsph.harvard.edu/miguel-hernan/causal-inference-book/</a>.
+</div></div><hr>
+</section>
+<section id="part-1-how-measurement-error-bias-makes-your-causal-inferences-weird" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="part-1-how-measurement-error-bias-makes-your-causal-inferences-weird">Part 1: How Measurement Error Bias Makes Your Causal Inferences <strong>weird</strong></h2>
+<p><em>(<strong>w</strong>rongly <strong>e</strong>stimated inferences due to <strong>i</strong>nappropriate <strong>r</strong>estriction and <strong>d</strong>istortion)</em></p>
+<p>Measurements record reality, but they are not always accurate. Whenever variables are measured with error, our results can be misleading. Every study must therefore consider how its measurements might mislead.</p>
+<p>Causal graphs can deepen understanding because—as implied by the concept of ‘record’—there are structural or causal properties that give rise to measurement error. Measurement error can take various forms, each with distinct implications for causal inference:</p>
+<ul>
+<li><strong>Independent (undirected) / uncorrelated:</strong> Errors in different variables do not influence each other.<br>
+</li>
+<li><strong>Independent (undirected) and correlated:</strong> Errors in different variables are related through a shared cause.<br>
+</li>
+<li><strong>Dependent (directed) and uncorrelated:</strong> Errors in one variable influence the measurement of another, but these influences are not related through a shared cause.<br>
+</li>
+<li><strong>Dependent (directed) and correlated:</strong> Errors in one variable influence the measurement of another, and these influences are related through a shared cause <span class="citation" data-cites="hernán2009 vanderweele2012a">(<a href="#ref-hernán2009" role="doc-biblioref">Hernán and Cole 2009</a>; <a href="#ref-vanderweele2012a" role="doc-biblioref">VanderWeele and Hernán 2012</a>)</span>.</li>
+</ul>
+<div class="no-row-height column-margin column-container"><div id="ref-hernán2009" class="csl-entry" role="listitem">
+Hernán, Miguel A., and Stephen R. Cole. 2009. <span>“Invited Commentary: Causal Diagrams and Measurement Bias.”</span> <em>American Journal of Epidemiology</em> 170 (8): 959–62. <a href="https://doi.org/10.1093/aje/kwp293">https://doi.org/10.1093/aje/kwp293</a>.
+</div></div><p>The six causal diagrams presented in <a href="#tbl-terminologymeasurementerror" class="quarto-xref">Table&nbsp;3</a> illustrate structural features of measurement error bias and clarify how these structural features compromise causal inferences.</p>
+<div id="tbl-terminologymeasurementerror" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full">
+<figure class="quarto-float quarto-float-tbl figure page-columns page-full">
+<div aria-describedby="tbl-terminologymeasurementerror-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<p><a href="../content/8-structural-representation-measurement-error-bias.pdf">Measurement Error Bias</a> Examples of measurement error bias</p>
+</div>
+<figcaption class="quarto-float-caption-margin quarto-float-caption quarto-float-tbl quarto-uncaptioned margin-caption" id="tbl-terminologymeasurementerror-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;3
+</figcaption>
+</figure>
+</div>
+<p>Understanding these structural features will help explain why measurement error bias cannot typically be evaluated with statistical models, and will prepare us to link target-population restriction biases to measurement error.</p>
+<section id="example-1-uncorrelated-non-differential-errors-under-sharp-null-no-treatment-effect" class="level3 page-columns page-full">
+<h3 class="anchored" data-anchor-id="example-1-uncorrelated-non-differential-errors-under-sharp-null-no-treatment-effect">Example 1: Uncorrelated Non-Differential Errors under Sharp Null (No Treatment Effect)</h3>
+<p><a href="#tbl-terminologymeasurementerror" class="quarto-xref">Table&nbsp;3</a> <span class="math inline">\mathcal{G}_1</span> illustrates uncorrelated non-differential measurement error under the ‘sharp null’, which arises when the error terms in the exposure and outcome are independent. In this setting, measurement error is not expected to bias estimates.</p>
+<p><em>Example:</em> A study on whether beliefs in big Gods affect social complexity in ancient societies, where societies randomly omitted or inaccurately recorded such beliefs and complexity, with errors independent across variables. Under randomisation, uncorrelated undirected errors will generally not bias estimates under the sharp null, assuming all backdoor paths are closed. However, mismeasured confounders can open backdoor paths <span class="citation" data-cites="robins2008estimation">(<a href="#ref-robins2008estimation" role="doc-biblioref">Robins and Hernan 2008</a>)</span>.</p>
+<div class="no-row-height column-margin column-container"><div id="ref-robins2008estimation" class="csl-entry" role="listitem">
+Robins, James, and Miguel Hernan. 2008. <span>“Estimation of the Causal Effects of Time-Varying Exposures.”</span> <em>Chapman &amp; Hall/CRC Handbooks of Modern Statistical Methods</em>, 553–99.
+</div></div></section>
+<section id="example-2-uncorrelated-non-differential-errors-off-the-null-true-effect-present" class="level3 page-columns page-full">
+<h3 class="anchored" data-anchor-id="example-2-uncorrelated-non-differential-errors-off-the-null-true-effect-present">Example 2: Uncorrelated Non-Differential Errors “Off the Null” (True Effect Present)</h3>
+<p><a href="#tbl-terminologymeasurementerror" class="quarto-xref">Table&nbsp;3</a> <span class="math inline">\mathcal{G}_2</span> illustrates uncorrelated non-differential measurement error when there is a true treatment effect. This bias, also called <strong>information bias</strong> <span class="citation" data-cites="lash2009applying">(<a href="#ref-lash2009applying" role="doc-biblioref">Lash, Fox, and Fink 2009</a>)</span>, often attenuates the effect toward the null—but not always <span class="citation" data-cites="jurek2005proper jurek2006exposure jurek2008brief">(<a href="#ref-jurek2005proper" role="doc-biblioref">Anne M. Jurek et al. 2005</a>; <a href="#ref-jurek2006exposure" role="doc-biblioref">Anne M. Jurek et al. 2006</a>; <a href="#ref-jurek2008brief" role="doc-biblioref">Anne M. Jurek, Greenland, and Maldonado 2008</a>)</span>.</p>
+<div class="no-row-height column-margin column-container"><div id="ref-lash2009applying" class="csl-entry" role="listitem">
+Lash, Timothy L., Matthew P. Fox, and Aliza K. Fink. 2009. <em>Applying Quantitative Bias Analysis to Epidemiologic Data</em>. Springer.
+</div><div id="ref-jurek2005proper" class="csl-entry" role="listitem">
+Jurek, Anne M, Sander Greenland, George Maldonado, and Timothy R Church. 2005. <span>“Proper Interpretation of Non-Differential Misclassification Effects: Expectations Vs Observations.”</span> <em>International Journal of Epidemiology</em> 34 (3): 680–87.
+</div><div id="ref-jurek2006exposure" class="csl-entry" role="listitem">
+Jurek, Anne M., Gustavo Maldonado, Sander Greenland, and Timothy R. Church. 2006. <span>“Exposure-Measurement Error Is Frequently Ignored When Interpreting Epidemiologic Study Results.”</span> <em>European Journal of Epidemiology</em> 21 (12): 871–76. <a href="https://doi.org/10.1007/s10654-006-9083-0">https://doi.org/10.1007/s10654-006-9083-0</a>.
+</div><div id="ref-jurek2008brief" class="csl-entry" role="listitem">
+Jurek, Anne M, Sander Greenland, and George Maldonado. 2008. <span>“Brief Report: How Far from Non-Differential Does Exposure or Disease Misclassification Have to Be to Bias Measures of Association Away from the Null?”</span> <em>International Journal of Epidemiology</em> 37 (2): 382–85.
+</div></div><p><em>Example:</em> Same setting as above, but a real effect exists. Measurement error often underestimates it, but attenuation is not guaranteed. Mismeasured confounders may still open backdoor paths.</p>
+</section>
+<section id="example-3-correlated-non-differential-undirected-measurement-errors" class="level3">
+<h3 class="anchored" data-anchor-id="example-3-correlated-non-differential-undirected-measurement-errors">Example 3: Correlated Non-Differential (Undirected) Measurement Errors</h3>
+<p><a href="#tbl-terminologymeasurementerror" class="quarto-xref">Table&nbsp;3</a> <span class="math inline">\mathcal{G}_3</span> arises when the error terms of the treatment and outcome share a common cause.</p>
+<p><em>Example:</em> Societies with advanced record-keeping produce more precise records of both big God beliefs and social complexity. This common cause creates a spurious association even in the absence of a true causal effect.</p>
+</section>
+<section id="example-4-uncorrelated-differential-measurement-error-exposure-error-in-outcome" class="level3">
+<h3 class="anchored" data-anchor-id="example-4-uncorrelated-differential-measurement-error-exposure-error-in-outcome">Example 4: Uncorrelated Differential Measurement Error — Exposure → Error in Outcome</h3>
+<p><a href="#tbl-terminologymeasurementerror" class="quarto-xref">Table&nbsp;3</a> <span class="math inline">\mathcal{G}_4</span> occurs when the exposure influences how the outcome is measured.</p>
+<p><em>Example:</em> Big God beliefs lead to inflated historical records of social complexity, introducing bias even without a true causal effect.</p>
+</section>
+<section id="example-5-uncorrelated-differential-measurement-error-outcome-error-in-exposure" class="level3">
+<h3 class="anchored" data-anchor-id="example-5-uncorrelated-differential-measurement-error-outcome-error-in-exposure">Example 5: Uncorrelated Differential Measurement Error — Outcome → Error in Exposure</h3>
+<p><a href="#tbl-terminologymeasurementerror" class="quarto-xref">Table&nbsp;3</a> <span class="math inline">\mathcal{G}_5</span> occurs when the outcome influences the measurement of the exposure.</p>
+<p><em>Example:</em> If social complexity shapes historical narratives, victors might record big God beliefs selectively to support political legitimacy.</p>
+</section>
+<section id="example-6-correlated-differential-measurement-error" class="level3">
+<h3 class="anchored" data-anchor-id="example-6-correlated-differential-measurement-error">Example 6: Correlated Differential Measurement Error</h3>
+<p><a href="#tbl-terminologymeasurementerror" class="quarto-xref">Table&nbsp;3</a> <span class="math inline">\mathcal{G}_6</span> occurs when the exposure influences already correlated error terms.</p>
+<p><em>Example:</em> Social complexity fosters elites who glorify both political reach and big God beliefs, biasing both measures in a correlated fashion.</p>
+</section>
+<section id="summary" class="level3 page-columns page-full">
+<h3 class="anchored" data-anchor-id="summary">Summary</h3>
+<p>In Part 1, we examined independent, correlated, dependent, and correlated–dependent forms of measurement error bias. These structural features clarify why such biases threaten causal inference and often cannot be resolved with statistical adjustment alone <span class="citation" data-cites="vanderweele2012a">(<a href="#ref-vanderweele2012a" role="doc-biblioref">VanderWeele and Hernán 2012</a>)</span>.</p>
+<div class="no-row-height column-margin column-container"><div id="ref-vanderweele2012a" class="csl-entry" role="listitem">
+VanderWeele, Tyler J., and Miguel A. Hernán. 2012. <span>“Results on Differential and Dependent Measurement Error of the Exposure and the Outcome Using Signed Directed Acyclic Graphs.”</span> <em>American Journal of Epidemiology</em> 175 (12): 1303–10. <a href="https://doi.org/10.1093/aje/kwr458">https://doi.org/10.1093/aje/kwr458</a>.
+</div></div><p>We return to measurement error in <a href="#id-sec-4">Part 4</a>.</p>
+<hr>
+</section>
+</section>
+<section id="part-2-target-population-restriction-bias-at-the-end-of-study-id-sec-2" class="level2 fragile page-columns page-full">
+<h2 class="fragile anchored" data-anchor-id="part-2-target-population-restriction-bias-at-the-end-of-study-id-sec-2">Part 2: Target Population Restriction Bias at the End of Study {#id-sec-2}</h2>
+<p>Suppose the analytic sample matches the target population at baseline. Attrition (right-censoring) may bias causal effect estimates by:<br>
+1) opening biasing pathways (distortion), or<br>
+2) restricting the analytic sample so it is no longer representative (restriction).</p>
+<div id="tbl-terminologycensoring" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full">
+<figure class="quarto-float quarto-float-tbl figure page-columns page-full">
+<div aria-describedby="tbl-terminologycensoring-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<p><a href="../pdfs/bulbulia-hand-outs/9-external-validity-as-measurement-error.pdf">Selection-bias over time</a> Five examples of right-censoring bias.</p>
+</div>
+<figcaption class="quarto-float-caption-margin quarto-float-caption quarto-float-tbl quarto-uncaptioned margin-caption" id="tbl-terminologycensoring-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;4
+</figcaption>
+</figure>
+</div>
+<section id="example-1-confounding-by-common-cause-of-treatment-and-attrition" class="level3">
+<h3 class="anchored" data-anchor-id="example-1-confounding-by-common-cause-of-treatment-and-attrition">Example 1: Confounding by common cause of treatment and attrition</h3>
+<p><a href="#tbl-terminologycensoring" class="quarto-xref">Table&nbsp;4</a> <span class="math inline">\mathcal{G}_1</span> illustrates confounding by common cause of treatment and outcome in the censored such that the potential outcomes of the population at baseline <span class="math inline">Y(a)</span> may differ from those of the censored population at the end of study <span class="math inline">Y'(a)</span>, so <span class="math inline">Y'(a) \neq Y(a)</span>. Suppose investigators ask whether religious service attendance affects volunteering, and an unmeasured variable (loyalty) affects attendance, attrition, and volunteering—opening a backdoor path.</p>
+<p>We have encountered this bias before: the structure matches correlated measurement errors (<a href="#tbl-terminologymeasurementerror" class="quarto-xref">Table&nbsp;3</a> <span class="math inline">\mathcal{G}_3</span>). Attrition may exacerbate measurement error bias by opening a path <span class="math inline">A \;\associationred\; U \;\associationred\; U_{\Delta A} \;\associationred\; Y'</span>.</p>
+</section>
+<section id="example-2-treatment-affects-censoring" class="level3">
+<h3 class="anchored" data-anchor-id="example-2-treatment-affects-censoring">Example 2: Treatment affects censoring</h3>
+<p><a href="#tbl-terminologycensoring" class="quarto-xref">Table&nbsp;4</a> <span class="math inline">\mathcal{G}_2</span> illustrates bias in which the treatment affects the censoring process. Here, the treatment causally affects the outcome reporter but not the outcome itself.</p>
+<p><em>Example:</em> In a meditation trial with no true effect on well-being, Buddha-like detachment increases attrition and also changes how well-being is reported. This opens a path <span class="math inline">A \;\associationred\; U_{\Delta{A\to Y}} \;\associationred\; Y'</span> (not confounding; no common cause of <span class="math inline">A</span> and <span class="math inline">Y</span>). Structurally, this is directed uncorrelated measurement error (<a href="#tbl-terminologymeasurementerror" class="quarto-xref">Table&nbsp;3</a> <span class="math inline">\mathcal{G}_4</span>). Results risk distortion via end-of-study restriction.</p>
+</section>
+<section id="example-3-no-treatment-effect-when-outcome-causes-censoring" class="level3">
+<h3 class="anchored" data-anchor-id="example-3-no-treatment-effect-when-outcome-causes-censoring">Example 3: No treatment effect when outcome causes censoring</h3>
+<p><a href="#tbl-terminologycensoring" class="quarto-xref">Table&nbsp;4</a> <span class="math inline">\mathcal{G}_3</span> shows outcome-driven censoring under the sharp null. In theory, the ATE may remain unbiased, though the analytic sample is restricted. This corresponds to undirected uncorrelated measurement error (<a href="#tbl-terminologymeasurementerror" class="quarto-xref">Table&nbsp;3</a> <span class="math inline">\mathcal{G}_1</span>). In practice the sharp-null assumption is untestable and rarely known in advance.</p>
+</section>
+<section id="example-4-treatment-effect-when-outcome-causes-censoring-and-a-true-effect-exists" class="level3">
+<h3 class="anchored" data-anchor-id="example-4-treatment-effect-when-outcome-causes-censoring-and-a-true-effect-exists">Example 4: Treatment effect when outcome causes censoring and a true effect exists</h3>
+<p><a href="#tbl-terminologycensoring" class="quarto-xref">Table&nbsp;4</a> <span class="math inline">\mathcal{G}_4</span> shows that if the outcome affects censoring in the presence of a true effect, bias arises (at least on one effect scale). This structure is equivalent to measurement error bias and can occur without confounding. See the worked example in <a href="#id-sec-4">Part 4</a>.</p>
+</section>
+<section id="example-5-treatment-effect-and-effect-modifiers-differ-in-censored-group-restriction-bias-without-confounding" class="level3 page-columns page-full">
+<h3 class="anchored" data-anchor-id="example-5-treatment-effect-and-effect-modifiers-differ-in-censored-group-restriction-bias-without-confounding">Example 5: Treatment effect and effect-modifiers differ in censored group (restriction bias without confounding)</h3>
+<p><a href="#tbl-terminologycensoring" class="quarto-xref">Table&nbsp;4</a> <span class="math inline">\mathcal{G}_5</span> represents a setting with a true treatment effect, but the distribution of effect modifiers differs at study end. If missingness is at random and models are correctly specified, inverse probability weighting or multiple imputation can recover valid estimates <span class="citation" data-cites="cole2008 leyrat2021 shiba2021">(<a href="#ref-cole2008" role="doc-biblioref">Cole and Hernán 2008</a>; <a href="#ref-leyrat2021" role="doc-biblioref">Leyrat et al. 2021</a>; <a href="#ref-shiba2021" role="doc-biblioref">Shiba and Kawahara 2021</a>)</span>. If not (e.g., MNAR or model misspecification), causal estimation is compromised <span class="citation" data-cites="tchetgen2017general malinsky2022semiparametric">(<a href="#ref-tchetgen2017general" role="doc-biblioref">Tchetgen Tchetgen and Wirth 2017</a>; <a href="#ref-malinsky2022semiparametric" role="doc-biblioref">Malinsky, Shpitser, and Tchetgen Tchetgen 2022</a>)</span>.</p>
+<div class="no-row-height column-margin column-container"><div id="ref-cole2008" class="csl-entry" role="listitem">
+Cole, Stephen R, and Miguel A Hernán. 2008. <span>“Constructing Inverse Probability Weights for Marginal Structural Models.”</span> <em>American Journal of Epidemiology</em> 168 (6): 656–64.
+</div><div id="ref-leyrat2021" class="csl-entry" role="listitem">
+Leyrat, Clémence, James R Carpenter, Sébastien Bailly, and Elizabeth J Williamson. 2021. <span>“Common Methods for Handling Missing Data in Marginal Structural Models: What Works and Why.”</span> <em>American Journal of Epidemiology</em> 190 (4): 663–72.
+</div><div id="ref-shiba2021" class="csl-entry" role="listitem">
+Shiba, Koichiro, and Takuya Kawahara. 2021. <span>“Using Propensity Scores for Causal Inference: Pitfalls and Tips.”</span> <em>Journal of Epidemiology</em> 31 (8): 457–63.
+</div><div id="ref-tchetgen2017general" class="csl-entry" role="listitem">
+Tchetgen Tchetgen, Eric J, and Kathleen E Wirth. 2017. <span>“A General Instrumental Variable Framework for Regression Analysis with Outcome Missing Not at Random.”</span> <em>Biometrics</em> 73 (4): 1123–31.
+</div><div id="ref-malinsky2022semiparametric" class="csl-entry" role="listitem">
+Malinsky, Daniel, Ilya Shpitser, and Eric J Tchetgen Tchetgen. 2022. <span>“Semiparametric Inference for Nonmonotone Missing-Not-at-Random Data: The No Self-Censoring Model.”</span> <em>Journal of the American Statistical Association</em> 117 (539): 1415–23.
+</div></div><p>Note that <a href="#tbl-terminologycensoring" class="quarto-xref">Table&nbsp;4</a> <span class="math inline">\mathcal{G}_5</span> resembles <a href="#tbl-terminologymeasurementerror" class="quarto-xref">Table&nbsp;3</a> <span class="math inline">\mathcal{G}_2</span>. Replacing unmeasured effect modifiers <span class="math inline">\circledotted{F}</span> and <span class="math inline">U_{\Delta F}</span> by <span class="math inline">\circledotted{U_Y}</span> shows the link to uncorrelated independent measurement error ‘off the null’.</p>
+<p>In this setting there may be a common cause of <span class="math inline">A</span> and <span class="math inline">Y</span>, and, additionally, the end-of-study analytic sample is an undesirable restriction of the target population: marginal effects differ between the restricted sample and the target (see Supplement S4 for a simulation). Hence results can be <strong>weird</strong> due to inappropriate restriction.</p>
+</section>
+<section id="summary-1" class="level3 page-columns page-full">
+<h3 class="anchored" data-anchor-id="summary-1">Summary</h3>
+<p>Right-censoring can bias effect estimates by changing the distribution of effect modifiers between baseline and study end. Investigators should ensure the end-of-study potential outcomes distribution aligns with the target population. Methods such as inverse probability weighting and multiple imputation can mitigate this bias <span class="citation" data-cites="bulbulia2024PRACTICAL">(<a href="#ref-bulbulia2024PRACTICAL" role="doc-biblioref">Bulbulia 2024c</a>)</span>, subject to their assumptions.</p>
+<div class="no-row-height column-margin column-container"><div id="ref-bulbulia2024PRACTICAL" class="csl-entry" role="listitem">
+———. 2024c. <span>“A Practical Guide to Causal Inference in Three-Wave Panel Studies.”</span> <em>PsyArXiv Preprints</em>, February. <a href="https://doi.org/10.31234/osf.io/uyg3d">https://doi.org/10.31234/osf.io/uyg3d</a>.
+</div></div><p>The take-home message: attrition is nearly inevitable; if unchecked, it yields <strong>weird</strong> results (<strong>w</strong>rongly <strong>e</strong>stimated inferences due to <strong>i</strong>nappropriate <strong>r</strong>estriction and <strong>d</strong>istortion). See Supplement S3 for a formal explanation and S4 for a simulation.</p>
+</section>
+</section>
+<section id="id-sec-3" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="id-sec-3">Part 3: Target Population Restriction Bias at the Start of Study</h2>
+<p>Target‐restriction bias occurs when the analytic sample at baseline differs from the target population in the distribution of confounders and/or treatment‐effect modifiers. Misalignment may arise if the source population does not match the target, or if study selection alters distributions. Alignment cannot generally be verified from data (see Supplement S3).</p>
+<section id="colliderrestriction-bias-at-baseline" class="level3 page-columns page-full">
+<h3 class="anchored" data-anchor-id="colliderrestriction-bias-at-baseline">Collider‐Restriction Bias at Baseline</h3>
+<div id="tbl-terminologyselectionrestrictionclassic" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full">
+<figure class="quarto-float quarto-float-tbl figure page-columns page-full">
+<div aria-describedby="tbl-terminologyselectionrestrictionclassic-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<p><a href="../pdfs/bulbulia-hand-outs/10-confounding-selection-bias-experiments.pdf">Collider‐stratification bias at the start of a study</a> Collider‐stratification bias at the start of a study (“M‐bias”)</p>
+</div>
+<figcaption class="quarto-float-caption-margin quarto-float-caption quarto-float-tbl quarto-uncaptioned margin-caption" id="tbl-terminologyselectionrestrictionclassic-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;5
+</figcaption>
+</figure>
+</div>
+<p>In <a href="#tbl-terminologyselectionrestrictionclassic" class="quarto-xref">Table&nbsp;5</a> <span class="math inline">\mathcal{G}_1</span>, unmeasured health awareness (<span class="math inline">U_1</span>) influences both activity (<span class="math inline">A</span>) and participation (<span class="math inline">S=1</span>), and unmeasured SES (<span class="math inline">U_2</span>) influences both heart health (<span class="math inline">Y</span>) and <span class="math inline">S=1</span>. Conditioning on <span class="math inline">S=1</span> opens paths: - <span class="math inline">U_1</span>: Over‐representation of active individuals, overstating benefits. - <span class="math inline">U_2</span>: Confounding path via SES, inflating effect estimates.</p>
+<p>Adjusting for <span class="math inline">U_1</span>, <span class="math inline">U_2</span>, or proxies can block these paths (<a href="#tbl-terminologyselectionrestrictionclassic" class="quarto-xref">Table&nbsp;5</a> <span class="math inline">\mathcal{G}_2</span>).</p>
+</section>
+<section id="restriction-bias-without-collider-stratification" class="level3 page-columns page-full">
+<h3 class="anchored" data-anchor-id="restriction-bias-without-collider-stratification">Restriction Bias Without Collider Stratification</h3>
+<div id="tbl-terminologyselectionrestrictionbaseline" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full">
+<figure class="quarto-float quarto-float-tbl figure page-columns page-full">
+<div aria-describedby="tbl-terminologyselectionrestrictionbaseline-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<p><a href="../pdfs/bulbulia-hand-outs/S6-detailed-confounding-selection-bias-in-three-wave-panel.pdf">Selection bias at baseline</a> Selection bias “off the null”</p>
+</div>
+<figcaption class="quarto-float-caption-margin quarto-float-caption quarto-float-tbl quarto-uncaptioned margin-caption" id="tbl-terminologyselectionrestrictionbaseline-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;6
+</figcaption>
+</figure>
+</div>
+<section id="example-1-weird-sample-nonweird-target" class="level4">
+<h4 class="anchored" data-anchor-id="example-1-weird-sample-nonweird-target">Example 1: WEIRD Sample, Non‐WEIRD Target</h4>
+<p>If effect modifiers differ between a WEIRD sample and general population (<a href="#tbl-terminologyselectionrestrictionbaseline" class="quarto-xref">Table&nbsp;6</a> <span class="math inline">\mathcal{G}_{1.1}</span>), estimates may be biased without confounding . Structure matches <a href="#tbl-terminologycensoring" class="quarto-xref">Table&nbsp;4</a> <span class="math inline">\mathcal{G}_5</span> and <a href="#tbl-terminologymeasurementerror" class="quarto-xref">Table&nbsp;3</a> <span class="math inline">\mathcal{G}_2</span>. Known effect‐modifier distributions allow weighting , but mapping from restricted to target effects (<span class="math inline">f_W</span>) is usually unknown .</p>
+</section>
+<section id="example-2-overly-broad-sample-for-narrow-target" class="level4">
+<h4 class="anchored" data-anchor-id="example-2-overly-broad-sample-for-narrow-target">Example 2: Overly Broad Sample for Narrow Target</h4>
+<p>If the target is a restricted stratum (e.g., NZ men &gt; 40 without vasectomy) but sampling is broader (<a href="#tbl-terminologyselectionrestrictionbaseline" class="quarto-xref">Table&nbsp;6</a> <span class="math inline">\mathcal{G}_{2.1}</span>), bias mirrors right‐censoring with effect modifiers. Correct restriction (<a href="#tbl-terminologyselectionrestrictionbaseline" class="quarto-xref">Table&nbsp;6</a> <span class="math inline">\mathcal{G}_{2.2}</span>) aligns sample with target.</p>
+</section>
+<section id="example-3-correlated-covariateoutcome-measurement-error-across-strata" class="level4">
+<h4 class="anchored" data-anchor-id="example-3-correlated-covariateoutcome-measurement-error-across-strata">Example 3: Correlated Covariate/Outcome Measurement Error Across Strata</h4>
+<p>In cross‐cultural studies, correlated measurement errors in <span class="math inline">L</span> and <span class="math inline">Y</span> (<a href="#tbl-terminologyselectionrestrictionbaseline" class="quarto-xref">Table&nbsp;6</a> <span class="math inline">\mathcal{G}_{3.1}</span>) can open biasing paths even if <span class="math inline">A</span> is measured perfectly. Without local validation, pooling cultures risks contamination; restricting to cultures with reliable measures (<a href="#tbl-terminologyselectionrestrictionbaseline" class="quarto-xref">Table&nbsp;6</a> <span class="math inline">\mathcal{G}_{3.2}</span>) is safer.</p>
+</section>
+<section id="example-4-correlated-measurement-error-in-effect-modifiers" class="level4">
+<h4 class="anchored" data-anchor-id="example-4-correlated-measurement-error-in-effect-modifiers">Example 4: Correlated Measurement Error in Effect Modifiers</h4>
+<p>With perfect <span class="math inline">A</span> and <span class="math inline">Y</span>, correlated errors in effect‐modifier measures (<a href="#tbl-terminologyselectionrestrictionbaseline" class="quarto-xref">Table&nbsp;6</a> <span class="math inline">\mathcal{G}_{4.1}</span>) still prevent valid heterogeneity estimation or use of target weights. Best practice: restrict to settings with reliable effect‐modifier measurement (<a href="#tbl-terminologyselectionrestrictionbaseline" class="quarto-xref">Table&nbsp;6</a> <span class="math inline">\mathcal{G}_{4.2}</span>) and report strata separately if errors differ.</p>
+
+
+<!-- -->
+
+
+</section>
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+    const viewSource = window.document.getElementById('quarto-view-source') ||
+                       window.document.getElementById('quarto-code-tools-source');
+    if (viewSource) {
+      const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+      viewSource.addEventListener("click", function(e) {
+        if (sourceUrl) {
+          // rstudio viewer pane
+          if (/\bcapabilities=\b/.test(window.location)) {
+            window.open(sourceUrl);
+          } else {
+            window.location.href = sourceUrl;
+          }
+        } else {
+          const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+          modal.show();
+        }
+        return false;
+      });
+    }
+    function toggleCodeHandler(show) {
+      return function(e) {
+        const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+        for (let i=0; i<detailsSrc.length; i++) {
+          const details = detailsSrc[i].parentElement;
+          if (show) {
+            details.open = true;
+          } else {
+            details.removeAttribute("open");
+          }
+        }
+        const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+        const fromCls = show ? "hidden" : "unhidden";
+        const toCls = show ? "unhidden" : "hidden";
+        for (let i=0; i<cellCodeDivs.length; i++) {
+          const codeDiv = cellCodeDivs[i];
+          if (codeDiv.classList.contains(fromCls)) {
+            codeDiv.classList.remove(fromCls);
+            codeDiv.classList.add(toCls);
+          } 
+        }
+        return false;
+      }
+    }
+    const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+    if (hideAllCode) {
+      hideAllCode.addEventListener("click", toggleCodeHandler(false));
+    }
+    const showAllCode = window.document.getElementById("quarto-show-all-code");
+    if (showAllCode) {
+      showAllCode.addEventListener("click", toggleCodeHandler(true));
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+            // default icon
+            link.classList.add("external");
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" data-shortcodes="false"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1"></a><span class="co">---</span></span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="an">title:</span><span class="co"> "Measurement And Selection Biases"</span></span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="an">subtitle:</span><span class="co"> ""</span></span>
+<span id="cb1-4"><a href="#cb1-4"></a><span class="an">format:</span></span>
+<span id="cb1-5"><a href="#cb1-5"></a><span class="co">  html:</span></span>
+<span id="cb1-6"><a href="#cb1-6"></a><span class="co">    warnings: false</span></span>
+<span id="cb1-7"><a href="#cb1-7"></a><span class="co">    error: false</span></span>
+<span id="cb1-8"><a href="#cb1-8"></a><span class="co">    messages: false</span></span>
+<span id="cb1-9"><a href="#cb1-9"></a><span class="co">    code-overflow: scroll</span></span>
+<span id="cb1-10"><a href="#cb1-10"></a><span class="co">    highlight-style: Ayu</span></span>
+<span id="cb1-11"><a href="#cb1-11"></a><span class="co">    code-line-numbers: true</span></span>
+<span id="cb1-12"><a href="#cb1-12"></a><span class="co">    code-fold: false</span></span>
+<span id="cb1-13"><a href="#cb1-13"></a><span class="co">    code-tools:</span></span>
+<span id="cb1-14"><a href="#cb1-14"></a><span class="co">      source: true</span></span>
+<span id="cb1-15"><a href="#cb1-15"></a><span class="co">      toggle: false</span></span>
+<span id="cb1-16"><a href="#cb1-16"></a><span class="an">html-math-method:</span><span class="co"> katex</span></span>
+<span id="cb1-17"><a href="#cb1-17"></a><span class="an">reference-location:</span><span class="co"> margin</span></span>
+<span id="cb1-18"><a href="#cb1-18"></a><span class="an">citation-location:</span><span class="co"> margin</span></span>
+<span id="cb1-19"><a href="#cb1-19"></a><span class="an">cap-location:</span><span class="co"> margin</span></span>
+<span id="cb1-20"><a href="#cb1-20"></a><span class="an">code-block-border-left:</span><span class="co"> true</span></span>
+<span id="cb1-21"><a href="#cb1-21"></a><span class="an">bibliography:</span><span class="co"> /Users/joseph/GIT/templates/bib/references.bib</span></span>
+<span id="cb1-22"><a href="#cb1-22"></a><span class="an">editor_options:</span><span class="co"> </span></span>
+<span id="cb1-23"><a href="#cb1-23"></a><span class="co">  chunk_output_type: console</span></span>
+<span id="cb1-24"><a href="#cb1-24"></a><span class="co">---</span></span>
+<span id="cb1-25"><a href="#cb1-25"></a></span>
+<span id="cb1-26"><a href="#cb1-26"></a><span class="fu">## Terminology and Background</span></span>
+<span id="cb1-27"><a href="#cb1-27"></a></span>
+<span id="cb1-28"><a href="#cb1-28"></a>::: {#tbl-terminologygeneral}</span>
+<span id="cb1-29"><a href="#cb1-29"></a><span class="co">[</span><span class="ot">General Terminology for Causal Directed Acyclic Graphs</span><span class="co">](/pdfs/bulbulia-hand-outs/terminologygeneral.pdf)</span></span>
+<span id="cb1-30"><a href="#cb1-30"></a>:::</span>
+<span id="cb1-31"><a href="#cb1-31"></a></span>
+<span id="cb1-32"><a href="#cb1-32"></a><span class="fu">## Effect-Modification on Causal Directed Acyclic Graphs </span></span>
+<span id="cb1-33"><a href="#cb1-33"></a></span>
+<span id="cb1-34"><a href="#cb1-34"></a>The primary function of a causal directed acyclic graph is to allow investigators to apply Pearl's backdoor adjustment theorem to evaluate whether causal effects may be identified from data, as shown in @tbl-terminologygeneral. We have noted that modifying a causal effect within one or more strata of the target population opens the possibility for biased average treatment effect estimates when the distribution of these effect modifiers differs in the analytic sample population <span class="co">[</span><span class="ot">@bulbulia2024swigstime</span><span class="co">]</span>.</span>
+<span id="cb1-35"><a href="#cb1-35"></a></span>
+<span id="cb1-36"><a href="#cb1-36"></a>We do not generally represent non-linearities in causal directed acyclic graphs, which are tools for obtaining relationships of conditional and unconditional independence from assumed structural relationships encoded in a causal diagram that may lead to a non-causal treatment/outcome association <span class="co">[</span><span class="ot">@bulbulia2023</span><span class="co">]</span>.</span>
+<span id="cb1-37"><a href="#cb1-37"></a></span>
+<span id="cb1-38"><a href="#cb1-38"></a>@tbl-effectmodification presents our convention for highlighting a relationship of effect modification in settings where (1) we assume no confounding of treatment and outcome and (2) there is effect modification such that the effect of $A$ on $Y$ differs in at least one stratum of the target population.</span>
+<span id="cb1-39"><a href="#cb1-39"></a></span>
+<span id="cb1-40"><a href="#cb1-40"></a>::: {#tbl-effectmodification}</span>
+<span id="cb1-41"><a href="#cb1-41"></a><span class="co">[</span><span class="ot">Effect-Modification</span><span class="co">](/pdfs/bulbulia-hand-outs/6-effectmodification.pdf)</span></span>
+<span id="cb1-42"><a href="#cb1-42"></a>:::</span>
+<span id="cb1-43"><a href="#cb1-43"></a></span>
+<span id="cb1-44"><a href="#cb1-44"></a>To focus on effect modification, we do not draw a causal arrow from the direct effect modifier $F$ to the outcome $Y$. This convention is specific to this article (refer to @hernan2024WHATIF, pp. 126–127, for a discussion of ‘non-causal’ arrows).</span>
+<span id="cb1-45"><a href="#cb1-45"></a></span>
+<span id="cb1-46"><a href="#cb1-46"></a>---</span>
+<span id="cb1-47"><a href="#cb1-47"></a></span>
+<span id="cb1-48"><a href="#cb1-48"></a><span class="fu">## Part 1: How Measurement Error Bias Makes Your Causal Inferences **weird** </span></span>
+<span id="cb1-49"><a href="#cb1-49"></a>*(**w**rongly **e**stimated inferences due to **i**nappropriate **r**estriction and **d**istortion)*</span>
+<span id="cb1-50"><a href="#cb1-50"></a></span>
+<span id="cb1-51"><a href="#cb1-51"></a>Measurements record reality, but they are not always accurate. Whenever variables are measured with error, our results can be misleading. Every study must therefore consider how its measurements might mislead.</span>
+<span id="cb1-52"><a href="#cb1-52"></a></span>
+<span id="cb1-53"><a href="#cb1-53"></a>Causal graphs can deepen understanding because—as implied by the concept of ‘record’—there are structural or causal properties that give rise to measurement error. Measurement error can take various forms, each with distinct implications for causal inference:</span>
+<span id="cb1-54"><a href="#cb1-54"></a></span>
+<span id="cb1-55"><a href="#cb1-55"></a><span class="ss">- </span>**Independent (undirected) / uncorrelated:** Errors in different variables do not influence each other.  </span>
+<span id="cb1-56"><a href="#cb1-56"></a><span class="ss">- </span>**Independent (undirected) and correlated:** Errors in different variables are related through a shared cause.  </span>
+<span id="cb1-57"><a href="#cb1-57"></a><span class="ss">- </span>**Dependent (directed) and uncorrelated:** Errors in one variable influence the measurement of another, but these influences are not related through a shared cause.  </span>
+<span id="cb1-58"><a href="#cb1-58"></a><span class="ss">- </span>**Dependent (directed) and correlated:** Errors in one variable influence the measurement of another, and these influences are related through a shared cause <span class="co">[</span><span class="ot">@hernán2009; @vanderweele2012a</span><span class="co">]</span>.</span>
+<span id="cb1-59"><a href="#cb1-59"></a></span>
+<span id="cb1-60"><a href="#cb1-60"></a>The six causal diagrams presented in @tbl-terminologymeasurementerror illustrate structural features of measurement error bias and clarify how these structural features compromise causal inferences.</span>
+<span id="cb1-61"><a href="#cb1-61"></a></span>
+<span id="cb1-62"><a href="#cb1-62"></a>::: {#tbl-terminologymeasurementerror}</span>
+<span id="cb1-63"><a href="#cb1-63"></a><span class="co">[</span><span class="ot">Measurement Error Bias</span><span class="co">](/content/8-structural-representation-measurement-error-bias.pdf)</span></span>
+<span id="cb1-64"><a href="#cb1-64"></a>Examples of measurement error bias</span>
+<span id="cb1-65"><a href="#cb1-65"></a>:::</span>
+<span id="cb1-66"><a href="#cb1-66"></a></span>
+<span id="cb1-67"><a href="#cb1-67"></a>Understanding these structural features will help explain why measurement error bias cannot typically be evaluated with statistical models, and will prepare us to link target-population restriction biases to measurement error.</span>
+<span id="cb1-68"><a href="#cb1-68"></a></span>
+<span id="cb1-69"><a href="#cb1-69"></a><span class="fu">### Example 1: Uncorrelated Non-Differential Errors under Sharp Null (No Treatment Effect)</span></span>
+<span id="cb1-70"><a href="#cb1-70"></a></span>
+<span id="cb1-71"><a href="#cb1-71"></a>@tbl-terminologymeasurementerror $\mathcal{G}_1$ illustrates uncorrelated non-differential measurement error under the ‘sharp null’, which arises when the error terms in the exposure and outcome are independent. In this setting, measurement error is not expected to bias estimates.</span>
+<span id="cb1-72"><a href="#cb1-72"></a></span>
+<span id="cb1-73"><a href="#cb1-73"></a>*Example:* A study on whether beliefs in big Gods affect social complexity in ancient societies, where societies randomly omitted or inaccurately recorded such beliefs and complexity, with errors independent across variables. Under randomisation, uncorrelated undirected errors will generally not bias estimates under the sharp null, assuming all backdoor paths are closed. However, mismeasured confounders can open backdoor paths <span class="co">[</span><span class="ot">@robins2008estimation</span><span class="co">]</span>.</span>
+<span id="cb1-74"><a href="#cb1-74"></a></span>
+<span id="cb1-75"><a href="#cb1-75"></a><span class="fu">### Example 2: Uncorrelated Non-Differential Errors “Off the Null” (True Effect Present)</span></span>
+<span id="cb1-76"><a href="#cb1-76"></a></span>
+<span id="cb1-77"><a href="#cb1-77"></a>@tbl-terminologymeasurementerror $\mathcal{G}_2$ illustrates uncorrelated non-differential measurement error when there is a true treatment effect. This bias, also called **information bias** <span class="co">[</span><span class="ot">@lash2009applying</span><span class="co">]</span>, often attenuates the effect toward the null—but not always <span class="co">[</span><span class="ot">@jurek2005proper; @jurek2006exposure; @jurek2008brief</span><span class="co">]</span>.</span>
+<span id="cb1-78"><a href="#cb1-78"></a></span>
+<span id="cb1-79"><a href="#cb1-79"></a>*Example:* Same setting as above, but a real effect exists. Measurement error often underestimates it, but attenuation is not guaranteed. Mismeasured confounders may still open backdoor paths.</span>
+<span id="cb1-80"><a href="#cb1-80"></a></span>
+<span id="cb1-81"><a href="#cb1-81"></a><span class="fu">### Example 3: Correlated Non-Differential (Undirected) Measurement Errors</span></span>
+<span id="cb1-82"><a href="#cb1-82"></a></span>
+<span id="cb1-83"><a href="#cb1-83"></a>@tbl-terminologymeasurementerror $\mathcal{G}_3$ arises when the error terms of the treatment and outcome share a common cause.</span>
+<span id="cb1-84"><a href="#cb1-84"></a></span>
+<span id="cb1-85"><a href="#cb1-85"></a>*Example:* Societies with advanced record-keeping produce more precise records of both big God beliefs and social complexity. This common cause creates a spurious association even in the absence of a true causal effect.</span>
+<span id="cb1-86"><a href="#cb1-86"></a></span>
+<span id="cb1-87"><a href="#cb1-87"></a><span class="fu">### Example 4: Uncorrelated Differential Measurement Error — Exposure → Error in Outcome</span></span>
+<span id="cb1-88"><a href="#cb1-88"></a></span>
+<span id="cb1-89"><a href="#cb1-89"></a>@tbl-terminologymeasurementerror $\mathcal{G}_4$ occurs when the exposure influences how the outcome is measured.</span>
+<span id="cb1-90"><a href="#cb1-90"></a></span>
+<span id="cb1-91"><a href="#cb1-91"></a>*Example:* Big God beliefs lead to inflated historical records of social complexity, introducing bias even without a true causal effect.</span>
+<span id="cb1-92"><a href="#cb1-92"></a></span>
+<span id="cb1-93"><a href="#cb1-93"></a><span class="fu">### Example 5: Uncorrelated Differential Measurement Error — Outcome → Error in Exposure</span></span>
+<span id="cb1-94"><a href="#cb1-94"></a></span>
+<span id="cb1-95"><a href="#cb1-95"></a>@tbl-terminologymeasurementerror $\mathcal{G}_5$ occurs when the outcome influences the measurement of the exposure.</span>
+<span id="cb1-96"><a href="#cb1-96"></a></span>
+<span id="cb1-97"><a href="#cb1-97"></a>*Example:* If social complexity shapes historical narratives, victors might record big God beliefs selectively to support political legitimacy.</span>
+<span id="cb1-98"><a href="#cb1-98"></a></span>
+<span id="cb1-99"><a href="#cb1-99"></a><span class="fu">### Example 6: Correlated Differential Measurement Error</span></span>
+<span id="cb1-100"><a href="#cb1-100"></a></span>
+<span id="cb1-101"><a href="#cb1-101"></a>@tbl-terminologymeasurementerror $\mathcal{G}_6$ occurs when the exposure influences already correlated error terms.</span>
+<span id="cb1-102"><a href="#cb1-102"></a></span>
+<span id="cb1-103"><a href="#cb1-103"></a>*Example:* Social complexity fosters elites who glorify both political reach and big God beliefs, biasing both measures in a correlated fashion.</span>
+<span id="cb1-104"><a href="#cb1-104"></a></span>
+<span id="cb1-105"><a href="#cb1-105"></a><span class="fu">### Summary</span></span>
+<span id="cb1-106"><a href="#cb1-106"></a></span>
+<span id="cb1-107"><a href="#cb1-107"></a>In Part 1, we examined independent, correlated, dependent, and correlated–dependent forms of measurement error bias. These structural features clarify why such biases threaten causal inference and often cannot be resolved with statistical adjustment alone <span class="co">[</span><span class="ot">@vanderweele2012a</span><span class="co">]</span>.</span>
+<span id="cb1-108"><a href="#cb1-108"></a></span>
+<span id="cb1-109"><a href="#cb1-109"></a>We return to measurement error in <span class="co">[</span><span class="ot">Part 4</span><span class="co">](#id-sec-4)</span>.</span>
+<span id="cb1-110"><a href="#cb1-110"></a></span>
+<span id="cb1-111"><a href="#cb1-111"></a>---</span>
+<span id="cb1-112"><a href="#cb1-112"></a></span>
+<span id="cb1-113"><a href="#cb1-113"></a><span class="fu">## Part 2: Target Population Restriction Bias at the End of Study {#id-sec-2} {.fragile}</span></span>
+<span id="cb1-114"><a href="#cb1-114"></a></span>
+<span id="cb1-115"><a href="#cb1-115"></a>Suppose the analytic sample matches the target population at baseline. Attrition (right-censoring) may bias causal effect estimates by:  </span>
+<span id="cb1-116"><a href="#cb1-116"></a>1) opening biasing pathways (distortion), or  </span>
+<span id="cb1-117"><a href="#cb1-117"></a>2) restricting the analytic sample so it is no longer representative (restriction).</span>
+<span id="cb1-118"><a href="#cb1-118"></a></span>
+<span id="cb1-119"><a href="#cb1-119"></a>::: {#tbl-terminologycensoring}</span>
+<span id="cb1-120"><a href="#cb1-120"></a><span class="co">[</span><span class="ot">Selection-bias over time</span><span class="co">](/pdfs/bulbulia-hand-outs/9-external-validity-as-measurement-error.pdf)</span></span>
+<span id="cb1-121"><a href="#cb1-121"></a>Five examples of right-censoring bias.</span>
+<span id="cb1-122"><a href="#cb1-122"></a>:::</span>
+<span id="cb1-123"><a href="#cb1-123"></a></span>
+<span id="cb1-124"><a href="#cb1-124"></a><span class="fu">### Example 1: Confounding by common cause of treatment and attrition</span></span>
+<span id="cb1-125"><a href="#cb1-125"></a></span>
+<span id="cb1-126"><a href="#cb1-126"></a>@tbl-terminologycensoring $\mathcal{G}_1$ illustrates confounding by common cause of treatment and outcome in the censored such that the potential outcomes of the population at baseline $Y(a)$ may differ from those of the censored population at the end of study $Y'(a)$, so $Y'(a) \neq Y(a)$. Suppose investigators ask whether religious service attendance affects volunteering, and an unmeasured variable (loyalty) affects attendance, attrition, and volunteering—opening a backdoor path.</span>
+<span id="cb1-127"><a href="#cb1-127"></a></span>
+<span id="cb1-128"><a href="#cb1-128"></a>We have encountered this bias before: the structure matches correlated measurement errors (@tbl-terminologymeasurementerror $\mathcal{G}_3$). Attrition may exacerbate measurement error bias by opening a path $A \;\associationred\; U \;\associationred\; U_{\Delta A} \;\associationred\; Y'$.</span>
+<span id="cb1-129"><a href="#cb1-129"></a></span>
+<span id="cb1-130"><a href="#cb1-130"></a><span class="fu">### Example 2: Treatment affects censoring</span></span>
+<span id="cb1-131"><a href="#cb1-131"></a></span>
+<span id="cb1-132"><a href="#cb1-132"></a>@tbl-terminologycensoring $\mathcal{G}_2$ illustrates bias in which the treatment affects the censoring process. Here, the treatment causally affects the outcome reporter but not the outcome itself.</span>
+<span id="cb1-133"><a href="#cb1-133"></a></span>
+<span id="cb1-134"><a href="#cb1-134"></a>*Example:* In a meditation trial with no true effect on well-being, Buddha-like detachment increases attrition and also changes how well-being is reported. This opens a path $A \;\associationred\; U_{\Delta{A\to Y}} \;\associationred\; Y'$ (not confounding; no common cause of $A$ and $Y$). Structurally, this is directed uncorrelated measurement error (@tbl-terminologymeasurementerror $\mathcal{G}_4$). Results risk distortion via end-of-study restriction.</span>
+<span id="cb1-135"><a href="#cb1-135"></a></span>
+<span id="cb1-136"><a href="#cb1-136"></a><span class="fu">### Example 3: No treatment effect when outcome causes censoring</span></span>
+<span id="cb1-137"><a href="#cb1-137"></a></span>
+<span id="cb1-138"><a href="#cb1-138"></a>@tbl-terminologycensoring $\mathcal{G}_3$ shows outcome-driven censoring under the sharp null. In theory, the ATE may remain unbiased, though the analytic sample is restricted. This corresponds to undirected uncorrelated measurement error (@tbl-terminologymeasurementerror $\mathcal{G}_1$). In practice the sharp-null assumption is untestable and rarely known in advance.</span>
+<span id="cb1-139"><a href="#cb1-139"></a></span>
+<span id="cb1-140"><a href="#cb1-140"></a><span class="fu">### Example 4: Treatment effect when outcome causes censoring and a true effect exists</span></span>
+<span id="cb1-141"><a href="#cb1-141"></a></span>
+<span id="cb1-142"><a href="#cb1-142"></a>@tbl-terminologycensoring $\mathcal{G}_4$ shows that if the outcome affects censoring in the presence of a true effect, bias arises (at least on one effect scale). This structure is equivalent to measurement error bias and can occur without confounding. See the worked example in <span class="co">[</span><span class="ot">Part 4</span><span class="co">](#id-sec-4)</span>.</span>
+<span id="cb1-143"><a href="#cb1-143"></a></span>
+<span id="cb1-144"><a href="#cb1-144"></a><span class="fu">### Example 5: Treatment effect and effect-modifiers differ in censored group (restriction bias without confounding)</span></span>
+<span id="cb1-145"><a href="#cb1-145"></a></span>
+<span id="cb1-146"><a href="#cb1-146"></a>@tbl-terminologycensoring $\mathcal{G}_5$ represents a setting with a true treatment effect, but the distribution of effect modifiers differs at study end. If missingness is at random and models are correctly specified, inverse probability weighting or multiple imputation can recover valid estimates <span class="co">[</span><span class="ot">@cole2008; @leyrat2021; @shiba2021</span><span class="co">]</span>. If not (e.g., MNAR or model misspecification), causal estimation is compromised <span class="co">[</span><span class="ot">@tchetgen2017general; @malinsky2022semiparametric</span><span class="co">]</span>.</span>
+<span id="cb1-147"><a href="#cb1-147"></a></span>
+<span id="cb1-148"><a href="#cb1-148"></a>Note that @tbl-terminologycensoring $\mathcal{G}_5$ resembles @tbl-terminologymeasurementerror $\mathcal{G}_2$. Replacing unmeasured effect modifiers $\circledotted{F}$ and $U_{\Delta F}$ by $\circledotted{U_Y}$ shows the link to uncorrelated independent measurement error ‘off the null’.</span>
+<span id="cb1-149"><a href="#cb1-149"></a></span>
+<span id="cb1-150"><a href="#cb1-150"></a>In this setting there may be a common cause of $A$ and $Y$, and, additionally, the end-of-study analytic sample is an undesirable restriction of the target population: marginal effects differ between the restricted sample and the target (see Supplement S4 for a simulation). Hence results can be **weird** due to inappropriate restriction.</span>
+<span id="cb1-151"><a href="#cb1-151"></a></span>
+<span id="cb1-152"><a href="#cb1-152"></a><span class="fu">### Summary</span></span>
+<span id="cb1-153"><a href="#cb1-153"></a></span>
+<span id="cb1-154"><a href="#cb1-154"></a>Right-censoring can bias effect estimates by changing the distribution of effect modifiers between baseline and study end. Investigators should ensure the end-of-study potential outcomes distribution aligns with the target population. Methods such as inverse probability weighting and multiple imputation can mitigate this bias <span class="co">[</span><span class="ot">@bulbulia2024PRACTICAL</span><span class="co">]</span>, subject to their assumptions.</span>
+<span id="cb1-155"><a href="#cb1-155"></a></span>
+<span id="cb1-156"><a href="#cb1-156"></a>The take-home message: attrition is nearly inevitable; if unchecked, it yields **weird** results (**w**rongly **e**stimated inferences due to **i**nappropriate **r**estriction and **d**istortion). See Supplement S3 for a formal explanation and S4 for a simulation.</span>
+<span id="cb1-157"><a href="#cb1-157"></a></span>
+<span id="cb1-158"><a href="#cb1-158"></a></span>
+<span id="cb1-159"><a href="#cb1-159"></a><span class="fu">## Part 3: Target Population Restriction Bias at the Start of Study {#id-sec-3}</span></span>
+<span id="cb1-160"><a href="#cb1-160"></a></span>
+<span id="cb1-161"><a href="#cb1-161"></a>Target‐restriction bias occurs when the analytic sample at baseline differs from the target population in the distribution of confounders and/or treatment‐effect modifiers. Misalignment may arise if the source population does not match the target, or if study selection alters distributions. Alignment cannot generally be verified from data (see Supplement S3).</span>
+<span id="cb1-162"><a href="#cb1-162"></a></span>
+<span id="cb1-163"><a href="#cb1-163"></a><span class="fu">### Collider‐Restriction Bias at Baseline</span></span>
+<span id="cb1-164"><a href="#cb1-164"></a></span>
+<span id="cb1-165"><a href="#cb1-165"></a>::: {#tbl-terminologyselectionrestrictionclassic}</span>
+<span id="cb1-166"><a href="#cb1-166"></a><span class="co">[</span><span class="ot">Collider‐stratification bias at the start of a study</span><span class="co">](/pdfs/bulbulia-hand-outs/10-confounding-selection-bias-experiments.pdf)</span></span>
+<span id="cb1-167"><a href="#cb1-167"></a>Collider‐stratification bias at the start of a study ("M‐bias")</span>
+<span id="cb1-168"><a href="#cb1-168"></a>:::</span>
+<span id="cb1-169"><a href="#cb1-169"></a></span>
+<span id="cb1-170"><a href="#cb1-170"></a>In @tbl-terminologyselectionrestrictionclassic $\mathcal{G}_1$, unmeasured health awareness ($U_1$) influences both activity ($A$) and participation ($S=1$), and unmeasured SES ($U_2$) influences both heart health ($Y$) and $S=1$. Conditioning on $S=1$ opens paths:</span>
+<span id="cb1-171"><a href="#cb1-171"></a><span class="ss">- </span>$U_1$: Over‐representation of active individuals, overstating benefits.</span>
+<span id="cb1-172"><a href="#cb1-172"></a><span class="ss">- </span>$U_2$: Confounding path via SES, inflating effect estimates.</span>
+<span id="cb1-173"><a href="#cb1-173"></a></span>
+<span id="cb1-174"><a href="#cb1-174"></a>Adjusting for $U_1$, $U_2$, or proxies can block these paths (@tbl-terminologyselectionrestrictionclassic $\mathcal{G}_2$).</span>
+<span id="cb1-175"><a href="#cb1-175"></a></span>
+<span id="cb1-176"><a href="#cb1-176"></a><span class="fu">### Restriction Bias Without Collider Stratification</span></span>
+<span id="cb1-177"><a href="#cb1-177"></a></span>
+<span id="cb1-178"><a href="#cb1-178"></a>::: {#tbl-terminologyselectionrestrictionbaseline}</span>
+<span id="cb1-179"><a href="#cb1-179"></a><span class="co">[</span><span class="ot">Selection bias at baseline</span><span class="co">](/pdfs/bulbulia-hand-outs/S6-detailed-confounding-selection-bias-in-three-wave-panel.pdf)</span></span>
+<span id="cb1-180"><a href="#cb1-180"></a>Selection bias "off the null"</span>
+<span id="cb1-181"><a href="#cb1-181"></a>:::</span>
+<span id="cb1-182"><a href="#cb1-182"></a></span>
+<span id="cb1-183"><a href="#cb1-183"></a><span class="fu">#### Example 1: WEIRD Sample, Non‐WEIRD Target  </span></span>
+<span id="cb1-184"><a href="#cb1-184"></a>If effect modifiers differ between a WEIRD sample and general population (@tbl-terminologyselectionrestrictionbaseline $\mathcal{G}_{1.1}$), estimates may be biased without confounding \citep{schimmelpfennig2023problem,schimmelpfennig2024moderating}. Structure matches @tbl-terminologycensoring $\mathcal{G}_5$ and @tbl-terminologymeasurementerror $\mathcal{G}_2$. Known effect‐modifier distributions allow weighting \citep{stuart2015}, but mapping from restricted to target effects ($f_W$) is usually unknown \citep{imai2008misunderstandings,cole2010generalizing,stuart2018generalizability}.</span>
+<span id="cb1-185"><a href="#cb1-185"></a></span>
+<span id="cb1-186"><a href="#cb1-186"></a><span class="fu">#### Example 2: Overly Broad Sample for Narrow Target  </span></span>
+<span id="cb1-187"><a href="#cb1-187"></a>If the target is a restricted stratum (e.g., NZ men &gt; 40 without vasectomy) but sampling is broader (@tbl-terminologyselectionrestrictionbaseline $\mathcal{G}_{2.1}$), bias mirrors right‐censoring with effect modifiers. Correct restriction (@tbl-terminologyselectionrestrictionbaseline $\mathcal{G}_{2.2}$) aligns sample with target.</span>
+<span id="cb1-188"><a href="#cb1-188"></a></span>
+<span id="cb1-189"><a href="#cb1-189"></a><span class="fu">#### Example 3: Correlated Covariate/Outcome Measurement Error Across Strata  </span></span>
+<span id="cb1-190"><a href="#cb1-190"></a>In cross‐cultural studies, correlated measurement errors in $L$ and $Y$ (@tbl-terminologyselectionrestrictionbaseline $\mathcal{G}_{3.1}$) can open biasing paths even if $A$ is measured perfectly. Without local validation, pooling cultures risks contamination; restricting to cultures with reliable measures (@tbl-terminologyselectionrestrictionbaseline $\mathcal{G}_{3.2}$) is safer.</span>
+<span id="cb1-191"><a href="#cb1-191"></a></span>
+<span id="cb1-192"><a href="#cb1-192"></a><span class="fu">#### Example 4: Correlated Measurement Error in Effect Modifiers  </span></span>
+<span id="cb1-193"><a href="#cb1-193"></a>With perfect $A$ and $Y$, correlated errors in effect‐modifier measures (@tbl-terminologyselectionrestrictionbaseline $\mathcal{G}_{4.1}$) still prevent valid heterogeneity estimation or use of target weights. Best practice: restrict to settings with reliable effect‐modifier measurement (@tbl-terminologyselectionrestrictionbaseline $\mathcal{G}_{4.2}$) and report strata separately if errors differ.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+</div></div></div></div></div>
+</div> <!-- /content -->
+
+
+
+
+<script src="../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>

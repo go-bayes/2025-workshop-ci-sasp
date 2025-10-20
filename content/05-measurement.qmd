@@ -1,0 +1,193 @@
+---
+title: "Measurement And Selection Biases"
+subtitle: ""
+format:
+  html:
+    warnings: false
+    error: false
+    messages: false
+    code-overflow: scroll
+    highlight-style: Ayu
+    code-line-numbers: true
+    code-fold: false
+    code-tools:
+      source: true
+      toggle: false
+html-math-method: katex
+reference-location: margin
+citation-location: margin
+cap-location: margin
+code-block-border-left: true
+bibliography: /Users/joseph/GIT/templates/bib/references.bib
+editor_options: 
+  chunk_output_type: console
+---
+
+## Terminology and Background
+
+::: {#tbl-terminologygeneral}
+[General Terminology for Causal Directed Acyclic Graphs](/pdfs/bulbulia-hand-outs/terminologygeneral.pdf)
+:::
+
+## Effect-Modification on Causal Directed Acyclic Graphs 
+
+The primary function of a causal directed acyclic graph is to allow investigators to apply Pearl's backdoor adjustment theorem to evaluate whether causal effects may be identified from data, as shown in @tbl-terminologygeneral. We have noted that modifying a causal effect within one or more strata of the target population opens the possibility for biased average treatment effect estimates when the distribution of these effect modifiers differs in the analytic sample population [@bulbulia2024swigstime].
+
+We do not generally represent non-linearities in causal directed acyclic graphs, which are tools for obtaining relationships of conditional and unconditional independence from assumed structural relationships encoded in a causal diagram that may lead to a non-causal treatment/outcome association [@bulbulia2023].
+
+@tbl-effectmodification presents our convention for highlighting a relationship of effect modification in settings where (1) we assume no confounding of treatment and outcome and (2) there is effect modification such that the effect of $A$ on $Y$ differs in at least one stratum of the target population.
+
+::: {#tbl-effectmodification}
+[Effect-Modification](/pdfs/bulbulia-hand-outs/6-effectmodification.pdf)
+:::
+
+To focus on effect modification, we do not draw a causal arrow from the direct effect modifier $F$ to the outcome $Y$. This convention is specific to this article (refer to @hernan2024WHATIF, pp. 126–127, for a discussion of ‘non-causal’ arrows).
+
+---
+
+## Part 1: How Measurement Error Bias Makes Your Causal Inferences **weird** 
+*(**w**rongly **e**stimated inferences due to **i**nappropriate **r**estriction and **d**istortion)*
+
+Measurements record reality, but they are not always accurate. Whenever variables are measured with error, our results can be misleading. Every study must therefore consider how its measurements might mislead.
+
+Causal graphs can deepen understanding because—as implied by the concept of ‘record’—there are structural or causal properties that give rise to measurement error. Measurement error can take various forms, each with distinct implications for causal inference:
+
+- **Independent (undirected) / uncorrelated:** Errors in different variables do not influence each other.  
+- **Independent (undirected) and correlated:** Errors in different variables are related through a shared cause.  
+- **Dependent (directed) and uncorrelated:** Errors in one variable influence the measurement of another, but these influences are not related through a shared cause.  
+- **Dependent (directed) and correlated:** Errors in one variable influence the measurement of another, and these influences are related through a shared cause [@hernán2009; @vanderweele2012a].
+
+The six causal diagrams presented in @tbl-terminologymeasurementerror illustrate structural features of measurement error bias and clarify how these structural features compromise causal inferences.
+
+::: {#tbl-terminologymeasurementerror}
+[Measurement Error Bias](/content/8-structural-representation-measurement-error-bias.pdf)
+Examples of measurement error bias
+:::
+
+Understanding these structural features will help explain why measurement error bias cannot typically be evaluated with statistical models, and will prepare us to link target-population restriction biases to measurement error.
+
+### Example 1: Uncorrelated Non-Differential Errors under Sharp Null (No Treatment Effect)
+
+@tbl-terminologymeasurementerror $\mathcal{G}_1$ illustrates uncorrelated non-differential measurement error under the ‘sharp null’, which arises when the error terms in the exposure and outcome are independent. In this setting, measurement error is not expected to bias estimates.
+
+*Example:* A study on whether beliefs in big Gods affect social complexity in ancient societies, where societies randomly omitted or inaccurately recorded such beliefs and complexity, with errors independent across variables. Under randomisation, uncorrelated undirected errors will generally not bias estimates under the sharp null, assuming all backdoor paths are closed. However, mismeasured confounders can open backdoor paths [@robins2008estimation].
+
+### Example 2: Uncorrelated Non-Differential Errors “Off the Null” (True Effect Present)
+
+@tbl-terminologymeasurementerror $\mathcal{G}_2$ illustrates uncorrelated non-differential measurement error when there is a true treatment effect. This bias, also called **information bias** [@lash2009applying], often attenuates the effect toward the null—but not always [@jurek2005proper; @jurek2006exposure; @jurek2008brief].
+
+*Example:* Same setting as above, but a real effect exists. Measurement error often underestimates it, but attenuation is not guaranteed. Mismeasured confounders may still open backdoor paths.
+
+### Example 3: Correlated Non-Differential (Undirected) Measurement Errors
+
+@tbl-terminologymeasurementerror $\mathcal{G}_3$ arises when the error terms of the treatment and outcome share a common cause.
+
+*Example:* Societies with advanced record-keeping produce more precise records of both big God beliefs and social complexity. This common cause creates a spurious association even in the absence of a true causal effect.
+
+### Example 4: Uncorrelated Differential Measurement Error — Exposure → Error in Outcome
+
+@tbl-terminologymeasurementerror $\mathcal{G}_4$ occurs when the exposure influences how the outcome is measured.
+
+*Example:* Big God beliefs lead to inflated historical records of social complexity, introducing bias even without a true causal effect.
+
+### Example 5: Uncorrelated Differential Measurement Error — Outcome → Error in Exposure
+
+@tbl-terminologymeasurementerror $\mathcal{G}_5$ occurs when the outcome influences the measurement of the exposure.
+
+*Example:* If social complexity shapes historical narratives, victors might record big God beliefs selectively to support political legitimacy.
+
+### Example 6: Correlated Differential Measurement Error
+
+@tbl-terminologymeasurementerror $\mathcal{G}_6$ occurs when the exposure influences already correlated error terms.
+
+*Example:* Social complexity fosters elites who glorify both political reach and big God beliefs, biasing both measures in a correlated fashion.
+
+### Summary
+
+In Part 1, we examined independent, correlated, dependent, and correlated–dependent forms of measurement error bias. These structural features clarify why such biases threaten causal inference and often cannot be resolved with statistical adjustment alone [@vanderweele2012a].
+
+We return to measurement error in [Part 4](#id-sec-4).
+
+---
+
+## Part 2: Target Population Restriction Bias at the End of Study {#id-sec-2} {.fragile}
+
+Suppose the analytic sample matches the target population at baseline. Attrition (right-censoring) may bias causal effect estimates by:  
+1) opening biasing pathways (distortion), or  
+2) restricting the analytic sample so it is no longer representative (restriction).
+
+::: {#tbl-terminologycensoring}
+[Selection-bias over time](/pdfs/bulbulia-hand-outs/9-external-validity-as-measurement-error.pdf)
+Five examples of right-censoring bias.
+:::
+
+### Example 1: Confounding by common cause of treatment and attrition
+
+@tbl-terminologycensoring $\mathcal{G}_1$ illustrates confounding by common cause of treatment and outcome in the censored such that the potential outcomes of the population at baseline $Y(a)$ may differ from those of the censored population at the end of study $Y'(a)$, so $Y'(a) \neq Y(a)$. Suppose investigators ask whether religious service attendance affects volunteering, and an unmeasured variable (loyalty) affects attendance, attrition, and volunteering—opening a backdoor path.
+
+We have encountered this bias before: the structure matches correlated measurement errors (@tbl-terminologymeasurementerror $\mathcal{G}_3$). Attrition may exacerbate measurement error bias by opening a path $A \;\associationred\; U \;\associationred\; U_{\Delta A} \;\associationred\; Y'$.
+
+### Example 2: Treatment affects censoring
+
+@tbl-terminologycensoring $\mathcal{G}_2$ illustrates bias in which the treatment affects the censoring process. Here, the treatment causally affects the outcome reporter but not the outcome itself.
+
+*Example:* In a meditation trial with no true effect on well-being, Buddha-like detachment increases attrition and also changes how well-being is reported. This opens a path $A \;\associationred\; U_{\Delta{A\to Y}} \;\associationred\; Y'$ (not confounding; no common cause of $A$ and $Y$). Structurally, this is directed uncorrelated measurement error (@tbl-terminologymeasurementerror $\mathcal{G}_4$). Results risk distortion via end-of-study restriction.
+
+### Example 3: No treatment effect when outcome causes censoring
+
+@tbl-terminologycensoring $\mathcal{G}_3$ shows outcome-driven censoring under the sharp null. In theory, the ATE may remain unbiased, though the analytic sample is restricted. This corresponds to undirected uncorrelated measurement error (@tbl-terminologymeasurementerror $\mathcal{G}_1$). In practice the sharp-null assumption is untestable and rarely known in advance.
+
+### Example 4: Treatment effect when outcome causes censoring and a true effect exists
+
+@tbl-terminologycensoring $\mathcal{G}_4$ shows that if the outcome affects censoring in the presence of a true effect, bias arises (at least on one effect scale). This structure is equivalent to measurement error bias and can occur without confounding. See the worked example in [Part 4](#id-sec-4).
+
+### Example 5: Treatment effect and effect-modifiers differ in censored group (restriction bias without confounding)
+
+@tbl-terminologycensoring $\mathcal{G}_5$ represents a setting with a true treatment effect, but the distribution of effect modifiers differs at study end. If missingness is at random and models are correctly specified, inverse probability weighting or multiple imputation can recover valid estimates [@cole2008; @leyrat2021; @shiba2021]. If not (e.g., MNAR or model misspecification), causal estimation is compromised [@tchetgen2017general; @malinsky2022semiparametric].
+
+Note that @tbl-terminologycensoring $\mathcal{G}_5$ resembles @tbl-terminologymeasurementerror $\mathcal{G}_2$. Replacing unmeasured effect modifiers $\circledotted{F}$ and $U_{\Delta F}$ by $\circledotted{U_Y}$ shows the link to uncorrelated independent measurement error ‘off the null’.
+
+In this setting there may be a common cause of $A$ and $Y$, and, additionally, the end-of-study analytic sample is an undesirable restriction of the target population: marginal effects differ between the restricted sample and the target (see Supplement S4 for a simulation). Hence results can be **weird** due to inappropriate restriction.
+
+### Summary
+
+Right-censoring can bias effect estimates by changing the distribution of effect modifiers between baseline and study end. Investigators should ensure the end-of-study potential outcomes distribution aligns with the target population. Methods such as inverse probability weighting and multiple imputation can mitigate this bias [@bulbulia2024PRACTICAL], subject to their assumptions.
+
+The take-home message: attrition is nearly inevitable; if unchecked, it yields **weird** results (**w**rongly **e**stimated inferences due to **i**nappropriate **r**estriction and **d**istortion). See Supplement S3 for a formal explanation and S4 for a simulation.
+
+
+## Part 3: Target Population Restriction Bias at the Start of Study {#id-sec-3}
+
+Target‐restriction bias occurs when the analytic sample at baseline differs from the target population in the distribution of confounders and/or treatment‐effect modifiers. Misalignment may arise if the source population does not match the target, or if study selection alters distributions. Alignment cannot generally be verified from data (see Supplement S3).
+
+### Collider‐Restriction Bias at Baseline
+
+::: {#tbl-terminologyselectionrestrictionclassic}
+[Collider‐stratification bias at the start of a study](/pdfs/bulbulia-hand-outs/10-confounding-selection-bias-experiments.pdf)
+Collider‐stratification bias at the start of a study ("M‐bias")
+:::
+
+In @tbl-terminologyselectionrestrictionclassic $\mathcal{G}_1$, unmeasured health awareness ($U_1$) influences both activity ($A$) and participation ($S=1$), and unmeasured SES ($U_2$) influences both heart health ($Y$) and $S=1$. Conditioning on $S=1$ opens paths:
+- $U_1$: Over‐representation of active individuals, overstating benefits.
+- $U_2$: Confounding path via SES, inflating effect estimates.
+
+Adjusting for $U_1$, $U_2$, or proxies can block these paths (@tbl-terminologyselectionrestrictionclassic $\mathcal{G}_2$).
+
+### Restriction Bias Without Collider Stratification
+
+::: {#tbl-terminologyselectionrestrictionbaseline}
+[Selection bias at baseline](/pdfs/bulbulia-hand-outs/S6-detailed-confounding-selection-bias-in-three-wave-panel.pdf)
+Selection bias "off the null"
+:::
+
+#### Example 1: WEIRD Sample, Non‐WEIRD Target  
+If effect modifiers differ between a WEIRD sample and general population (@tbl-terminologyselectionrestrictionbaseline $\mathcal{G}_{1.1}$), estimates may be biased without confounding \citep{schimmelpfennig2023problem,schimmelpfennig2024moderating}. Structure matches @tbl-terminologycensoring $\mathcal{G}_5$ and @tbl-terminologymeasurementerror $\mathcal{G}_2$. Known effect‐modifier distributions allow weighting \citep{stuart2015}, but mapping from restricted to target effects ($f_W$) is usually unknown \citep{imai2008misunderstandings,cole2010generalizing,stuart2018generalizability}.
+
+#### Example 2: Overly Broad Sample for Narrow Target  
+If the target is a restricted stratum (e.g., NZ men > 40 without vasectomy) but sampling is broader (@tbl-terminologyselectionrestrictionbaseline $\mathcal{G}_{2.1}$), bias mirrors right‐censoring with effect modifiers. Correct restriction (@tbl-terminologyselectionrestrictionbaseline $\mathcal{G}_{2.2}$) aligns sample with target.
+
+#### Example 3: Correlated Covariate/Outcome Measurement Error Across Strata  
+In cross‐cultural studies, correlated measurement errors in $L$ and $Y$ (@tbl-terminologyselectionrestrictionbaseline $\mathcal{G}_{3.1}$) can open biasing paths even if $A$ is measured perfectly. Without local validation, pooling cultures risks contamination; restricting to cultures with reliable measures (@tbl-terminologyselectionrestrictionbaseline $\mathcal{G}_{3.2}$) is safer.
+
+#### Example 4: Correlated Measurement Error in Effect Modifiers  
+With perfect $A$ and $Y$, correlated errors in effect‐modifier measures (@tbl-terminologyselectionrestrictionbaseline $\mathcal{G}_{4.1}$) still prevent valid heterogeneity estimation or use of target weights. Best practice: restrict to settings with reliable effect‐modifier measurement (@tbl-terminologyselectionrestrictionbaseline $\mathcal{G}_{4.2}$) and report strata separately if errors differ.

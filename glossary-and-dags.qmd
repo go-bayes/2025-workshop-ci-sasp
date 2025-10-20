@@ -1,0 +1,130 @@
+---
+title: "Glossary and Causal DAGs"
+subtitle: "Reference Materials for Causal Inference"
+format:
+  html:
+    highlight-style: kate
+    code-fold: true
+    code-overflow: scroll
+    toc: true
+    toc-depth: 3
+execute:
+  echo: false
+  warning: false
+  error: false
+---
+
+::: {.welcome-banner}
+# Reference Materials 📊
+
+**Comprehensive collection of terminology and causal diagrams for workshop participants**
+:::
+
+## Causal Inference Glossary
+
+::: {.card}
+### 📖 Complete Terminology Guide
+
+Access the comprehensive glossary of causal inference terms and definitions used throughout the workshop.
+
+**[Download Glossary (PDF)](pdfs/bulbulia-hand-outs/S2-glossary.pdf)**
+
+This glossary contains essential definitions for terms including:
+- Average Treatment Effect (ATE), Conditional Average Treatment Effect (CATE)
+- Backdoor paths, confounders, and colliders
+- Instrumental variables and propensity scores
+- Time-varying confounding and measurement error
+- Causal estimands, estimators, and identification strategies
+
+*Essential reference for understanding causal inference methodology and terminology.*
+:::
+
+## Causal DAGs Reference Collection
+
+### Core Terminology & Foundations
+
+::: {.card}
+#### 1. Foundational Concepts
+
+**[1a. Local Conventions](pdfs/bulbulia-hand-outs/1a-terminologylocalconventions.pdf)**  
+Essential local conventions for causal diagram construction and interpretation
+
+**[1b. Directed Graph Terminology](pdfs/bulbulia-hand-outs/1b-terminologydirectedgraph.pdf)**  
+Core terminology specific to directed acyclic graphs (DAGs)
+
+**[S1. Graphical Key](pdfs/bulbulia-hand-outs/S1-graphical-key.pdf)**  
+Visual reference guide for interpreting causal diagram symbols and notation
+:::
+
+### Common Questions & Applications
+
+::: {.card}
+#### 2. Practical Applications
+
+**[2. Common Causal Questions](pdfs/bulbulia-hand-outs/2-common-causal-questions.pdf)**  
+Frequently encountered causal questions and how to approach them
+
+**[6. Effect Modification](pdfs/bulbulia-hand-outs/6-effectmodification.pdf)**  
+Understanding when and how treatment effects vary across subgroups
+
+**[9. External Validity](pdfs/bulbulia-hand-outs/9-external-validity-as-measurement-error.pdf)**  
+Approaches to generalising causal findings across populations and contexts
+:::
+
+### Time Series & Confounding
+
+::: {.card}
+#### 3. Keeping Time on Your Side
+
+**[3. Time Series Approaches](pdfs/bulbulia-hand-outs/3-how-time-series-address-confounding-bias.pdf)**  
+How longitudinal data help address confounding bias
+
+**[4. Three-Wave Panel Methods](pdfs/bulbulia-hand-outs/4-three-wave-panel-to-address-confounding-bias.pdf)**  
+Using three-wave panel data for causal inference
+
+**[5. Time Series Limitations](pdfs/bulbulia-hand-outs/5-dags-show-time-series-not-resolved.pdf)**  
+When time series approaches may not resolve confounding
+
+**[S3. Time-Resolved Confounding](pdfs/bulbulia-hand-outs/S3-dags-show-time-resolved-confounding.pdf)**  
+Advanced approaches to time-varying confounding
+:::
+
+### Advanced Topics
+
+::: {.card}
+#### 4. Complex Methodological Issues
+
+**[7. Selection Bias Focus](pdfs/bulbulia-hand-outs/7-focus-on-confounding-selection-bias-three-wave-panel.pdf)**  
+Detailed examination of selection bias in longitudinal studies
+
+**[8. Measurement Error](pdfs/bulbulia-hand-outs/8-structural-representation-measurement-error-bias.pdf)**  
+Structural approaches to representing and addressing measurement error
+
+**[10. Experimental Design](pdfs/bulbulia-hand-outs/10-confounding-selection-bias-experiments.pdf)**  
+How experiments address confounding and selection bias challenges
+:::
+
+### Supplementary Materials
+
+::: {.card}
+#### 5. Additional Resources
+
+**[S5. Timing Examples](pdfs/bulbulia-hand-outs/S5-examples-confounding-timing.pdf)**  
+Practical examples of confounding and timing issues
+
+**[S6. Detailed Panel Examples](pdfs/bulbulia-hand-outs/S6-detailed-confounding-selection-bias-in-three-wave-panel.pdf)**  
+What can go wrong in a three-wave panel. 
+
+**[S7. Cross-Sectional Approaches](pdfs/bulbulia-hand-outs/S7-if-cross-sectional-report-mutiple-dags.pdf)** 
+When to report multiple DAGs in cross-sectional studies
+
+**[S8. Bias Correction](pdfs/bulbulia-hand-outs/S8-handout_quantitative_bias_correction.pdf)**  
+Quantitative approaches to bias correction
+
+**[S9. Mediator Bias](pdfs/bulbulia-hand-outs/S9-mediator-bias.pdf)**  
+Understanding confounding bias in mediation analysis
+
+**[S10. Misclassification Bias](pdfs/bulbulia-hand-outs/S10-handout-miss-classification-bias-null-example.pdf)**  
+Examples of misclassification bias and bias towards the nulls
+:::
+

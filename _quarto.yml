@@ -1,0 +1,77 @@
+project:
+  type: website
+  output-dir: docs
+
+website:
+  title: "Beyond Correlation: Causal Inference Workshop"
+  navbar:
+    left:
+      - text: "Home"
+        href: index.qmd
+      - text: "Workshop Content"
+        menu:
+          - text: "1. What is Causality?"
+            href: content/00-background.qmd
+          - text: "2. Identification Using Causal DAGs"
+            href: content/01-background.qmd
+          - text: "3. Causal Workflow"
+            href: content/02-causal-workflow.qmd
+          - text: "4. Average and Conditional Average Treatment Effects"
+            href: content/03-interaction.qmd
+          - text: "5. Code Review"
+            href: workshop-scripts/06-interpretation-2.qmd
+          - text: "Simulations"
+            href: simulations/01-simulation-population.qmd
+          # - text: "ggdag"
+          #   href: content/ggdag-examples.qmd
+          # - text: "Understanding the Data"
+          #   href: content/data-tutorial.qmd
+          # - text: "Worked Example: Religion → Cooperation"
+          #   href: content/04-worked-example.qmd
+          # - text: "---"
+          - text: "Glossary (PDF)"
+            href: pdfs/bulbulia-hand-outs/S2-glossary.pdf
+          # - text: "---"
+          # - text: "Short Quiz"
+          #   href: quiz/sparcc_day_2_short_quiz.pdf
+          # - text: "Quiz Answer Key"
+          #   href: quiz/sparcc_day_2_short_quiz-answer-key.pdf
+          # - text: "Test"
+          #   href: quiz/2025-workshop-diagnostic.pdf
+      - text: "Glossary & DAGs"
+        href: glossary-and-dags.qmd
+      - text: "Reading"
+        href: reading.qmd
+    right:
+      - icon: github
+        text: "Go-Bayes"
+        href: "https://github.com/go-bayes"
+
+format:
+  html:
+    theme:
+      light: [cosmo, styles.css]        # modern, clean, excellent typography
+      dark: [darkly, styles.css]         # optional dark mode
+    toc: true
+    toc-depth: 3
+    toc-location: right
+    number-sections: false
+    smooth-scroll: true
+    link-external-icon: true
+    link-external-newwindow: true
+    code-fold: true
+    code-tools: true
+    code-copy: hover
+    code-overflow: wrap
+    fig-align: center
+    fig-responsive: true
+    # better rendering
+    self-contained: false
+    anchor-sections: true
+    citations-hover: true
+    footnotes-hover: true
+
+# Resources to copy to output
+resources:
+  - "pdfs/"
+  - "quiz/"

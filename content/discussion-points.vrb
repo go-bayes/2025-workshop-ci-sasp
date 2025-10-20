@@ -1,0 +1,300 @@
+\frametitle{Error 1 -- What (over-adjustment)}
+\phantomsection\label{error-1-what-over-adjustment}
+\begin{block}{``What Error \#1'': \textbf{Mediator Bias}}
+\phantomsection\label{what-error-1-mediator-bias}
+\[\mediatorT\]
+\end{block}
+
+\begin{block}{Data Generating Process}
+\phantomsection\label{data-generating-process}
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(tidyverse)}
+
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{123}\NormalTok{)                           }\CommentTok{\# reproducibility}
+\NormalTok{n        }\OtherTok{\textless{}{-}} \DecValTok{1000}
+\NormalTok{service  }\OtherTok{\textless{}{-}} \FunctionTok{rbinom}\NormalTok{(n, }\DecValTok{1}\NormalTok{, }\FloatTok{0.5}\NormalTok{)          }\CommentTok{\# A}
+\NormalTok{wealth   }\OtherTok{\textless{}{-}} \DecValTok{2} \SpecialCharTok{*}\NormalTok{ service }\SpecialCharTok{+} \FunctionTok{rnorm}\NormalTok{(n)     }\CommentTok{\# L}
+\NormalTok{charity  }\OtherTok{\textless{}{-}} \FloatTok{1.5} \SpecialCharTok{*}\NormalTok{ wealth }\SpecialCharTok{+} \FunctionTok{rnorm}\NormalTok{(n, }\AttributeTok{sd =} \FloatTok{1.5}\NormalTok{)  }\CommentTok{\# Y}
+
+\NormalTok{sim1 }\OtherTok{\textless{}{-}} \FunctionTok{tibble}\NormalTok{(service, wealth, charity)}
+\end{Highlighting}
+\end{Shaded}
+\end{block}
+
+\begin{block}{Model comparison}
+\phantomsection\label{model-comparison}
+\begin{table}
+\caption{Controlling for the mediator reverses the sign of the service
+coefficient.}\tabularnewline
+
+\fontsize{12.0pt}{14.4pt}\selectfont
+\begin{tabular*}{\linewidth}{@{\extracolsep{\fill}}lcccccc}
+\toprule
+ & \multicolumn{3}{c}{Model A: Omit L} & \multicolumn{3}{c}{Model B: Control for L} \\
+\cmidrule(lr){2-4} \cmidrule(lr){5-7}
+\textbf{Characteristic} & \textbf{Beta} & \textbf{95\% CI} & \textbf{p-value} & \textbf{Beta} & \textbf{95\% CI} & \textbf{p-value} \\
+\midrule\addlinespace[2.5pt]
+service & 2.9 & 2.6, 3.2 & <0.001 & -0.27 & -0.53, -0.01 & 0.043 \\
+wealth &  &  &  & 1.6 & 1.5, 1.7 & <0.001 \\
+\bottomrule
+\end{tabular*}
+\begin{minipage}{\linewidth}
+Abbreviation: CI = Confidence Interval\\
+\end{minipage}
+\end{table}
+\end{block}
+
+\begin{block}{Which model looks better?}
+\phantomsection\label{which-model-looks-better}
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(performance)}
+
+\FunctionTok{compare\_performance}\NormalTok{(fit\_adjust, fit\_omit, }\AttributeTok{rank =} \ConstantTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+# Comparison of Model Performance Indices
+
+Name       | Model |    R2 | R2 (adj.) |  RMSE | Sigma | AIC weights
+--------------------------------------------------------------------
+fit_adjust |    lm | 0.682 |     0.682 | 1.473 | 1.475 |        1.00
+fit_omit   |    lm | 0.312 |     0.311 | 2.169 | 2.171 |   2.88e-168
+
+Name       | AICc weights | BIC weights | Performance-Score
+-----------------------------------------------------------
+fit_adjust |         1.00 |        1.00 |           100.00%
+fit_omit   |    2.91e-168 |   3.35e-167 |             0.00%
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# BIC(fit\_adjust) {-} BIC(fit\_omit)  \# negative → "better" fit}
+\end{Highlighting}
+\end{Shaded}
+\end{block}
+
+\begin{block}{``What Error \#2'': Collider Bias}
+\phantomsection\label{what-error-2-collider-bias}
+\[\colliderT\]
+\end{block}
+
+\begin{block}{Data Generating Process}
+\phantomsection\label{data-generating-process-1}
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{2025}\NormalTok{)}
+
+\NormalTok{n          }\OtherTok{\textless{}{-}} \DecValTok{1000}
+\NormalTok{service    }\OtherTok{\textless{}{-}} \FunctionTok{rbinom}\NormalTok{(n, }\DecValTok{1}\NormalTok{, }\FloatTok{0.5}\NormalTok{)                            }\CommentTok{\# A}
+\NormalTok{donations  }\OtherTok{\textless{}{-}} \FunctionTok{rnorm}\NormalTok{(n)                                     }\CommentTok{\# Y}
+\NormalTok{wealth     }\OtherTok{\textless{}{-}} \FunctionTok{rnorm}\NormalTok{(n, }\AttributeTok{mean =}\NormalTok{ service }\SpecialCharTok{+}\NormalTok{ donations, }\AttributeTok{sd =} \DecValTok{1}\NormalTok{) }\CommentTok{\# collider L}
+
+\NormalTok{sim2 }\OtherTok{\textless{}{-}} \FunctionTok{tibble}\NormalTok{(service, wealth, donations)}
+\end{Highlighting}
+\end{Shaded}
+\end{block}
+
+\begin{block}{Model Comparison}
+\phantomsection\label{model-comparison-1}
+\begin{table}
+\caption{Adding the collider creates a spurious, significant effect of A.}\tabularnewline
+
+\fontsize{12.0pt}{14.4pt}\selectfont
+\begin{tabular*}{\linewidth}{@{\extracolsep{\fill}}lcccccc}
+\toprule
+ & \multicolumn{3}{c}{Model A: Omit L} & \multicolumn{3}{c}{Model B: Control for L (collider)} \\
+\cmidrule(lr){2-4} \cmidrule(lr){5-7}
+\textbf{Characteristic} & \textbf{Beta} & \textbf{95\% CI} & \textbf{p-value} & \textbf{Beta} & \textbf{95\% CI} & \textbf{p-value} \\
+\midrule\addlinespace[2.5pt]
+service & 0.00 & -0.12, 0.13 & >0.9 & -0.53 & -0.63, -0.44 & <0.001 \\
+wealth &  &  &  & 0.51 & 0.48, 0.54 & <0.001 \\
+\bottomrule
+\end{tabular*}
+\begin{minipage}{\linewidth}
+Abbreviation: CI = Confidence Interval\\
+\end{minipage}
+\end{table}
+\end{block}
+
+\begin{block}{Which model looks better?}
+\phantomsection\label{which-model-looks-better-1}
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{compare\_performance}\NormalTok{(fit\_biased, fit\_correct, }\AttributeTok{rank =} \ConstantTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+# Comparison of Model Performance Indices
+
+Name        | Model |        R2 |  R2 (adj.) |  RMSE | Sigma | AIC weights
+--------------------------------------------------------------------------
+fit_biased  |    lm |     0.526 |      0.525 | 0.707 | 0.708 |        1.00
+fit_correct |    lm | 3.722e-06 | -9.983e-04 | 1.028 | 1.029 |   1.42e-162
+
+Name        | AICc weights | BIC weights | Performance-Score
+------------------------------------------------------------
+fit_biased  |         1.00 |        1.00 |           100.00%
+fit_correct |    1.43e-162 |   1.65e-161 |             0.00%
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{BIC}\NormalTok{(fit\_biased) }\SpecialCharTok{{-}} \FunctionTok{BIC}\NormalTok{(fit\_correct)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] -740.425
+\end{verbatim}
+\end{block}
+
+\begin{block}{Take-Home}
+\phantomsection\label{take-home}
+\begin{tcolorbox}[enhanced jigsaw, toprule=.15mm, leftrule=.75mm, bottomtitle=1mm, colbacktitle=quarto-callout-important-color!10!white, rightrule=.15mm, bottomrule=.15mm, left=2mm, breakable, coltitle=black, arc=.35mm, toptitle=1mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Important}, colback=white, opacityback=0, titlerule=0mm, opacitybacktitle=0.6, colframe=quarto-callout-important-color-frame]
+
+Relying on model fit perpetuates the \emph{causality crisis} in
+psychology (Bulbulia 2023).\\
+Draw the DAG first; decide what belongs in the model before looking at
+numbers.
+
+\end{tcolorbox}
+\end{block}
+
+\begin{block}{The What Error is widespread in \textbf{experimental}
+studies in the social sciences}
+\phantomsection\label{the-what-error-is-widespread-in-experimental-studies-in-the-social-sciences}
+\begin{itemize}
+\item
+  ``Overall, we find that \textbf{46.7\% of the experimental studies}
+  published in APSR, AJPS, and JOP from 2012 to 2014 engaged in
+  posttreatment conditioning (35 of 75 studies) \ldots{}''
+\item
+  ``About \textbf{1 in 4 drop cases or subset the data based on
+  post-treatment criteria,} and \textbf{nearly a third include
+  post-treatment variables as covariates}''
+\item
+  ``Most tellingly, \textbf{nearly 1 in 8 articles directly conditions
+  on variables that the authors themselves show as being an outcome of
+  the experiment} -- an unambiguous indicator of \textbf{a fundamental
+  lack of understanding \ldots{} that conditioning on posttreatment
+  variables can invalidate results from randomized experiments.}''
+\item
+  ``Empirically, then, the answer to the question of \textbf{whether the
+  discipline already understands posttreatment bias is clear: It does
+  not.}'' (Montgomery, Nyhan, and Torres 2018)
+\end{itemize}
+\end{block}
+
+\begin{block}{Mediator Bias control strategy: \textbf{Longitudinal
+Hygiene}}
+\phantomsection\label{mediator-bias-control-strategy-longitudinal-hygiene}
+\begin{columns}[T]
+\begin{column}{0.5\linewidth}
+\[
+\mediatorT
+\]
+\end{column}
+
+\begin{column}{0.5\linewidth}
+\[
+\commoncausesolvedT
+\]
+\end{column}
+\end{columns}
+\end{block}
+
+\begin{block}{How to Tame The What Error? \textbf{Hide your future}}
+\phantomsection\label{how-to-tame-the-what-error-hide-your-future}
+Use Repeated Measures on the Same Individuals
+\end{block}
+
+\begin{block}{Collider bias control strategy: \textbf{Hide your future}}
+\phantomsection\label{collider-bias-control-strategy-hide-your-future}
+\begin{columns}[T]
+\begin{column}{0.5\linewidth}
+\[\colliderT\]
+\end{column}
+
+\begin{column}{0.5\linewidth}
+\[\commoncausesolvedT\]
+\end{column}
+\end{columns}
+\end{block}
+
+\begin{block}{Collider bias by proxy control strategy: \textbf{Hide your
+future}}
+\phantomsection\label{collider-bias-by-proxy-control-strategy-hide-your-future}
+\begin{columns}[T]
+\begin{column}{0.5\linewidth}
+\[\commoncausechildT\]
+\end{column}
+
+\begin{column}{0.5\linewidth}
+\[\commoncausesolvedchildT\]
+\end{column}
+\end{columns}
+\end{block}
+
+\begin{block}{Post-exposure collider bias control strategy: \textbf{Hide
+your future}}
+\phantomsection\label{post-exposure-collider-bias-control-strategy-hide-your-future}
+\begin{columns}[T]
+\begin{column}{0.5\linewidth}
+\[\mediatorcolliderT\]
+\end{column}
+
+\begin{column}{0.5\linewidth}
+\[\commoncausesolvedT\]
+\end{column}
+\end{columns}
+\end{block}
+
+\begin{block}{Finally, our biggest worry: \textbf{Unmeasured Common
+Causes}}
+\phantomsection\label{finally-our-biggest-worry-unmeasured-common-causes}
+\[\downstreamT\]
+\end{block}
+
+\begin{block}{Unmeasured common cause strategy: \textbf{Hide your
+future}}
+\phantomsection\label{unmeasured-common-cause-strategy-hide-your-future}
+\begin{columns}[T]
+\begin{column}{0.5\linewidth}
+\[\downstreamT\]
+\end{column}
+
+\begin{column}{0.5\linewidth}
+\[\commoncausesolvedT\]
+\end{column}
+\end{columns}
+
+And because \textcolor{cyan}{hope is not enough}, we should consistently
+report sensitivity analyses.
+\end{block}
+
+\begin{block}{Are longitudinal data + sensitivity analysis enough?}
+\phantomsection\label{are-longitudinal-data-sensitivity-analysis-enough}
+\begin{columns}[T]
+\begin{column}{0.5\linewidth}
+If the data we collect were like this:
+\[Y_{\text{time 0}} ~~...~~ A_{\text{time 1}}\]
+\end{column}
+
+\begin{column}{0.5\linewidth}
+We should not be tempted to model this.
+
+\[\ytoacrazyT\]
+\end{column}
+\end{columns}
+\end{block}
+
+\begin{block}{Are longitudinal data + sensitivity analysis enough?}
+\phantomsection\label{are-longitudinal-data-sensitivity-analysis-enough-1}
+\textcolor{cyan}{Too obvious} this is wrong?
+
+\[\ytoacrazyT\]
+\end{block}

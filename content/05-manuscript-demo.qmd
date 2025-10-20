@@ -1,0 +1,286 @@
+---
+title: "Reporting Causal Inference Results"
+subtitle: "How to Present Your Analysis Findings"
+date: "May 2025"
+format:
+  html:
+    code-overflow: scroll
+    code-tools:
+      source: true
+      toggle: false
+    toc: true
+    toc-depth: 3
+    number-sections: true
+warning: false
+error: false
+---
+
+## Introduction
+
+This guide demonstrates how to report results from causal inference analyses following the 9-step causal inference workflow. We use the workshop example of religious service → cooperation to illustrate best practices for communicating causal findings.
+
+::: {.callout-important}
+## Focus
+This tutorial covers **result presentation** following rigorous causal inference methodology. Learn how to interpret and communicate your causal findings using both standardised and data-scale effects.
+:::
+
+## The 9-Step Causal Inference Workflow
+
+Before reporting results, ensure you've addressed these foundational steps:
+
+### Steps 1-3: Problem Definition
+1. **Well-defined treatment**: "Weekly religious service attendance (≥1 time per week vs. <1 time per week)"
+2. **Well-defined outcome**: "Cooperative behaviour measured using standardised scales one year after intervention"  
+3. **Target population**: "New Zealand adults aged 18+ as represented in NZAVS Time 10 weighted by census demographics"
+
+### Steps 4-6: Identification Strategy
+4. **Exchangeability**: Conditional independence achieved through rich baseline covariate control
+5. **Consistency**: Binary exposure ensures well-defined intervention versions
+6. **Positivity**: Verified through transition tables showing exposure variation across covariates
+
+### Steps 7-9: Implementation
+7. **Measurement validity**: Validated scales with known psychometric properties
+8. **Attrition handling**: Inverse probability of censoring weights (IPCW) for panel attrition
+9. **Transparent reporting**: Complete documentation of decisions and assumptions
+
+::: {.callout-tip}
+## Target Trial Emulation
+Frame your causal question as: "How would outcomes change if we intervened to set everyone's religious service attendance to weekly rather than less-than-weekly, conditional on baseline characteristics?"
+:::
+
+## Reporting Average Treatment Effects
+
+### Standard ATE Table
+
+When reporting average treatment effects, include these key elements:
+
+**Table 1: Average Treatment Effects of Weekly Religious Service on Cooperation**
+
+| Outcome | Estimate | 95% CI | E-value | Interpretation |
+|---------|----------|---------|---------|----------------|
+| Charitable Donations (log) | 0.12 | [0.08, 0.16] | 1.8 | Small positive effect |
+| Volunteering Hours (log) | 0.09 | [0.05, 0.13] | 1.6 | Small positive effect |
+| Social Support | 0.15 | [0.11, 0.19] | 2.1 | Moderate positive effect |
+| Sense of Belonging | 0.18 | [0.14, 0.22] | 2.4 | Moderate positive effect |
+
+### Key Reporting Elements
+
+1. **Effect sizes**: Report in standard deviation units for continuous outcomes
+2. **Confidence intervals**: Show uncertainty around estimates
+3. **E-values**: Indicate robustness to unmeasured confounding
+4. **Sample size**: Total analysed after exclusions/weighting
+
+### Example Results Text
+
+> "Weekly religious service attendance showed positive causal effects across all cooperation measures. The largest effects were observed for social outcomes: sense of belonging (β = 0.18, 95% CI: 0.14-0.22) and social support (β = 0.15, 95% CI: 0.11-0.19). Behavioural cooperation showed smaller but significant effects: charitable donations (β = 0.12, 95% CI: 0.08-0.16) and volunteering (β = 0.09, 95% CI: 0.05-0.13). All effects were robust to moderate unmeasured confounding (E-values > 1.6)."
+
+## Reporting Heterogeneous Treatment Effects
+
+### RATE Results Summary
+
+When you find heterogeneity, report it systematically:
+
+**Table 2: Heterogeneity Assessment Using RATE Metrics**
+
+| Outcome | RATE-AUTOC | p-value | RATE-Qini | p-value | Evidence |
+|---------|------------|---------|-----------|---------|----------|
+| Social Support | 0.12 | 0.003 | 0.08 | 0.012 | Strong |
+| Belonging | 0.15 | 0.001 | 0.11 | 0.004 | Strong |
+| Charitable Donations | 0.06 | 0.089 | 0.04 | 0.156 | Moderate |
+| Volunteering | 0.03 | 0.234 | 0.02 | 0.445 | Weak |
+
+### Example Heterogeneity Text
+
+> "We found substantial heterogeneity in treatment effects for social outcomes (RATE-Qini > 0.08, p < 0.05), but limited heterogeneity for behavioural outcomes. This suggests that while religious service benefits most people socially, individual responses vary considerably in magnitude."
+
+## Reporting Policy Tree Results
+
+### Subgroup Identification with Data-Scale Effects
+
+Present policy trees with both standardised and original scale interpretations:
+
+```{r}
+#| eval: false
+# Example: Convert standardised effects to original scale for donations
+log_mean_donations <- mean(original_df$log_charity_donate, na.rm = TRUE)
+log_sd_donations <- sd(original_df$log_charity_donate, na.rm = TRUE)
+
+# Create mapping for common effect sizes
+donation_mapping <- margot_back_transform_log_z(
+  log_mean = log_mean_donations,
+  log_sd = log_sd_donations,
+  z_scores = c(0.08, 0.22, 0.28),  # effect sizes from subgroups
+  label = "annual_donations_nzd"
+)
+print(donation_mapping)
+```
+
+**High-Response Subgroups for Charitable Donations:**
+
+1. **Older adults with high agreeableness** (Age > 45 & Agreeableness > +1 SD)
+   - **Standardised effect**: β = 0.28 (95% CI: 0.21-0.35)
+   - **Data-scale effect**: NZ$847 additional annual donations (95% CI: NZ$635-1,058)
+   - **Sample proportion**: 23%
+
+2. **Parents with medium conscientiousness** (Parent = Yes & Conscientiousness > 0)
+   - **Standardised effect**: β = 0.22 (95% CI: 0.16-0.28)
+   - **Data-scale effect**: NZ$665 additional annual donations (95% CI: NZ$484-846)
+   - **Sample proportion**: 31%
+
+3. **All others**
+   - **Standardised effect**: β = 0.08 (95% CI: 0.04-0.12)
+   - **Data-scale effect**: NZ$242 additional annual donations (95% CI: NZ$121-363)
+   - **Sample proportion**: 46%
+
+### Example Policy Tree Text with Data-Scale Interpretation
+
+> "Policy tree analysis identified two subgroups with enhanced treatment response for charitable donations. Older adults (45+) with high agreeableness showed the largest increase (β = 0.28 SD, equivalent to NZ$847 additional annual donations), representing 23% of the sample. Parents with medium-to-high conscientiousness also showed strong responses (β = 0.22 SD, equivalent to NZ$665 additional annually), comprising 31% of the sample. In practical terms, targeted interventions toward these subgroups could generate 2.8-3.5 times more charitable giving than population-wide approaches."
+
+## Sensitivity Analysis Reporting
+
+### E-value Interpretation
+
+Always interpret E-values in context:
+
+> "To assess robustness to unmeasured confounding, we calculated E-values for all estimates. The observed effect on sense of belonging (E-value = 2.4) would require an unmeasured confounder associated with both religious service and belonging by a risk ratio of 2.4 each to explain away the result. This represents a strong confounder—stronger than most demographic or personality variables in our model."
+
+### What E-values Mean
+
+- **E-value ≥ 2.0**: Robust to strong confounding
+- **E-value 1.5-2.0**: Robust to moderate confounding  
+- **E-value < 1.5**: Vulnerable to weak confounding
+
+## Methods Section Template Following 9-Step Workflow
+
+### Target Trial Emulation
+
+```{r}
+#| eval: false
+# Complete methods section template:
+
+"We emulated a target trial to estimate the causal effect of religious 
+service attendance on cooperative behaviour.
+
+**Treatment Definition**: We defined the treatment as weekly religious 
+service attendance (≥1 time per week) compared to less frequent attendance 
+(<1 time per week), assessed during Time 11 (2019) of the New Zealand 
+Attitudes and Values Study.
+
+**Outcome Definition**: Cooperative behaviour was measured using four 
+validated scales one year later (Time 12, 2020): charitable donations 
+(log-transformed annual giving), volunteering hours (log-transformed 
+weekly hours), social support (7-point scale), and sense of belonging 
+(7-point scale). All outcomes were z-standardised for analysis.
+
+**Target Population**: New Zealand adults aged 18+ as represented in NZAVS 
+Time 10, weighted by census demographics for age, gender, and ethnicity 
+to enhance population representativeness.
+
+**Eligibility Criteria**: Participants were included if they provided 
+baseline religious service data (Time 10) and were not lost to follow-up 
+due to COVID-related measurement error. Of 20,000 eligible participants, 
+15,742 remained after applying exclusion criteria and censoring weights.
+
+**Causal Identification**: We assumed conditional exchangeability given 
+32 baseline covariates including demographics, personality traits, health 
+indicators, and prior cooperation levels. Positivity was verified through 
+transition tables showing exposure variation across covariate strata.
+
+**Statistical Analysis**: We estimated causal effects using generalized 
+random forests with sample splitting to prevent overfitting. The analysis 
+employed 1,000 trees with minimum node size 20. We applied two-stage 
+inverse probability of censoring weights to address panel attrition: 
+stage 1 for baseline-to-exposure dropout, stage 2 for exposure-to-outcome 
+dropout, combined with original sampling weights.
+
+**Heterogeneity Assessment**: Treatment effect heterogeneity was evaluated 
+using Rank Average Treatment Effect (RATE) metrics with false discovery 
+rate correction. For outcomes showing significant heterogeneity (p < 0.05), 
+we fitted policy trees with maximum depth 2 to identify high-response 
+subgroups.
+
+**Sensitivity Analysis**: Robustness to unmeasured confounding was assessed 
+using E-values, quantifying the minimum strength of association an unmeasured 
+confounder would require with both exposure and outcome to explain away 
+observed effects."
+```
+
+## Key Reporting Principles
+
+### Do Report
+
+✅ **Both standardised and data-scale effects**  
+✅ **Effect sizes with confidence intervals**  
+✅ **Sample sizes after exclusions and weighting**  
+✅ **E-values for sensitivity analysis**  
+✅ **Clear practical interpretation of effect magnitudes**  
+✅ **Subgroup sizes and effect magnifications**  
+✅ **Target trial framework and causal question**  
+✅ **Explicit treatment and outcome definitions**  
+
+### Don't Report
+
+❌ **Model coefficients without interpretation**  
+❌ **P-values alone without effect sizes**  
+❌ **Only standardised effects for policy-relevant outcomes**  
+❌ **Technical details that obscure main findings**  
+❌ **Causal claims beyond your identification strategy**  
+❌ **Results without addressing the 9-step workflow**
+
+## Figure Presentation
+
+### ATE Plot Standards
+
+- Use forest plots with confidence intervals
+- Order by effect magnitude or E-value
+- Include sample sizes
+- Use consistent colour coding
+
+### Policy Tree Plots
+
+- Show decision rules clearly
+- Include sample proportions in each node
+- Use readable font sizes
+- Provide plain-language interpretation
+
+## Conclusion
+
+Effective reporting of causal inference results requires:
+
+1. **Clear effect size interpretation** in practical terms
+2. **Honest uncertainty quantification** with confidence intervals  
+3. **Sensitivity analysis** using E-values
+4. **Meaningful subgroup analysis** when heterogeneity exists
+5. **Accessible language** that explains technical concepts
+
+The goal is communicating actionable insights, not demonstrating methodological sophistication.
+
+::: {.callout-tip}
+## Remember
+Your analysis is only as good as how clearly you can communicate the findings. Focus on what decision-makers need to know, not just what the statistical tests show.
+:::
+
+## Example Complete Results Section with Data-Scale Effects
+
+> **Results**
+> 
+> **Average Treatment Effects**: Among 15,742 New Zealand adults followed over three years, weekly religious service attendance caused small to moderate increases in cooperative behaviour. Social cooperation showed the strongest effects: sense of belonging increased by 0.18 standard deviations (95% CI: 0.14-0.22), equivalent to a 1.3-point increase on the 7-point scale, and social support increased by 0.15 SD (95% CI: 0.11-0.19), equivalent to a 1.1-point increase. Behavioural cooperation showed smaller but meaningful effects: charitable donations increased by 0.12 SD (95% CI: 0.08-0.16), equivalent to NZ$364 additional annual giving, and volunteering increased by 0.09 SD (95% CI: 0.05-0.13), equivalent to 1.7 additional hours weekly.
+> 
+> **Heterogeneous Treatment Effects**: Treatment effects varied substantially across individuals for social outcomes (RATE-Qini > 0.08, p < 0.05) but showed little heterogeneity for behavioural outcomes. Policy tree analysis identified high-response subgroups for charitable donations: older adults (45+) with high agreeableness showed the largest response (β = 0.28 SD, equivalent to NZ$847 additional annually), while parents with medium conscientiousness showed strong responses (β = 0.22 SD, equivalent to NZ$665 additional annually). Together, these subgroups comprised 54% of the sample and showed 2.8-3.5 times larger effects than the general population.
+> 
+> **Sensitivity Analysis**: All findings were robust to unmeasured confounding, with E-values ranging from 1.6 to 2.4. Even the smallest effect (volunteering, E-value = 1.6) would require an unmeasured confounder associated with both religious attendance and volunteering by a risk ratio of 1.6 each to explain away the result. The largest effect (belonging, E-value = 2.4) would require substantially stronger confounding to nullify.
+
+::: {.callout-tip}
+## Best Practice Summary
+
+**Complete causal inference reporting requires:**
+
+1. **9-Step Workflow Compliance**: Address all foundational steps
+2. **Target Trial Framework**: Frame as hypothetical intervention  
+3. **Dual-Scale Reporting**: Both standardised and data-scale effects
+4. **Heterogeneity Assessment**: RATE metrics and policy trees when appropriate
+5. **Sensitivity Analysis**: E-values for robustness evaluation
+6. **Clear Practical Interpretation**: Policy-relevant effect magnifications
+
+Remember: The goal is actionable insights for decision-makers, not just statistical significance.
+:::

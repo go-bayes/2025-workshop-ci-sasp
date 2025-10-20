@@ -1,0 +1,65 @@
+# r project files
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+
+# mac system files
+.DS_Store
+
+# large data files - workshop data directory
+data/
+workshop-data/
+analysis-data/
+results/
+models/
+*.rds
+*.qs
+*.csv
+*.RData
+
+# margot analysis outputs
+outputs/
+save_directory/
+push_mods/
+workshop-scripts/experimental-stability-functions.R
+
+# workshop-specific save directories (external paths used in scripts)
+grf-church-coop/
+v-project*/
+*Dropbox*/data/
+*dropbox*/data/
+
+# output files that might be large
+*.pdf
+!docs/pdfs/**/*.pdf
+!docs/quiz/*.pdf
+!pdfs/**/*.pdf
+!quiz/*.pdf
+laboratory/**/*.pdf
+laboratory/**/*.png
+
+# temporary files
+*~
+*.tmp
+*.temp
+
+# r markdown cache
+*_cache/
+*_files/
+
+# knitr and r markdown default cache directories
+/*_cache/
+/cache/
+
+# r environment variables
+.Renviron
+
+# quarto
+/.quarto/
+_site/
+
+# ignored folder for large files and drafts
+_ignore/
+
+**/*.quarto_ipynb

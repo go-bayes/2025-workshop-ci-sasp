@@ -1,0 +1,1667 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2025-05-01">
+
+<title>Reporting Causal Inference Results – Day 2: SPARCC Causal Inference Workshop</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-f98ea211b99fe8356d6469e598480a52.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-5c1f7a6a2802c248a2ccc243aab7b5c3.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-f98ea211b99fe8356d6469e598480a52.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-b1feb1a0902d666fd80953a92c5c0b1f.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark-acb479e9156c0391e8ae9500026fddbd.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-b1feb1a0902d666fd80953a92c5c0b1f.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+
+
+</head>
+
+<body class="nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../index.html" class="navbar-brand navbar-brand-logo">
+    </a>
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">Day 2: SPARCC Causal Inference Workshop</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html"> 
+<span class="menu-text">🏠 Home</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-content" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">📚 CONTENT</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-content">    
+        <li class="dropdown-header">Core Materials</li>
+        <li><hr class="dropdown-divider"></li>
+        <li class="dropdown-header">Workshop Sessions</li>
+        <li>
+    <a class="dropdown-item" href="../content/00-background.html">
+ <span class="dropdown-text">1. What is Causality?</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../content/01-background.html">
+ <span class="dropdown-text">2. Identification Using Causal DAGs</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../content/02-causal-workflow.html">
+ <span class="dropdown-text">3. Causal Workflow</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../content/03-interaction.html">
+ <span class="dropdown-text">4. Average and Conditional Average Treatment Effects</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../content/05-measurement.html">
+ <span class="dropdown-text">5. Measurement Matters</span></a>
+  </li>  
+        <li><hr class="dropdown-divider"></li>
+        <li>
+    <a class="dropdown-item" href="../workshop-scripts/06-interpretation-2.html">
+ <span class="dropdown-text">6. Code Review</span></a>
+  </li>  
+        <li class="dropdown-header">Simulations</li>
+        <li>
+    <a class="dropdown-item" href="../simulations/01-simulation-population.html">
+ <span class="dropdown-text">Simulation: Population Estimate</span></a>
+  </li>  
+        <li class="dropdown-header">ggdag</li>
+        <li>
+    <a class="dropdown-item" href="../content/ggdag-examples.html">
+ <span class="dropdown-text">Causal Diagrams: The Structures of Interaction/Effect Modification, Measurement Bias, Selection Bias</span></a>
+  </li>  
+        <li class="dropdown-header">References</li>
+        <li>
+    <a class="dropdown-item" href="../pdfs/bulbulia-hand-outs/S2-glossary.pdf">
+ <span class="dropdown-text">Glossary (PDF)</span></a>
+  </li>  
+        <li><hr class="dropdown-divider"></li>
+        <li>
+    <a class="dropdown-item" href="../quiz/sparcc_day_2_short_quiz.pdf">
+ <span class="dropdown-text">Short Quiz</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../quiz/sparcc_day_2_short_quiz-answer-key.pdf">
+ <span class="dropdown-text">Short Quiz Answer Key</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../quiz/2025-SPARCC-DAY-2-TEST.pdf">
+ <span class="dropdown-text">Test</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="../glossary-and-dags.html"> 
+<span class="menu-text">📊 Glossary &amp; DAGs</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../reading.html"> 
+<span class="menu-text">📚 Reading</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="https://go-bayes.github.io/sparcc-day-1/"> 
+<span class="menu-text">Day 1 Workshop led by B.G. Purzycki</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://github.com/go-bayes"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text">Research Code</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="header-section-number">1</span> Introduction</a></li>
+  <li><a href="#the-9-step-causal-inference-workflow" id="toc-the-9-step-causal-inference-workflow" class="nav-link" data-scroll-target="#the-9-step-causal-inference-workflow"><span class="header-section-number">2</span> The 9-Step Causal Inference Workflow</a>
+  <ul class="collapse">
+  <li><a href="#steps-1-3-problem-definition" id="toc-steps-1-3-problem-definition" class="nav-link" data-scroll-target="#steps-1-3-problem-definition"><span class="header-section-number">2.1</span> Steps 1-3: Problem Definition</a></li>
+  <li><a href="#steps-4-6-identification-strategy" id="toc-steps-4-6-identification-strategy" class="nav-link" data-scroll-target="#steps-4-6-identification-strategy"><span class="header-section-number">2.2</span> Steps 4-6: Identification Strategy</a></li>
+  <li><a href="#steps-7-9-implementation" id="toc-steps-7-9-implementation" class="nav-link" data-scroll-target="#steps-7-9-implementation"><span class="header-section-number">2.3</span> Steps 7-9: Implementation</a></li>
+  </ul></li>
+  <li><a href="#reporting-average-treatment-effects" id="toc-reporting-average-treatment-effects" class="nav-link" data-scroll-target="#reporting-average-treatment-effects"><span class="header-section-number">3</span> Reporting Average Treatment Effects</a>
+  <ul class="collapse">
+  <li><a href="#standard-ate-table" id="toc-standard-ate-table" class="nav-link" data-scroll-target="#standard-ate-table"><span class="header-section-number">3.1</span> Standard ATE Table</a></li>
+  <li><a href="#key-reporting-elements" id="toc-key-reporting-elements" class="nav-link" data-scroll-target="#key-reporting-elements"><span class="header-section-number">3.2</span> Key Reporting Elements</a></li>
+  <li><a href="#example-results-text" id="toc-example-results-text" class="nav-link" data-scroll-target="#example-results-text"><span class="header-section-number">3.3</span> Example Results Text</a></li>
+  </ul></li>
+  <li><a href="#reporting-heterogeneous-treatment-effects" id="toc-reporting-heterogeneous-treatment-effects" class="nav-link" data-scroll-target="#reporting-heterogeneous-treatment-effects"><span class="header-section-number">4</span> Reporting Heterogeneous Treatment Effects</a>
+  <ul class="collapse">
+  <li><a href="#rate-results-summary" id="toc-rate-results-summary" class="nav-link" data-scroll-target="#rate-results-summary"><span class="header-section-number">4.1</span> RATE Results Summary</a></li>
+  <li><a href="#example-heterogeneity-text" id="toc-example-heterogeneity-text" class="nav-link" data-scroll-target="#example-heterogeneity-text"><span class="header-section-number">4.2</span> Example Heterogeneity Text</a></li>
+  </ul></li>
+  <li><a href="#reporting-policy-tree-results" id="toc-reporting-policy-tree-results" class="nav-link" data-scroll-target="#reporting-policy-tree-results"><span class="header-section-number">5</span> Reporting Policy Tree Results</a>
+  <ul class="collapse">
+  <li><a href="#subgroup-identification-with-data-scale-effects" id="toc-subgroup-identification-with-data-scale-effects" class="nav-link" data-scroll-target="#subgroup-identification-with-data-scale-effects"><span class="header-section-number">5.1</span> Subgroup Identification with Data-Scale Effects</a></li>
+  <li><a href="#example-policy-tree-text-with-data-scale-interpretation" id="toc-example-policy-tree-text-with-data-scale-interpretation" class="nav-link" data-scroll-target="#example-policy-tree-text-with-data-scale-interpretation"><span class="header-section-number">5.2</span> Example Policy Tree Text with Data-Scale Interpretation</a></li>
+  </ul></li>
+  <li><a href="#sensitivity-analysis-reporting" id="toc-sensitivity-analysis-reporting" class="nav-link" data-scroll-target="#sensitivity-analysis-reporting"><span class="header-section-number">6</span> Sensitivity Analysis Reporting</a>
+  <ul class="collapse">
+  <li><a href="#e-value-interpretation" id="toc-e-value-interpretation" class="nav-link" data-scroll-target="#e-value-interpretation"><span class="header-section-number">6.1</span> E-value Interpretation</a></li>
+  <li><a href="#what-e-values-mean" id="toc-what-e-values-mean" class="nav-link" data-scroll-target="#what-e-values-mean"><span class="header-section-number">6.2</span> What E-values Mean</a></li>
+  </ul></li>
+  <li><a href="#methods-section-template-following-9-step-workflow" id="toc-methods-section-template-following-9-step-workflow" class="nav-link" data-scroll-target="#methods-section-template-following-9-step-workflow"><span class="header-section-number">7</span> Methods Section Template Following 9-Step Workflow</a>
+  <ul class="collapse">
+  <li><a href="#target-trial-emulation-1" id="toc-target-trial-emulation-1" class="nav-link" data-scroll-target="#target-trial-emulation-1"><span class="header-section-number">7.1</span> Target Trial Emulation</a></li>
+  </ul></li>
+  <li><a href="#key-reporting-principles" id="toc-key-reporting-principles" class="nav-link" data-scroll-target="#key-reporting-principles"><span class="header-section-number">8</span> Key Reporting Principles</a>
+  <ul class="collapse">
+  <li><a href="#do-report" id="toc-do-report" class="nav-link" data-scroll-target="#do-report"><span class="header-section-number">8.1</span> Do Report</a></li>
+  <li><a href="#dont-report" id="toc-dont-report" class="nav-link" data-scroll-target="#dont-report"><span class="header-section-number">8.2</span> Don’t Report</a></li>
+  </ul></li>
+  <li><a href="#figure-presentation" id="toc-figure-presentation" class="nav-link" data-scroll-target="#figure-presentation"><span class="header-section-number">9</span> Figure Presentation</a>
+  <ul class="collapse">
+  <li><a href="#ate-plot-standards" id="toc-ate-plot-standards" class="nav-link" data-scroll-target="#ate-plot-standards"><span class="header-section-number">9.1</span> ATE Plot Standards</a></li>
+  <li><a href="#policy-tree-plots" id="toc-policy-tree-plots" class="nav-link" data-scroll-target="#policy-tree-plots"><span class="header-section-number">9.2</span> Policy Tree Plots</a></li>
+  </ul></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">10</span> Conclusion</a></li>
+  <li><a href="#example-complete-results-section-with-data-scale-effects" id="toc-example-complete-results-section-with-data-scale-effects" class="nav-link" data-scroll-target="#example-complete-results-section-with-data-scale-effects"><span class="header-section-number">11</span> Example Complete Results Section with Data-Scale Effects</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<div class="quarto-title-block"><div><h1 class="title">Reporting Causal Inference Results</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
+<p class="subtitle lead">How to Present Your Analysis Findings</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">May 1, 2025</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="introduction" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="introduction"><span class="header-section-number">1</span> Introduction</h2>
+<p>This guide demonstrates how to report results from causal inference analyses following the 9-step causal inference workflow. We use the workshop example of religious service → cooperation to illustrate best practices for communicating causal findings.</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Focus
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>This tutorial covers <strong>result presentation</strong> following rigorous causal inference methodology. Learn how to interpret and communicate your causal findings using both standardised and data-scale effects.</p>
+</div>
+</div>
+</section>
+<section id="the-9-step-causal-inference-workflow" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="the-9-step-causal-inference-workflow"><span class="header-section-number">2</span> The 9-Step Causal Inference Workflow</h2>
+<p>Before reporting results, ensure you’ve addressed these foundational steps:</p>
+<section id="steps-1-3-problem-definition" class="level3" data-number="2.1">
+<h3 data-number="2.1" class="anchored" data-anchor-id="steps-1-3-problem-definition"><span class="header-section-number">2.1</span> Steps 1-3: Problem Definition</h3>
+<ol type="1">
+<li><strong>Well-defined treatment</strong>: “Weekly religious service attendance (≥1 time per week vs.&nbsp;&lt;1 time per week)”</li>
+<li><strong>Well-defined outcome</strong>: “Cooperative behaviour measured using standardised scales one year after intervention”<br>
+</li>
+<li><strong>Target population</strong>: “New Zealand adults aged 18+ as represented in NZAVS Time 10 weighted by census demographics”</li>
+</ol>
+</section>
+<section id="steps-4-6-identification-strategy" class="level3" data-number="2.2">
+<h3 data-number="2.2" class="anchored" data-anchor-id="steps-4-6-identification-strategy"><span class="header-section-number">2.2</span> Steps 4-6: Identification Strategy</h3>
+<ol start="4" type="1">
+<li><strong>Exchangeability</strong>: Conditional independence achieved through rich baseline covariate control</li>
+<li><strong>Consistency</strong>: Binary exposure ensures well-defined intervention versions</li>
+<li><strong>Positivity</strong>: Verified through transition tables showing exposure variation across covariates</li>
+</ol>
+</section>
+<section id="steps-7-9-implementation" class="level3" data-number="2.3">
+<h3 data-number="2.3" class="anchored" data-anchor-id="steps-7-9-implementation"><span class="header-section-number">2.3</span> Steps 7-9: Implementation</h3>
+<ol start="7" type="1">
+<li><strong>Measurement validity</strong>: Validated scales with known psychometric properties</li>
+<li><strong>Attrition handling</strong>: Inverse probability of censoring weights (IPCW) for panel attrition</li>
+<li><strong>Transparent reporting</strong>: Complete documentation of decisions and assumptions</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Target Trial Emulation
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Frame your causal question as: “How would outcomes change if we intervened to set everyone’s religious service attendance to weekly rather than less-than-weekly, conditional on baseline characteristics?”</p>
+</div>
+</div>
+</section>
+</section>
+<section id="reporting-average-treatment-effects" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="reporting-average-treatment-effects"><span class="header-section-number">3</span> Reporting Average Treatment Effects</h2>
+<section id="standard-ate-table" class="level3" data-number="3.1">
+<h3 data-number="3.1" class="anchored" data-anchor-id="standard-ate-table"><span class="header-section-number">3.1</span> Standard ATE Table</h3>
+<p>When reporting average treatment effects, include these key elements:</p>
+<p><strong>Table 1: Average Treatment Effects of Weekly Religious Service on Cooperation</strong></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 16%">
+<col style="width: 18%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 30%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Outcome</th>
+<th>Estimate</th>
+<th>95% CI</th>
+<th>E-value</th>
+<th>Interpretation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Charitable Donations (log)</td>
+<td>0.12</td>
+<td>[0.08, 0.16]</td>
+<td>1.8</td>
+<td>Small positive effect</td>
+</tr>
+<tr class="even">
+<td>Volunteering Hours (log)</td>
+<td>0.09</td>
+<td>[0.05, 0.13]</td>
+<td>1.6</td>
+<td>Small positive effect</td>
+</tr>
+<tr class="odd">
+<td>Social Support</td>
+<td>0.15</td>
+<td>[0.11, 0.19]</td>
+<td>2.1</td>
+<td>Moderate positive effect</td>
+</tr>
+<tr class="even">
+<td>Sense of Belonging</td>
+<td>0.18</td>
+<td>[0.14, 0.22]</td>
+<td>2.4</td>
+<td>Moderate positive effect</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="key-reporting-elements" class="level3" data-number="3.2">
+<h3 data-number="3.2" class="anchored" data-anchor-id="key-reporting-elements"><span class="header-section-number">3.2</span> Key Reporting Elements</h3>
+<ol type="1">
+<li><strong>Effect sizes</strong>: Report in standard deviation units for continuous outcomes</li>
+<li><strong>Confidence intervals</strong>: Show uncertainty around estimates</li>
+<li><strong>E-values</strong>: Indicate robustness to unmeasured confounding</li>
+<li><strong>Sample size</strong>: Total analysed after exclusions/weighting</li>
+</ol>
+</section>
+<section id="example-results-text" class="level3" data-number="3.3">
+<h3 data-number="3.3" class="anchored" data-anchor-id="example-results-text"><span class="header-section-number">3.3</span> Example Results Text</h3>
+<blockquote class="blockquote">
+<p>“Weekly religious service attendance showed positive causal effects across all cooperation measures. The largest effects were observed for social outcomes: sense of belonging (β = 0.18, 95% CI: 0.14-0.22) and social support (β = 0.15, 95% CI: 0.11-0.19). Behavioural cooperation showed smaller but significant effects: charitable donations (β = 0.12, 95% CI: 0.08-0.16) and volunteering (β = 0.09, 95% CI: 0.05-0.13). All effects were robust to moderate unmeasured confounding (E-values &gt; 1.6).”</p>
+</blockquote>
+</section>
+</section>
+<section id="reporting-heterogeneous-treatment-effects" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="reporting-heterogeneous-treatment-effects"><span class="header-section-number">4</span> Reporting Heterogeneous Treatment Effects</h2>
+<section id="rate-results-summary" class="level3" data-number="4.1">
+<h3 data-number="4.1" class="anchored" data-anchor-id="rate-results-summary"><span class="header-section-number">4.1</span> RATE Results Summary</h3>
+<p>When you find heterogeneity, report it systematically:</p>
+<p><strong>Table 2: Heterogeneity Assessment Using RATE Metrics</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Outcome</th>
+<th>RATE-AUTOC</th>
+<th>p-value</th>
+<th>RATE-Qini</th>
+<th>p-value</th>
+<th>Evidence</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Social Support</td>
+<td>0.12</td>
+<td>0.003</td>
+<td>0.08</td>
+<td>0.012</td>
+<td>Strong</td>
+</tr>
+<tr class="even">
+<td>Belonging</td>
+<td>0.15</td>
+<td>0.001</td>
+<td>0.11</td>
+<td>0.004</td>
+<td>Strong</td>
+</tr>
+<tr class="odd">
+<td>Charitable Donations</td>
+<td>0.06</td>
+<td>0.089</td>
+<td>0.04</td>
+<td>0.156</td>
+<td>Moderate</td>
+</tr>
+<tr class="even">
+<td>Volunteering</td>
+<td>0.03</td>
+<td>0.234</td>
+<td>0.02</td>
+<td>0.445</td>
+<td>Weak</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="example-heterogeneity-text" class="level3" data-number="4.2">
+<h3 data-number="4.2" class="anchored" data-anchor-id="example-heterogeneity-text"><span class="header-section-number">4.2</span> Example Heterogeneity Text</h3>
+<blockquote class="blockquote">
+<p>“We found substantial heterogeneity in treatment effects for social outcomes (RATE-Qini &gt; 0.08, p &lt; 0.05), but limited heterogeneity for behavioural outcomes. This suggests that while religious service benefits most people socially, individual responses vary considerably in magnitude.”</p>
+</blockquote>
+</section>
+</section>
+<section id="reporting-policy-tree-results" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="reporting-policy-tree-results"><span class="header-section-number">5</span> Reporting Policy Tree Results</h2>
+<section id="subgroup-identification-with-data-scale-effects" class="level3" data-number="5.1">
+<h3 data-number="5.1" class="anchored" data-anchor-id="subgroup-identification-with-data-scale-effects"><span class="header-section-number">5.1</span> Subgroup Identification with Data-Scale Effects</h3>
+<p>Present policy trees with both standardised and original scale interpretations:</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Example: Convert standardised effects to original scale for donations</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>log_mean_donations <span class="ot">&lt;-</span> <span class="fu">mean</span>(original_df<span class="sc">$</span>log_charity_donate, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>log_sd_donations <span class="ot">&lt;-</span> <span class="fu">sd</span>(original_df<span class="sc">$</span>log_charity_donate, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Create mapping for common effect sizes</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>donation_mapping <span class="ot">&lt;-</span> <span class="fu">margot_back_transform_log_z</span>(</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">log_mean =</span> log_mean_donations,</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">log_sd =</span> log_sd_donations,</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">z_scores =</span> <span class="fu">c</span>(<span class="fl">0.08</span>, <span class="fl">0.22</span>, <span class="fl">0.28</span>),  <span class="co"># effect sizes from subgroups</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">label =</span> <span class="st">"annual_donations_nzd"</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(donation_mapping)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<p><strong>High-Response Subgroups for Charitable Donations:</strong></p>
+<ol type="1">
+<li><strong>Older adults with high agreeableness</strong> (Age &gt; 45 &amp; Agreeableness &gt; +1 SD)
+<ul>
+<li><strong>Standardised effect</strong>: β = 0.28 (95% CI: 0.21-0.35)</li>
+<li><strong>Data-scale effect</strong>: NZ$847 additional annual donations (95% CI: NZ$635-1,058)</li>
+<li><strong>Sample proportion</strong>: 23%</li>
+</ul></li>
+<li><strong>Parents with medium conscientiousness</strong> (Parent = Yes &amp; Conscientiousness &gt; 0)
+<ul>
+<li><strong>Standardised effect</strong>: β = 0.22 (95% CI: 0.16-0.28)</li>
+<li><strong>Data-scale effect</strong>: NZ$665 additional annual donations (95% CI: NZ$484-846)</li>
+<li><strong>Sample proportion</strong>: 31%</li>
+</ul></li>
+<li><strong>All others</strong>
+<ul>
+<li><strong>Standardised effect</strong>: β = 0.08 (95% CI: 0.04-0.12)</li>
+<li><strong>Data-scale effect</strong>: NZ$242 additional annual donations (95% CI: NZ$121-363)</li>
+<li><strong>Sample proportion</strong>: 46%</li>
+</ul></li>
+</ol>
+</section>
+<section id="example-policy-tree-text-with-data-scale-interpretation" class="level3" data-number="5.2">
+<h3 data-number="5.2" class="anchored" data-anchor-id="example-policy-tree-text-with-data-scale-interpretation"><span class="header-section-number">5.2</span> Example Policy Tree Text with Data-Scale Interpretation</h3>
+<blockquote class="blockquote">
+<p>“Policy tree analysis identified two subgroups with enhanced treatment response for charitable donations. Older adults (45+) with high agreeableness showed the largest increase (β = 0.28 SD, equivalent to NZ$847 additional annual donations), representing 23% of the sample. Parents with medium-to-high conscientiousness also showed strong responses (β = 0.22 SD, equivalent to NZ$665 additional annually), comprising 31% of the sample. In practical terms, targeted interventions toward these subgroups could generate 2.8-3.5 times more charitable giving than population-wide approaches.”</p>
+</blockquote>
+</section>
+</section>
+<section id="sensitivity-analysis-reporting" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="sensitivity-analysis-reporting"><span class="header-section-number">6</span> Sensitivity Analysis Reporting</h2>
+<section id="e-value-interpretation" class="level3" data-number="6.1">
+<h3 data-number="6.1" class="anchored" data-anchor-id="e-value-interpretation"><span class="header-section-number">6.1</span> E-value Interpretation</h3>
+<p>Always interpret E-values in context:</p>
+<blockquote class="blockquote">
+<p>“To assess robustness to unmeasured confounding, we calculated E-values for all estimates. The observed effect on sense of belonging (E-value = 2.4) would require an unmeasured confounder associated with both religious service and belonging by a risk ratio of 2.4 each to explain away the result. This represents a strong confounder—stronger than most demographic or personality variables in our model.”</p>
+</blockquote>
+</section>
+<section id="what-e-values-mean" class="level3" data-number="6.2">
+<h3 data-number="6.2" class="anchored" data-anchor-id="what-e-values-mean"><span class="header-section-number">6.2</span> What E-values Mean</h3>
+<ul>
+<li><strong>E-value ≥ 2.0</strong>: Robust to strong confounding</li>
+<li><strong>E-value 1.5-2.0</strong>: Robust to moderate confounding<br>
+</li>
+<li><strong>E-value &lt; 1.5</strong>: Vulnerable to weak confounding</li>
+</ul>
+</section>
+</section>
+<section id="methods-section-template-following-9-step-workflow" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="methods-section-template-following-9-step-workflow"><span class="header-section-number">7</span> Methods Section Template Following 9-Step Workflow</h2>
+<section id="target-trial-emulation-1" class="level3" data-number="7.1">
+<h3 data-number="7.1" class="anchored" data-anchor-id="target-trial-emulation-1"><span class="header-section-number">7.1</span> Target Trial Emulation</h3>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Complete methods section template:</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="st">"We emulated a target trial to estimate the causal effect of religious </span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="st">service attendance on cooperative behaviour.</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="st">**Treatment Definition**: We defined the treatment as weekly religious </span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="st">service attendance (≥1 time per week) compared to less frequent attendance </span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="st">(&lt;1 time per week), assessed during Time 11 (2019) of the New Zealand </span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="st">Attitudes and Values Study.</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="st">**Outcome Definition**: Cooperative behaviour was measured using four </span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="st">validated scales one year later (Time 12, 2020): charitable donations </span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="st">(log-transformed annual giving), volunteering hours (log-transformed </span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="st">weekly hours), social support (7-point scale), and sense of belonging </span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="st">(7-point scale). All outcomes were z-standardised for analysis.</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="st">**Target Population**: New Zealand adults aged 18+ as represented in NZAVS </span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="st">Time 10, weighted by census demographics for age, gender, and ethnicity </span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="st">to enhance population representativeness.</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a><span class="st">**Eligibility Criteria**: Participants were included if they provided </span></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="st">baseline religious service data (Time 10) and were not lost to follow-up </span></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a><span class="st">due to COVID-related measurement error. Of 20,000 eligible participants, </span></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a><span class="st">15,742 remained after applying exclusion criteria and censoring weights.</span></span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a><span class="st">**Causal Identification**: We assumed conditional exchangeability given </span></span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a><span class="st">32 baseline covariates including demographics, personality traits, health </span></span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a><span class="st">indicators, and prior cooperation levels. Positivity was verified through </span></span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a><span class="st">transition tables showing exposure variation across covariate strata.</span></span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a><span class="st">**Statistical Analysis**: We estimated causal effects using generalized </span></span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a><span class="st">random forests with sample splitting to prevent overfitting. The analysis </span></span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a><span class="st">employed 1,000 trees with minimum node size 20. We applied two-stage </span></span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a><span class="st">inverse probability of censoring weights to address panel attrition: </span></span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a><span class="st">stage 1 for baseline-to-exposure dropout, stage 2 for exposure-to-outcome </span></span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a><span class="st">dropout, combined with original sampling weights.</span></span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a><span class="st">**Heterogeneity Assessment**: Treatment effect heterogeneity was evaluated </span></span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a><span class="st">using Rank Average Treatment Effect (RATE) metrics with false discovery </span></span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a><span class="st">rate correction. For outcomes showing significant heterogeneity (p &lt; 0.05), </span></span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a><span class="st">we fitted policy trees with maximum depth 2 to identify high-response </span></span>
+<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a><span class="st">subgroups.</span></span>
+<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a><span class="st">**Sensitivity Analysis**: Robustness to unmeasured confounding was assessed </span></span>
+<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a><span class="st">using E-values, quantifying the minimum strength of association an unmeasured </span></span>
+<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a><span class="st">confounder would require with both exposure and outcome to explain away </span></span>
+<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a><span class="st">observed effects."</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+</section>
+</section>
+<section id="key-reporting-principles" class="level2" data-number="8">
+<h2 data-number="8" class="anchored" data-anchor-id="key-reporting-principles"><span class="header-section-number">8</span> Key Reporting Principles</h2>
+<section id="do-report" class="level3" data-number="8.1">
+<h3 data-number="8.1" class="anchored" data-anchor-id="do-report"><span class="header-section-number">8.1</span> Do Report</h3>
+<p>✅ <strong>Both standardised and data-scale effects</strong><br>
+✅ <strong>Effect sizes with confidence intervals</strong><br>
+✅ <strong>Sample sizes after exclusions and weighting</strong><br>
+✅ <strong>E-values for sensitivity analysis</strong><br>
+✅ <strong>Clear practical interpretation of effect magnitudes</strong><br>
+✅ <strong>Subgroup sizes and effect magnifications</strong><br>
+✅ <strong>Target trial framework and causal question</strong><br>
+✅ <strong>Explicit treatment and outcome definitions</strong></p>
+</section>
+<section id="dont-report" class="level3" data-number="8.2">
+<h3 data-number="8.2" class="anchored" data-anchor-id="dont-report"><span class="header-section-number">8.2</span> Don’t Report</h3>
+<p>❌ <strong>Model coefficients without interpretation</strong><br>
+❌ <strong>P-values alone without effect sizes</strong><br>
+❌ <strong>Only standardised effects for policy-relevant outcomes</strong><br>
+❌ <strong>Technical details that obscure main findings</strong><br>
+❌ <strong>Causal claims beyond your identification strategy</strong><br>
+❌ <strong>Results without addressing the 9-step workflow</strong></p>
+</section>
+</section>
+<section id="figure-presentation" class="level2" data-number="9">
+<h2 data-number="9" class="anchored" data-anchor-id="figure-presentation"><span class="header-section-number">9</span> Figure Presentation</h2>
+<section id="ate-plot-standards" class="level3" data-number="9.1">
+<h3 data-number="9.1" class="anchored" data-anchor-id="ate-plot-standards"><span class="header-section-number">9.1</span> ATE Plot Standards</h3>
+<ul>
+<li>Use forest plots with confidence intervals</li>
+<li>Order by effect magnitude or E-value</li>
+<li>Include sample sizes</li>
+<li>Use consistent colour coding</li>
+</ul>
+</section>
+<section id="policy-tree-plots" class="level3" data-number="9.2">
+<h3 data-number="9.2" class="anchored" data-anchor-id="policy-tree-plots"><span class="header-section-number">9.2</span> Policy Tree Plots</h3>
+<ul>
+<li>Show decision rules clearly</li>
+<li>Include sample proportions in each node</li>
+<li>Use readable font sizes</li>
+<li>Provide plain-language interpretation</li>
+</ul>
+</section>
+</section>
+<section id="conclusion" class="level2" data-number="10">
+<h2 data-number="10" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">10</span> Conclusion</h2>
+<p>Effective reporting of causal inference results requires:</p>
+<ol type="1">
+<li><strong>Clear effect size interpretation</strong> in practical terms</li>
+<li><strong>Honest uncertainty quantification</strong> with confidence intervals<br>
+</li>
+<li><strong>Sensitivity analysis</strong> using E-values</li>
+<li><strong>Meaningful subgroup analysis</strong> when heterogeneity exists</li>
+<li><strong>Accessible language</strong> that explains technical concepts</li>
+</ol>
+<p>The goal is communicating actionable insights, not demonstrating methodological sophistication.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Remember
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Your analysis is only as good as how clearly you can communicate the findings. Focus on what decision-makers need to know, not just what the statistical tests show.</p>
+</div>
+</div>
+</section>
+<section id="example-complete-results-section-with-data-scale-effects" class="level2" data-number="11">
+<h2 data-number="11" class="anchored" data-anchor-id="example-complete-results-section-with-data-scale-effects"><span class="header-section-number">11</span> Example Complete Results Section with Data-Scale Effects</h2>
+<blockquote class="blockquote">
+<p><strong>Results</strong></p>
+<p><strong>Average Treatment Effects</strong>: Among 15,742 New Zealand adults followed over three years, weekly religious service attendance caused small to moderate increases in cooperative behaviour. Social cooperation showed the strongest effects: sense of belonging increased by 0.18 standard deviations (95% CI: 0.14-0.22), equivalent to a 1.3-point increase on the 7-point scale, and social support increased by 0.15 SD (95% CI: 0.11-0.19), equivalent to a 1.1-point increase. Behavioural cooperation showed smaller but meaningful effects: charitable donations increased by 0.12 SD (95% CI: 0.08-0.16), equivalent to NZ$364 additional annual giving, and volunteering increased by 0.09 SD (95% CI: 0.05-0.13), equivalent to 1.7 additional hours weekly.</p>
+<p><strong>Heterogeneous Treatment Effects</strong>: Treatment effects varied substantially across individuals for social outcomes (RATE-Qini &gt; 0.08, p &lt; 0.05) but showed little heterogeneity for behavioural outcomes. Policy tree analysis identified high-response subgroups for charitable donations: older adults (45+) with high agreeableness showed the largest response (β = 0.28 SD, equivalent to NZ$847 additional annually), while parents with medium conscientiousness showed strong responses (β = 0.22 SD, equivalent to NZ$665 additional annually). Together, these subgroups comprised 54% of the sample and showed 2.8-3.5 times larger effects than the general population.</p>
+<p><strong>Sensitivity Analysis</strong>: All findings were robust to unmeasured confounding, with E-values ranging from 1.6 to 2.4. Even the smallest effect (volunteering, E-value = 1.6) would require an unmeasured confounder associated with both religious attendance and volunteering by a risk ratio of 1.6 each to explain away the result. The largest effect (belonging, E-value = 2.4) would require substantially stronger confounding to nullify.</p>
+</blockquote>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Best Practice Summary
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Complete causal inference reporting requires:</strong></p>
+<ol type="1">
+<li><strong>9-Step Workflow Compliance</strong>: Address all foundational steps</li>
+<li><strong>Target Trial Framework</strong>: Frame as hypothetical intervention<br>
+</li>
+<li><strong>Dual-Scale Reporting</strong>: Both standardised and data-scale effects</li>
+<li><strong>Heterogeneity Assessment</strong>: RATE metrics and policy trees when appropriate</li>
+<li><strong>Sensitivity Analysis</strong>: E-values for robustness evaluation</li>
+<li><strong>Clear Practical Interpretation</strong>: Policy-relevant effect magnifications</li>
+</ol>
+<p>Remember: The goal is actionable insights for decision-makers, not just statistical significance.</p>
+</div>
+</div>
+
+
+<!-- -->
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+    const viewSource = window.document.getElementById('quarto-view-source') ||
+                       window.document.getElementById('quarto-code-tools-source');
+    if (viewSource) {
+      const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+      viewSource.addEventListener("click", function(e) {
+        if (sourceUrl) {
+          // rstudio viewer pane
+          if (/\bcapabilities=\b/.test(window.location)) {
+            window.open(sourceUrl);
+          } else {
+            window.location.href = sourceUrl;
+          }
+        } else {
+          const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+          modal.show();
+        }
+        return false;
+      });
+    }
+    function toggleCodeHandler(show) {
+      return function(e) {
+        const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+        for (let i=0; i<detailsSrc.length; i++) {
+          const details = detailsSrc[i].parentElement;
+          if (show) {
+            details.open = true;
+          } else {
+            details.removeAttribute("open");
+          }
+        }
+        const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+        const fromCls = show ? "hidden" : "unhidden";
+        const toCls = show ? "unhidden" : "hidden";
+        for (let i=0; i<cellCodeDivs.length; i++) {
+          const codeDiv = cellCodeDivs[i];
+          if (codeDiv.classList.contains(fromCls)) {
+            codeDiv.classList.remove(fromCls);
+            codeDiv.classList.add(toCls);
+          } 
+        }
+        return false;
+      }
+    }
+    const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+    if (hideAllCode) {
+      hideAllCode.addEventListener("click", toggleCodeHandler(false));
+    }
+    const showAllCode = window.document.getElementById("quarto-show-all-code");
+    if (showAllCode) {
+      showAllCode.addEventListener("click", toggleCodeHandler(true));
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+            // default icon
+            link.classList.add("external");
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Reporting Causal Inference Results"</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="an">subtitle:</span><span class="co"> "How to Present Your Analysis Findings"</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="an">date:</span><span class="co"> "May 2025"</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co">  html:</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co">    code-overflow: scroll</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co">    code-tools:</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co">      source: true</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co">      toggle: false</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="co">    toc: true</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="co">    toc-depth: 3</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="co">    number-sections: true</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="an">warning:</span><span class="co"> false</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="an">error:</span><span class="co"> false</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="fu">## Introduction</span></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>This guide demonstrates how to report results from causal inference analyses following the 9-step causal inference workflow. We use the workshop example of religious service → cooperation to illustrate best practices for communicating causal findings.</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>::: {.callout-important}</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a><span class="fu">## Focus</span></span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>This tutorial covers **result presentation** following rigorous causal inference methodology. Learn how to interpret and communicate your causal findings using both standardised and data-scale effects.</span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a><span class="fu">## The 9-Step Causal Inference Workflow</span></span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>Before reporting results, ensure you've addressed these foundational steps:</span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a><span class="fu">### Steps 1-3: Problem Definition</span></span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Well-defined treatment**: "Weekly religious service attendance (≥1 time per week vs. &lt;1 time per week)"</span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>**Well-defined outcome**: "Cooperative behaviour measured using standardised scales one year after intervention"  </span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>**Target population**: "New Zealand adults aged 18+ as represented in NZAVS Time 10 weighted by census demographics"</span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a><span class="fu">### Steps 4-6: Identification Strategy</span></span>
+<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>**Exchangeability**: Conditional independence achieved through rich baseline covariate control</span>
+<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a><span class="ss">5. </span>**Consistency**: Binary exposure ensures well-defined intervention versions</span>
+<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a><span class="ss">6. </span>**Positivity**: Verified through transition tables showing exposure variation across covariates</span>
+<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a><span class="fu">### Steps 7-9: Implementation</span></span>
+<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a><span class="ss">7. </span>**Measurement validity**: Validated scales with known psychometric properties</span>
+<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a><span class="ss">8. </span>**Attrition handling**: Inverse probability of censoring weights (IPCW) for panel attrition</span>
+<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a><span class="ss">9. </span>**Transparent reporting**: Complete documentation of decisions and assumptions</span>
+<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip}</span>
+<span id="cb3-47"><a href="#cb3-47" aria-hidden="true" tabindex="-1"></a><span class="fu">## Target Trial Emulation</span></span>
+<span id="cb3-48"><a href="#cb3-48" aria-hidden="true" tabindex="-1"></a>Frame your causal question as: "How would outcomes change if we intervened to set everyone's religious service attendance to weekly rather than less-than-weekly, conditional on baseline characteristics?"</span>
+<span id="cb3-49"><a href="#cb3-49" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb3-50"><a href="#cb3-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-51"><a href="#cb3-51" aria-hidden="true" tabindex="-1"></a><span class="fu">## Reporting Average Treatment Effects</span></span>
+<span id="cb3-52"><a href="#cb3-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-53"><a href="#cb3-53" aria-hidden="true" tabindex="-1"></a><span class="fu">### Standard ATE Table</span></span>
+<span id="cb3-54"><a href="#cb3-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-55"><a href="#cb3-55" aria-hidden="true" tabindex="-1"></a>When reporting average treatment effects, include these key elements:</span>
+<span id="cb3-56"><a href="#cb3-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-57"><a href="#cb3-57" aria-hidden="true" tabindex="-1"></a>**Table 1: Average Treatment Effects of Weekly Religious Service on Cooperation**</span>
+<span id="cb3-58"><a href="#cb3-58" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-59"><a href="#cb3-59" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Outcome <span class="pp">|</span> Estimate <span class="pp">|</span> 95% CI <span class="pp">|</span> E-value <span class="pp">|</span> Interpretation <span class="pp">|</span></span>
+<span id="cb3-60"><a href="#cb3-60" aria-hidden="true" tabindex="-1"></a><span class="pp">|---------|----------|---------|---------|----------------|</span></span>
+<span id="cb3-61"><a href="#cb3-61" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Charitable Donations (log) <span class="pp">|</span> 0.12 <span class="pp">|</span> <span class="co">[</span><span class="ot">0.08, 0.16</span><span class="co">]</span> <span class="pp">|</span> 1.8 <span class="pp">|</span> Small positive effect <span class="pp">|</span></span>
+<span id="cb3-62"><a href="#cb3-62" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Volunteering Hours (log) <span class="pp">|</span> 0.09 <span class="pp">|</span> <span class="co">[</span><span class="ot">0.05, 0.13</span><span class="co">]</span> <span class="pp">|</span> 1.6 <span class="pp">|</span> Small positive effect <span class="pp">|</span></span>
+<span id="cb3-63"><a href="#cb3-63" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Social Support <span class="pp">|</span> 0.15 <span class="pp">|</span> <span class="co">[</span><span class="ot">0.11, 0.19</span><span class="co">]</span> <span class="pp">|</span> 2.1 <span class="pp">|</span> Moderate positive effect <span class="pp">|</span></span>
+<span id="cb3-64"><a href="#cb3-64" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Sense of Belonging <span class="pp">|</span> 0.18 <span class="pp">|</span> <span class="co">[</span><span class="ot">0.14, 0.22</span><span class="co">]</span> <span class="pp">|</span> 2.4 <span class="pp">|</span> Moderate positive effect <span class="pp">|</span></span>
+<span id="cb3-65"><a href="#cb3-65" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-66"><a href="#cb3-66" aria-hidden="true" tabindex="-1"></a><span class="fu">### Key Reporting Elements</span></span>
+<span id="cb3-67"><a href="#cb3-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-68"><a href="#cb3-68" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Effect sizes**: Report in standard deviation units for continuous outcomes</span>
+<span id="cb3-69"><a href="#cb3-69" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>**Confidence intervals**: Show uncertainty around estimates</span>
+<span id="cb3-70"><a href="#cb3-70" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>**E-values**: Indicate robustness to unmeasured confounding</span>
+<span id="cb3-71"><a href="#cb3-71" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>**Sample size**: Total analysed after exclusions/weighting</span>
+<span id="cb3-72"><a href="#cb3-72" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-73"><a href="#cb3-73" aria-hidden="true" tabindex="-1"></a><span class="fu">### Example Results Text</span></span>
+<span id="cb3-74"><a href="#cb3-74" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-75"><a href="#cb3-75" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; "Weekly religious service attendance showed positive causal effects across all cooperation measures. The largest effects were observed for social outcomes: sense of belonging (β = 0.18, 95% CI: 0.14-0.22) and social support (β = 0.15, 95% CI: 0.11-0.19). Behavioural cooperation showed smaller but significant effects: charitable donations (β = 0.12, 95% CI: 0.08-0.16) and volunteering (β = 0.09, 95% CI: 0.05-0.13). All effects were robust to moderate unmeasured confounding (E-values &gt; 1.6)."</span></span>
+<span id="cb3-76"><a href="#cb3-76" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-77"><a href="#cb3-77" aria-hidden="true" tabindex="-1"></a><span class="fu">## Reporting Heterogeneous Treatment Effects</span></span>
+<span id="cb3-78"><a href="#cb3-78" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-79"><a href="#cb3-79" aria-hidden="true" tabindex="-1"></a><span class="fu">### RATE Results Summary</span></span>
+<span id="cb3-80"><a href="#cb3-80" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-81"><a href="#cb3-81" aria-hidden="true" tabindex="-1"></a>When you find heterogeneity, report it systematically:</span>
+<span id="cb3-82"><a href="#cb3-82" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-83"><a href="#cb3-83" aria-hidden="true" tabindex="-1"></a>**Table 2: Heterogeneity Assessment Using RATE Metrics**</span>
+<span id="cb3-84"><a href="#cb3-84" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-85"><a href="#cb3-85" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Outcome <span class="pp">|</span> RATE-AUTOC <span class="pp">|</span> p-value <span class="pp">|</span> RATE-Qini <span class="pp">|</span> p-value <span class="pp">|</span> Evidence <span class="pp">|</span></span>
+<span id="cb3-86"><a href="#cb3-86" aria-hidden="true" tabindex="-1"></a><span class="pp">|---------|------------|---------|-----------|---------|----------|</span></span>
+<span id="cb3-87"><a href="#cb3-87" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Social Support <span class="pp">|</span> 0.12 <span class="pp">|</span> 0.003 <span class="pp">|</span> 0.08 <span class="pp">|</span> 0.012 <span class="pp">|</span> Strong <span class="pp">|</span></span>
+<span id="cb3-88"><a href="#cb3-88" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Belonging <span class="pp">|</span> 0.15 <span class="pp">|</span> 0.001 <span class="pp">|</span> 0.11 <span class="pp">|</span> 0.004 <span class="pp">|</span> Strong <span class="pp">|</span></span>
+<span id="cb3-89"><a href="#cb3-89" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Charitable Donations <span class="pp">|</span> 0.06 <span class="pp">|</span> 0.089 <span class="pp">|</span> 0.04 <span class="pp">|</span> 0.156 <span class="pp">|</span> Moderate <span class="pp">|</span></span>
+<span id="cb3-90"><a href="#cb3-90" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Volunteering <span class="pp">|</span> 0.03 <span class="pp">|</span> 0.234 <span class="pp">|</span> 0.02 <span class="pp">|</span> 0.445 <span class="pp">|</span> Weak <span class="pp">|</span></span>
+<span id="cb3-91"><a href="#cb3-91" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-92"><a href="#cb3-92" aria-hidden="true" tabindex="-1"></a><span class="fu">### Example Heterogeneity Text</span></span>
+<span id="cb3-93"><a href="#cb3-93" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-94"><a href="#cb3-94" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; "We found substantial heterogeneity in treatment effects for social outcomes (RATE-Qini &gt; 0.08, p &lt; 0.05), but limited heterogeneity for behavioural outcomes. This suggests that while religious service benefits most people socially, individual responses vary considerably in magnitude."</span></span>
+<span id="cb3-95"><a href="#cb3-95" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-96"><a href="#cb3-96" aria-hidden="true" tabindex="-1"></a><span class="fu">## Reporting Policy Tree Results</span></span>
+<span id="cb3-97"><a href="#cb3-97" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-98"><a href="#cb3-98" aria-hidden="true" tabindex="-1"></a><span class="fu">### Subgroup Identification with Data-Scale Effects</span></span>
+<span id="cb3-99"><a href="#cb3-99" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-100"><a href="#cb3-100" aria-hidden="true" tabindex="-1"></a>Present policy trees with both standardised and original scale interpretations:</span>
+<span id="cb3-101"><a href="#cb3-101" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-104"><a href="#cb3-104" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb3-105"><a href="#cb3-105" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb3-106"><a href="#cb3-106" aria-hidden="true" tabindex="-1"></a><span class="co"># Example: Convert standardised effects to original scale for donations</span></span>
+<span id="cb3-107"><a href="#cb3-107" aria-hidden="true" tabindex="-1"></a>log_mean_donations <span class="ot">&lt;-</span> <span class="fu">mean</span>(original_df<span class="sc">$</span>log_charity_donate, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb3-108"><a href="#cb3-108" aria-hidden="true" tabindex="-1"></a>log_sd_donations <span class="ot">&lt;-</span> <span class="fu">sd</span>(original_df<span class="sc">$</span>log_charity_donate, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb3-109"><a href="#cb3-109" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-110"><a href="#cb3-110" aria-hidden="true" tabindex="-1"></a><span class="co"># Create mapping for common effect sizes</span></span>
+<span id="cb3-111"><a href="#cb3-111" aria-hidden="true" tabindex="-1"></a>donation_mapping <span class="ot">&lt;-</span> <span class="fu">margot_back_transform_log_z</span>(</span>
+<span id="cb3-112"><a href="#cb3-112" aria-hidden="true" tabindex="-1"></a>  <span class="at">log_mean =</span> log_mean_donations,</span>
+<span id="cb3-113"><a href="#cb3-113" aria-hidden="true" tabindex="-1"></a>  <span class="at">log_sd =</span> log_sd_donations,</span>
+<span id="cb3-114"><a href="#cb3-114" aria-hidden="true" tabindex="-1"></a>  <span class="at">z_scores =</span> <span class="fu">c</span>(<span class="fl">0.08</span>, <span class="fl">0.22</span>, <span class="fl">0.28</span>),  <span class="co"># effect sizes from subgroups</span></span>
+<span id="cb3-115"><a href="#cb3-115" aria-hidden="true" tabindex="-1"></a>  <span class="at">label =</span> <span class="st">"annual_donations_nzd"</span></span>
+<span id="cb3-116"><a href="#cb3-116" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb3-117"><a href="#cb3-117" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(donation_mapping)</span>
+<span id="cb3-118"><a href="#cb3-118" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb3-119"><a href="#cb3-119" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-120"><a href="#cb3-120" aria-hidden="true" tabindex="-1"></a>**High-Response Subgroups for Charitable Donations:**</span>
+<span id="cb3-121"><a href="#cb3-121" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-122"><a href="#cb3-122" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Older adults with high agreeableness** (Age &gt; 45 &amp; Agreeableness &gt; +1 SD)</span>
+<span id="cb3-123"><a href="#cb3-123" aria-hidden="true" tabindex="-1"></a><span class="ss">   - </span>**Standardised effect**: β = 0.28 (95% CI: 0.21-0.35)</span>
+<span id="cb3-124"><a href="#cb3-124" aria-hidden="true" tabindex="-1"></a><span class="ss">   - </span>**Data-scale effect**: NZ$847 additional annual donations (95% CI: NZ$635-1,058)</span>
+<span id="cb3-125"><a href="#cb3-125" aria-hidden="true" tabindex="-1"></a><span class="ss">   - </span>**Sample proportion**: 23%</span>
+<span id="cb3-126"><a href="#cb3-126" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-127"><a href="#cb3-127" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>**Parents with medium conscientiousness** (Parent = Yes &amp; Conscientiousness &gt; 0)</span>
+<span id="cb3-128"><a href="#cb3-128" aria-hidden="true" tabindex="-1"></a><span class="ss">   - </span>**Standardised effect**: β = 0.22 (95% CI: 0.16-0.28)</span>
+<span id="cb3-129"><a href="#cb3-129" aria-hidden="true" tabindex="-1"></a><span class="ss">   - </span>**Data-scale effect**: NZ$665 additional annual donations (95% CI: NZ$484-846)</span>
+<span id="cb3-130"><a href="#cb3-130" aria-hidden="true" tabindex="-1"></a><span class="ss">   - </span>**Sample proportion**: 31%</span>
+<span id="cb3-131"><a href="#cb3-131" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-132"><a href="#cb3-132" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>**All others**</span>
+<span id="cb3-133"><a href="#cb3-133" aria-hidden="true" tabindex="-1"></a><span class="ss">   - </span>**Standardised effect**: β = 0.08 (95% CI: 0.04-0.12)</span>
+<span id="cb3-134"><a href="#cb3-134" aria-hidden="true" tabindex="-1"></a><span class="ss">   - </span>**Data-scale effect**: NZ$242 additional annual donations (95% CI: NZ$121-363)</span>
+<span id="cb3-135"><a href="#cb3-135" aria-hidden="true" tabindex="-1"></a><span class="ss">   - </span>**Sample proportion**: 46%</span>
+<span id="cb3-136"><a href="#cb3-136" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-137"><a href="#cb3-137" aria-hidden="true" tabindex="-1"></a><span class="fu">### Example Policy Tree Text with Data-Scale Interpretation</span></span>
+<span id="cb3-138"><a href="#cb3-138" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-139"><a href="#cb3-139" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; "Policy tree analysis identified two subgroups with enhanced treatment response for charitable donations. Older adults (45+) with high agreeableness showed the largest increase (β = 0.28 SD, equivalent to NZ$847 additional annual donations), representing 23% of the sample. Parents with medium-to-high conscientiousness also showed strong responses (β = 0.22 SD, equivalent to NZ$665 additional annually), comprising 31% of the sample. In practical terms, targeted interventions toward these subgroups could generate 2.8-3.5 times more charitable giving than population-wide approaches."</span></span>
+<span id="cb3-140"><a href="#cb3-140" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-141"><a href="#cb3-141" aria-hidden="true" tabindex="-1"></a><span class="fu">## Sensitivity Analysis Reporting</span></span>
+<span id="cb3-142"><a href="#cb3-142" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-143"><a href="#cb3-143" aria-hidden="true" tabindex="-1"></a><span class="fu">### E-value Interpretation</span></span>
+<span id="cb3-144"><a href="#cb3-144" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-145"><a href="#cb3-145" aria-hidden="true" tabindex="-1"></a>Always interpret E-values in context:</span>
+<span id="cb3-146"><a href="#cb3-146" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-147"><a href="#cb3-147" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; "To assess robustness to unmeasured confounding, we calculated E-values for all estimates. The observed effect on sense of belonging (E-value = 2.4) would require an unmeasured confounder associated with both religious service and belonging by a risk ratio of 2.4 each to explain away the result. This represents a strong confounder—stronger than most demographic or personality variables in our model."</span></span>
+<span id="cb3-148"><a href="#cb3-148" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-149"><a href="#cb3-149" aria-hidden="true" tabindex="-1"></a><span class="fu">### What E-values Mean</span></span>
+<span id="cb3-150"><a href="#cb3-150" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-151"><a href="#cb3-151" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**E-value ≥ 2.0**: Robust to strong confounding</span>
+<span id="cb3-152"><a href="#cb3-152" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**E-value 1.5-2.0**: Robust to moderate confounding  </span>
+<span id="cb3-153"><a href="#cb3-153" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**E-value &lt; 1.5**: Vulnerable to weak confounding</span>
+<span id="cb3-154"><a href="#cb3-154" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-155"><a href="#cb3-155" aria-hidden="true" tabindex="-1"></a><span class="fu">## Methods Section Template Following 9-Step Workflow</span></span>
+<span id="cb3-156"><a href="#cb3-156" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-157"><a href="#cb3-157" aria-hidden="true" tabindex="-1"></a><span class="fu">### Target Trial Emulation</span></span>
+<span id="cb3-158"><a href="#cb3-158" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-161"><a href="#cb3-161" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb3-162"><a href="#cb3-162" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb3-163"><a href="#cb3-163" aria-hidden="true" tabindex="-1"></a><span class="co"># Complete methods section template:</span></span>
+<span id="cb3-164"><a href="#cb3-164" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-165"><a href="#cb3-165" aria-hidden="true" tabindex="-1"></a><span class="st">"We emulated a target trial to estimate the causal effect of religious </span></span>
+<span id="cb3-166"><a href="#cb3-166" aria-hidden="true" tabindex="-1"></a><span class="st">service attendance on cooperative behaviour.</span></span>
+<span id="cb3-167"><a href="#cb3-167" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-168"><a href="#cb3-168" aria-hidden="true" tabindex="-1"></a><span class="st">**Treatment Definition**: We defined the treatment as weekly religious </span></span>
+<span id="cb3-169"><a href="#cb3-169" aria-hidden="true" tabindex="-1"></a><span class="st">service attendance (≥1 time per week) compared to less frequent attendance </span></span>
+<span id="cb3-170"><a href="#cb3-170" aria-hidden="true" tabindex="-1"></a><span class="st">(&lt;1 time per week), assessed during Time 11 (2019) of the New Zealand </span></span>
+<span id="cb3-171"><a href="#cb3-171" aria-hidden="true" tabindex="-1"></a><span class="st">Attitudes and Values Study.</span></span>
+<span id="cb3-172"><a href="#cb3-172" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-173"><a href="#cb3-173" aria-hidden="true" tabindex="-1"></a><span class="st">**Outcome Definition**: Cooperative behaviour was measured using four </span></span>
+<span id="cb3-174"><a href="#cb3-174" aria-hidden="true" tabindex="-1"></a><span class="st">validated scales one year later (Time 12, 2020): charitable donations </span></span>
+<span id="cb3-175"><a href="#cb3-175" aria-hidden="true" tabindex="-1"></a><span class="st">(log-transformed annual giving), volunteering hours (log-transformed </span></span>
+<span id="cb3-176"><a href="#cb3-176" aria-hidden="true" tabindex="-1"></a><span class="st">weekly hours), social support (7-point scale), and sense of belonging </span></span>
+<span id="cb3-177"><a href="#cb3-177" aria-hidden="true" tabindex="-1"></a><span class="st">(7-point scale). All outcomes were z-standardised for analysis.</span></span>
+<span id="cb3-178"><a href="#cb3-178" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-179"><a href="#cb3-179" aria-hidden="true" tabindex="-1"></a><span class="st">**Target Population**: New Zealand adults aged 18+ as represented in NZAVS </span></span>
+<span id="cb3-180"><a href="#cb3-180" aria-hidden="true" tabindex="-1"></a><span class="st">Time 10, weighted by census demographics for age, gender, and ethnicity </span></span>
+<span id="cb3-181"><a href="#cb3-181" aria-hidden="true" tabindex="-1"></a><span class="st">to enhance population representativeness.</span></span>
+<span id="cb3-182"><a href="#cb3-182" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-183"><a href="#cb3-183" aria-hidden="true" tabindex="-1"></a><span class="st">**Eligibility Criteria**: Participants were included if they provided </span></span>
+<span id="cb3-184"><a href="#cb3-184" aria-hidden="true" tabindex="-1"></a><span class="st">baseline religious service data (Time 10) and were not lost to follow-up </span></span>
+<span id="cb3-185"><a href="#cb3-185" aria-hidden="true" tabindex="-1"></a><span class="st">due to COVID-related measurement error. Of 20,000 eligible participants, </span></span>
+<span id="cb3-186"><a href="#cb3-186" aria-hidden="true" tabindex="-1"></a><span class="st">15,742 remained after applying exclusion criteria and censoring weights.</span></span>
+<span id="cb3-187"><a href="#cb3-187" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-188"><a href="#cb3-188" aria-hidden="true" tabindex="-1"></a><span class="st">**Causal Identification**: We assumed conditional exchangeability given </span></span>
+<span id="cb3-189"><a href="#cb3-189" aria-hidden="true" tabindex="-1"></a><span class="st">32 baseline covariates including demographics, personality traits, health </span></span>
+<span id="cb3-190"><a href="#cb3-190" aria-hidden="true" tabindex="-1"></a><span class="st">indicators, and prior cooperation levels. Positivity was verified through </span></span>
+<span id="cb3-191"><a href="#cb3-191" aria-hidden="true" tabindex="-1"></a><span class="st">transition tables showing exposure variation across covariate strata.</span></span>
+<span id="cb3-192"><a href="#cb3-192" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-193"><a href="#cb3-193" aria-hidden="true" tabindex="-1"></a><span class="st">**Statistical Analysis**: We estimated causal effects using generalized </span></span>
+<span id="cb3-194"><a href="#cb3-194" aria-hidden="true" tabindex="-1"></a><span class="st">random forests with sample splitting to prevent overfitting. The analysis </span></span>
+<span id="cb3-195"><a href="#cb3-195" aria-hidden="true" tabindex="-1"></a><span class="st">employed 1,000 trees with minimum node size 20. We applied two-stage </span></span>
+<span id="cb3-196"><a href="#cb3-196" aria-hidden="true" tabindex="-1"></a><span class="st">inverse probability of censoring weights to address panel attrition: </span></span>
+<span id="cb3-197"><a href="#cb3-197" aria-hidden="true" tabindex="-1"></a><span class="st">stage 1 for baseline-to-exposure dropout, stage 2 for exposure-to-outcome </span></span>
+<span id="cb3-198"><a href="#cb3-198" aria-hidden="true" tabindex="-1"></a><span class="st">dropout, combined with original sampling weights.</span></span>
+<span id="cb3-199"><a href="#cb3-199" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-200"><a href="#cb3-200" aria-hidden="true" tabindex="-1"></a><span class="st">**Heterogeneity Assessment**: Treatment effect heterogeneity was evaluated </span></span>
+<span id="cb3-201"><a href="#cb3-201" aria-hidden="true" tabindex="-1"></a><span class="st">using Rank Average Treatment Effect (RATE) metrics with false discovery </span></span>
+<span id="cb3-202"><a href="#cb3-202" aria-hidden="true" tabindex="-1"></a><span class="st">rate correction. For outcomes showing significant heterogeneity (p &lt; 0.05), </span></span>
+<span id="cb3-203"><a href="#cb3-203" aria-hidden="true" tabindex="-1"></a><span class="st">we fitted policy trees with maximum depth 2 to identify high-response </span></span>
+<span id="cb3-204"><a href="#cb3-204" aria-hidden="true" tabindex="-1"></a><span class="st">subgroups.</span></span>
+<span id="cb3-205"><a href="#cb3-205" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-206"><a href="#cb3-206" aria-hidden="true" tabindex="-1"></a><span class="st">**Sensitivity Analysis**: Robustness to unmeasured confounding was assessed </span></span>
+<span id="cb3-207"><a href="#cb3-207" aria-hidden="true" tabindex="-1"></a><span class="st">using E-values, quantifying the minimum strength of association an unmeasured </span></span>
+<span id="cb3-208"><a href="#cb3-208" aria-hidden="true" tabindex="-1"></a><span class="st">confounder would require with both exposure and outcome to explain away </span></span>
+<span id="cb3-209"><a href="#cb3-209" aria-hidden="true" tabindex="-1"></a><span class="st">observed effects."</span></span>
+<span id="cb3-210"><a href="#cb3-210" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb3-211"><a href="#cb3-211" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-212"><a href="#cb3-212" aria-hidden="true" tabindex="-1"></a><span class="fu">## Key Reporting Principles</span></span>
+<span id="cb3-213"><a href="#cb3-213" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-214"><a href="#cb3-214" aria-hidden="true" tabindex="-1"></a><span class="fu">### Do Report</span></span>
+<span id="cb3-215"><a href="#cb3-215" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-216"><a href="#cb3-216" aria-hidden="true" tabindex="-1"></a>✅ **Both standardised and data-scale effects**  </span>
+<span id="cb3-217"><a href="#cb3-217" aria-hidden="true" tabindex="-1"></a>✅ **Effect sizes with confidence intervals**  </span>
+<span id="cb3-218"><a href="#cb3-218" aria-hidden="true" tabindex="-1"></a>✅ **Sample sizes after exclusions and weighting**  </span>
+<span id="cb3-219"><a href="#cb3-219" aria-hidden="true" tabindex="-1"></a>✅ **E-values for sensitivity analysis**  </span>
+<span id="cb3-220"><a href="#cb3-220" aria-hidden="true" tabindex="-1"></a>✅ **Clear practical interpretation of effect magnitudes**  </span>
+<span id="cb3-221"><a href="#cb3-221" aria-hidden="true" tabindex="-1"></a>✅ **Subgroup sizes and effect magnifications**  </span>
+<span id="cb3-222"><a href="#cb3-222" aria-hidden="true" tabindex="-1"></a>✅ **Target trial framework and causal question**  </span>
+<span id="cb3-223"><a href="#cb3-223" aria-hidden="true" tabindex="-1"></a>✅ **Explicit treatment and outcome definitions**  </span>
+<span id="cb3-224"><a href="#cb3-224" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-225"><a href="#cb3-225" aria-hidden="true" tabindex="-1"></a><span class="fu">### Don't Report</span></span>
+<span id="cb3-226"><a href="#cb3-226" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-227"><a href="#cb3-227" aria-hidden="true" tabindex="-1"></a>❌ **Model coefficients without interpretation**  </span>
+<span id="cb3-228"><a href="#cb3-228" aria-hidden="true" tabindex="-1"></a>❌ **P-values alone without effect sizes**  </span>
+<span id="cb3-229"><a href="#cb3-229" aria-hidden="true" tabindex="-1"></a>❌ **Only standardised effects for policy-relevant outcomes**  </span>
+<span id="cb3-230"><a href="#cb3-230" aria-hidden="true" tabindex="-1"></a>❌ **Technical details that obscure main findings**  </span>
+<span id="cb3-231"><a href="#cb3-231" aria-hidden="true" tabindex="-1"></a>❌ **Causal claims beyond your identification strategy**  </span>
+<span id="cb3-232"><a href="#cb3-232" aria-hidden="true" tabindex="-1"></a>❌ **Results without addressing the 9-step workflow**</span>
+<span id="cb3-233"><a href="#cb3-233" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-234"><a href="#cb3-234" aria-hidden="true" tabindex="-1"></a><span class="fu">## Figure Presentation</span></span>
+<span id="cb3-235"><a href="#cb3-235" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-236"><a href="#cb3-236" aria-hidden="true" tabindex="-1"></a><span class="fu">### ATE Plot Standards</span></span>
+<span id="cb3-237"><a href="#cb3-237" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-238"><a href="#cb3-238" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Use forest plots with confidence intervals</span>
+<span id="cb3-239"><a href="#cb3-239" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Order by effect magnitude or E-value</span>
+<span id="cb3-240"><a href="#cb3-240" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Include sample sizes</span>
+<span id="cb3-241"><a href="#cb3-241" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Use consistent colour coding</span>
+<span id="cb3-242"><a href="#cb3-242" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-243"><a href="#cb3-243" aria-hidden="true" tabindex="-1"></a><span class="fu">### Policy Tree Plots</span></span>
+<span id="cb3-244"><a href="#cb3-244" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-245"><a href="#cb3-245" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Show decision rules clearly</span>
+<span id="cb3-246"><a href="#cb3-246" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Include sample proportions in each node</span>
+<span id="cb3-247"><a href="#cb3-247" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Use readable font sizes</span>
+<span id="cb3-248"><a href="#cb3-248" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Provide plain-language interpretation</span>
+<span id="cb3-249"><a href="#cb3-249" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-250"><a href="#cb3-250" aria-hidden="true" tabindex="-1"></a><span class="fu">## Conclusion</span></span>
+<span id="cb3-251"><a href="#cb3-251" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-252"><a href="#cb3-252" aria-hidden="true" tabindex="-1"></a>Effective reporting of causal inference results requires:</span>
+<span id="cb3-253"><a href="#cb3-253" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-254"><a href="#cb3-254" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Clear effect size interpretation** in practical terms</span>
+<span id="cb3-255"><a href="#cb3-255" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>**Honest uncertainty quantification** with confidence intervals  </span>
+<span id="cb3-256"><a href="#cb3-256" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>**Sensitivity analysis** using E-values</span>
+<span id="cb3-257"><a href="#cb3-257" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>**Meaningful subgroup analysis** when heterogeneity exists</span>
+<span id="cb3-258"><a href="#cb3-258" aria-hidden="true" tabindex="-1"></a><span class="ss">5. </span>**Accessible language** that explains technical concepts</span>
+<span id="cb3-259"><a href="#cb3-259" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-260"><a href="#cb3-260" aria-hidden="true" tabindex="-1"></a>The goal is communicating actionable insights, not demonstrating methodological sophistication.</span>
+<span id="cb3-261"><a href="#cb3-261" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-262"><a href="#cb3-262" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip}</span>
+<span id="cb3-263"><a href="#cb3-263" aria-hidden="true" tabindex="-1"></a><span class="fu">## Remember</span></span>
+<span id="cb3-264"><a href="#cb3-264" aria-hidden="true" tabindex="-1"></a>Your analysis is only as good as how clearly you can communicate the findings. Focus on what decision-makers need to know, not just what the statistical tests show.</span>
+<span id="cb3-265"><a href="#cb3-265" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb3-266"><a href="#cb3-266" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-267"><a href="#cb3-267" aria-hidden="true" tabindex="-1"></a><span class="fu">## Example Complete Results Section with Data-Scale Effects</span></span>
+<span id="cb3-268"><a href="#cb3-268" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-269"><a href="#cb3-269" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; **Results**</span></span>
+<span id="cb3-270"><a href="#cb3-270" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; </span></span>
+<span id="cb3-271"><a href="#cb3-271" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; **Average Treatment Effects**: Among 15,742 New Zealand adults followed over three years, weekly religious service attendance caused small to moderate increases in cooperative behaviour. Social cooperation showed the strongest effects: sense of belonging increased by 0.18 standard deviations (95% CI: 0.14-0.22), equivalent to a 1.3-point increase on the 7-point scale, and social support increased by 0.15 SD (95% CI: 0.11-0.19), equivalent to a 1.1-point increase. Behavioural cooperation showed smaller but meaningful effects: charitable donations increased by 0.12 SD (95% CI: 0.08-0.16), equivalent to NZ$364 additional annual giving, and volunteering increased by 0.09 SD (95% CI: 0.05-0.13), equivalent to 1.7 additional hours weekly.</span></span>
+<span id="cb3-272"><a href="#cb3-272" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; </span></span>
+<span id="cb3-273"><a href="#cb3-273" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; **Heterogeneous Treatment Effects**: Treatment effects varied substantially across individuals for social outcomes (RATE-Qini &gt; 0.08, p &lt; 0.05) but showed little heterogeneity for behavioural outcomes. Policy tree analysis identified high-response subgroups for charitable donations: older adults (45+) with high agreeableness showed the largest response (β = 0.28 SD, equivalent to NZ$847 additional annually), while parents with medium conscientiousness showed strong responses (β = 0.22 SD, equivalent to NZ$665 additional annually). Together, these subgroups comprised 54% of the sample and showed 2.8-3.5 times larger effects than the general population.</span></span>
+<span id="cb3-274"><a href="#cb3-274" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; </span></span>
+<span id="cb3-275"><a href="#cb3-275" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; **Sensitivity Analysis**: All findings were robust to unmeasured confounding, with E-values ranging from 1.6 to 2.4. Even the smallest effect (volunteering, E-value = 1.6) would require an unmeasured confounder associated with both religious attendance and volunteering by a risk ratio of 1.6 each to explain away the result. The largest effect (belonging, E-value = 2.4) would require substantially stronger confounding to nullify.</span></span>
+<span id="cb3-276"><a href="#cb3-276" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-277"><a href="#cb3-277" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip}</span>
+<span id="cb3-278"><a href="#cb3-278" aria-hidden="true" tabindex="-1"></a><span class="fu">## Best Practice Summary</span></span>
+<span id="cb3-279"><a href="#cb3-279" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-280"><a href="#cb3-280" aria-hidden="true" tabindex="-1"></a>**Complete causal inference reporting requires:**</span>
+<span id="cb3-281"><a href="#cb3-281" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-282"><a href="#cb3-282" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**9-Step Workflow Compliance**: Address all foundational steps</span>
+<span id="cb3-283"><a href="#cb3-283" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>**Target Trial Framework**: Frame as hypothetical intervention  </span>
+<span id="cb3-284"><a href="#cb3-284" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>**Dual-Scale Reporting**: Both standardised and data-scale effects</span>
+<span id="cb3-285"><a href="#cb3-285" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>**Heterogeneity Assessment**: RATE metrics and policy trees when appropriate</span>
+<span id="cb3-286"><a href="#cb3-286" aria-hidden="true" tabindex="-1"></a><span class="ss">5. </span>**Sensitivity Analysis**: E-values for robustness evaluation</span>
+<span id="cb3-287"><a href="#cb3-287" aria-hidden="true" tabindex="-1"></a><span class="ss">6. </span>**Clear Practical Interpretation**: Policy-relevant effect magnifications</span>
+<span id="cb3-288"><a href="#cb3-288" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-289"><a href="#cb3-289" aria-hidden="true" tabindex="-1"></a>Remember: The goal is actionable insights for decision-makers, not just statistical significance.</span>
+<span id="cb3-290"><a href="#cb3-290" aria-hidden="true" tabindex="-1"></a>:::</span>
+</code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+</div></div></div></div></div>
+</div> <!-- /content -->
+
+
+
+
+<script src="../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>

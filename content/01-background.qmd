@@ -1,0 +1,302 @@
+---
+title: "Causal diagrams: Five Elementary Structures"
+date: "2025-NOV-19"
+bibliography: /Users/joseph/GIT/templates/bib/references.bib
+editor_options: 
+  chunk_output_type: console
+format:
+  html:
+    warnings: FALSE
+    error: FALSE
+    messages: FALSE
+    code-overflow: scroll
+    highlight-style: kate
+    code-tools:
+      source: true
+      toggle: FALSE
+html-math-method: katex
+cap-location: margin
+code-block-border-left: true
+---
+
+```{r}
+#| echo: FALSE
+#| warning: FALSE
+
+# reference-location: margin
+# citation-location: margin
+# WARNING:  COMMENT THIS OUT. JB DOES THIS FOR WORKING WITHOUT WIFI
+#source("/Users/joseph/GIT/templates/functions/libs2.R")
+
+# WARNING:  COMMENT THIS OUT. JB DOES THIS FOR WORKING WITHOUT WIFI
+#source("/Users/joseph/GIT/templates/functions/funs.R")
+
+# ALERT: UNCOMMENT THIS AND DOWNLOAD THE FUNCTIONS FROM JB's GITHUB
+# source(
+#   "https://raw.githubusercontent.com/go-bayes/templates/main/functions/experimental_funs.R"
+# )
+
+# source(
+#   "https://raw.githubusercontent.com/go-bayes/templates/main/functions/experimental_funs.R"
+# )
+
+# for making graphs
+library("tinytex")
+library("extrafont")
+loadfonts(device = "all")
+```
+
+::: {.callout-note}
+## Sugessted Readings
+- Barrett M (2023). _ggdag: Analyze and Create Elegant Directed Acyclic Graphs_. R package version 0.2.7.9000, <https://github.com/malcolmbarrett/ggdag>
+- "An Introduction to Directed Acyclic Graphs", <https://r-causal.github.io/ggdag/articles/intro-to-dags.html>
+- "Common Structures of Bias", <https://r-causal.github.io/ggdag/articles/bias-structures.html>
+:::
+
+::: {.callout-important}
+## Key concepts:
+  - **Confounding**
+  - **Causal Directed Acyclic Graph** 
+  - **Five Elementary Causal Structures**
+  - **d-separation**
+  - **Back door path**
+  - **Conditioning**
+  - **Fork bias**
+  - **Collider bias**
+  - **Mediator bias**
+  - **Four Rules of Confounding Control**
+:::
+
+
+
+### Objective  
+
+- To approach confounding bias through **five elementary directed acyclic causal graphs**
+
+
+### Review
+
+1. The Human Sciences begin with two questions: 
+
+> 1. What do I want to know? 
+> 2. For which population does this knowledge generalise?  
+
+2. In psychological research, we typically ask questions about the causes and consequences of thought and behaviour - "What if?" questions [@hernan2024WHATIF]. 
+
+3. The following concepts help us to describe two distinct failure modes in human science research (particularly psychological science) when asking "What if?" questions:
+
+  - **The Concept of External Validity**: the extent to which the findings of a study can be generalised to other situations, people, settings, and time periods. That is, we want to know if our findings carry beyond the *sample population* to the *target population*.  We fail when our results do not generalise as we think.  More fundamentally, we fail when we have not clearly defined our question or our target population.
+
+  - **The Concept of Internal Validity**: the extent to which the associations we obtain from data reflect causality. In psychological science, we use "independent variable" and "dependent variable." Sometimes we use the terms "exogenous variable" and "endogenous variable."  Sometimes we use the term "predictor variable" to describe the "dependent" or "endogenous" variable. These words are confusing.  When asking "What if?" questions, we want to understand what would happen if we intervened.  In this workshop, we will use the term "treatment" or, equivalently the term "exposure" to denote the intervention; we will use the term "outcome" to denote the effect of an intervention.[^note]
+
+[^note]: "What if?" questions implicitly invoke the idea of intervening on the world. "If we did *this*, *then* what would happen to *that*...?" Our preferred terminology reflects our interest in the effects of interventions.
+
+
+
+
+<!-- ## Definitions -->
+
+<!-- ::: {#def-internal-validity} -->
+<!-- We say internal validity is compromised if the association between the treatment and outcome in a study does not consistently reflect causality in the sample population as defined at baseline. -->
+<!-- ::: -->
+
+<!-- ::: {#def-external-validity} -->
+<!-- We say external validity is compromised if the association between the treatment and outcome in a study does not consistently reflect causality in the target population as defined at baseline. -->
+<!-- ::: -->
+
+<!-- The concept of "confounding bias" helps to clarify what it is at stake when evaluating the *internal validity* of a study.  As we shall see, there are several equivalent definitions of "confounding bias," which we will describe during the upcoming weeks.  -->
+
+<!-- The definition of confounding bias that we will examine today is: -->
+
+<!-- ::: {#def-confounding} -->
+<!-- We say there is confounding bias if there is an open back-door path between the treatment and outcome or if the path between the treatment and outcome is blocked. -->
+<!-- ::: -->
+
+<!-- Today, our purpose will be to clarify the meaning of each term in this definition. To that end, we will introduce the five elementary graphical structures employed in causal diagrams. We will then explain the four elementary rules that allow investigators to identify causal effects from the asserted relations in a causal diagram. First, what are causal diagrams?  -->
+
+
+## Introduction to Causal Diagrams.
+
+Causal diagrams, also called causal graphs, Directed Acyclic Graphs, and Causal Directed Acyclic Graphs, are graphical tools whose primary purpose is to enable investigators to detect confounding biases.
+
+**Remarkably, causal diagrams are rarely used in psychology!**
+
+
+Before describing how causal diagrams work, we first define the meanings of their symbols. Note there is no single convention for creating causal diagrams, so it is important that we are clear when defining our meanings.
+
+
+### The meaning of our symbols
+
+The conventions that describe the meanings of our symbols are given in @fig-conventions.
+
+::: {#fig-conventions}
+![](terminologylocalconventions.pdf){fig-align="left" height=100% width=100%}
+
+Our variable naming conventions. This figure is adapted from [@bulbulia2023]
+:::
+
+For us:
+
+$X$ denotes a variable without reference to its role;
+
+$A$ denotes the "treatment" or "exposure" variable. This is the variable for which we seek to understand the effect of intervening on it. It is the "cause;" 
+
+$Y$ denotes the outcome or response of an intervention. It is the "effect." Last week we considered whether marriage $A$ causes happiness $Y$.
+
+$Y(a)$ denotes the counterfactual or potential state of $Y$ in response to setting the level of the exposure to a specific level, $A=a$. As we will consider in the second half of the course, to consistently estimate causal effects we will need to evaluate counterfactual or potential states of the world.  Keeping to our example, we will need to do more than evaluate marriage and happiness in people over time. We will need to evaluate how happy the unmarried people would have been had they been married and how happy the married people would have been had they not been married. Of course, these events cannot be directly observed. Thus to address fundamental questions in psychology, we need to contrast counterfactual states of the world. This might seem like science fiction; however, we are already familiar with methods for obtaining such counterfactual contrasts -- namely, randomised controlled experiments! We will return to this concept later, but for now, it will be useful for you to understand the notation. 
+
+$L$ denotes a measured confounder or set of confounders is defined as a variable which, if conditioned upon, closes an open back-door path between the treatment $A$ and the outcome $Y$.  Consider the scenario where happiness at time 0 ($L$) affects both the probability of getting married at time 1 ($A$) and one's happiness at time 2 ($Y$). In this case, $L$ serves as a confounder because it influences both the treatment (marriage at time 1) and the outcome (happiness at time 2), potentially opening a back-door path that confounds the estimated effect of marriage on happiness.
+
+To accurately estimate the causal effect of marriage on happiness, then, it is essential to control for $L$. With cross-sectional data, such control might be difficult. 
+
+$U$ denotes an unmeasured confounder -- that is a variable that may affect both the treatment and the outcome, but for which we have no direct measurement. Suppose cultural upbringing affects both whether someone gets married and whether they are happy.  If this variable is not measured, we cannot accurately estimate a causal effect of marriage on happiness.
+
+$M$ denotes a mediator or a variable along the path from exposure to outcome. For example, perhaps marriage causes wealth and wealth causes happiness. As we shall see, conditioning on "wealth" when estimating the effect of marriage on happiness will make it seem that marriage does not cause happiness when it does, *through* wealth.
+
+$\bar{X}$ denotes a sequence of variables, for example, a sequence of treatments.  Imagine we were interested in the causal effect of marriage and remarriage on well-being. In this case, there are two treatments $A_0$ and $A_1$ and four potential contrasts. For the scenario of marriage and remarriage affecting well-being, we denote the potential outcomes as $Y(a_0, a_1)$, where $a_0$ and $a_1$ represent the specific values taken by $A_0$ and $A_1$, respectively. Given two treatments, $A_0$ and $A_1$, four primary contrasts of interest correspond to the different combinations of these treatments. These contrasts allow us to compare the causal effects of being married versus not and remarried versus not on well-being. The potential outcomes under these conditions can be specified as follows:
+
+1. $Y(0, 0)$: The potential outcome when there is no marriage.
+2. $Y(0, 1)$: The potential outcome when there is marriage. 
+2. $Y(1, 0)$: The potential outcome when there is divorce.
+4. $Y(1, 1)$: The potential outcome from marriage prevalence.
+
+Each of these outcomes allows for a specific contrast to be made, comparing the well-being under different scenarios of marriage and remarriage. Which do we want to contrast?  Note, the question about 'the causal effects of marriage on happiness' is ambiguous because we have not stated the causal contrast we are interested in. 
+
+$\mathcal{R}$ denotes a randomisation or a chance event.
+
+### Elements of our Causal Graphs 
+
+The conventions that describe components of our causal graphs are given in @fig-general.
+
+
+::: {#fig-general}
+![](terminologygeneral.pdf){fig-align="left" height=100% width=100%}
+
+Nodes, Edges, Conditioning Conventions. This figure is adapted from [@bulbulia2023]
+:::
+
+
+
+
+#### Time indexing
+
+
+In our causal diagrams, we will implement two conventions to accurately depict the temporal order of events.
+
+First, the layout of a causal diagram will be structured from left to right to reflect the sequence of causality as it unfolds in reality. This orientation is crucial because causal diagrams must inherently be acyclic and because causality itself is inherently temporal. 
+
+Second, we will enhance the representation of the event sequence within our diagrams by systematically indexing our nodes according to the relative timing of events. If an event represented by $X_0$ precedes another event represented by $X_1$, the indexing will indicate this chronological order.
+
+
+
+#### Representing uncertainty in timing explicitly
+
+In settings in which the sequence of events is ambiguous or cannot be definitively known, particularly in the context of cross-sectional data where all measurements are taken at a single point in time, we adopt a specific convention to express causality under uncertainty: $X_{\phi t}$. This notation allows us to propose a temporal order without clear, time-specific measurements, acknowledging our speculation.
+
+For instance, when the timing between events is unclear, we denote an event that is presumed to occur first as $X_{\phi 0}$ and a subsequent event as $X_{\phi 1}$, indicating a tentative ordering where $X_{\phi 0}$ is thought to precede $X_{\phi 1}$. However, it is essential to underscore that this notation signals our uncertainty regarding the actual timing of events; our measurements do not give us the confidence to assert this sequence definitively.
+
+
+
+#### Arrows
+
+As indicated in @fig-general, black arrows denote causality, red arrows reveal an open backdoor path, dashed black arrows denote attenuation, and red dashed arrows denote bias in a true causal association between $A$ and $Y$. Finally, a blue arrow with a circle point denotes effect-measure modification, also known as "effect modification."  We might be interested in treatment effect heterogeneity without evaluating the causality in the sources of this heterogeneity.  For example, we cannot typically imagine any intervention in which people could be randomised into cultures.  However, we may be interested in whether the effects of an intervention that might be manipulable, such as marriage, differ by culture.  To clarify this interest, we require a non-causal arrow. 
+
+$\mathcal{R}\to A$ denotes a random treatment assignment. 
+
+
+#### Boxes
+
+We use a black box to denote conditioning that reduces confounding or that is inert. 
+
+
+We use a red box to describe settings in which conditioning on a variable introduces confounding bias. 
+
+
+Occasionally we will use a dashed circle do denote a latent variable, that is, a variable that is either not measured or not conditioned upon. 
+
+
+#### Terminology for Conditional Independence
+
+The bottom panel of @fig-general shows some mathematical notation. Do not be alarmed, we are safe! Part 1 of the course will not require more complicated math than this notation. And we shall see that the notation is a compact way to describe intuitions that can be expressed less compactly in words:
+
+- **Statistical Independence ($\coprod$):** in the context of causal inference, statistical independence between the treatment and potential outcomes, denoted as $A \coprod Y(a)$, means the treatment assignment is independent of the potential outcomes. This assumption is critical for estimating causal effects without bias.
+
+- **Statistical Dependence ($\cancel\coprod$):** conversely, $\cancel\coprod$ denotes statistical dependence, indicating that the distribution of one variable is influenced by the other. For example, $A \cancel\coprod Y(a)$ implies that the treatment assignment is related to the potential outcomes, potentially introducing bias into causal estimates.
+
+- **Conditioning ($|$):** conditioning, denoted by the vertical line $|$, allows for specifying contexts or conditions under which independence or dependence holds.
+
+    - **Conditional Independence ($A \coprod Y(a)|L$):** This means that once we account for a set of variables $L$, the treatment and potential outcomes are independent. This condition is often the basis for strategies aiming to control for confounding.
+
+    - **Conditional Dependence ($A \cancel\coprod Y(a)|L$):** States that potential outcomes and treatments are not independent after conditioning on $L$, indicating a need for careful consideration in the analysis to avoid biased causal inferences.
+
+
+
+## The Five Elementary Structures of Causality
+
+
+Judea Pearl proved that all elementary structures of causality can be represented graphically [@pearl2009a].  @fig-directedgraph presents this five elementary structures. 
+
+
+
+::: {#fig-directedgraph}
+![](terminologydirectedgraph.pdf){fig-align="left" height=100% width=100%}
+
+Five elementary structures. This figure is adapted from [@bulbulia2023].
+:::
+
+
+
+The structures are as follows: 
+
+- **Two Variables:**
+    1. **Causality Absent:** There is no causal effect between variables $A$ and $B$. They do not influence each other, denoted as $A \coprod B$, indicating they are statistically independent.
+    2. **Causality:** Variable $A$ causally affects variable $B$. This relationship suggests an association between them, denoted as $A \cancel\coprod B$, indicating they are statistically dependent.
+
+- **Three Variables:**
+    3. **Fork:** Variable $A$ causally affects both $B$ and $C$. Variables $B$ and $C$ are conditionally independent given $A$, denoted as $B \coprod C | A$. This structure implies that knowing $A$ removes any association between $B$ and $C$ due to their common cause.
+    4. **Chain:** A causal chain exists where $C$ is affected by $B$, which in turn is affected by $A$. Variables $A$ and $C$ are conditionally independent given $B$, denoted as $A \coprod C | B$. This indicates that $B$ mediates the effect of $A$ on $C$, and knowing $B$ breaks the association between $A$ and $C$.
+    5. **Collider:** Variable $C$ is affected by both $A$ and $B$, which are independent. However, conditioning on $C$ induces an association between $A$ and $B$, denoted as $A \cancel\coprod B | C$. This structure is unique because it suggests that $A$ and $B$, while initially independent, become associated when we account for their common effect $C$.
+
+
+Once we understand the basic relationships between two variables, we can build upon these to create more complex relationships. These structures help us see how statistical independences and dependencies emerge from the data, allowing us to clarify the causal relationships we presume exist. Such clarity is crucial for ensuring that confounders are balanced across treatment groups, given all measured confounders, so that $Y(a) \coprod A | L$.
+
+You might wonder, "If not from the data, where do our assumptions about causality come from?" This question will come up repeatedly throughout the course. The short answer is that our assumptions are based on existing knowledge. This reliance on current knowledge might seem counterintuitive for buiding scientific knowledge-— shouldn't we use data to build knowledge, not the other way around? Yes, but it is not that straightforward. Data often hold the answers we're looking for but can be ambiguous. When the causal structure is unclear, it is important to sketch out different causal diagrams, explore their implications, and, if necessary, conduct separate analyses based on these diagrams.
+
+Otto Neurath, an Austrian philosopher and a member of the Vienna Circle, famously used the metaphor of a ship that must be rebuilt at sea to describe the process of scientific theory and knowledge development. 
+
+> Duhem has shown ... that every statement about any happening is saturated with hypotheses of all sorts and that these in the end are derived from our whole world-view. We are like sailors who on the open sea must reconstruct their ship but are never able to start afresh from the bottom. Where a beam is taken away a new one must at once be put there, and for this the rest of the ship is used as support. In this way, by using the old beams and driftwood, the ship can be shaped entirely anew, but only by gradual reconstruction. [@neurath1973, p.199]
+
+This quotation emphasises the iterative process that accumulates scientific knowledge;  new insights are cast from the foundation of existing knowledge. Causal diagrams are at home in Neurath's boat. The tradition of science that believes that knowledge develops from the results of statistical tests applied to data should be resisted. The data alone typically do not contain the answers we seek.
+
+
+## The Four Rules of Confounding Control
+
+
+@fig-terminologyconfounders describe the four elementary rules of confounding control:
+
+
+::: {#fig-terminologyconfounders}
+![](terminologyelconfounders.pdf){fig-align="left" height=100% width=100%}
+
+Four rules of confounding control
+
+:::
+
+
+1. **Condition on Common Cause or its Proxy**: this rule applies to settings in which the treatment ($A$) and the outcome ($Y$) share common causes. By conditioning on these common causes, we block the open backdoor paths that could introduce bias into our causal estimates. Controlling for these common causes (or their proxies) helps tp isolate the specific effect of $A$ on $Y$. (We do not draw a path from $ A \to Y$ because we do not assume this path.)
+
+2. **Do Not Condition on a Mediator**:  this rule applies to settings in which the variable $L$ is a mediator of $A \to Y$. Here, conditioning on a mediator will bias the total causal effect estimate. Later in the course, we will discuss the assumptions required for causal mediation.  For now, if we are interested in total effect estimates, we must not condition on a mediator.  Here we draw the path from $A \to Y$ to ensure that if such a path exists, it will not become biased from our conditioning strategy. 
+
+3. **Do Not Condition on a Collider**: this rule applies to settings in which we $L$ is a common effect of $A$ and $Y$. Conditioning on a collider may invoke a spurious association.  Last week we considered an example in which marriage caused wealth and happiness caused wealth. Conditioning on wealth in this setting will induce an association between happiness and marriage. Why?  If we know the outcome, wealth, then we know there are at least two ways of wealth.  Among those wealthy but low on happiness, we can predict that they are more likely to be married, for how else would they be wealthy? Similarly, among those who are wealthy and are not married, we can predict that they are happy, for how else would they be wealthy if not through marriage? These relationships are predictable entirely without a causal association between marriage and happiness!
+
+4. **Proxy Rule: Conditioning on a Descendent Is Akin to Conditioning on Its Parent**: this rule applies to settings in which we $L’$ is an effect from another variable $L$.  The graph considers when $L’$ is downstream of a collider.  For example, suppose we condition on home ownership, which is an effect of wealth. Such conditioning will open up a non-causal path without causation because home ownership is a proxy for wealth.  Consider, if someone owns a house but is not married, they are more likely to be happy, for how else could they accumulate the wealth required for home ownership?  Likewise, if someone is unhappy and owns a house, we can infer that they are more likely to be married because how else would they be wealthy? Conditioning on a proxy for a collider here is akin to conditioning on the collider itself.  
+
+However, we can also use the proxy rule to reduce bias. Return to the earlier example in which there is an unmeasured common cause of marriage and happiness, which we called "cultural upbringing"  Suppose we have not measured this variable but have measured proxies for this variable, such as country of birth, childhood religion, number of languages one speaks, and others.  By controlling for baseline values of these proxies, we can exert more control over unmeasured confounding. Even if bias is not eliminated, we should reduce bias wherever possible, which includes not introducing new biases, such as mediator bias, along the way.  Later in the course, we will teach you how to perform sensitivity analyses to verify the robustness of your results to unmeasured confounding.  Sensitivity analysis is critical because where the data are observational, we cannot entirely rule out unmeasured confounding. 
+  
+  
+
+
+
+<!-- :::{.callout-note appearance="minimal"} -->
+<!-- © 2025 Joseph Bulbulia. This work is licensed under a [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License](https://creativecommons.org/licenses/by-nc-sa/4.0/). -->
+<!-- ::: -->

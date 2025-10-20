@@ -1,0 +1,105 @@
+---
+title: "Causal Diagrammes & Measurement"
+date: "2025-AUG-12"
+format:
+  html:
+    warnings: false
+    error: false
+    messages: false
+    code-overflow: scroll
+    highlight-style: Ayu
+    code-line-numbers: true
+    code-fold: false
+    code-tools:
+      source: true
+      toggle: false
+html-math-method: katex
+reference-location: margin
+citation-location: margin
+cap-location: margin
+code-block-border-left: true
+bibliography: /Users/joseph/GIT/templates/bib/references.bib
+editor_options: 
+  chunk_output_type: console
+---
+
+
+
+## Graphical conventions
+- DAGs represent causal structure; blue arrows highlight **effect modification**.
+- SWIGs split intervention nodes into fixed/random components to display counterfactual states.
+- Special node/edge styles indicate conditioning, unmeasured variables, and measurement processes.
+
+---
+
+## Part 1 — Measurement error bias
+Measurement error structures:
+1. **Uncorrelated, non-differential**: often attenuates effects under a true effect, but not guaranteed.
+2. **Correlated non-differential**: common causes of errors can create spurious associations.
+3. **Uncorrelated differential**: treatment or outcome affects error in the other.
+4. **Correlated differential**: both directed and shared causes of error.
+
+**Key insight**: Many forms distort effect estimates “off the null”; even in randomised settings, mismeasured confounders can re-open biasing paths.
+
+@tbl-terminologymeasurementerror illustrates six canonical structures.
+
+---
+
+## Part 2 — Target restriction bias at study end
+Right-censoring (attrition) can bias effects by:
+- Introducing new backdoor paths (distortion).
+- Changing distribution of effect modifiers between baseline and end-of-study (restriction).
+
+**Five example DAGs** in @tbl-terminologycensoring show:
+- Common cause of treatment and attrition.
+- Treatment-induced attrition.
+- Outcome-induced attrition (null and non-null cases).
+- Attrition changing effect modifier distribution.
+
+Inverse probability weighting or multiple imputation can help if missingness is well-modelled.
+
+---
+
+## Part 3 — Target restriction bias at baseline
+Bias arises when the **analytic sample** differs from the **target population** in confounders or effect modifiers:
+- **Collider restriction** (M-bias).
+- Sampling only WEIRD groups for general population questions.
+- Overly broad or overly narrow eligibility criteria.
+- Cross-cultural designs with **structured measurement error** in covariates or effect modifiers.
+
+@tbl-terminologyselectionrestrictionbaseline links these to equivalent measurement error structures (esp. uncorrelated error off the null).
+
+---
+
+## Part 4 — SWIGs and unifying biases
+SWIGs reveal:
+- **Treatment measurement error**: reporter is a post-treatment collider, diluting effects.
+- **Outcome measurement error**: error acts as an effect modifier; scale-dependent bias.
+- Target restriction biases at start/end are often equivalent to undirected, uncorrelated measurement error off the null.
+
+@tbl-tblme shows SWIG templates and counterfactual worlds for key bias types.
+
+---
+
+## Conclusions and workflow
+To avoid **weird** inferences:
+1. Define treatment and outcome precisely.
+2. Clarify target population.
+3. Ensure treatments satisfy **consistency**.
+4. Verify **exchangeability** and **positivity**.
+5. Evaluate measurement error structures.
+6. Ensure end-of-study sample matches target population.
+7. Document assumptions and reasoning transparently.
+
+Comparative research demands extra caution: **each site’s measurement validity** must be assessed before pooling or comparing.
+
+---
+
+**Figures included:**
+- @tbl-terminologygeneral (d-separation rules).
+- @tbl-effectmodification (effect modification on DAGs).
+- @tbl-terminologymeasurementerror (measurement error structures).
+- @tbl-terminologycensoring (censoring/restriction at end of study).
+- @tbl-terminologyselectionrestrictionclassic, @tbl-terminologyselectionrestrictionbaseline (restriction at baseline).
+- @tbl-tblme (SWIGs for measurement error).
+---

@@ -1,0 +1,361 @@
+% Options for packages loaded elsewhere
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+  ignorenonframetext,
+  aspectratio=169,
+]{beamer}
+\newif\ifbibliography
+\usepackage{pgfpages}
+\setbeamertemplate{caption}[numbered]
+\setbeamertemplate{caption label separator}{: }
+\setbeamercolor{caption name}{fg=normal text.fg}
+\beamertemplatenavigationsymbolshorizontal
+% remove section numbering
+\setbeamertemplate{part page}{
+  \centering
+  \begin{beamercolorbox}[sep=16pt,center]{part title}
+    \usebeamerfont{part title}\insertpart\par
+  \end{beamercolorbox}
+}
+\setbeamertemplate{section page}{
+  \centering
+  \begin{beamercolorbox}[sep=12pt,center]{section title}
+    \usebeamerfont{section title}\insertsection\par
+  \end{beamercolorbox}
+}
+\setbeamertemplate{subsection page}{
+  \centering
+  \begin{beamercolorbox}[sep=8pt,center]{subsection title}
+    \usebeamerfont{subsection title}\insertsubsection\par
+  \end{beamercolorbox}
+}
+% Prevent slide breaks in the middle of a paragraph
+\widowpenalties 1 10000
+\raggedbottom
+\AtBeginPart{
+  \frame{\partpage}
+}
+\AtBeginSection{
+  \ifbibliography
+  \else
+    \frame{\sectionpage}
+  \fi
+}
+\AtBeginSubsection{
+  \frame{\subsectionpage}
+}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+
+\usetheme[]{Madrid}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+
+
+\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+\usepackage{caption}
+% Make caption package work with longtable
+\makeatletter
+\def\fnum@table{\tablename~\thetable}
+\makeatother
+\usepackage{graphicx}
+\makeatletter
+\newsavebox\pandoc@box
+\newcommand*\pandocbounded[1]{% scales image to fit in text height/width
+  \sbox\pandoc@box{#1}%
+  \Gscale@div\@tempa{\textheight}{\dimexpr\ht\pandoc@box+\dp\pandoc@box\relax}%
+  \Gscale@div\@tempb{\linewidth}{\wd\pandoc@box}%
+  \ifdim\@tempb\p@<\@tempa\p@\let\@tempa\@tempb\fi% select the smaller of both
+  \ifdim\@tempa\p@<\p@\scalebox{\@tempa}{\usebox\pandoc@box}%
+  \else\usebox{\pandoc@box}%
+  \fi%
+}
+% Set default figure placement to htbp
+\def\fps@figure{htbp}
+\makeatother
+
+
+
+
+
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+
+
+ 
+
+
+\usepackage{graphicx}
+\setkeys{Gin}{width=.95\linewidth,keepaspectratio}
+\makeatletter
+\@ifpackageloaded{caption}{}{\usepackage{caption}}
+\AtBeginDocument{%
+\ifdefined\contentsname
+  \renewcommand*\contentsname{Table of contents}
+\else
+  \newcommand\contentsname{Table of contents}
+\fi
+\ifdefined\listfigurename
+  \renewcommand*\listfigurename{List of Figures}
+\else
+  \newcommand\listfigurename{List of Figures}
+\fi
+\ifdefined\listtablename
+  \renewcommand*\listtablename{List of Tables}
+\else
+  \newcommand\listtablename{List of Tables}
+\fi
+\ifdefined\figurename
+  \renewcommand*\figurename{Figure}
+\else
+  \newcommand\figurename{Figure}
+\fi
+\ifdefined\tablename
+  \renewcommand*\tablename{Table}
+\else
+  \newcommand\tablename{Table}
+\fi
+}
+\@ifpackageloaded{float}{}{\usepackage{float}}
+\floatstyle{ruled}
+\@ifundefined{c@chapter}{\newfloat{codelisting}{h}{lop}}{\newfloat{codelisting}{h}{lop}[chapter]}
+\floatname{codelisting}{Listing}
+\newcommand*\listoflistings{\listof{codelisting}{List of Listings}}
+\makeatother
+\makeatletter
+\makeatother
+\makeatletter
+\@ifpackageloaded{caption}{}{\usepackage{caption}}
+\@ifpackageloaded{subcaption}{}{\usepackage{subcaption}}
+\makeatother
+
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={Measurement And Selection Biases},
+  pdfauthor={Joseph A. Bulbulia},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+
+\title{Measurement And Selection Biases}
+\author{Joseph A. Bulbulia}
+\date{}
+
+\begin{document}
+\frame{\titlepage}
+
+
+\begin{frame}
+\section{Effect-Modification on Causal Directed Acyclic Graphs}
+
+The primary function of a causal directed acyclic graph is to allow
+investigators to apply Pearl's backdoor adjustment theorem to evaluate
+whether causal effects may be identified from data, as shown in
+Table\textasciitilde{}\ref{tbl-terminologygeneral}. We have noted that
+modifying a causal effect within one or more strata of the target
+population opens the possibility for biased average treatment effect
+estimates when the distribution of these effect modifiers differs in the
+analytic sample population \citep{bulbulia2024swigstime}.
+
+We do not generally represent non-linearities in causal directed acyclic
+graphs, which are tools for obtaining relationships of conditional and
+unconditional independence from assumed structural relationships encoded
+in a causal diagram that may lead to a non-causal treatment/outcome
+association \citep{bulbulia2023}.
+
+Table\textasciitilde{}\ref{tbl-effectmodification} presents our
+convention for highlighting a relationship of effect modification in
+settings where (1) we assume no confounding of treatment and outcome and
+(2) there is effect modification such that the effect of \(A\) on \(Y\)
+differs in at least one stratum of the target population.
+
+\begin{table}[ht]
+\centering
+\terminologyeffectmodification
+\caption{The five elementary structures of causality which all directed acyclic graphs are composed.}
+\label{tbl-effectmodification}
+\end{table}
+
+To focus on effect modification, we do not draw a causal arrow from the
+direct effect modifier \(F\) to the outcome \(Y\). This convention is
+specific to this article (refer to \citealt{hernan2024WHATIF},
+pp.~126--127, for a discussion of ``non-causal'\,' arrows).
+
+\subsection{Part 1: How Measurement Error Bias Makes Your Causal Inferences \textbf{weird} (wrongly estimated inferences due to inappropriate restriction and distortion)}
+
+Measurements record reality, but they are not always accurate. Whenever
+variables are measured with error, our results can be misleading. Every
+study must therefore consider how its measurements might mislead.
+
+Causal graphs can deepen understanding because---as implied by the
+concept of ``record'\,'---there are structural or causal properties that
+give rise to measurement error. Measurement error can take various
+forms, each with distinct implications for causal inference:
+
+\begin{itemize}
+    \item \textbf{Independent (undirected) / uncorrelated}: Errors in different variables do not influence each other.
+    \item \textbf{Independent (undirected) and correlated}: Errors in different variables are related through a shared cause.
+    \item \textbf{Dependent (directed) and uncorrelated}: Errors in one variable influence the measurement of another, but these influences are not related through a shared cause.
+    \item \textbf{Dependent (directed) and correlated}: Errors in one variable influence the measurement of another, and these influences are related through a shared cause \citep{hernan2009, vanderweele2012a}.
+\end{itemize}
+
+The six causal diagrams presented in
+Table\textasciitilde{}\ref{tbl-terminologymeasurementerror} illustrate
+structural features of measurement error bias and clarify how these
+structural features compromise causal inferences.
+
+\begin{table}[ht]
+\centering
+\terminologymeasurementerror
+\caption{Examples of measurement error bias.}
+\label{tbl-terminologymeasurementerror}
+\end{table}
+
+Understanding these structural features will help explain why
+measurement error bias cannot typically be evaluated with statistical
+models, and will prepare us to link target-population restriction biases
+to measurement error.
+
+\subsubsection*{Example 1: Uncorrelated Non-Differential Errors under Sharp Null (No Treatment Effect)}
+
+Table\textasciitilde{}\ref{tbl-terminologymeasurementerror}
+\(\mathcal{G}_1\) illustrates uncorrelated non-differential measurement
+error under the sharp null. In this setting, measurement error is not
+expected to bias estimates.
+
+\emph{Example:} A study on whether beliefs in big Gods affect social
+complexity in ancient societies, where societies randomly omitted or
+inaccurately recorded such beliefs and complexity, with errors
+independent across variables. Under randomisation, uncorrelated
+undirected errors will generally not bias estimates under the sharp
+null, assuming all backdoor paths are closed. However, mismeasured
+confounders can open backdoor paths \citep{robins2008estimation}.
+
+\subsubsection*{Example 2: Uncorrelated Non-Differential Errors ``Off the Null'' (True Effect Present)}
+
+Table\textasciitilde{}\ref{tbl-terminologymeasurementerror}
+\(\mathcal{G}_2\) illustrates uncorrelated non-differential measurement
+error when there is a true treatment effect, also called
+\emph{information bias} \citep{lash2009applying}. This bias often
+attenuates the effect toward the null---but not always
+\citep{jurek2005proper, jurek2006exposure, jurek2008brief}.
+
+\emph{Example:} Same as above, but a real effect exists. Measurement
+error often underestimates it, but attenuation is not guaranteed.
+Mismeasured confounders may still open backdoor paths.
+
+\subsubsection*{Example 3: Correlated Non-Differential (Undirected) Measurement Errors}
+
+Table\textasciitilde{}\ref{tbl-terminologymeasurementerror}
+\(\mathcal{G}_3\) arises when the error terms of the treatment and
+outcome share a common cause.
+
+\emph{Example:} Societies with advanced record-keeping produce more
+precise records of both big God beliefs and social complexity. This
+common cause creates a spurious association even in the absence of a
+true causal effect.
+
+\subsubsection*{Example 4: Uncorrelated Differential Measurement Error — Exposure $\rightarrow$ Error in Outcome}
+
+Table\textasciitilde{}\ref{tbl-terminologymeasurementerror}
+\(\mathcal{G}_4\) occurs when the exposure influences how the outcome is
+measured.
+
+\emph{Example:} Big God beliefs lead to inflated historical records of
+social complexity, introducing bias even without a true causal effect.
+
+\subsubsection*{Example 5: Uncorrelated Differential Measurement Error — Outcome $\rightarrow$ Error in Exposure}
+
+Table\textasciitilde{}\ref{tbl-terminologymeasurementerror}
+\(\mathcal{G}_5\) occurs when the outcome influences the measurement of
+the exposure.
+
+\emph{Example:} If social complexity shapes historical narratives,
+victors might record big God beliefs selectively to support political
+legitimacy.
+
+\subsubsection*{Example 6: Correlated Differential Measurement Error}
+
+Table\textasciitilde{}\ref{tbl-terminologymeasurementerror}
+\(\mathcal{G}_6\) occurs when the exposure influences already correlated
+error terms.
+
+\emph{Example:} Social complexity fosters elites who glorify both
+political reach and big God beliefs, biasing both measures in a
+correlated fashion.
+
+\paragraph{Summary:}
+
+In Part 1, we examined independent, correlated, dependent, and
+correlated--dependent forms of measurement error bias. These structural
+features clarify why such biases threaten causal inference and often
+cannot be resolved with statistical adjustment alone
+\citep{vanderweele2012a}.
+
+\section{Part 2: Target Population Restriction Bias at the End of Study}\label{id-sec-2}
+
+Suppose the analytic sample matches the target population at baseline.
+Attrition (right-censoring) may bias causal effect estimates by:
+
+\begin{enumerate}
+    \item Opening biasing pathways (distortion), or
+    \item Restricting the analytic sample so it is no longer representative (restriction).
+\end{enumerate}
+
+\begin{table}[ht]
+\centering
+\terminologycensoring
+\caption{Five examples of right-censoring bias.}
+\label{tbl-terminologycensoring}
+\end{table}
+
+\% Examples 1--5 follow here, unchanged in text but in LaTeX
+paragraph/subsubsection form
+
+\paragraph{Summary:}
+
+Attrition can bias estimates whenever the distribution of effect
+modifiers changes between baseline and study end. Methods such as
+inverse probability weighting or multiple imputation can mitigate such
+bias \citep{bulbulia2024PRACTICAL}, but only if their assumptions hold.
+\end{frame}
+
+
+
+
+\end{document}
