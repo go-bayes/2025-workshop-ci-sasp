@@ -17,15 +17,15 @@ execute:
 ::: {.welcome-banner}
 # Reference Materials 📊
 
-**Comprehensive collection of terminology and causal diagrams for workshop participants**
+**Navitaging the jargon**
 :::
 
 ## Causal Inference Glossary
 
 ::: {.card}
-### 📖 Complete Terminology Guide
+### 📖 Terminology Guide
 
-Access the comprehensive glossary of causal inference terms and definitions used throughout the workshop.
+Causal inference is anchored on mathematical proofs. This brings wide agreement about its foundations. The proofs give us confidence. However, the words people use to describe concepts vary. The terminology  invites confusion. Linked here is a glossary of terminology. Where terminology differs, I've added a note.
 
 **[Download Glossary (PDF)](pdfs/bulbulia-hand-outs/S2-glossary.pdf)**
 
@@ -35,16 +35,16 @@ This glossary contains essential definitions for terms including:
 - Instrumental variables and propensity scores
 - Time-varying confounding and measurement error
 - Causal estimands, estimators, and identification strategies
+- Words whose meanings differ -- sometimes with opposite meanings -- include "selection", "fixed effects", "standardisation", "estimand", "moderator", "structural equation model", and "identification". 
 
 *Essential reference for understanding causal inference methodology and terminology.*
 :::
 
-## Causal DAGs Reference Collection
+## Causal Directed Acyclic Graph
 
-### Core Terminology & Foundations
 
 ::: {.card}
-#### 1. Foundational Concepts
+#### 1. Our Conventions Here
 
 **[1a. Local Conventions](pdfs/bulbulia-hand-outs/1a-terminologylocalconventions.pdf)**  
 Essential local conventions for causal diagram construction and interpretation
@@ -56,7 +56,7 @@ Core terminology specific to directed acyclic graphs (DAGs)
 Visual reference guide for interpreting causal diagram symbols and notation
 :::
 
-### Common Questions & Applications
+### Common Applications
 
 ::: {.card}
 #### 2. Practical Applications
@@ -97,7 +97,7 @@ Advanced approaches to time-varying confounding
 **[7. Selection Bias Focus](pdfs/bulbulia-hand-outs/7-focus-on-confounding-selection-bias-three-wave-panel.pdf)**  
 Detailed examination of selection bias in longitudinal studies
 
-**[8. Measurement Error](pdfs/bulbulia-hand-outs/8-structural-representation-measurement-error-bias.pdf)**  
+**[8. Measurement Error Focus](pdfs/bulbulia-hand-outs/8-structural-representation-measurement-error-bias.pdf)**  
 Structural approaches to representing and addressing measurement error
 
 **[10. Experimental Design](pdfs/bulbulia-hand-outs/10-confounding-selection-bias-experiments.pdf)**  

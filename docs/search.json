@@ -1418,14 +1418,14 @@
     "href": "glossary-and-dags.html",
     "title": "Glossary and Causal DAGs",
     "section": "",
-    "text": "Comprehensive collection of terminology and causal diagrams for workshop participants"
+    "text": "Navitaging the jargon"
   },
   {
     "objectID": "glossary-and-dags.html#causal-inference-glossary",
     "href": "glossary-and-dags.html#causal-inference-glossary",
     "title": "Glossary and Causal DAGs",
     "section": "Causal Inference Glossary",
-    "text": "Causal Inference Glossary\n\n📖 Complete Terminology Guide\nAccess the comprehensive glossary of causal inference terms and definitions used throughout the workshop.\nDownload Glossary (PDF)\nThis glossary contains essential definitions for terms including: - Average Treatment Effect (ATE), Conditional Average Treatment Effect (CATE) - Backdoor paths, confounders, and colliders - Instrumental variables and propensity scores - Time-varying confounding and measurement error - Causal estimands, estimators, and identification strategies\nEssential reference for understanding causal inference methodology and terminology."
+    "text": "Causal Inference Glossary\n\n📖 Terminology Guide\nCausal inference is anchored on mathematical proofs. This brings wide agreement about its foundations. The proofs give us confidence. However, the words people use to describe concepts vary. The terminology invites confusion. Linked here is a glossary of terminology. Where terminology differs, I’ve added a note.\nDownload Glossary (PDF)\nThis glossary contains essential definitions for terms including: - Average Treatment Effect (ATE), Conditional Average Treatment Effect (CATE) - Backdoor paths, confounders, and colliders - Instrumental variables and propensity scores - Time-varying confounding and measurement error - Causal estimands, estimators, and identification strategies - Words whose meanings differ – sometimes with opposite meanings – include “selection”, “fixed effects”, “standardisation”, “estimand”, “moderator”, “structural equation model”, and “identification”.\nEssential reference for understanding causal inference methodology and terminology."
   },
   {
     "objectID": "glossary-and-dags.html#causal-dags-reference-collection",
@@ -1881,5 +1881,12 @@
     "title": "Readings",
     "section": "",
     "text": "I’ve written four methods articles. Check the links for further readings. Also my lab resouces at the bottom 👇.\n\nPart 1: Causal Diagrams and Confounding\nPart 2: Interaction, Mediation, and Time-Varying Treatments\nPart 3: Measurement, Measurement Error, Cultural Comparisons\nPart 4: Experiments: What Randomisation Ensures and Does not Ensure\n\n\nFor more resources on causal inference, visit the EPIC Lab Resources page."
+  },
+  {
+    "objectID": "glossary-and-dags.html#causal-directed-acyclic-graph",
+    "href": "glossary-and-dags.html#causal-directed-acyclic-graph",
+    "title": "Glossary and Causal DAGs",
+    "section": "Causal Directed Acyclic Graph",
+    "text": "Causal Directed Acyclic Graph\n\n1. Our Conventions Here\n1a. Local Conventions\nEssential local conventions for causal diagram construction and interpretation\n1b. Directed Graph Terminology\nCore terminology specific to directed acyclic graphs (DAGs)\nS1. Graphical Key\nVisual reference guide for interpreting causal diagram symbols and notation\n\n\nCommon Applications\n\n2. Practical Applications\n2. Common Causal Questions\nFrequently encountered causal questions and how to approach them\n6. Effect Modification\nUnderstanding when and how treatment effects vary across subgroups\n9. External Validity\nApproaches to generalising causal findings across populations and contexts\n\n\n\nTime Series & Confounding\n\n3. Keeping Time on Your Side\n3. Time Series Approaches\nHow longitudinal data help address confounding bias\n4. Three-Wave Panel Methods\nUsing three-wave panel data for causal inference\n5. Time Series Limitations\nWhen time series approaches may not resolve confounding\nS3. Time-Resolved Confounding\nAdvanced approaches to time-varying confounding\n\n\n\nAdvanced Topics\n\n4. Complex Methodological Issues\n7. Selection Bias Focus\nDetailed examination of selection bias in longitudinal studies\n8. Measurement Error Focus\nStructural approaches to representing and addressing measurement error\n10. Experimental Design\nHow experiments address confounding and selection bias challenges\n\n\n\nSupplementary Materials\n\n5. Additional Resources\nS5. Timing Examples\nPractical examples of confounding and timing issues\nS6. Detailed Panel Examples\nWhat can go wrong in a three-wave panel.\nS7. Cross-Sectional Approaches When to report multiple DAGs in cross-sectional studies\nS8. Bias Correction\nQuantitative approaches to bias correction\nS9. Mediator Bias\nUnderstanding confounding bias in mediation analysis\nS10. Misclassification Bias\nExamples of misclassification bias and bias towards the nulls"
   }
 ]
