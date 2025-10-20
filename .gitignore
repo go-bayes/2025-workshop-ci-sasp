@@ -32,6 +32,8 @@ v-project*/
 
 # output files that might be large
 *.pdf
+!content/**/*.pdf
+!docs/content/**/*.pdf
 !docs/pdfs/**/*.pdf
 !docs/quiz/*.pdf
 !pdfs/**/*.pdf
