@@ -30,20 +30,29 @@ editor_options:
 
 **Location:** University of Melbourne (Parkville campus), Redmond Barry Building (Building 115), Level 5 Room 516  
 
-**Format:** Registration via SASP abstract submission; in-person. Before lunch we'll cover average treatment effects.  This module is self-sufficient, and will culminate with student presentations. If you just want to get a sense of causal inference, and learn about causal graphs, the morning will be sufficient. After lunch we'll get into estimation of heterogeneous treatment effects, and walk through a data exercise that will show you how to estimate such effects, as well as average treatment effects. You will estimate effects using **causal machine learning**.  Building knowledge and skills in this area will be empowering.
+**Format:** Registration via SASP abstract submission; in-person. 
 
-**Preparation**: Bring your curiosity and attention. If you want to do the data exercise, download R and Rstudio (or your favourite IDE) and then download the workshop R package. (Make sure you install the package first, and run through the scripts as we will not pause to work on your package installation). Bring a writing instrument and some paper, or software that allows free hand writing, as we'll draw graphs together. 
+Before lunch we'll cover average treatment effects.  This module is self-sufficient, and will culminate with student presentations. If you just want to get a sense of causal inference, and learn about causal graphs, the morning will be sufficient. 
+
+If you want to be mighty, stick around. After lunch we'll get into estimation of heterogeneous treatment effects, and walk through a data exercise that will show you how to do causal inference with using **causal machine learning**. Despite the highfalutin sound, the approach is useful. You deserve to be empowered. 
+
+**Preparation**: Bring your curiosity and attention. For the morning session, bring a writing instrument and some paper, or software that allows free hand writing, as we'll draw graphs together. 
+
+If you want to do the data exercise, download R and Rstudio (or your favourite IDE -- like neovim or emacs if you're one of the cool kids) and then download the workshop R package (bottom 👇). 
+
+Important: make sure you install the package first, and run through the scripts as we will not pause to deal with your crisis in working your package installation. Reach out before the workshop, or after, if you get stuck. 
+
 :::
 
 
 ::: {.callout-important}
 ## Links to Lectures 
-In the weeks before the workshop, I'll be **simplifying the background lectures** and adding some background videos.  Updates will be described here. 
+In the weeks before the workshop, I'll be **simplifying the background lectures** and adding some background videos.  Check back here ~ week before. 
 :::
 
 ## Venue Location
 
-We'll meet on Level 5 of the Redmond Barry Building (Building 115). See the campus map for map for detail by clicking the arrow in the centre of the OpenStreetMap. 
+We'll meet on Level 5 of the Redmond Barry Building (Building 115). See the campus map for map for detail by clicking the arrow in the centre of the OpenStreetMap. The sessions will start at 9am. 
 
 ```{r}
 #| echo: false
