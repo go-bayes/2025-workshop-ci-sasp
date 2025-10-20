@@ -53,32 +53,53 @@ leaflet() %>%
   )
 ```
 
-## Overview
+## Why is causal inference important? 
 
-Social psychological theories aim for causal explanations, yet our evidence is often associational. This full-day, practice-oriented workshop introduces modern causal inference for observational data, with an emphasis on discovering for whom effects are strongest (afternoon).
+Suppose you observe that psychology graduate students who own expensive espresso machines publish more papers. Should your department invest in high-end coffee equipment for all incoming students?
 
-Here, we will:
+Probably not. This is the difference between prognostic and causal knowledge.
 
-- diagnose confounding and other threats to causal claims in observational studies.  
-- use the potential outcomes framework and causal diagrams to keep assumptions explicit.  
-- demonstrate state-of-the-art estimators: doubly robust machine learning using causal forests.
-- translate workflow principles into hands-on R practice.  
+Observational psychology typically recovers prognostic information -- which factors predict which others. The word 'predictor' is engrained in our vocabulary. But predictions don't tell us what would happen if we intervened. Owning an expensive coffee machine predicts publication success, but giving someone an expensive machine wouldn't cause their productivity to increase. The machine is likely a marker for other factors: being further along in candidature, having more disposable income, or possessing pre-existing caffeinated ambition. Of course the machines might help, but how much?  
 
 
-## Objectives
+This distinction between **prediction** and **causation** has serious implications for intervention design:
 
-Participants will leave with:
+1) We might observe that adolescents with higher self-esteem have better academic outcomes. But if we were to intervene to boost self-esteem directly (through positive affirmations or praise), would grades improve? Or is self-esteem mostly a marker for other causal factors like stable family environments or prior academic success?  
 
-- A conceptual toolkit for articulating and evaluating causal claims.  
+2) We might find that people who practice mindfulness meditation report lower anxiety. But does meditation cause reduced anxiety, or are less anxious people simply more likely to maintain a meditation practice -- i.e. to sit, for long periods of time, still?
+
+3) We might observe that children who attend preschool show better social skills. But before recommending universal preschool, we need to ask: would sending any child to preschool produce these benefits, or do families who can afford and prioritise preschool differ in ways that independently foster social development?  
+
+**Prognostic models tell us what to expect. Causal models tell us what we can change. For psychologists aiming to improve human welfare, that distinction is everything.**
+
+## The workshop
+
+This full-day, practice-oriented workshop introduces modern causal inference for observational data, with an emphasis on discovering for whom effects are strongest (afternoon).
+
+We will:
+
+- Unveil a **causal workflow** that starts with asking a clearly formulated causal question. 
+- Before answering a causal question we must consider and explicate **identification assumptions**. We will consider these assumptions and introduce graphical tools for addressing them. You will discover that clarifying assumptions is not a statistical task. 
+- Only after stating our questions and assumptions can we turn to the data and its analysis. By the end of the workshop, you will conduct an analysis using doubly robust machine learning -- which has many advantages over standard estimators.  
+- After estimation there is communication.  I'll describe how to graphical tools to clarify results audiences with applied interests.  
+
+
+### Objectives
+
+You will leave with:
+
+- An understanding of how to ask, and answer, causal questions.
 - Annotated R code for simulating and estimating average and heterogeneous treatment effects.  
 - A curated reading list for self-study.  
 - Examples of how to communicate causal results to academic, policy, and organisational audiences.
+
+## My assumptions about you.
 
 The workshop assumes familiarity with regression and R, but no prior training in causal inference.
 
 ::: callout-tip
 ### A note on pace
-Please do not worry if the math or code looks intimidating at first glance. We'll slow everything down, build each idea together from first principles, and keep the focus on intuition before symbols. Bring your curiosity, and a computer pre-loaded with the workshop R package if you want to work through the data exercises. By the end of the day you'll see that the machinery is manageable, and even fun (really), when we unpack it step by step.
+Please do not worry if the math or code looks intimidating at first glance. We'll slow everything down, build each idea together from first principles, and keep the focus on intuition before symbols. Bring your curiosity, and a computer pre-loaded with the workshop R package if you want to work through the data exercises. By the end of the day you'll see that the machinery is manageable, and even fun (really!), when we unpack it step by step.
 :::
 
 ## Setup

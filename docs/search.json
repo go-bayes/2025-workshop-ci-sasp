@@ -1839,5 +1839,26 @@
     "title": "Beyond Correlation: A Practical Introduction to Causal Inference in Observational Social Psychology",
     "section": "Venue Location",
     "text": "Venue Location\nWe’ll meet on Level 5 of the Redmond Barry Building (Building 115). See the campus map for map for detail by clicking the arrow in the centre of the OpenStreetMap."
+  },
+  {
+    "objectID": "index.html#why-is-causal-inference-important",
+    "href": "index.html#why-is-causal-inference-important",
+    "title": "Beyond Correlation: A Practical Introduction to Causal Inference in Observational Social Psychology",
+    "section": "Why is causal inference important?",
+    "text": "Why is causal inference important?\nSuppose you observe that psychology graduate students who own expensive espresso machines publish more papers. Should your department invest in high-end coffee equipment for all incoming students?\nProbably not. This is the difference between prognostic and causal knowledge.\nObservational psychology typically recovers prognostic information – which factors predict which others. The word ‘predictor’ is engrained in our vocabulary. But predictions don’t tell us what would happen if we intervened. Owning an expensive coffee machine predicts publication success, but giving someone an expensive machine wouldn’t cause their productivity to increase. The machine is likely a marker for other factors: being further along in candidature, having more disposable income, or possessing pre-existing caffeinated ambition. Of course the machines might help, but how much?\nThis distinction between prediction and causation has serious implications for intervention design:\n\nWe might observe that adolescents with higher self-esteem have better academic outcomes. But if we were to intervene to boost self-esteem directly (through positive affirmations or praise), would grades improve? Or is self-esteem mostly a marker for other causal factors like stable family environments or prior academic success?\nWe might find that people who practice mindfulness meditation report lower anxiety. But does meditation cause reduced anxiety, or are less anxious people simply more likely to maintain a meditation practice – i.e. to sit, for long periods of time, still?\nWe might observe that children who attend preschool show better social skills. But before recommending universal preschool, we need to ask: would sending any child to preschool produce these benefits, or do families who can afford and prioritise preschool differ in ways that independently foster social development?\n\nPrognostic models tell us what to expect. Causal models tell us what we can change. For psychologists aiming to improve human welfare, that distinction is everything."
+  },
+  {
+    "objectID": "index.html#the-workshop",
+    "href": "index.html#the-workshop",
+    "title": "Beyond Correlation: A Practical Introduction to Causal Inference in Observational Social Psychology",
+    "section": "The workshop",
+    "text": "The workshop\nThis full-day, practice-oriented workshop introduces modern causal inference for observational data, with an emphasis on discovering for whom effects are strongest (afternoon).\nWe will:\n\nUnveil a causal workflow that starts with asking a clearly formulated causal question.\nBefore answering a causal question we must consider and explicate identification assumptions. We will consider these assumptions and introduce graphical tools for addressing them. You will discover that clarifying assumptions is not a statistical task.\nOnly after stating our questions and assumptions can we turn to the data and its analysis. By the end of the workshop, you will conduct an analysis using doubly robust machine learning – which has many advantages over standard estimators.\n\nAfter estimation there is communication. I’ll describe how to graphical tools to clarify results audiences with applied interests.\n\n\nObjectives\nYou will leave with:\n\nAn understanding of how to ask, and answer, causal questions.\nAnnotated R code for simulating and estimating average and heterogeneous treatment effects.\n\nA curated reading list for self-study.\n\nExamples of how to communicate causal results to academic, policy, and organisational audiences."
+  },
+  {
+    "objectID": "index.html#my-assumptions-about-you.",
+    "href": "index.html#my-assumptions-about-you.",
+    "title": "Beyond Correlation: A Practical Introduction to Causal Inference in Observational Social Psychology",
+    "section": "My assumptions about you.",
+    "text": "My assumptions about you.\nThe workshop assumes familiarity with regression and R, but no prior training in causal inference.\n\n\n\n\n\n\nTipA note on pace\n\n\n\nPlease do not worry if the math or code looks intimidating at first glance. We’ll slow everything down, build each idea together from first principles, and keep the focus on intuition before symbols. Bring your curiosity, and a computer pre-loaded with the workshop R package if you want to work through the data exercises. By the end of the day you’ll see that the machinery is manageable, and even fun (really!), when we unpack it step by step."
   }
 ]
