@@ -442,10 +442,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><strong>Location:</strong> University of Melbourne (Parkville campus), Redmond Barry Building (Building 115), Level 5 Room 516</p>
 <p><strong>Format:</strong> Registration via SASP abstract submission; in-person.</p>
 <p>Before lunch we’ll cover average treatment effects. This module is self-sufficient, and will culminate with student presentations. If you just want to get a sense of causal inference, and learn about causal graphs, the morning will be sufficient.</p>
-<p>If you want to be mighty, stick around. After lunch we’ll get into estimation of heterogeneous treatment effects, and walk through a data exercise that will show you how to do causal inference with using <strong>causal machine learning</strong>. Despite the highfalutin sound, the approach is useful. You deserve to be empowered.</p>
+<p>If you want to be mighty, stick around. After lunch we’ll get into estimation of heterogeneous treatment effects, and walk through a data exercise that will show you how to do causal inference with using <strong>causal machine learning</strong>. You deserve to be empowered.</p>
 <p><strong>Preparation</strong>: Bring your curiosity and attention. For the morning session, bring a writing instrument and some paper, or software that allows free hand writing, as we’ll draw graphs together.</p>
-<p>If you want to do the data exercise, download R and Rstudio (or your favourite IDE – like neovim or emacs if you’re one of the cool kids) and then download the workshop R package (bottom 👇).</p>
-<p>Important: make sure you install the package first, and run through the scripts as we will not pause to deal with your crisis in working your package installation. Reach out before the workshop, or after, if you get stuck.</p>
+<p>If you want to do the data exercise, download R and Rstudio (or your favourite IDE) and then download the workshop R package (bottom 👇).</p>
+<p>Important: make sure you install the package <strong>before</strong> the workshop. Ping me if you need help.</p>
 </div>
 </div>
 <div class="callout callout-style-default callout-important callout-titled">
@@ -466,8 +466,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>We’ll meet on Level 5 of the Redmond Barry Building (Building 115). See the campus map for map for detail by clicking the arrow in the centre of the OpenStreetMap. The sessions will start at 9am.</p>
 <div class="cell page-columns page-full">
 <div class="cell-output-display column-body-outset">
-<div class="leaflet html-widget html-fill-item" id="htmlwidget-144a4e855c88a82dc87a" style="width:100%;height:464px;"></div>
-<script type="application/json" data-for="htmlwidget-144a4e855c88a82dc87a">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"https://openstreetmap.org/copyright/\">OpenStreetMap<\/a>,  <a href=\"https://opendatacommons.org/licenses/odbl/\">ODbL<\/a>"}]},{"method":"addMarkers","args":[-37.7971,144.9617,null,null,null,{"interactive":true,"draggable":false,"keyboard":true,"title":"","alt":"","zIndexOffset":0,"opacity":1,"riseOnHover":false,"riseOffset":250},"Redmond Barry Building (Building 115)<br>L5 Room 516<br><a href='https://maps.unimelb.edu.au/parkville/building/115' target='_blank'>View on campus map<\/a>",null,null,null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]}],"limits":{"lat":[-37.7971,-37.7971],"lng":[144.9617,144.9617]}},"evals":[],"jsHooks":[]}</script>
+<div class="leaflet html-widget html-fill-item" id="htmlwidget-da476b0d3b9f8a7b5e37" style="width:100%;height:464px;"></div>
+<script type="application/json" data-for="htmlwidget-da476b0d3b9f8a7b5e37">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"https://openstreetmap.org/copyright/\">OpenStreetMap<\/a>,  <a href=\"https://opendatacommons.org/licenses/odbl/\">ODbL<\/a>"}]},{"method":"addMarkers","args":[-37.7971,144.9617,null,null,null,{"interactive":true,"draggable":false,"keyboard":true,"title":"","alt":"","zIndexOffset":0,"opacity":1,"riseOnHover":false,"riseOffset":250},"Redmond Barry Building (Building 115)<br>L5 Room 516<br><a href='https://maps.unimelb.edu.au/parkville/building/115' target='_blank'>View on campus map<\/a>",null,null,null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]}],"limits":{"lat":[-37.7971,-37.7971],"lng":[144.9617,144.9617]}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 </section>
@@ -1157,13 +1157,13 @@ Table&nbsp;1: Schedule and Learning Goals
 <span id="cb4-34"><a href="#cb4-34"></a></span>
 <span id="cb4-35"><a href="#cb4-35"></a>Before lunch we'll cover average treatment effects.  This module is self-sufficient, and will culminate with student presentations. If you just want to get a sense of causal inference, and learn about causal graphs, the morning will be sufficient. </span>
 <span id="cb4-36"><a href="#cb4-36"></a></span>
-<span id="cb4-37"><a href="#cb4-37"></a>If you want to be mighty, stick around. After lunch we'll get into estimation of heterogeneous treatment effects, and walk through a data exercise that will show you how to do causal inference with using **causal machine learning**. Despite the highfalutin sound, the approach is useful. You deserve to be empowered. </span>
+<span id="cb4-37"><a href="#cb4-37"></a>If you want to be mighty, stick around. After lunch we'll get into estimation of heterogeneous treatment effects, and walk through a data exercise that will show you how to do causal inference with using **causal machine learning**. You deserve to be empowered. </span>
 <span id="cb4-38"><a href="#cb4-38"></a></span>
 <span id="cb4-39"><a href="#cb4-39"></a>**Preparation**: Bring your curiosity and attention. For the morning session, bring a writing instrument and some paper, or software that allows free hand writing, as we'll draw graphs together. </span>
 <span id="cb4-40"><a href="#cb4-40"></a></span>
-<span id="cb4-41"><a href="#cb4-41"></a>If you want to do the data exercise, download R and Rstudio (or your favourite IDE -- like neovim or emacs if you're one of the cool kids) and then download the workshop R package (bottom 👇). </span>
+<span id="cb4-41"><a href="#cb4-41"></a>If you want to do the data exercise, download R and Rstudio (or your favourite IDE) and then download the workshop R package (bottom 👇). </span>
 <span id="cb4-42"><a href="#cb4-42"></a></span>
-<span id="cb4-43"><a href="#cb4-43"></a>Important: make sure you install the package first, and run through the scripts as we will not pause to deal with your crisis in working your package installation. Reach out before the workshop, or after, if you get stuck. </span>
+<span id="cb4-43"><a href="#cb4-43"></a>Important: make sure you install the package **before** the workshop. Ping me if you need help.</span>
 <span id="cb4-44"><a href="#cb4-44"></a></span>
 <span id="cb4-45"><a href="#cb4-45"></a>:::</span>
 <span id="cb4-46"><a href="#cb4-46"></a></span>

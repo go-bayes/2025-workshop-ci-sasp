@@ -34,13 +34,13 @@ editor_options:
 
 Before lunch we'll cover average treatment effects.  This module is self-sufficient, and will culminate with student presentations. If you just want to get a sense of causal inference, and learn about causal graphs, the morning will be sufficient. 
 
-If you want to be mighty, stick around. After lunch we'll get into estimation of heterogeneous treatment effects, and walk through a data exercise that will show you how to do causal inference with using **causal machine learning**. Despite the highfalutin sound, the approach is useful. You deserve to be empowered. 
+If you want to be mighty, stick around. After lunch we'll get into estimation of heterogeneous treatment effects, and walk through a data exercise that will show you how to do causal inference with using **causal machine learning**. You deserve to be empowered. 
 
 **Preparation**: Bring your curiosity and attention. For the morning session, bring a writing instrument and some paper, or software that allows free hand writing, as we'll draw graphs together. 
 
-If you want to do the data exercise, download R and Rstudio (or your favourite IDE -- like neovim or emacs if you're one of the cool kids) and then download the workshop R package (bottom 👇). 
+If you want to do the data exercise, download R and Rstudio (or your favourite IDE) and then download the workshop R package (bottom 👇). 
 
-Important: make sure you install the package first, and run through the scripts as we will not pause to deal with your crisis in working your package installation. Reach out before the workshop, or after, if you get stuck. 
+Important: make sure you install the package **before** the workshop. Ping me if you need help.
 
 :::
 
