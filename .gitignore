@@ -49,8 +49,8 @@ laboratory/**/*.png
 # r markdown cache
 *_cache/
 *_files/
-!docs/**/_files/
-!docs/**/_files/**
+!docs/**/*_files/
+!docs/**/*_files/**
 
 # knitr and r markdown default cache directories
 /*_cache/
