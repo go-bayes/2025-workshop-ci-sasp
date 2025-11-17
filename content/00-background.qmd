@@ -2,7 +2,7 @@
 title: "Causal Inference: Average Treatment Effects"
 date: "2025-NOV-19"
 bibliography: /Users/joseph/GIT/templates/bib/references.bib
-editor_options: 
+editor_options:
   chunk_output_type: console
 format:
   html:
@@ -26,10 +26,10 @@ cap-location: margin
 # code-block-border-left: true
 
 # WARNING:  COMMENT THIS OUT. JB DOES THIS FOR WORKING WITHOUT WIFI
-#source("/Users/joseph/GIT/templates/functions/libs2.R")
+# source("/Users/joseph/GIT/templates/functions/libs2.R")
 
 # WARNING:  COMMENT THIS OUT. JB DOES THIS FOR WORKING WITHOUT WIFI
-#source("/Users/joseph/GIT/templates/functions/funs.R")
+# source("/Users/joseph/GIT/templates/functions/funs.R")
 
 # ALERT: UNCOMMENT THIS AND DOWNLOAD THE FUNCTIONS FROM JB's GITHUB
 # source(
@@ -80,8 +80,8 @@ Here, we use the terms "counterfactual outcomes" and "potential outcomes" interc
 ### 1990s observational studies indicated 30% all-cause mortality reduction from estrogen therapies?
 
 ::: {.callout-note title="In the 1980s and 1990s estrogen treatments appeared to **benefit** postmenopausal women" icon="false"}
-Hazard ratio for all-cause mortality: **0.68** current users vs. never users 
-[@grodstein2006hormone] 
+Hazard ratio for all-cause mortality: **0.68** current users vs. never users
+[@grodstein2006hormone]
 :::
 
 ### Standard Medical Advice
@@ -118,36 +118,36 @@ All-cause mortality Hazard Ratio: **1.23** for initiators vs non-initiators.  [@
 -  {What went wrong?}
 
 
-### Opening 
+### Opening
 
 
 ::: {.callout-quote}
 **Robert Frost writes:**
 
-> Two roads diverged in a yellow wood,  
-> And sorry I could not travel both  
-> And be one traveler, long I stood  
-> And looked down one as far as I could  
-> To where it bent in the undergrowth;  
-> 
-> Then took the other, as just as fair,  
-> And having perhaps the better claim,  
-> Because it was grassy and wanted wear;  
-> Though as for that the passing there  
-> Had worn them really about the same,  
-> 
-> And both that morning equally lay  
-> In leaves no step had trodden black.  
-> Oh, I kept the first for another day!  
-> Yet knowing how way leads on to way,  
-> I doubted if I should ever come back.  
-> 
-> I shall be telling this with a sigh  
-> Somewhere ages and ages hence:  
-> Two roads diverged in a wood, and I—  
-> I took the one less traveled by,  
+> Two roads diverged in a yellow wood,
+> And sorry I could not travel both
+> And be one traveler, long I stood
+> And looked down one as far as I could
+> To where it bent in the undergrowth;
+>
+> Then took the other, as just as fair,
+> And having perhaps the better claim,
+> Because it was grassy and wanted wear;
+> Though as for that the passing there
+> Had worn them really about the same,
+>
+> And both that morning equally lay
+> In leaves no step had trodden black.
+> Oh, I kept the first for another day!
+> Yet knowing how way leads on to way,
+> I doubted if I should ever come back.
+>
+> I shall be telling this with a sigh
+> Somewhere ages and ages hence:
+> Two roads diverged in a wood, and I—
+> I took the one less traveled by,
 > And that has made all the difference.
-> 
+>
 > -- *The Road Not Taken*
 :::
 
@@ -161,21 +161,21 @@ There is evidence that people who attend religious volunteer more, but would Ali
 
 **"And sorry I could not travel both. And be one traveler $\dots$"**
 
-## Part 1: The Fundamental Problem of Causal Inference as a Missing Data Problem 
+## Part 1: The Fundamental Problem of Causal Inference as a Missing Data Problem
 
-**The fundamental problem of causal inference** is that causality is never directly observed. 
+**The fundamental problem of causal inference** is that causality is never directly observed.
 
 Let $Y$ an'a'd $A$ denote random variables.
 
 We formulate a causal question by asking whether experiencing a exposure $A$, when this exposure is set to level $A = a$, would lead to a difference in $Y$, compared to what would have occurred had the exposure been set to a different level, say $A=a'$ will lead to a difference in outcome $Y$. For simplicity, we imagine binary exposure such that $A = 1$ denotes receiving the "religious service" exposure and $A = 0$ denotes receiving the "no religious service" exposure. Assume these are the only two exposures of interest:
 
-Let: 
+Let:
 
   - $Y_i(a = 1)$ denotes Alice's volunteering if Alice attended religious service (potential outcome when $A_i = 1$).
   - $Y_i(a = 0)$ denotes Alice's volunteering if Alice did not attend religious service  (potential outcome when $A_i = 0$).
 
 
-What does it mean to *quantify* a causal effect. 
+What does it mean to *quantify* a causal effect.
 
 We may define the individual-level causal effect of religious service on volunteering for a Alice ($i$) as the difference between two states of the world: one for which Alice experiences regular religious service and the other, not. We write this contrast by referring to the potential outcomes under different levels of exposure:
 
@@ -202,7 +202,7 @@ Frost put it this way:
 
 **"And sorry I could not travel both / And be one traveler, long I stood $\dots$"**
 
-In short, individuals cannot simultaneously experience both exposure conditions, so we cannot quantitatively estimate individual-level causal effects (generally) because one outcome is inevitably missing. 
+In short, individuals cannot simultaneously experience both exposure conditions, so we cannot quantitatively estimate individual-level causal effects (generally) because one outcome is inevitably missing.
 
 ### How can we make contrasts between counterfactual (potential) outcomes?
 
@@ -228,7 +228,7 @@ $$
 Y_i|A_i = 0 \implies Y_i(1)|A_i = 1~ \text{is counterfactual}
 $$
 
-Because of the laws of physics (above the atomic scale), an individual can experience only one exposure level at any moment. Consequently, we can observe only one of the two counterfactual outcomes needed to quantify a causal effect. This is the fundamental problem of causal inference. Counterfactual contrasts cannot be individually observed. 
+Because of the laws of physics (above the atomic scale), an individual can experience only one exposure level at any moment. Consequently, we can observe only one of the two counterfactual outcomes needed to quantify a causal effect. This is the fundamental problem of causal inference. Counterfactual contrasts cannot be individually observed.
 
 However, because of the causal consistency assumption, we can nevertheless recover half of the missing counterfactual (or “potential”) outcomes needed to estimate average treatment effects. We may do this if two other assumptions are satisfied.
 
@@ -274,9 +274,9 @@ $$
 $$
 
 
-We have it that $\mathbb{E}[Y\mid A=1]$ and  $\mathbb{E}[Y\mid A=0]$ and  $\mathbb{E}[Y(1)\mid A=0]$ are observed. If both consistency and exchangeability are satisifed then we may use these observed quantities to identify contrasts of counterfactual quanities. 
+We have it that $\mathbb{E}[Y\mid A=1]$ and  $\mathbb{E}[Y\mid A=0]$ and  $\mathbb{E}[Y(1)\mid A=0]$ are observed. If both consistency and exchangeability are satisifed then we may use these observed quantities to identify contrasts of counterfactual quanities.
 
-Thus, although individual-level counterfactuals are missing, the consistency assumptions and the exchangeability assumptions allow us to identify the average effect of treatment using observed data.  Randomised controlled experiments allow us to meet these assumptions. Randomisation warrents the exchangeability assumption. Control warrents the consistency asumption. 
+Thus, although individual-level counterfactuals are missing, the consistency assumptions and the exchangeability assumptions allow us to identify the average effect of treatment using observed data.  Randomised controlled experiments allow us to meet these assumptions. Randomisation warrents the exchangeability assumption. Control warrents the consistency asumption.
 
 
 #### Fundamental Assumption 3: Positivity
@@ -288,9 +288,9 @@ $$
 P(A = a \mid L = l) > 0.
 $$
 
-Randomised experiments achieve positivity by design -- at least for the sample that is selected into the study. In observational settings violations occur if some subgroups never receive a particular treatment. If treatments occur but are rare, we may have sufficient data from which to obtain convincing causal inferences. 
+Randomised experiments achieve positivity by design -- at least for the sample that is selected into the study. In observational settings violations occur if some subgroups never receive a particular treatment. If treatments occur but are rare, we may have sufficient data from which to obtain convincing causal inferences.
 
-Positivity is the only assumption that can be verified with data. 
+Positivity is the only assumption that can be verified with data.
 
 
 ### Challenges with Observational Data
@@ -301,7 +301,7 @@ Below are some ways in which real-world complexities can violate causal consiste
 
 - **Cultural Dependence**: one group's "religious service" will differ qualitatively from another's. Attending a !Kung! healing ritual and an Aztec human sacrifice may, plausible, produce different responses in people. In one, charity, in the other, terror.
 
-- **Social Dependencies**: Watts sees Alice gives, so Watts gives too. Here, effects under treatment differs depending on how others respond. 
+- **Social Dependencies**: Watts sees Alice gives, so Watts gives too. Here, effects under treatment differs depending on how others respond.
 
 
  If the actual exposures differ across individuals, then consistency $(Y_i(a) = Y_i \mid A_i)$ may fail, because $A=a$ is not the same phenomenon for everyone.
@@ -326,15 +326,15 @@ If important confounders go unmeasured or are poorly measured, these differences
 
 ### 3. The Positivity Assumption May Fail: Treatments Might Not Exist for All
 
-Positivity requires that each individual could, in principle, receive *any* exposure level. But in real-world observational settings, some groups have no access to bilingual education (or no reason to be monolingual), making certain treatment levels impossible for them. If a treatment level does not appear in the data for a given subgroup, any causal effect estimate for that subgroup is purely an extrapolation [@westreich2010; @hernan2023]. 
+Positivity requires that each individual could, in principle, receive *any* exposure level. But in real-world observational settings, some groups have no access to bilingual education (or no reason to be monolingual), making certain treatment levels impossible for them. If a treatment level does not appear in the data for a given subgroup, any causal effect estimate for that subgroup is purely an extrapolation [@westreich2010; @hernan2023].
 
 ### Summary
 
-We introduced the fundamental problem of causal inference by distinguishing correlation (associations in the data) from causation (contrasts between potential outcomes, of which only one can be observed for each individual). 
+We introduced the fundamental problem of causal inference by distinguishing correlation (associations in the data) from causation (contrasts between potential outcomes, of which only one can be observed for each individual).
 
 **Randomised experiments** address this problem by balancing confounding variables across treatment levels. Although individual causal effects are unobservable, random assignment allows us to infer **average** causal effects — also called *marginal* effects.
 
-In **observational data**, inferring average treatment effects demands that we satisfy three assumptions that are automatically satisfied in (well-conducted) experiments: **causal consistency**, **exchangeability**, and **positivity**. These assumptions ensure that we can compare like-with-like (that the population-level treatment effect is consistent across individuals), that there are no unmeasured common causes of the exposure and outcomes that may lead to associations in the absence of causality, and that every exposure level is a real possibility for each subgroup. 
+In **observational data**, inferring average treatment effects demands that we satisfy three assumptions that are automatically satisfied in (well-conducted) experiments: **causal consistency**, **exchangeability**, and **positivity**. These assumptions ensure that we can compare like-with-like (that the population-level treatment effect is consistent across individuals), that there are no unmeasured common causes of the exposure and outcomes that may lead to associations in the absence of causality, and that every exposure level is a real possibility for each subgroup.
 
 
 
@@ -383,47 +383,65 @@ library(tidyverse)
 # lifeline coordinates ----------------------------------------------------
 lifelines <- tibble(
   scenario = factor(c("early time-zero", "correct time-zero", "late time-zero"),
-                    levels = c("early time-zero", "correct time-zero", "late time-zero")),
-  clinic = 0,      # day of clinic visit
-  rx     = 30,     # day prescription filled
-  event  = 200     # day outcome occurs
+    levels = c("early time-zero", "correct time-zero", "late time-zero")
+  ),
+  clinic = 0, # day of clinic visit
+  rx = 30, # day prescription filled
+  event = 200 # day outcome occurs
 )
 
 # plot --------------------------------------------------------------------
 ggplot(lifelines) +
   ## horizontal lifelines
-  geom_segment(aes(x = clinic, xend = event,
-                   y = scenario, yend = scenario),
-               linewidth = 1.2) +
+  geom_segment(
+    aes(
+      x = clinic, xend = event,
+      y = scenario, yend = scenario
+    ),
+    linewidth = 1.2
+  ) +
   ## milestone dots
   geom_point(aes(x = clinic, y = scenario), size = 3) +
-  geom_point(aes(x = rx,     y = scenario), size = 3) +
-  geom_point(aes(x = event,  y = scenario), size = 3) +
+  geom_point(aes(x = rx, y = scenario), size = 3) +
+  geom_point(aes(x = event, y = scenario), size = 3) +
   ## dashed t = 0 lines
   # early (wrong)
-  geom_segment(x = 0,  xend = 0,  y = 0.7, yend = 1.3,
-               linetype = "dashed", colour = "red", linewidth = 1) +
+  geom_segment(
+    x = 0, xend = 0, y = 0.7, yend = 1.3,
+    linetype = "dashed", colour = "red", linewidth = 1
+  ) +
   # correct
-  geom_segment(x = 30, xend = 30, y = 1.7, yend = 2.3,
-               linetype = "dashed", colour = "forestgreen", linewidth = 1) +
+  geom_segment(
+    x = 30, xend = 30, y = 1.7, yend = 2.3,
+    linetype = "dashed", colour = "forestgreen", linewidth = 1
+  ) +
   # late (wrong)
-  geom_segment(x = 60, xend = 60, y = 2.7, yend = 3.3,
-               linetype = "dashed", colour = "red", linewidth = 1) +
+  geom_segment(
+    x = 60, xend = 60, y = 2.7, yend = 3.3,
+    linetype = "dashed", colour = "red", linewidth = 1
+  ) +
   ## labels
-  annotate("text", x = 0,   y = 1.35, label = "t = 0 (early, wrong)",
-           colour = "red", hjust = 0, size = 3.8) +
-  annotate("text", x = 30,  y = 2.35, label = "t = 0 (correct)",
-           colour = "forestgreen", hjust = 0, size = 3.8) +
-  annotate("text", x = 60,  y = 3.35, label = "t = 0 (late, wrong)",
-           colour = "red", hjust = 0, size = 3.8) +
-  annotate("text", x = 0,   y = 1.05, label = "clinic visit", vjust = -1.2) +
-  annotate("text", x = 30,  y = 2.05, label = "rx pickup",    vjust = -1.2) +
-  annotate("text", x = 200, y = 3.05, label = "event",        vjust = -1.2) +
+  annotate("text",
+    x = 0, y = 1.35, label = "t = 0 (early, wrong)",
+    colour = "red", hjust = 0, size = 3.8
+  ) +
+  annotate("text",
+    x = 30, y = 2.35, label = "t = 0 (correct)",
+    colour = "forestgreen", hjust = 0, size = 3.8
+  ) +
+  annotate("text",
+    x = 60, y = 3.35, label = "t = 0 (late, wrong)",
+    colour = "red", hjust = 0, size = 3.8
+  ) +
+  annotate("text", x = 0, y = 1.05, label = "clinic visit", vjust = -1.2) +
+  annotate("text", x = 30, y = 2.05, label = "rx pickup", vjust = -1.2) +
+  annotate("text", x = 200, y = 3.05, label = "event", vjust = -1.2) +
   theme_minimal() +
-  theme(axis.title = element_blank(),
-        axis.text.y = element_blank(),
-        axis.ticks  = element_blank())
-        
+  theme(
+    axis.title = element_blank(),
+    axis.text.y = element_blank(),
+    axis.ticks = element_blank()
+  )
 ```
 
 ### Key Take Home: Set Up Your Study Like an Experiment
@@ -636,6 +654,3 @@ tribble(
 <!-- ## Are longitudinal data + sensitivity analysis enough? -->
 <!-- {Too obvious} this is wrong? -->
 <!-- $$Y \to A$$ -->
-
-
-

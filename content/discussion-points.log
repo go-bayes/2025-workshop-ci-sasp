@@ -1,4 +1,4 @@
-This is LuaHBTeX, Version 1.18.0 (TeX Live 2024)  (format=lualatex 2024.12.20)  20 OCT 2025 10:41
+This is LuaHBTeX, Version 1.18.0 (TeX Live 2024)  (format=lualatex 2024.12.20)  18 NOV 2025 09:23
  restricted system commands enabled.
 **discussion-points.tex
 (./discussion-points.tex
@@ -3502,49 +3502,106 @@ Overfull \vbox (517.65721pt too high) detected at line 857
 <./discussion-points_files/figure-beamer/fig-time-zero-3lines-1.pdf>] [6
 
 ]
+\openout4 = discussion-points.vrb
+ (./discussion-points.vrb
 LaTeX Font Info:    Font shape `TU/LibertinusSans(0)/m/n' will be
-(Font)              scaled to size 9.0pt on input line 1003.
+(Font)              scaled to size 9.0pt on input line 57.
 LaTeX Font Info:    Font shape `TU/LibertinusMath-Regular.otf(1)/m/n' will be
-(Font)              scaled to size 9.65039pt on input line 1003.
+(Font)              scaled to size 9.65039pt on input line 57.
 LaTeX Font Info:    Font shape `TU/LibertinusMath-Regular.otf(1)/m/n' will be
-(Font)              scaled to size 5.36133pt on input line 1003.
+(Font)              scaled to size 5.36133pt on input line 57.
 LaTeX Font Info:    Font shape `TU/LibertinusSerif(1)/m/n' will be
-(Font)              scaled to size 9.0pt on input line 1003.
+(Font)              scaled to size 9.0pt on input line 57.
 LaTeX Font Info:    Font shape `TU/LibertinusSerif(1)/m/n' will be
-(Font)              scaled to size 5.0pt on input line 1003.
+(Font)              scaled to size 5.0pt on input line 57.
 LaTeX Font Info:    Font shape `TU/LibertinusMath-Regular.otf(2)/m/n' will be
-(Font)              scaled to size 9.65039pt on input line 1003.
+(Font)              scaled to size 9.65039pt on input line 57.
 LaTeX Font Info:    Font shape `TU/LibertinusMath-Regular.otf(2)/m/n' will be
-(Font)              scaled to size 5.36133pt on input line 1003.
+(Font)              scaled to size 5.36133pt on input line 57.
 LaTeX Font Info:    Font shape `TU/LibertinusMath-Regular.otf(3)/m/n' will be
-(Font)              scaled to size 9.65039pt on input line 1003.
+(Font)              scaled to size 9.65039pt on input line 57.
 LaTeX Font Info:    Font shape `TU/LibertinusMath-Regular.otf(3)/m/n' will be
-(Font)              scaled to size 5.36133pt on input line 1003.
+(Font)              scaled to size 5.36133pt on input line 57.
+<discussion-points_files/figure-beamer/fig-sample-weights-1.pdf, id=812, 640.39
+25pt x 356.33125pt>
+File: discussion-points_files/figure-beamer/fig-sample-weights-1.pdf Graphic fi
+le (type pdf)
+<use discussion-points_files/figure-beamer/fig-sample-weights-1.pdf>
+Package luatex.def Info: discussion-points_files/figure-beamer/fig-sample-weigh
+ts-1.pdf  used on input line 70.
+(luatex.def)             Requested size: 390.01347pt x 217.01375pt.
+<discussion-points_files/figure-beamer/fig-combo-weights-1.pdf, id=825, 640.392
+5pt x 356.33125pt>
+File: discussion-points_files/figure-beamer/fig-combo-weights-1.pdf Graphic fil
+e (type pdf)
+<use discussion-points_files/figure-beamer/fig-combo-weights-1.pdf>
+Package luatex.def Info: discussion-points_files/figure-beamer/fig-combo-weight
+s-1.pdf  used on input line 86.
+(luatex.def)             Requested size: 390.01347pt x 217.01375pt.
+LaTeX Font Info:    Font shape `TU/LibertinusMono(0)/m/it' will be
+(Font)              scaled to size 10.17572pt on input line 111.
 
-LaTeX Warning: File `hist_sample_weights.png' not found on input line 1003.
+Underfull \hbox (badness 10000) in paragraph at lines 130--131
+[]\TU/LibertinusSans(0)/m/it/10.95 Propen-sity di-ag-nos-tics ap-pear once polic
+y-tree scripts ex-port
+ []
 
 
-! Package luatex.def Error: File `hist_sample_weights.png' not found: using dra
-ft setting.
+Package longtable Warning: Column widths have changed
+(longtable)                in table 4 on input line 176.
+
+)
+Overfull \vbox (1402.10545pt too high) detected at line 1053
+ []
+
+[7
+
+<./discussion-points_files/figure-beamer/fig-sample-weights-1.pdf><./discussion-
+points_files/figure-beamer/fig-combo-weights-1.pdf>]
+\openout4 = discussion-points.vrb
+ (./discussion-points.vrb
+Overfull \hbox (17.8239pt too wide) in paragraph at lines 47--48
+[]\TU/LibertinusSans(0)/m/it/10.95 Pol-icy tree plot (be-long-ing) will ap-pear once \TU/LibertinusMono(0)/m/it/10.95 images/2025_2L_church_on_belonging.png
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 66--67
+[]\TU/LibertinusSans(0)/m/it/10.95 Pol-icy tree plot (char-i-ta-ble do-na-tions)
+ loads from
+ []
+
+)
+Overfull \vbox (283.17476pt too high) detected at line 1171
+ []
+
+[8
+
+]
+
+LaTeX Warning: File `NZAVS-QR.png' not found on input line 1219.
+
+
+! Package luatex.def Error: File `NZAVS-QR.png' not found: using draft setting.
+
 
 See the luatex.def package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.1003 \end{frame}
+l.1219 \end{frame}
                 
 
 Here is how much of LuaTeX's memory you used:
- 50852 strings out of 476447
+ 51018 strings out of 476447
  305424,2373549 words of node,token memory allocated
- 29893 words of node memory still in use:
-   411 hlist, 39 vlist, 26 rule, 117 disc, 24 local_par, 9 dir, 12 math, 828 glu
-e, 135 kern, 66 penalty, 20 margin_kern, 1295 glyph, 1316 attribute, 107 glue_sp
-ec, 1316 attribute_list, 8 temp, 7 if_stack, 1 shape, 19 write, 574 pdf_literal,
- 9 pdf_dest, 119 pdf_colorstack nodes
-   avail lists: 1:5,2:10460,3:8800,4:1396,5:1785,6:285,7:21689,8:53,9:4673,10:19
-,11:755
- 71521 multiletter control sequences out of 65536+600000
- 147 fonts using 43383683 bytes
+ 26505 words of node memory still in use:
+   302 hlist, 54 vlist, 74 rule, 101 disc, 39 local_par, 3 dir, 706 glue, 112 ke
+rn, 147 penalty, 12 margin_kern, 1224 glyph, 1089 attribute, 102 glue_spec, 1089
+ attribute_list, 2 temp, 7 if_stack, 1 shape, 21 write, 361 pdf_literal, 1 pdf_s
+tart_link, 1 pdf_end_link, 10 pdf_dest, 1 pdf_action, 127 pdf_colorstack nodes
+   avail lists: 1:5,2:10920,3:8929,4:1396,5:1827,6:269,7:21894,8:53,9:4717,10:19
+,11:771
+ 71634 multiletter control sequences out of 65536+600000
+ 148 fonts using 43482627 bytes
  128i,18n,150p,1013b,1573s stack positions out of 10000i,1000n,20000p,200000b,200000s
 !  ==> Fatal error occurred, no output PDF file produced!

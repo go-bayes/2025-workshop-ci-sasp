@@ -67,115 +67,178 @@ push_mods <-
 # 10.31234/osf.io/b23k7
 ```
 
+::: {.callout-note}
+**Suggested Readings**\
+
+- [@westreich2013] [link](https://pubmed.ncbi.nlm.nih.gov/23371353/)
+- [@bulbulia2024swigstime] [link](https://www.cambridge.org/core/journals/evolutionary-human-sciences/article/methods-in-causal-inference-part-2-interaction-mediation-and-timevarying-treatments/D7FD95D3ED64FE0FBBEC37AC6CEAFBC1)
+:::
+
+
 ## Simulations
-- S2 and S3 are from the supplement to @bulbulia2024wierd. S2 is a simulation. We illustrate how, if the distribution of effect-modifiers in our sample differs from that of the target population, the marginal effect estimate (ATE) will be biased. S3 offers a mathmatical explanation for this result. These simulations are followed by others that clarify how inference may fail when the true timing of events in one's measures differs from what is assumed.
+
+S2 and S3 are adapted from the supplement to @bulbulia2024wierd. Study S2 uses simulations to show how differences in the distribution of effect modifiers between a study sample and a target population can bias marginal effect estimates (average treatment effects, ATEs). Study S3 provides a mathematical explanation for this result. These simulations are then followed by others that demonstrate how inference may fail when the true timing of events differs from the temporal ordering assumed in one’s measurements.
 
 ## S2. Generalisability and Transportability {#id-app-b}
 
-Generalisability: When a study sample is drawn randomly from the target population, we may generalise from the sample to the target population as follows.
+Generalisability and transportability describe different ways of connecting study findings to a target population.
 
-Suppose we sample randomly from the target population, where:
+### Generalisability
 
-- $n_S$ denotes the size of the study's analytic sample $S$.
-- $N_T$ denotes the total size of the target population $T$.
-- $\widehat{ATE}_{n_S}$ denotes the estimated average treatment effect in the analytic sample $S$.
-- $ATE_{T}$ denotes the true average treatment effect in the target population $T$.
-- $\epsilon$ denotes an arbitrarily small positive value.
+When a study sample is drawn at random from the target population, we may generalise from the sample to that population.
 
-Assuming the rest of the causal inference workflow goes to plan (randomisation succeeds, there is no measurement error, no model misspecification, etc.), as the random sample size $n_S$ increases, the estimated treatment effect in the analytic sample $S$ converges in probability to the true treatment effect in the target population $T$:
+Suppose we sample randomly from a target population, where:
+
+First, $n_S$ denotes the size of the study’s analytic sample $S$.
+
+Second, $N_T$ denotes the total size of the target population $T$.
+
+Third, $\widehat{ATE}_{n_S}$ denotes the estimated average treatment effect in the analytic sample $S$.
+
+Fourth, $ATE_T$ denotes the true average treatment effect in the target population $T$.
+
+Fifth, $\epsilon$ denotes an arbitrarily small positive value.
+
+Assuming that the rest of the causal inference workflow goes to plan (for example, randomisation succeeds, there is no measurement error, and models are correctly specified), as the random sample size $n_S$ increases, the estimated treatment effect in the analytic sample $S$ converges in probability to the true treatment effect in the target population $T$:
 
 $$
-\lim_{n_S \to \infty} P(|\widehat{ATE}_{n_S} - ATE_{T}| < \epsilon) = 1
+\lim_{n_S \to \infty} P\bigl(|\widehat{ATE}_{n_S} - ATE_T| < \epsilon\bigr) = 1
 $$
 
 for any small positive value of $\epsilon$.
 
-Transportability: When the analytic sample is not drawn from the target population, we cannot directly generalise the findings. However, we can transport the estimated causal effect from the source population to the target population under certain assumptions. This involves adjusting for differences in the distributions of effect modifiers between the two populations. The closer the source population is to the target population, the more plausible the transportability assumptions are, and the less we need to rely on complex adjustment methods.
-Suppose we have an analytic sample $n_S$ drawn from a source population $S$, and we want to estimate the average treatment effect in a target population $T$.
+Informally, under these conditions and with a large enough random sample, the estimated ATE in the study converges to the true ATE in the target population.
+
+### Transportability
+
+When the analytic sample is **not** drawn randomly from the target population, we cannot directly generalise the findings. However, we may still transport the estimated causal effect from the source population to the target population under additional assumptions. In essence, transportability requires us to adjust for differences in the distributions of effect modifiers between the two populations. The closer the source population is to the target population, the more plausible these assumptions become and the less we must rely on complex adjustment methods.
+
+Suppose we have an analytic sample of size $n_S$ drawn from a source population $S$, and we wish to estimate the average treatment effect in a target population $T$.
+
 Define:
 
-$\widehat{ATE}_{S}$ as the estimated average treatment effect in the analytic sample drawn from the source population $S$.
-$\widehat{ATE}_{T}$ as the estimated average treatment effect in the target population $T$.
-$f(n_S, R)$ as the mapping function that adjusts the estimated effect in the analytic sample using a set of measured covariates $R$, allowing for valid projection from the source population to the target population.
+$\widehat{ATE}_S$ as the estimated average treatment effect in the analytic sample drawn from the source population $S$.
 
-The transportability assumption is that there exists a function $f$ such that:
+$\widehat{ATE}_T$ as the (hypothetical) average treatment effect in the target population $T$ that we wish to learn.
+
+$f(n_S, R)$ as a mapping function that adjusts the estimated effect in the analytic sample using a set of measured covariates $R$ (for example, effect modifiers and sampling variables), thereby allowing valid projection from the source population to the target population.
+
+The transportability assumption is that there exists a function $f$ such that
 
 $$
-\widehat{ATE}_{T} = f(\widehat{ATE}_S, R)
+\widehat{ATE}_T = f(\widehat{ATE}_S, R).
 $$
 
-Here, $\widehat{ATE}_S$ is the estimated average treatment effect from the source population, and $R$ represents the set of covariates used for adjustment.
+Here, $\widehat{ATE}_S$ is the estimated average treatment effect in the source population, and $R$ represents the set of covariates used for adjustment. In practice, $f$ may be implemented using methods such as re-weighting, outcome modelling, or doubly robust estimators that explicitly account for differences in the distribution of $R$ between the two populations.
 
-Finding a suitable function $f$ is the central challenge in adjusting for sampling bias and achieving transportability [@bareinboim2013general; @westreich2017transportability; @dahabreh2019generalizing; @deffner2022].
+Finding a suitable function $f$ is the central challenge in correcting sampling bias and achieving transportability [@bareinboim2013general; @westreich2017transportability; @dahabreh2019generalizing; @deffner2022].
 
 {{< pagebreak >}}
 
 ## S3. A Mathematical Explanation for the Difference in Marginal Effects between Censored and Uncensored Populations {#id-app-c}
 
-This appendix provides an explanation for why marginal effects may differ between the censored and uncensored sample population in the absence of unmeasured confounding.
+This appendix explains why marginal effects may differ between censored and uncensored populations, even in the absence of unmeasured confounding.
 
-#### Definitions:
+### Definitions
 
-- **$A$**: Exposure variable, where $a$ represents the reference level and $a^*$ represents the comparison level
-- **$Y$**: Outcome variable
-- **$F$**: Effect modifier
-- **$C$**: Indicator for the uncensored population ($C = 0$) or the censored population ($C = 1$)
+Let $A$ denote the exposure variable, where $a$ represents the reference level and $a^*$ represents the comparison level.
 
-#### Average Treatment Effects:
+Let $Y$ denote the outcome variable.
 
-The average treatment effects for the uncensored and censored populations are defined as:
+Let $F$ denote an effect modifier.
 
-$$ \Delta_{\text{uncensored}} = \mathbb{E}[Y(a^*) - Y(a) \mid C = 0] $$
+Let $C$ denote an indicator for membership in the uncensored or censored population, where $C = 0$ indicates the uncensored population and $C = 1$ indicates the censored population.
 
-$$ \Delta_{\text{censored}} = \mathbb{E}[Y(a^*) - Y(a) \mid C = 1] $$
+### Average Treatment Effects
 
-#### Potential Outcomes:
+The average treatment effects for the uncensored and censored populations are defined as
+
+$$
+\Delta_{\text{uncensored}} = \mathbb{E}\bigl[Y(a^*) - Y(a) \mid C = 0\bigr],
+$$
+
+$$
+\Delta_{\text{censored}} = \mathbb{E}\bigl[Y(a^*) - Y(a) \mid C = 1\bigr].
+$$
+
+### Potential Outcomes and Causal Consistency
 
 By causal consistency, potential outcomes can be expressed in terms of observed outcomes:
 
-$$ \Delta_{\text{uncensored}} = \mathbb{E}[Y \mid A=a^*, C=0] - \mathbb{E}[Y \mid A=a, C=0] $$
-
-$$ \Delta_{\text{censored}} = \mathbb{E}[Y \mid A=a^*, C=1] - \mathbb{E}[Y \mid A=a, C=1] $$
-
-#### Law of Total Probability:
-
-Applying the Law of Total Probability, we can weight the average treatment effects by the conditional probability of the effect modifier $F$:
-
-$$ \Delta_{\text{uncensored}} = \sum_{f} \Big\{\mathbb{E}[Y \mid A=a^*, F=f, C=0] - \mathbb{E}[Y \mid A=a, F=f, C=0]\Big\} \times \Pr(F=f \mid C=0) $$
-
 $$
-\Delta_{\text{censored}} = \sum_{f} \Big\{\mathbb{E}[Y \mid A=a^*, F=f, C=1] - \mathbb{E}[Y \mid A=a, F=f, C=1]\Big\} \times \Pr(F=f \mid C=1)
+\Delta_{\text{uncensored}} = \mathbb{E}[Y \mid A = a^*, C = 0] - \mathbb{E}[Y \mid A = a, C = 0],
 $$
 
-#### Assumption of Informative Censoring:
-
-We assume that the distribution of the effect modifier $F$ differs between the censored and uncensored populations:
-
-$$ \Pr(F=f \mid C=0) \neq \Pr(F=f \mid C=1) $$
-
-Under this assumption, the probability weights used to calculate the marginal effects for the uncensored and censored populations differ.
-
-#### Effect Estimates for Censored and Uncensored Populations:
-
-Given that $\Pr(F=f \mid C=0) \neq \Pr(F=f \mid C=1)$, we cannot guarantee that:
-
 $$
-\Delta_{\text{uncensored}} = \Delta_{\text{censored}}
+\Delta_{\text{censored}} = \mathbb{E}[Y \mid A = a^*, C = 1] - \mathbb{E}[Y \mid A = a, C = 1].
 $$
 
-The equality of marginal effects between the two populations will only hold if there is a universal null effect (i.e., no effect of the exposure on the outcome for any individual) across all units, by chance, or under specific conditions discussed by @vanderweele2007 and further elucidated by @suzuki2013counterfactual. Otherwise:
+### Law of Total Probability
 
-$$ \Delta_{\text{uncensored}} \ne \Delta_{\text{censored}} $$
+By the law of total probability, we can decompose these average treatment effects over the distribution of the effect modifier $F$:
 
-Furthermore, @vanderweele2012 proved that if there is effect modification of $A$ by $F$, there will be a difference in at least one scale of causal contrast, such that:
+$$
+\Delta_{\text{uncensored}}
+= \sum_{f}
+\Bigl\{
+\mathbb{E}[Y \mid A = a^*, F = f, C = 0]
+-
+\mathbb{E}[Y \mid A = a, F = f, C = 0]
+\Bigr\}
+\times \Pr(F = f \mid C = 0),
+$$
 
-$$ \Delta^{\text{risk ratio}}_{\text{uncensored}} \ne \Delta^{\text{risk ratio}}_{\text{censored}} $$
+$$
+\Delta_{\text{censored}}
+= \sum_{f}
+\Bigl\{
+\mathbb{E}[Y \mid A = a^*, F = f, C = 1]
+-
+\mathbb{E}[Y \mid A = a, F = f, C = 1]
+\Bigr\}
+\times \Pr(F = f \mid C = 1).
+$$
+
+These expressions show that the marginal effects are weighted averages of stratum-specific effects, where the weights are given by the distribution of $F$ in each population.
+
+### Informative Censoring and Effect Modification
+
+Assume that censoring is *informative* with respect to the effect modifier $F$, in the sense that
+
+$$
+\Pr(F = f \mid C = 0) \neq \Pr(F = f \mid C = 1).
+$$
+
+Under this assumption, the weights used to calculate the marginal effects differ between the uncensored and censored populations. Consequently, unless the effect of $A$ on $Y$ is identical across all levels of $F$, we should not expect the marginal effects to coincide.
+
+In general, we cannot guarantee that
+
+$$
+\Delta_{\text{uncensored}} = \Delta_{\text{censored}}.
+$$
+
+Equality of marginal effects between the two populations would only hold in special cases, such as a universal null effect (no effect of the exposure on the outcome for any individual), by chance, or under specific conditions discussed by @vanderweele2007 and further elucidated by @suzuki2013counterfactual. Otherwise,
+
+$$
+\Delta_{\text{uncensored}} \neq \Delta_{\text{censored}}.
+$$
+
+Furthermore, @vanderweele2012 proved that if there is effect modification of $A$ by $F$, then there will be a difference in at least one scale of causal contrast. That is, either
+
+$$
+\Delta^{\text{risk ratio}}_{\text{uncensored}} \neq
+\Delta^{\text{risk ratio}}_{\text{censored}},
+$$
 
 or
 
-$$ \Delta^{\text{difference}}_{\text{uncensored}} \ne \Delta^{\text{difference}}_{\text{censored}} $$
+$$
+\Delta^{\text{difference}}_{\text{uncensored}} \neq
+\Delta^{\text{difference}}_{\text{censored}}.
+$$
 
-For comprehensive discussions on sampling and inference, refer to @dahabreh2019 and @dahabreh2021study.
+Thus, even under no unmeasured confounding, informative censoring combined with effect modification can generate genuine differences in marginal effects between censored and uncensored populations. For comprehensive discussions on sampling, transport, and inference, see @dahabreh2019 and @dahabreh2021study.
+
 {{< pagebreak >}}
 ## S4. R Simulation to Clarify Why The Distribution of Effect Modifiers Matters For Estimating Treatment Effects For A Target Population  {#id-app-d}
 
@@ -529,7 +592,6 @@ ATE_fit_2 <-
                         CI = [{round(summary_sim_est_fit_2[3, 2], 2)},
                         {round(summary_sim_est_fit_2[3, 3], 2)}]"
   )
-
 
 # print(ATE_fit_1)
 # print(ATE_fit_2)
