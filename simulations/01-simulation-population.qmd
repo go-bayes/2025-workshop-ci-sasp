@@ -2,7 +2,7 @@
 title: "Simulation: Population Estimate"
 abstract: |
 bibliography: /Users/joseph/GIT/templates/bib/references.bib
-editor_options: 
+editor_options:
   chunk_output_type: console
 format:
   html:
@@ -65,11 +65,10 @@ push_mods <-
 
 # keywords: potential outcomes, DAGs, causal inference, evolution, religion, measurement, tutorial
 # 10.31234/osf.io/b23k7
-
 ```
 
 ## Simulations
-- S2 and S3 are from the supplement to @bulbulia2024wierd. S2 is a simulation. It illustrates how, if the distribution of effect-modifiers in one's sample differs from that of the target population, the marginal effect estimate (ATE) will be biased. S3 offers a mathmatical explanation for this result. These simulations are followed by others that clarify how inference may fail when the true timing of events in one's measures differs from what is assumed.
+- S2 and S3 are from the supplement to @bulbulia2024wierd. S2 is a simulation. We illustrate how, if the distribution of effect-modifiers in our sample differs from that of the target population, the marginal effect estimate (ATE) will be biased. S3 offers a mathmatical explanation for this result. These simulations are followed by others that clarify how inference may fail when the true timing of events in one's measures differs from what is assumed.
 
 ## S2. Generalisability and Transportability {#id-app-b}
 
@@ -100,6 +99,7 @@ $\widehat{ATE}_{T}$ as the estimated average treatment effect in the target popu
 $f(n_S, R)$ as the mapping function that adjusts the estimated effect in the analytic sample using a set of measured covariates $R$, allowing for valid projection from the source population to the target population.
 
 The transportability assumption is that there exists a function $f$ such that:
+
 $$
 \widehat{ATE}_{T} = f(\widehat{ATE}_S, R)
 $$
@@ -143,8 +143,8 @@ Applying the Law of Total Probability, we can weight the average treatment effec
 
 $$ \Delta_{\text{uncensored}} = \sum_{f} \Big\{\mathbb{E}[Y \mid A=a^*, F=f, C=0] - \mathbb{E}[Y \mid A=a, F=f, C=0]\Big\} \times \Pr(F=f \mid C=0) $$
 
-$$ 
-\Delta_{\text{censored}} = \sum_{f} \Big\{\mathbb{E}[Y \mid A=a^*, F=f, C=1] - \mathbb{E}[Y \mid A=a, F=f, C=1]\Big\} \times \Pr(F=f \mid C=1) 
+$$
+\Delta_{\text{censored}} = \sum_{f} \Big\{\mathbb{E}[Y \mid A=a^*, F=f, C=1] - \mathbb{E}[Y \mid A=a, F=f, C=1]\Big\} \times \Pr(F=f \mid C=1)
 $$
 
 #### Assumption of Informative Censoring:
@@ -159,8 +159,8 @@ Under this assumption, the probability weights used to calculate the marginal ef
 
 Given that $\Pr(F=f \mid C=0) \neq \Pr(F=f \mid C=1)$, we cannot guarantee that:
 
-$$ 
-\Delta_{\text{uncensored}} = \Delta_{\text{censored}} 
+$$
+\Delta_{\text{uncensored}} = \Delta_{\text{censored}}
 $$
 
 The equality of marginal effects between the two populations will only hold if there is a universal null effect (i.e., no effect of the exposure on the outcome for any individual) across all units, by chance, or under specific conditions discussed by @vanderweele2007 and further elucidated by @suzuki2013counterfactual. Otherwise:
@@ -187,16 +187,22 @@ We also load the `parameters` library, which creates nice tables [@parameters202
 #|label: loadlibs
 
 # to obtain marginal effects
-if (!requireNamespace('stdReg', quietly = TRUE)) install.packages('stdReg')
+if (!requireNamespace("stdReg", quietly = TRUE)) install.packages("stdReg")
 library(stdReg)
 
 #  to view data
-if (!requireNamespace('skimr', quietly = TRUE)) install.packages('skimr')
+if (!requireNamespace("skimr", quietly = TRUE)) install.packages("skimr")
 library(skimr)
 
 # to create nice tables
-if (!requireNamespace('parameters', quietly = TRUE)) install.packages('parameters')
+if (!requireNamespace("parameters", quietly = TRUE)) install.packages("parameters")
 library(parameters)
+
+
+if (!require(margot, quietly = TRUE)) {
+  devtools::install_github("go-bayes/margot") # ensure version is at least 1.0.45
+  library("margot")
+}
 ```
 
 Next, we write a function to simulate data for the sample and target populations.
@@ -208,12 +214,11 @@ That is: **the distribution of effect modifiers is the only respect in which the
 This function will generate data under a range of scenarios. Refer to documentation in the `margot` package: @margot2024
 
 ```{r}
-# function to generate data for the sample and population, 
-# Along with precise sample weights for the population, there are differences 
-# in the distribution of the true effect modifier but no differences in the treatment effect 
-# or the effect modification. all that differs between the sample and the population is 
+# function to generate data for the sample and population,
+# Along with precise sample weights for the population, there are differences
+# in the distribution of the true effect modifier but no differences in the treatment effect
+# or the effect modification. all that differs between the sample and the population is
 # the distribution of effect modifiers.
-
 # seed
 set.seed(123)
 
@@ -254,42 +259,46 @@ First, we obtain the regression coefficients for the sample. They are as follows
 
 ```{r}
 # model coefficients sample
-model_sample  <- glm(y_sample ~ a_sample * z_sample, 
-  data = sample_data)
+model_sample <- glm(y_sample ~ a_sample * z_sample,
+  data = sample_data
+)
 
 # summary
-parameters::model_parameters(model_sample, ci_method = 'wald')
+parameters::model_parameters(model_sample, ci_method = "wald")
 ```
 
 Next, we obtain the regression coefficients for the weighted regression of the sample. Notice that the coefficients are virtually the same:
 
 ```{r}
-# model the sample weighted to the population, again note that these coefficients are similar 
-model_weighted_sample <- glm(y_sample ~ a_sample * z_sample, 
-  data = sample_data, weights = weights)
+# model the sample weighted to the population, again note that these coefficients are similar
+model_weighted_sample <- glm(y_sample ~ a_sample * z_sample,
+  data = sample_data, weights = weights
+)
 
 # summary
-summary(parameters::model_parameters(model_weighted_sample, 
-  ci_method = 'wald'))
+summary(parameters::model_parameters(model_weighted_sample,
+  ci_method = "wald"
+))
 ```
 
-We might be tempted to infer that weighting wasn't relevant to the analysis. However, we'll see that such an interpretation would be a mistake.
+**We might be tempted to infer that weighting wasn't relevant to the analysis**. However, we'll see that such an interpretation would be a mistake.
 
 Next, we obtain model coefficients for the population. Note again there is no difference -- only narrower errors owing to the large sample size.
 
 ```{r}
-# model coefficients population -- note that these coefficients are very similar. 
-model_population <- glm(y_population ~ a_population * z_population, 
-  data = population_data)
+# model coefficients population -- note that these coefficients are very similar.
+model_population <- glm(y_population ~ a_population * z_population,
+  data = population_data
+)
 
-parameters::model_parameters(model_population, ci_method = 'wald')
+parameters::model_parameters(model_population, ci_method = "wald")
 ```
 
-Again, there is no difference. That is, we find that all model coefficients are practically equivalent. The different distribution of effect modifiers does not result in different coefficient values for the treatment effect, the effect-modifier 'effect,' or the interaction of the effect modifier and treatment.
+Again, there is no difference. That is, **we find that all model coefficients are practically equivalent**. The different distribution of effect modifiers does not result in different coefficient values for the treatment effect, the effect-modifier 'effect,' or the interaction of the effect modifier and treatment.
 
 Consider why this is the case: in a large sample where the causal effects are invariant -- as we have simulated them to be -- we will have good replication in the effect modifiers within the sample, so our statistical model can recover the *coefficients* for the population without challenge.
 
-However, in causal inference, we are interested in the marginal effect of the treatment within a population of interest or within strata of this population. That is, we seek an estimate for the counterfactual contrast in which everyone in a pre-specified population or stratum of a population was subject to one level of treatment compared with a counterfactual condition in which everyone in a population was subject to another level of the same treatment.
+However, in causal inference, we are interested in the marginal effect of the treatment for a target population. That is, we seek an estimate for the counterfactual contrast in which everyone in a pre-specified population or stratum of a population was subject to one level of treatment compared with a counterfactual condition in which everyone in this same population was subject to another level of the same treatment.
 
 **The marginal effect estimates will differ in at least one measure of effect when the analytic sample population has a different distribution of effect modifiers compared to the target population.**
 
@@ -298,20 +307,21 @@ To see this, we use the `stdReg` package to recover marginal effect estimates, c
 First, consider this Average Treatment Effect for the analytic population:
 
 ```{r}
-# What inference do we draw?  
-# we cannot say the models are unbiased for the marginal effect estimates. 
-# regression standardisation 
-library(stdReg) # to obtain marginal effects 
+# What inference do we draw?
+# we cannot say the models are unbiased for the marginal effect estimates.
+# regression standardisation
+library(stdReg) # to obtain marginal effects
 
 # obtain sample ate
-fit_std_sample <- stdReg::stdGlm(model_sample, 
-  data = sample_data, X = 'a_sample')
+fit_std_sample <- stdReg::stdGlm(model_sample,
+  data = sample_data, X = "a_sample"
+)
 
 # summary
-summary(fit_std_sample, contrast = 'difference', reference = 0)
+summary(fit_std_sample, contrast = "difference", reference = 0)
 ```
 
-The treatment effect is given as a 1.06 unit change in the outcome across the analytic population, with a confidence interval from 1.04 to 1.08.
+The treatment effect is given as a 1.04 unit change in the outcome across the analytic population, with a confidence interval from 1.02 to 1.06.
 
 Next, we obtain the true (oracle) treatment effect for the target population under the same intervention:
 
@@ -319,11 +329,12 @@ Next, we obtain the true (oracle) treatment effect for the target population und
 ## note the population effect is different
 
 # obtain true ate
-fit_std_population <- stdReg::stdGlm(model_population, 
-  data = population_data, X = 'a_population')
+fit_std_population <- stdReg::stdGlm(model_population,
+  data = population_data, X = "a_population"
+)
 
 # summary
-summary(fit_std_population, contrast = 'difference', reference = 0)
+summary(fit_std_population, contrast = "difference", reference = 0)
 ```
 
 Note that the true treatment effect is a 1.25-unit change in the population, with a confidence bound between 1.24 and 1.26. This is well outside the ATE that we obtain from the analytic population!
@@ -332,11 +343,12 @@ Next, consider the ATE in the weighted regression, where the analytic sample was
 
 ```{r}
 ## next try weights adjusted ate where we correctly assign population weights to the sample
-fit_std_weighted_sample_weights <- stdReg::stdGlm(model_weighted_sample, 
-  data = sample_data, X = 'a_sample')
+fit_std_weighted_sample_weights <- stdReg::stdGlm(model_weighted_sample,
+  data = sample_data, X = "a_sample"
+)
 
 # this gives us the right answer
-summary(fit_std_weighted_sample_weights, contrast = 'difference', reference = 0)
+summary(fit_std_weighted_sample_weights, contrast = "difference", reference = 0)
 ```
 
 We find that we obtain the population-level causal effect estimate with accurate coverage by weighting the sample to the target population. So with appropriate weights, our results generalise from the sample to the target population.
@@ -349,7 +361,7 @@ We find that we obtain the population-level causal effect estimate with accurate
 - **To properly assess bias, one needs access to the counterfactual outcome** — what would have happened to the missing participants had they not been lost to follow-up or had they responded? The joint distributions over 'full data' are inherently unobservable [@vanderlaan2011].
 - **In simple settings, like the one we just simulated, we can address the gap between the sample and target population using methods such as modelling the censoring (e.g., censoring weighting).** However, we never know what setting we are in or whether it is simple—such modelling must be handled carefully. There is a large and growing epidemiology literature on this topic (see, for example, @li2023non).
 
---- 
+---
 
 ## Ambiguities from Cross-Sectional Data
 
@@ -366,7 +378,7 @@ We find that we obtain the population-level causal effect estimate with accurate
 
 
 **Model 1** (Correct Assumption): fits a linear regression model assuming $L$ as a mediator, including both $A$ and $L$ as regressors on $Y$. This model aligns with the data-generating process, and, by the rules of d-separation, induces mediator bias for the $A\to Y$ path.
-  
+
 **Model 2** (Incorrect Assumption): fits a linear regression model including only $A$ as a regressor on $Y$, omitting the mediator $L$. This model assesses the direct effect of A on Y without accounting for mediation.
 
 **Analysis**: We compares the estimated effects of $A$ on $Y$ under each model specification.
@@ -381,37 +393,41 @@ We find that we obtain the population-level causal effect estimate with accurate
 #| eval: false
 
 # load libraries
-!require(kableExtra)){install.packages("kableExtra")} # tables
-if(!require(gtsummary)){install.packages("gtsummary")} # tables
+if (!require(kableExtra)) {
+  install.packages("kableExtra")
+} # tables
+if (!require(gtsummary)) {
+  install.packages("gtsummary")
+} # tables
 
 # simulation seed
 set.seed(123) #  reproducibility
 
-# define the parameters 
-n = 1000 # Number of observations
-p = 0.5  # Probability of A = 1 (exposure)
-alpha = 0 # Intercept for L (mediator)
-beta = 2  # Effect of A on L 
-gamma = 1 # Intercept for Y 
-delta = 1.5 # Effect of L on Y
-sigma_L = 1 # Standard deviation of L
-sigma_Y = 1.5 # Standard deviation of Y
+# define the parameters
+n <- 1000 # Number of observations
+p <- 0.5 # Probability of A = 1 (exposure)
+alpha <- 0 # Intercept for L (mediator)
+beta <- 2 # Effect of A on L
+gamma <- 1 # Intercept for Y
+delta <- 1.5 # Effect of L on Y
+sigma_L <- 1 # Standard deviation of L
+sigma_Y <- 1.5 # Standard deviation of Y
 
 # simulate the data: fully mediated effect by L
-A = rbinom(n, 1, p) # binary exposure variable
-L = alpha + beta*A + rnorm(n, 0, sigma_L) # mediator L affect by A
-Y = gamma + delta*L + rnorm(n, 0, sigma_Y) # Y affected only by L,
+A <- rbinom(n, 1, p) # binary exposure variable
+L <- alpha + beta * A + rnorm(n, 0, sigma_L) # mediator L affect by A
+Y <- gamma + delta * L + rnorm(n, 0, sigma_Y) # Y affected only by L,
 
 # make the data frame
-data = data.frame(A = A, L = L, Y = Y)
+data <- data.frame(A = A, L = L, Y = Y)
 
 # fit regression in which we control for L, a mediator
 # (cross-sectional data is consistent with this model)
-fit_1 <- lm( Y ~ A + L, data = data)
+fit_1 <- lm(Y ~ A + L, data = data)
 
 # fit regression in which L is assumed to be a mediator, not a confounder.
 # (cross-sectional data is also consistent with this model)
-fit_2 <- lm( Y ~ A, data = data)
+fit_2 <- lm(Y ~ A, data = data)
 
 # create gtsummary tables for each regression model
 table1 <- gtsummary::tbl_regression(fit_1)
@@ -420,13 +436,16 @@ table2 <- gtsummary::tbl_regression(fit_2)
 # merge the tables for comparison
 table_comparison <- gtsummary::tbl_merge(
   list(table1, table2),
-  tab_spanner = c("Model: Exercise assumed confounder", 
-                  "Model: Exercise assumed to be a mediator")
+  tab_spanner = c(
+    "Model: Exercise assumed confounder",
+    "Model: Exercise assumed to be a mediator"
+  )
 )
 # make html table (for publication)
-markdown_table_0 <- as_kable_extra(table_comparison, 
-                                   format = "html")
-# print table (note, you might prefer "markdown" or another format)                                
+markdown_table_0 <- as_kable_extra(table_comparison,
+  format = "html"
+)
+# print table (note, you might prefer "markdown" or another format)
 markdown_table_0
 ```
 
@@ -440,21 +459,21 @@ The following code is designed to estimate the Average Treatment Effect (ATE) us
 2. **Set seed**: `set.seed(123)` ensures that the results of the simulations are reproducible, allowing for consistent outcomes across different code runs.
 
 3. **Simulate the data distribution**:
-   
+
    `sim_coefs_fit_1` and `sim_coefs_fit_2` are generated using the `sim` function from the `clarify` package, applied to two fitted models (`fit_1` and `fit_2`). These functions simulate the distribution of coefficients based on the specified models, capturing the uncertainty around the estimated parameters.
 
 4. **Calculate ATE**:
-  
+
   For both models, the `sim_ame` function calculates the ATE as the marginal risk difference (RD) when the treatment variable (`A`) is present (`A == 1`). This function uses the simulated coefficients to estimate the treatment effect across the simulated distributions, providing a comprehensive view of the ATE under each model.
-  
+
   To streamline the output, the function is set to verbose mode off (`verbose = FALSE`).
 
 5. **Results**:
-  
+
   Summaries of these estimates (`summary_sim_est_fit_1` and `summary_sim_est_fit_2`) are obtained, providing detailed statistics including the estimated ATE and its 95% confidence intervals (CI).
 
 6. **Presentation: report ATE and CIs**:
-   
+
 Using the `glue` package, the ATE and its 95% CIs for both models are formatted into a string for easy reporting. This step transforms the statistical output into a more interpretable form, highlighting the estimated treatment effect and its precision.
 
 
@@ -465,7 +484,9 @@ Using the `glue` package, the ATE and its 95% CIs for both models are formatted 
 #| eval: false
 
 # use `clarify` package to obtain ATE
-if(!require(clarify)){install.packages("clarify")} # clarify package
+if (!require(clarify)) {
+  install.packages("clarify")
+} # clarify package
 # simulate fit 1 ATE
 set.seed(2025)
 sim_coefs_fit_1 <- sim(fit_1)
@@ -493,7 +514,7 @@ sim_est_fit_2 <-
 summary_sim_est_fit_1 <- summary(sim_est_fit_1, null = c(`RD` = 0))
 summary_sim_est_fit_2 <- summary(sim_est_fit_2, null = c(`RD` = 0))
 
-# reporting 
+# reporting
 # ate for fit 1, with 95% CI
 ATE_fit_1 <- glue::glue(
   "ATE =
@@ -508,6 +529,10 @@ ATE_fit_2 <-
                         CI = [{round(summary_sim_est_fit_2[3, 2], 2)},
                         {round(summary_sim_est_fit_2[3, 3], 2)}]"
   )
+
+
+# print(ATE_fit_1)
+# print(ATE_fit_2)
 ```
 
 
@@ -536,7 +561,7 @@ This appendix outlines the methodology and results of a data simulation designed
 1. **Target**: we simulate data for 10,000 individuals, including baseline exposure to green spaces ($A_0$), baseline happiness ($Y_0$), baseline confounders ($L_0$), and an unmeasured confounder ($U$). The simulation uses a logistic model for treatment assignment and a linear model for the continuous outcome, incorporating interactions to assess how baseline characteristics modify the treatment effect.
 
 2. **Set seed and simulate the data distribution**:
-  
+
   Treatment assignment coefficients: $\beta_{A0} = 0.25$, $\beta_{Y0} = 0.3$, $\beta_{L0} = 0.2$, and $\beta_{U} = 0.1$.
   Outcome model coefficients: $\delta_{A1} = 0.3$, $\delta_{Y0} = 0.9$, $\delta_{A0} = 0.1$, $\delta_{L0} = 0.3$, with an interaction effect ($\theta_{A0Y0L0} = 0.5$) indicating the combined influence of baseline exposure, outcome, and confounders on the follow-up outcome.
 
@@ -549,7 +574,7 @@ This appendix outlines the methodology and results of a data simulation designed
 
 5. **Presentation**: the results are synthesised in a comparative table, formatted using the `kableExtra` {@zhu2021KableExtra] and `gtsummary` packages [@gtsummary2021], highlighting the estimated treatment effects and their statistical significance across models.
 
-Overall, we use the simulation to illustrate the importance of incorporating baseline characteristics and their interactions to mitigate the influence of unmeasured confounding. 
+Overall, we use the simulation to illustrate the importance of incorporating baseline characteristics and their interactions to mitigate the influence of unmeasured confounding.
 
 Here is the simulation/model code:
 
@@ -558,15 +583,21 @@ Here is the simulation/model code:
 #| echo: true
 #| eval: true
 library(kableExtra)
-if(!require(kableExtra)){install.packages("kableExtra")} # causal forest
-if(!require(gtsummary)){install.packages("gtsummary")} # causal forest
-if(!require(grf)){install.packages("grf")} # causal forest
+if (!require(kableExtra)) {
+  install.packages("kableExtra")
+} # causal forest
+if (!require(gtsummary)) {
+  install.packages("gtsummary")
+} # causal forest
+if (!require(grf)) {
+  install.packages("grf")
+} # causal forest
 
 # r_texmf()eproducibility
-set.seed(123) 
+set.seed(123)
 
 # set number of observations
-n <- 10000 
+n <- 10000
 
 # baseline covariates
 U <- rnorm(n) # Unmeasured confounder
@@ -575,35 +606,36 @@ Y_0 <- rnorm(n, mean = U, sd = 1) # Baseline outcome
 L_0 <- rnorm(n, mean = U, sd = 1) # Baseline confounders
 
 # coefficients for treatment assignment
-beta_A0 = 0.25
-beta_Y0 = 0.3
-beta_L0 = 0.2
-beta_U = 0.1
+beta_A0 <- 0.25
+beta_Y0 <- 0.3
+beta_L0 <- 0.2
+beta_U <- 0.1
 
 # simulate treatment assignment
-A_1 <- rbinom(n, 1, prob = plogis(-0.5 + 
-                                    beta_A0 * A_0 +
-                                    beta_Y0 * Y_0 + 
-                                    beta_L0 * L_0 + 
-                                    beta_U * U))
+A_1 <- rbinom(n, 1, prob = plogis(-0.5 +
+  beta_A0 * A_0 +
+  beta_Y0 * Y_0 +
+  beta_L0 * L_0 +
+  beta_U * U))
 # coefficients for continuous outcome
-delta_A1 = 0.3
-delta_Y0 = 0.9
-delta_A0 = 0.1
-delta_L0 = 0.3
-theta_A0Y0L0 = 0.5 # Interaction effect between A_1 and L_0
-delta_U = 0.05
+delta_A1 <- 0.3
+delta_Y0 <- 0.9
+delta_A0 <- 0.1
+delta_L0 <- 0.3
+theta_A0Y0L0 <- 0.5 # Interaction effect between A_1 and L_0
+delta_U <- 0.05
 # simulate continuous outcome including interaction
 Y_2 <- rnorm(n,
-             mean = 0 +
-               delta_A1 * A_1 + 
-               delta_Y0 * Y_0 + 
-               delta_A0 * A_0 + 
-               delta_L0 * L_0 + 
-               theta_A0Y0L0 * Y_0 * 
-               A_0 * L_0 + 
-               delta_U * U,
-             sd = .5)
+  mean = 0 +
+    delta_A1 * A_1 +
+    delta_Y0 * Y_0 +
+    delta_A0 * A_0 +
+    delta_L0 * L_0 +
+    theta_A0Y0L0 * Y_0 *
+      A_0 * L_0 +
+    delta_U * U,
+  sd = .5
+)
 # assemble data frame
 data <- data.frame(Y_2, A_0, A_1, L_0, Y_0, U)
 
@@ -614,29 +646,33 @@ fit_no_control <- lm(Y_2 ~ A_1, data = data)
 fit_standard <- lm(Y_2 ~ A_1 + L_0, data = data)
 
 # model: interaction with baseline confounders, and baseline outcome and exposure
-fit_interaction  <- lm(Y_2 ~ A_1 * (L_0 + A_0 + Y_0), data = data)
+fit_interaction <- lm(Y_2 ~ A_1 * (L_0 + A_0 + Y_0), data = data)
 
 # create gtsummary tables for each regression model
-tbl_fit_no_control<- tbl_regression(fit_no_control)  
+tbl_fit_no_control <- tbl_regression(fit_no_control)
 tbl_fit_standard <- tbl_regression(fit_standard)
 tbl_fit_interaction <- tbl_regression(fit_interaction)
 
 # get only the treatment variable
-tbl_list_modified <- lapply(list(
-  tbl_fit_no_control,
-  tbl_fit_standard,
-  tbl_fit_interaction),
-function(tbl) {
-  tbl %>%
-    modify_table_body(~ .x %>% dplyr::filter(variable == "A_1"))
-})
+tbl_list_modified <- lapply(
+  list(
+    tbl_fit_no_control,
+    tbl_fit_standard,
+    tbl_fit_interaction
+  ),
+  function(tbl) {
+    tbl %>%
+      modify_table_body(~ .x %>% dplyr::filter(variable == "A_1"))
+  }
+)
 # merge tables
 table_comparison <- tbl_merge(
   tbls = tbl_list_modified,
   tab_spanner = c(
     "No Control",
     "Standard",
-    "Interaction")
+    "Interaction"
+  )
 ) |>
   modify_table_styling(
     column = c(p.value_1, p.value_2, p.value_3),
@@ -670,11 +706,13 @@ This simulation-based approach to estimating the ATE underscores the importance 
 
 
 # use `clarify` package to obtain ATE
-if(!require(clarify)){install.packages("clarify")} # clarify package
+if (!require(clarify)) {
+  install.packages("clarify")
+} # clarify package
 
 # simulate fit 1 ATE
 set.seed(123)
-sim_coefs_fit_no_control<- sim(fit_no_control)  
+sim_coefs_fit_no_control <- sim(fit_no_control)
 sim_coefs_fit_std <- sim(fit_standard)
 sim_coefs_fit_int <- sim(fit_interaction)
 
@@ -715,14 +753,14 @@ summary_sim_est_fit_int <-
 
 # get coefficients for reporting
 # ate for fit 1, with 95% CI
-ATE_fit_no_control  <- glue::glue(
-  "ATE = {round(summary_sim_coefs_fit_no_control[3, 1], 2)}, 
+ATE_fit_no_control <- glue::glue(
+  "ATE = {round(summary_sim_coefs_fit_no_control[3, 1], 2)},
   CI = [{round(summary_sim_coefs_fit_no_control[3, 2], 2)},
   {round(summary_sim_coefs_fit_no_control[3, 3], 2)}]"
 )
 # ate for fit 2, with 95% CI
 ATE_fit_std <- glue::glue(
-  "ATE = {round(summary_sim_est_fit_std[3, 1], 2)}, 
+  "ATE = {round(summary_sim_est_fit_std[3, 1], 2)},
   CI = [{round(summary_sim_est_fit_std[3, 2], 2)},
   {round(summary_sim_est_fit_std[3, 3], 2)}]"
 )
@@ -739,11 +777,11 @@ ATE_fit_int <-
 
 Using the `clarify` package, we infer the ATE for the standard model is `r ATE_fit_std`.
 
-Using the `clarify` package, we infer the ATE for the model that conditions on the baseline exposure and baseline outcome to be:  `r ATE_fit_int`, which is close to the values supplied to the data-generating mechanism. 
+Using the `clarify` package, we infer the ATE for the model that conditions on the baseline exposure and baseline outcome to be:  `r ATE_fit_int`, which is close to the values supplied to the data-generating mechanism.
 
-**Take-home message:** 
+**Take-home message:**
 
-The baseline exposure and baseline outcome are often the most important variables to include for confounding control. The baseline exposure also allows us to estimate an incident-exposure effect. For this reason, we should endeavour to obtain at least three waves of data such that these variables and other baseline confounders are included at time 0, the exposure is included at time 1, and the outcome is included at time 2. 
+The baseline exposure and baseline outcome are often the most important variables to include for confounding control. The baseline exposure also allows us to estimate an incident-exposure effect. For this reason, we should endeavour to obtain at least three waves of data such that these variables and other baseline confounders are included at time 0, the exposure is included at time 1, and the outcome is included at time 2.
 
 {{< pagebreak >}}
 
@@ -760,8 +798,8 @@ This appendix provides a practical example of estimating average treatment effec
    - `A_1`: Treatment indicator.
    - `L_0`: A covariate.
    - `Y_2`: Outcome of interest.
-   - `A_0` and `Y_0`: Baseline exposure and outcome, respectively. 
-   
+   - `A_0` and `Y_0`: Baseline exposure and outcome, respectively.
+
    Treatment (`W`) and outcome (`Y`) vectors are extracted from `data` alongside a matrix `X` that includes covariates and baseline characteristics.
 
 3. **Causal Forest model**: a causal forest model is fitted using the `causal_forest` function from the `grf` package [@grf2024]. This function takes the covariate matrix `X`, the outcome vector `Y`, and the treatment vector `W` as inputs, and it returns a model object that can be used for further analysis.
@@ -772,9 +810,9 @@ This appendix provides a practical example of estimating average treatment effec
 
 #### Key Takeaways
 
-First, causal forests offer a robust way to estimate treatment effects without making parametric solid assumptions. This approach is particularly advantageous in settings where the treatment effect may vary with covariates or across different subpopulations. 
+First, causal forests offer a robust way to estimate treatment effects without making parametric solid assumptions. This approach is particularly advantageous in settings where the treatment effect may vary with covariates or across different subpopulations.
 
-Second, the model estimates the ATE as the difference in expected outcomes between treated and untreated units, averaged across the population. This estimate reflects the overall effect of the treatment, accounting for the distribution of covariates in the sample. 
+Second, the model estimates the ATE as the difference in expected outcomes between treated and untreated units, averaged across the population. This estimate reflects the overall effect of the treatment, accounting for the distribution of covariates in the sample.
 
 Third, we find that the estimated ATE by the causal forest model converges to the actual value used in the data-generating process (assumed to be 0.3). This demonstrates the effectiveness of causal forests in uncovering the true treatment effect from complex data.
 
@@ -784,25 +822,25 @@ This example underscores the utility of semi-parametric and non-parametric metho
 #| label: causal_forest
 #| echo: true
 
-# load causal forest library 
+# load causal forest library
 library(grf) # estimate conditional and average treatment effects
-library(glue) # reporting 
+library(glue) # reporting
 
 #  'data' is our data frame with columns 'A_1' for treatment, 'L_0' for a covariate, and 'Y_2' for the outcome
 #  we also have the baseline exposure 'A_0' and 'Y_0'
 #  ensure W (treatment) and Y (outcome) are vectors
-W <- as.matrix(data$A_1)  # Treatment
-Y <- as.matrix(data$Y_2)  # Outcome
+W <- as.matrix(data$A_1) # Treatment
+Y <- as.matrix(data$Y_2) # Outcome
 X <- as.matrix(data[, c("L_0", "A_0", "Y_0")])
 
-# fit causal forest model 
+# fit causal forest model
 fit_causal_forest <- causal_forest(X, Y, W)
 
 # estimate the average treatment effect (ATE)
 ate <- average_treatment_effect(fit_causal_forest)
 
-# make data frame for reporting using "glue' 
-ate<- data.frame(ate)
+# make data frame for reporting using "glue'
+ate <- data.frame(ate)
 
 # obtain ate for report
 ATE_fit_causal_forest <-
@@ -820,4 +858,4 @@ Causal forest estimates the average treatment effect as `r ATE_fit_causal_forest
 
 
 
-## 
+##
