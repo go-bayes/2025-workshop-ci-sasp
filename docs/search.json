@@ -130,7 +130,7 @@
     "href": "index.html#agenda",
     "title": "Beyond Correlation: A Practical Introduction to Causal Inference in Observational Social Psychology",
     "section": "Agenda",
-    "text": "Agenda\n\n\n\n\nTable 1: Schedule and Learning Goals\n\n\n\n\n\n\nTime\nSession\nLearning goals & activities\n\n\n\n\n09:00–09:45\nHow to ask a causal question\nState precise causal questions with the potential outcomes framework; focus on the average treatment effect (ATE).\n\n\n09:45–11:00\nThe causal workflow + causal diagrams (from question to answer)\nTrace the full causal workflow: define populations, build causal diagrams, assess assumptions, analyse data, conduct sensitivity analysis, and communicate results—using DAGs to expose bias from confounding, colliders, and mediators.\n\n\n11:00–11:30\nCoffee break & discussion (you might need to bring a your own coffee)\nInformal space for questions, clarifying assumptions, and networking.\n\n\n11:30–12:15\nWorked examples: employer gratitude & religious service attendance (Zahle Wisely & Hannah Robinson)\nPresenters: Zahle Wisely & Hannah Robinson. Apply the causal workflow to estimate how employer gratitude shapes wellbeing and how religious service attendance influences personality; joint Q&A follows.\n\n\n12:15–13:45\nLunch\nBreak.\n\n\n13:45–14:30\nBeyond averages: heterogeneous treatment effects and policy trees\nIntroduce heterogeneous treatment effects (HTE), conditional ATEs, and policy trees; discuss when effects differ across people.\n\n\n14:30–15:00\nRevisiting our examples: policy tree analyses\nAnalyse heterogeneity in Zahle and Hannah's case studies; interpret tree-based decision rules useful for obtaining *policies*.\n\n\n15:00–16:00\nHands-on demonstration: formulating questions and estimating effects in R\nR demonstration using causal forests; interpret simulated ATEs and HTEs, graphs, reporting & etc."
+    "text": "Agenda\n\n\n\n\nTable 1: Schedule and Learning Goals\n\n\n\n\n\n\nTime\nSession\nLearning goals & activities\n\n\n\n\n09:00–09:45\nHow to ask a causal question\nState precise causal questions with the potential outcomes framework; focus on the average treatment effect (ATE).\n\n\n09:45–11:00\nThe causal workflow + causal diagrams (from question to answer)\nTrace the full causal workflow: define populations, build causal diagrams, assess assumptions, analyse data, conduct sensitivity analysis, and communicate results—using DAGs to expose bias from confounding, colliders, and mediators.\n\n\n11:00–11:30\nCoffee break & discussion (you might need to bring your own coffee)\nInformal space for questions, clarifying assumptions, and networking.\n\n\n11:30–12:15\nWorked examples: employer gratitude & religious service attendance\nWalk through two applied studies from the NZAVS. First, Zahle Wisely’s employer gratitude analysis; then a deep dive on religious service attendance and personality—drawing directly on the lecture linked under \"Workshop Content.\" Joint Q&A follows.\n\n\n12:15–13:45\nLunch\nBreak.\n\n\n13:45–14:30\nBeyond averages: heterogeneous treatment effects and policy trees\nIntroduce heterogeneous treatment effects (HTE), conditional ATEs, and policy trees; discuss when effects differ across people.\n\n\n14:30–15:00\nRevisiting our examples: policy tree analyses\nAnalyse heterogeneity in Zahle and Hannah's case studies; interpret tree-based decision rules useful for obtaining *policies*.\n\n\n15:00–16:00\nHands-on demonstration: formulating questions and estimating effects in R\nR demonstration using causal forests; interpret simulated ATEs and HTEs, graphs, reporting & etc."
   },
   {
     "objectID": "index.html#contact",
@@ -903,6 +903,20 @@
     "text": "Thanks\n\n\nTRT Grant 0418 & Max Planck Institute for Evolutionary Anthropology for support.\nChris G. Sibley (NZAVS lead Investigator) for the heavy data lifting\n77,490 NZAVS participants for their time\n with questions or if you would like to become involved: \n\n\n\n\n\n\nNZAVS"
   },
   {
+    "objectID": "content/case-study-2.html",
+    "href": "content/case-study-2.html",
+    "title": "Case Study 2: CATE",
+    "section": "",
+    "text": "Open in New Tab"
+  },
+  {
+    "objectID": "content/case-study-2.html#case-study-2-cate",
+    "href": "content/case-study-2.html#case-study-2-cate",
+    "title": "Case Study 2: CATE",
+    "section": "",
+    "text": "Open in New Tab"
+  },
+  {
     "objectID": "content/S1-multiple-treatment-versions.html",
     "href": "content/S1-multiple-treatment-versions.html",
     "title": "Causal Consistency",
@@ -1216,6 +1230,20 @@
     "title": "Measurement And Selection Biases",
     "section": "Part 3: Target Population Restriction Bias at the Start of Study",
     "text": "Part 3: Target Population Restriction Bias at the Start of Study\nTarget‐restriction bias occurs when the analytic sample at baseline differs from the target population in the distribution of confounders and/or treatment‐effect modifiers. Misalignment may arise if the source population does not match the target, or if study selection alters distributions. Alignment cannot generally be verified from data (see Supplement S3).\n\nCollider‐Restriction Bias at Baseline\n\n\n\nCollider‐stratification bias at the start of a study Collider‐stratification bias at the start of a study (“M‐bias”)\n\n\nTable 5\n\n\n\nIn Table 5 \\mathcal{G}_1, unmeasured health awareness (U_1) influences both activity (A) and participation (S=1), and unmeasured SES (U_2) influences both heart health (Y) and S=1. Conditioning on S=1 opens paths: - U_1: Over‐representation of active individuals, overstating benefits. - U_2: Confounding path via SES, inflating effect estimates.\nAdjusting for U_1, U_2, or proxies can block these paths (Table 5 \\mathcal{G}_2).\n\n\nRestriction Bias Without Collider Stratification\n\n\n\nSelection bias at baseline Selection bias “off the null”\n\n\nTable 6\n\n\n\n\nExample 1: WEIRD Sample, Non‐WEIRD Target\nIf effect modifiers differ between a WEIRD sample and general population (Table 6 \\mathcal{G}_{1.1}), estimates may be biased without confounding . Structure matches Table 4 \\mathcal{G}_5 and Table 3 \\mathcal{G}_2. Known effect‐modifier distributions allow weighting , but mapping from restricted to target effects (f_W) is usually unknown .\n\n\nExample 2: Overly Broad Sample for Narrow Target\nIf the target is a restricted stratum (e.g., NZ men &gt; 40 without vasectomy) but sampling is broader (Table 6 \\mathcal{G}_{2.1}), bias mirrors right‐censoring with effect modifiers. Correct restriction (Table 6 \\mathcal{G}_{2.2}) aligns sample with target.\n\n\nExample 3: Correlated Covariate/Outcome Measurement Error Across Strata\nIn cross‐cultural studies, correlated measurement errors in L and Y (Table 6 \\mathcal{G}_{3.1}) can open biasing paths even if A is measured perfectly. Without local validation, pooling cultures risks contamination; restricting to cultures with reliable measures (Table 6 \\mathcal{G}_{3.2}) is safer.\n\n\nExample 4: Correlated Measurement Error in Effect Modifiers\nWith perfect A and Y, correlated errors in effect‐modifier measures (Table 6 \\mathcal{G}_{4.1}) still prevent valid heterogeneity estimation or use of target weights. Best practice: restrict to settings with reliable effect‐modifier measurement (Table 6 \\mathcal{G}_{4.2}) and report strata separately if errors differ."
+  },
+  {
+    "objectID": "content/case-study-1.html",
+    "href": "content/case-study-1.html",
+    "title": "Case Study 1: ATE",
+    "section": "",
+    "text": "Open in New Tab"
+  },
+  {
+    "objectID": "content/case-study-1.html#case-study-1-ate",
+    "href": "content/case-study-1.html#case-study-1-ate",
+    "title": "Case Study 1: ATE",
+    "section": "",
+    "text": "Open in New Tab"
   },
   {
     "objectID": "content/data-tutorial.html",

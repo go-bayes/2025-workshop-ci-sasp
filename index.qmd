@@ -250,7 +250,7 @@ schedule <- tibble(
     "State precise causal questions with the potential outcomes framework; focus on the average treatment effect (ATE).",
     "Trace the full causal workflow: define populations, build causal diagrams, assess assumptions, analyse data, conduct sensitivity analysis, and communicate results—using DAGs to expose bias from confounding, colliders, and mediators.",
     "Informal space for questions, clarifying assumptions, and networking.",
-    "Walk through two applied studies from the NZAVS. First, Zahle Wisely’s employer gratitude analysis; then a deep dive on religious service attendance and personality—drawing directly on the lecture linked under “Workshop Content.” Joint Q&A follows.",
+    "Walk through two applied studies from the NZAVS. First, Zahle Wisely’s employer gratitude analysis; then a deep dive on religious service attendance and personality—drawing directly on the lecture linked under \"Workshop Content.\" Joint Q&A follows.",
     "Break.",
     "Introduce heterogeneous treatment effects (HTE), conditional ATEs, and policy trees; discuss when effects differ across people.",
     "Analyse heterogeneity in Zahle and Hannah's case studies; interpret tree-based decision rules useful for obtaining *policies*.",
@@ -313,5 +313,4 @@ Questions before the workshop? Email me at [joseph.bulbulia@vuw.ac.nz](mailto:jo
 </p>
 ```
 :::
-
 
