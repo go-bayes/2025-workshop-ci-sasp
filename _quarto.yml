@@ -40,16 +40,16 @@ website:
           #   href: content/data-tutorial.qmd
           # - text: "Worked Example: Religion → Cooperation"
           #   href: content/04-worked-example.qmd
-          # - text: "---"
+          - text: "---"
           - text: "Glossary (PDF)"
             href: pdfs/bulbulia-hand-outs/S2-glossary.pdf
-          # - text: "---"
-          # - text: "Short Quiz"
-          #   href: quiz/sparcc_day_2_short_quiz.pdf
-          # - text: "Quiz Answer Key"
-          #   href: quiz/sparcc_day_2_short_quiz-answer-key.pdf
-          # - text: "Test"
-          #   href: quiz/2025-workshop-diagnostic.pdf
+          - text: "---"
+          - text: "Short Quiz"
+            href: quiz/sparcc_day_2_short_quiz.pdf
+          - text: "Quiz Answer Key"
+            href: quiz/sparcc_day_2_short_quiz-answer-key.pdf
+          - text: "Test"
+            href: quiz/2025-workshop-diagnostic.pdf
       - text: "Glossary & DAGs"
         href: glossary-and-dags.qmd
       - text: "Reading"

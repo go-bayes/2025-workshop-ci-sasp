@@ -93,8 +93,7 @@ if (requireNamespace("extrafont", quietly = TRUE)) {
   message("'extrafont' not installed; skipping font loading")
 }
 
-setwd("/Users/joseph/GIT/2025-workshop-ci-sasp/")
-here::i_am("index.qmd")
+here::i_am("workshop-scripts/06-interpretation-2.qmd")
 
 
 # reproducibility

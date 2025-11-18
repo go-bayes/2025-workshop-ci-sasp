@@ -11,9 +11,7 @@ suppressPackageStartupMessages({
   library(kableExtra)
 })
 devtools::load_all("/Users/joseph/GIT/margot/")
-
-setwd("/Users/joseph/GIT/2025-workshop-ci-sasp/")
-here::i_am("index.qmd")
+here::i_am("workshop-scripts/06-margot-analysis.R")
 
 
 

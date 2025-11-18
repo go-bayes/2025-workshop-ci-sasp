@@ -14,8 +14,7 @@ library(cli)
 library(tidyverse)
 library(grf)
 library(here)
-setwd("/Users/joseph/GIT/2025-workshop-ci-sasp/")
-here::i_am("index.qmd")
+here::i_am("workshop-scripts/03-rate-qini-curves.R")
 
 cli_rule("Rate and Qini Curve Analysis")
 

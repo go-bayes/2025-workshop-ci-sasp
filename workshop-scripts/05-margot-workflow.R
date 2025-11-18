@@ -63,8 +63,7 @@ library(kableExtra)
 library(grf)
 library(ggplot2)
 library(patchwork)
-setwd("/Users/joseph/GIT/2025-workshop-ci-sasp/")
-here::i_am("index.qmd")
+here::i_am("workshop-scripts/05-margot-workflow.R")
 
 
 

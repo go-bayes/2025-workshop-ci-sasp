@@ -6,8 +6,7 @@ library(cli)
 library(tidyverse)
 library(grf)
 library(here)
-setwd("/Users/joseph/GIT/2025-workshop-ci-sasp/")
-here::i_am("index.qmd")
+here::i_am("workshop-scripts/02-causal-forest-analysis.R")
 
 
 cli_rule("Causal Forest Analysis")

@@ -26,11 +26,11 @@ editor_options:
 
 ::: callout-note
 ### Workshop snapshot
-- **When:** Wednesday 19 November 2025, 09:00–16:00  
-- **Where:** Redmond Barry Building (Building 115), Level 5 Room 516, University of Melbourne  
-- **Format:** In-person via SASP abstract submission  
-- **Morning:** Average treatment effects + student presentations  
-- **Afternoon:** Heterogeneous effects & hands-on causal machine learning  
+- **When:** Wednesday 19 November 2025, 09:00–16:00
+- **Where:** Redmond Barry Building (Building 115), Level 5 Room 516, University of Melbourne
+- **Format:** In-person via SASP abstract submission
+- **Morning:** Average treatment effects + student presentations
+- **Afternoon:** Heterogeneous effects & hands-on causal machine learning
 
 If you want a sense of causal inference, the morning stands alone. Stick around after lunch to flex causal ML muscles.
 :::

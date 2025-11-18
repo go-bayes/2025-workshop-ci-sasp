@@ -31,12 +31,7 @@
 #   4. Highlight where diagnostics like RATE/Qini flag the signal
 #
 # Reference: Wager & Athey (2018) and follow-up GRF benchmarks.
-
-setwd("/Users/joseph/GIT/2025-workshop-ci-sasp/")
-here::i_am("index.qmd")
-
-
-
+here::i_am("workshop-scripts/07-grf-style-simulation.R")
 suppressPackageStartupMessages({
   library(tidyverse)
 })

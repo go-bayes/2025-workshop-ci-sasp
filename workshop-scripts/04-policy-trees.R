@@ -7,8 +7,7 @@ library(tidyverse)
 library(grf)
 library(policytree)
 library(here)
-setwd("/Users/joseph/GIT/2025-workshop-ci-sasp/")
-here::i_am("index.qmd")
+here::i_am("workshop-scripts/04-policy-trees.R")
 
 
 

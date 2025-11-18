@@ -5,8 +5,7 @@
 library(cli)
 library(tidyverse)
 library(here)
-setwd("/Users/joseph/GIT/2025-workshop-ci-sasp/")
-here::i_am("index.qmd")
+here::i_am("workshop-scripts/01-baseline-adjustment.R")
 
 cli_rule("Example: Religious Belief and Prosocial Behaviour")
 
