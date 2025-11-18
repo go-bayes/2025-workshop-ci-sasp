@@ -6,6 +6,9 @@ library(cli)
 library(tidyverse)
 library(grf)
 library(here)
+setwd("/Users/joseph/GIT/2025-workshop-ci-sasp/")
+here::i_am("index.qmd")
+
 
 cli_rule("Causal Forest Analysis")
 
@@ -125,4 +128,3 @@ saveRDS(forest_results, here::here("data", "causal_forest_results.rds"))
 cli_alert_success("Results saved")
 
 cli_rule()
-

@@ -2,7 +2,6 @@
 # Companion script for `06-interpretation-2.qmd`.
 # Runs ATE and CATE summaries using cached outputs produced by the workshop
 # pipeline. Designed for code review sessions in R / RStudio.
-
 suppressPackageStartupMessages({
   library(cli)
   library(glue)
@@ -11,15 +10,21 @@ suppressPackageStartupMessages({
   library(tidyverse)
   library(kableExtra)
 })
+devtools::load_all("/Users/joseph/GIT/margot/")
+
+setwd("/Users/joseph/GIT/2025-workshop-ci-sasp/")
+here::i_am("index.qmd")
+
+
 
 cli_rule("Margot causal forest analysis")
 
 # ---- Paths ------------------------------------------------------------------
 results_dir <- here("results")
-data_dir    <- here("data")
+data_dir <- here("data")
 
 required_dirs <- c(results_dir, data_dir)
-missing_dirs  <- required_dirs[!dir.exists(required_dirs)]
+missing_dirs <- required_dirs[!dir.exists(required_dirs)]
 
 if (length(missing_dirs) > 0) {
   cli_abort(c(
@@ -168,7 +173,7 @@ model_groups <- list(
 
 qini_results <- margot::margot_policy(
   models_for_analysis,
-  policy_tree_args   = list(
+  policy_tree_args = list(
     point_alpha              = 0.5,
     title_size               = 30,
     subtitle_size            = 25,
@@ -179,12 +184,12 @@ qini_results <- margot::margot_policy(
     split_label_color        = "red",
     split_label_nudge_factor = 0.007
   ),
-  model_names        = names(models_for_analysis$results),
-  original_df        = original_df,
-  label_mapping      = labels_for_analysis,
-  qini_args          = list(show_ci = "both"),
-  max_depth          = 1L,
-  output_objects     = c("qini_plot", "diff_gain_summaries")
+  model_names = names(models_for_analysis$results),
+  original_df = original_df,
+  label_mapping = labels_for_analysis,
+  qini_args = list(show_ci = "both"),
+  max_depth = 1L,
+  output_objects = c("qini_plot", "diff_gain_summaries")
 )
 
 qini_gain <- margot::margot_interpret_qini(
@@ -211,30 +216,30 @@ if (length(reliable_ids) > 0) {
       edge_label_offset = 0.02,
       border_size       = 0.01
     ),
-    policy_tree_args   = list(
-      point_alpha              = 0.5,
-      title_size               = 30,
-      subtitle_size            = 25,
-      axis_title_size          = 25,
-      legend_title_size        = 18,
-      split_line_color         = "red",
-      split_line_alpha         = 0.8,
-      split_label_color        = "red",
-      split_label_nudge_factor = 0.007
+    policy_tree_args = list(
+      # point_alpha              = 0.5,
+      # title_size               = 30,
+      # subtitle_size            = 25,
+      # axis_title_size          = 25,
+      # legend_title_size        = 18,
+      # split_line_color         = "red",
+      # split_line_alpha         = 0.8,
+      # split_label_color        = "red",
+      # split_label_nudge_factor = 0.007
     ),
-   # model_names        = reliable_ids, Uncomment for valid results only
-    original_df        = original_df,
-    label_mapping      = labels_for_analysis,
-    max_depth          = 1L,
-    output_objects     = c("combined_plot", "policy_tree")
+    # model_names        = reliable_ids, Uncomment for valid results only
+    original_df = original_df,
+    label_mapping = labels_for_analysis,
+    max_depth = 2L,
+    output_objects = c("combined_plot", "policy_tree")
   )
 
   policy_text <- margot::margot_interpret_policy_batch(
-    models        = models_for_analysis,
-    original_df   = original_df,
-   # model_names   = reliable_ids, uncommon for valid result only
+    models = models_for_analysis,
+    original_df = original_df,
+    # model_names   = reliable_ids, uncommon for valid result only
     label_mapping = labels_for_analysis,
-    max_depth     = 1L
+    max_depth = 2L
   )
 
   cli_h2("Policy tree interpretation")
@@ -249,7 +254,6 @@ if (length(reliable_ids) > 0) {
     ggplot2::ggsave(plot_path, res$combined_plot, width = 10, height = 8, dpi = 300)
     cli_alert_info("Saved policy tree for {id} -> {plot_path}")
   })
-
 } else {
   cli_alert_warning("No reliable heterogeneous treatment effects detected; skipping policy trees.")
 }
@@ -257,16 +261,27 @@ if (length(reliable_ids) > 0) {
 # ---- Optional: stability + policy workflow summary -------------------------
 cli_rule("Policy Tree Stability (optional)")
 
-if (!requireNamespace("fastpolicytree", quietly = TRUE)) {
+
+# check if results already exist
+results_ready <- all(
+  file.exists(file.path(results_dir, "policy_tree_result_stability.qs")),
+  file.exists(file.path(results_dir, "policy_workflow_summary.rds"))
+)
+
+
+if (results_ready) {
+  cli_alert_info("Skipping stability/policy workflow – cached results already exist.")
+} else if (!requireNamespace("fastpolicytree", quietly = TRUE)) {
   cli_alert_warning("Skipping stability analysis (package 'fastpolicytree' not installed)")
 } else {
+  # run policy tree stability analysis
   policy_tree_result_stability <- tryCatch(
     {
       cli_alert_info("Running stability analysis (100 iterations, depth 1–2) ...")
       margot::margot_policy_tree_stability(
-        models_binary_cate,
+        models_for_analysis,
         label_mapping = label_mapping,
-        n_iterations = 100L,
+        n_iterations = 300L,
         train_proportion = 0.5,
         tree_method = "fastpolicytree",
         seed = 42,
@@ -281,11 +296,10 @@ if (!requireNamespace("fastpolicytree", quietly = TRUE)) {
       NULL
     }
   )
-
+  # save stability results and generate workflow summary
   if (!is.null(policy_tree_result_stability)) {
     margot::here_save_qs(policy_tree_result_stability, "policy_tree_result_stability", results_dir)
     cli_alert_success("Stability results saved to results/policy_tree_result_stability.qs")
-
     policy_workflow <- tryCatch(
       margot::margot_policy_workflow(
         policy_tree_result_stability,
@@ -303,37 +317,67 @@ if (!requireNamespace("fastpolicytree", quietly = TRUE)) {
         NULL
       }
     )
-
     if (!is.null(policy_workflow)) {
       margot::here_save(policy_workflow, "policy_workflow_summary", results_dir)
       cli_alert_success("Policy workflow summary saved to results/policy_workflow_summary.rds")
-
-      depth_map <- policy_workflow$best$depth_map
-      donation_depth <- depth_map[["model_t2_charity_outcome_z"]]
-      if (!is.null(donation_depth)) {
-        cli_alert_info("Charitable giving policy: preferred tree depth = {donation_depth}")
-      }
-
-      summary_tbl <- policy_workflow$summary$table_df
-      donation_row <- dplyr::filter(
-        summary_tbl,
-        Outcome == "Charitable Giving",
-        Contrast == "policy - control_all"
-      )
-      if (nrow(donation_row) > 0) {
-        coverage_val <- donation_row$`Coverage (%)`[1]
-        cli_alert_info("Charitable giving coverage: {round(coverage_val, 1)}%")
-      }
+      # ... depth_map / coverage logging ...
     }
   }
 }
 
 cli_rule("Margot analysis complete ✔")
 
+#
+# # Charity Result (where there are genuine CATEs)
+# policy_results[[1]]
+#
+#
+# # Volunteering Result (where there are no genuine CATEs)
+# policy_results[[2]]
+#
+# diagnostics <- margot_stability_diagnostics(
+#   policy_tree_result_stability, # Your bootstrap results
+#   model_results = models_for_analysis, # Original causal forest results
+#   model_name = reliable_ids
+# )
+#
+# diagnostics
+#
+# Quantify effects
+# ============================================================
 
-# Charity Result (where there are genuine CATEs)
+
+policy_tree_result_stability <- here_read_qs("policy_tree_result_stability", results_dir)
+
+
+wf_ready <- all(
+  file.exists(file.path(results_dir, "wf.rds"))
+)
+
+if (wf_ready) {
+  # read result
+  wf <- margot::here_read("wf", results_dir)
+
+  cli_alert_info("Skipping stability/policy workflow – cached results already exist.")
+} else {
+  # policy_tree_result_stability
+  wf <- margot_policy_workflow(
+    policy_tree_result_stability,
+    min_gain_for_depth_switch = -Inf,
+    include_split_breakdown = "leaf",
+    split_top_only = FALSE,
+    original_df = original_df,
+    label_mapping = label_mapping,
+    se_method = "plugin",
+    dominance_threshold = 0.6,
+    include_interpretation = TRUE,
+    audience = "policy"
+  )
+
+  margot::here_save(wf, "wf", results_dir)
+}
+
+
+cat(wf$summary$recommendations_text)
+
 policy_results[[1]]
-
-
-# Volunteering Result (where there are no genuine CATEs)
-policy_results[[2]]

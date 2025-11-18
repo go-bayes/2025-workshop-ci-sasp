@@ -7,6 +7,10 @@ library(tidyverse)
 library(grf)
 library(policytree)
 library(here)
+setwd("/Users/joseph/GIT/2025-workshop-ci-sasp/")
+here::i_am("index.qmd")
+
+
 
 cli_rule("Policy Tree Analysis")
 
@@ -33,8 +37,8 @@ tau_hat <- data_with_tau$tau_hat
 # create reward matrix for policy learning
 # use tau_hat directly as treatment benefit
 gamma_matrix <- cbind(
-  control = rep(0, length(tau_hat)),    # control baseline reward = 0
-  treatment = tau_hat                   # treatment reward = predicted effect
+  control = rep(0, length(tau_hat)), # control baseline reward = 0
+  treatment = tau_hat # treatment reward = predicted effect
 )
 
 cli_alert_info("Reward matrix created: {nrow(gamma_matrix)} x {ncol(gamma_matrix)}")
@@ -201,4 +205,3 @@ saveRDS(policy_analysis, here::here("data", "policy_analysis.rds"))
 cli_alert_success("Policy tree analysis saved")
 
 cli_rule()
-

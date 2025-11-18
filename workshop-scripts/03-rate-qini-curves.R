@@ -14,6 +14,8 @@ library(cli)
 library(tidyverse)
 library(grf)
 library(here)
+setwd("/Users/joseph/GIT/2025-workshop-ci-sasp/")
+here::i_am("index.qmd")
 
 cli_rule("Rate and Qini Curve Analysis")
 
@@ -68,12 +70,13 @@ for (r in rates) {
   avg_tau_overall <- mean(tau_hat)
   gain <- avg_tau_targeted - avg_tau_overall
 
-  rate_results <- bind_rows(rate_results,
-                            tibble(
-                              rate = r,
-                              avg_tau_targeted = avg_tau_targeted,
-                              gain_over_random = gain
-                            )
+  rate_results <- bind_rows(
+    rate_results,
+    tibble(
+      rate = r,
+      avg_tau_targeted = avg_tau_targeted,
+      gain_over_random = gain
+    )
   )
 }
 
@@ -100,12 +103,13 @@ for (p in percentiles) {
   # cumulative gain from targeting
   cum_gain <- sum(tau_hat[top_indices]) - p * sum(tau_hat)
 
-  qini_results <- bind_rows(qini_results,
-                            tibble(
-                              percentile = p,
-                              qini_coefficient = qini_coeff,
-                              cumulative_gain = cum_gain
-                            )
+  qini_results <- bind_rows(
+    qini_results,
+    tibble(
+      percentile = p,
+      qini_coefficient = qini_coeff,
+      cumulative_gain = cum_gain
+    )
   )
 }
 
@@ -113,7 +117,7 @@ cli_alert_info("Qini curve analysis:")
 print(qini_results %>% mutate(across(where(is.numeric), ~ round(.x, 3))))
 
 # calculate area under qini curve (AUQC)
-auqc <- sum(qini_results$qini_coefficient) * 0.1  # trapezoidal approximation
+auqc <- sum(qini_results$qini_coefficient) * 0.1 # trapezoidal approximation
 cli_alert_info("Area Under Qini Curve (AUQC): {round(auqc, 3)}")
 
 # targeting efficiency at key percentiles
@@ -253,4 +257,3 @@ print(efficiency_plot)
 cli_alert_success("Targeting performance plots generated")
 
 cli_rule()
-

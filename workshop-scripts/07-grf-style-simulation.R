@@ -32,6 +32,11 @@
 #
 # Reference: Wager & Athey (2018) and follow-up GRF benchmarks.
 
+setwd("/Users/joseph/GIT/2025-workshop-ci-sasp/")
+here::i_am("index.qmd")
+
+
+
 suppressPackageStartupMessages({
   library(tidyverse)
 })
@@ -74,13 +79,13 @@ simulate_grf_style <- function(n = 10000,
 
   Y <- mu + tau * W + noise
 
-tibble(
-  W = W,
-  Y = Y,
-  tau = tau,
-  propensity = propensity
-) %>%
-  bind_cols(as_tibble(X))
+  tibble(
+    W = W,
+    Y = Y,
+    tau = tau,
+    propensity = propensity
+  ) %>%
+    bind_cols(as_tibble(X))
 }
 
 # In ad-hoc testing (n ≈ 10k) a default `grf::causal_forest()` recovers:

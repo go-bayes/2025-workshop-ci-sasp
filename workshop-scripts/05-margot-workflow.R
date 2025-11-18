@@ -25,11 +25,14 @@ if (!requireNamespace("margot", quietly = TRUE)) {
     install.packages("devtools")
   }
   cli_alert_info("Installing margot package from GitHub...")
-  tryCatch({
-    devtools::install_github("go-bayes/margot")
-  }, error = function(e) {
-    stop("Failed to install margot from GitHub. Please install manually: devtools::install_github('go-bayes/margot')")
-  })
+  tryCatch(
+    {
+      devtools::install_github("go-bayes/margot")
+    },
+    error = function(e) {
+      stop("Failed to install margot from GitHub. Please install manually: devtools::install_github('go-bayes/margot')")
+    }
+  )
 }
 
 # load margot
@@ -60,6 +63,10 @@ library(kableExtra)
 library(grf)
 library(ggplot2)
 library(patchwork)
+setwd("/Users/joseph/GIT/2025-workshop-ci-sasp/")
+here::i_am("index.qmd")
+
+
 
 cli_rule("Data Preparation and Forest Configuration")
 
@@ -83,7 +90,7 @@ X <- data %>%
 Y <- data$charity_outcome
 W <- data$belief_god_binary
 
-original_df <- data  # for interpretation of models
+original_df <- data # for interpretation of models
 cli_alert_info("Analysis specification:")
 cli_alert_info("  Primary outcome: charitable giving")
 cli_alert_info("  Treatment: religious belief")
@@ -108,7 +115,7 @@ data_standardised <- data %>%
   )
 
 # save
-here_save(data_standardised, "data_standardised", here::here('data'))
+here_save(data_standardised, "data_standardised", here::here("data"))
 
 # define outcomes for analysis
 
@@ -129,10 +136,10 @@ cli_rule("Causal Forest Estimation with Sample Splitting")
 # check if models already exist
 if (file.exists(file.path(dir_results, "models_binary_cate.qs"))) {
   cli_alert_info("Loading existing causal forest models...")
-   models_binary_cate <- margot::here_read_qs("models_binary_cate", dir_results)
+  models_binary_cate <- margot::here_read_qs("models_binary_cate", dir_results)
 } else {
   cli_alert_info("Fitting causal forests with honest sample splitting...")
-models_binary_cate <- margot::margot_causal_forest(
+  models_binary_cate <- margot::margot_causal_forest(
     data = data_standardised,
     outcome_vars = t2_outcomes_z,
     covariates = X,
@@ -145,10 +152,10 @@ models_binary_cate <- margot::margot_causal_forest(
     compute_conditional_means = TRUE,
     train_proportion = 0.5,
     seed = 2025
-    )
+  )
 
   # save models
-  margot::here_save_qs(models_binary_cate,  "models_binary_cate", dir_results)
+  margot::here_save_qs(models_binary_cate, "models_binary_cate", dir_results)
   cli_alert_success("Causal forest models saved")
 }
 
@@ -234,19 +241,19 @@ if (file.exists(file.path(dir_results, "hte_test_cv.rds"))) {
   hte_test_cv <- margot::here_read("hte_test_cv", dir_results)
 } else {
   cli_alert_info("Cross-validating rate estimates...")
-hte_test_cv <- margot::margot_interpret_heterogeneity(
-  models_binary_cate,
-  label_mapping = label_mapping,
-  spend_levels = c(0.1, 0.4),
-  adjust = "none",
-  parallel = FALSE,
-  include_extended_report = TRUE,
-  use_cross_validation = TRUE,
-  cv_num_folds = 5,
-  seed = 42
-)
-# save cross-validation results
-margot::here_save(hte_test_cv,  "hte_test_cv", dir_results)
+  hte_test_cv <- margot::margot_interpret_heterogeneity(
+    models_binary_cate,
+    label_mapping = label_mapping,
+    spend_levels = c(0.1, 0.4),
+    adjust = "none",
+    parallel = FALSE,
+    include_extended_report = TRUE,
+    use_cross_validation = TRUE,
+    cv_num_folds = 5,
+    seed = 42
+  )
+  # save cross-validation results
+  margot::here_save(hte_test_cv, "hte_test_cv", dir_results)
 }
 
 cli_alert_success("Heterogeneity analysis completed")
@@ -355,7 +362,7 @@ if (length(hte_test_cv$selected_model_ids) > 0 && !is.null(hte_test_cv$qini_resu
   # compute qini plots if there are reliable ra
   qini_curve_plots <- margot_plot_qini_batch(
     models_binary_cate,
-    spend_levels = c(0.1,0.4),
+    spend_levels = c(0.1, 0.4),
     ci_n_points = 15,
     # cate_color = "gold2",
     ci_ribbon_alpha = 0.3,
@@ -363,13 +370,12 @@ if (length(hte_test_cv$selected_model_ids) > 0 && !is.null(hte_test_cv$qini_resu
     treatment_cost = 1,
     show_ci = "cate",
     ylim = c(-.01, 0.2),
-    model_names      = hte_test_cv$qini_results$reliable_model_ids,
-    label_mapping      = label_mapping
+    model_names = hte_test_cv$qini_results$reliable_model_ids,
+    label_mapping = label_mapping
   )
 
   qini_curve_long_summary <- hte_test_cv$qini_results$qini_explanation
-  qini_curve_concise_summary <-  hte_test_cv$qini_results$concise_summary
-
+  qini_curve_concise_summary <- hte_test_cv$qini_results$concise_summary
 } else {
   qini_curve_long_summary <- list()
   qini_curve_concise_summary <- list()
@@ -388,19 +394,22 @@ if (length(hte_test_cv$selected_model_ids) > 0) {
 
   # try policy generation, but handle errors gracefully
   # using depth=1 to match the 2-dimensional heterogeneity structure
-  policy_results_1L <- tryCatch({
-    margot_policy(
-      models_binary_cate,
-      model_names = hte_test_cv$selected_model_ids,
-      original_df = original_df,
-      output_objects = c("decision_tree"),
-      label_mapping = label_mapping,
-      max_depth = 1L  # optimal depth for age/baseline_charity heterogeneity
-    )
-  }, error = function(e) {
-    cli_alert_warning("Policy tree generation failed: {e$message}")
-    return(NULL)
-  })
+  policy_results_1L <- tryCatch(
+    {
+      margot_policy(
+        models_binary_cate,
+        model_names = hte_test_cv$selected_model_ids,
+        original_df = original_df,
+        output_objects = c("decision_tree"),
+        label_mapping = label_mapping,
+        max_depth = 1L # optimal depth for age/baseline_charity heterogeneity
+      )
+    },
+    error = function(e) {
+      cli_alert_warning("Policy tree generation failed: {e$message}")
+      return(NULL)
+    }
+  )
 
   if (!is.null(policy_results_1L)) {
     cli_alert_info("Policy analysis completed for {length(policy_results_1L)} models")
@@ -417,7 +426,6 @@ if (length(hte_test_cv$selected_model_ids) > 0) {
     # count successful plots
     successful_plots <- sum(!sapply(policy_plots, is.null))
     cli_alert_info("Successfully generated {successful_plots} decision tree plots")
-
   } else {
     policy_plots <- list()
     cli_alert_warning("All policy tree generation failed")
@@ -430,14 +438,13 @@ if (length(hte_test_cv$selected_model_ids) > 0) {
       original_df = original_df,
       model_names = hte_test_cv$selected_model_ids,
       label_mapping = label_mapping,
-      max_depth = 1L  # matches simulation heterogeneity structure
+      max_depth = 1L # matches simulation heterogeneity structure
     )
     cat(policy_text, "\n")
   } else {
     policy_text <- "Policy tree analysis could not be completed due to technical issues."
     cli_alert_warning("Policy tree generation failed for all models")
   }
-
 } else {
   policy_plots <- list()
   policy_text <- "No reliable heterogeneous treatment effects found."
@@ -463,8 +470,3 @@ if (exists("hte_test_cv")) {
 
 cli_alert_info("All results saved in 'results/' directory")
 cli_alert_info("Workshop analysis pipeline completed successfully")
-
-
-
-
-
