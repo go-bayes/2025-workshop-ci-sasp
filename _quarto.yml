@@ -34,6 +34,8 @@ website:
             href: workshop-scripts/06-interpretation-2.qmd
           - text: "Simulations"
             href: simulations/01-simulation-population.qmd
+          - text: "Simulations: Just the R code"
+            href: content/just.qmd
           - text: "Case Study 1: Average Treatment Effects"
             href: content/case-study-1.qmd
           - text: "Case Study 2: Conditional Average Treatment Effects"
