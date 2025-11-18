@@ -25,34 +25,79 @@ editor_options:
 ---
 
 ::: callout-note
-### Workshop location
-**Date:** Wednesday, 19 November 2025, 09:00–16:00
+### Workshop snapshot
+- **When:** Wednesday 19 November 2025, 09:00–16:00  
+- **Where:** Redmond Barry Building (Building 115), Level 5 Room 516, University of Melbourne  
+- **Format:** In-person via SASP abstract submission  
+- **Morning:** Average treatment effects + student presentations  
+- **Afternoon:** Heterogeneous effects & hands-on causal machine learning  
 
-**Location:** University of Melbourne (Parkville campus), Redmond Barry Building (Building 115), Level 5 Room 516
-
-**Format:** Registration via SASP abstract submission; in-person.
-
-Before lunch we'll cover average treatment effects.  This module is self-sufficient, and will culminate with student presentations. If you just want to get a sense of causal inference, and learn about causal graphs, the morning will be sufficient.
-
-If you want to be mighty, stick around. After lunch we'll get into estimation of heterogeneous treatment effects, and walk through a data exercise that will show you how to do causal inference with using **causal machine learning**. You deserve to be empowered.
-
-**Preparation**: Bring your curiosity and attention. For the morning session, bring a writing instrument and some paper, or software that allows free hand writing, as we'll draw graphs together.
-
-If you want to do the data exercise, download R and Rstudio (or your favourite IDE) and then download the workshop R package (bottom 👇).
-
-Important: make sure you install the package **before** the workshop. Ping me if you need help.
-
+If you want a sense of causal inference, the morning stands alone. Stick around after lunch to flex causal ML muscles.
 :::
 
-
-::: {.callout-important}
-## Links to Lectures
-See links to lecture segments in top bar "Worshop Content"
+::: callout-tip
+### Preparation checklist
+- Bring something for sketching graphs (paper/tablet)
+- Install R + RStudio (or your preferred IDE)
+- Pre-install the workshop package (see Setup)
+- Ping me ahead of time if you need a hand
 :::
+
+**Jump to:** [Logistics](#logistics) • [Venue](#venue-location) • [Why causal inference?](#why-is-causal-inference-important) • [Workshop plan](#the-workshop) • [Setup](#setup)
+
+## Logistics
+
+::: {.callout-important appearance="minimal"}
+### Lunch · 12:15 pm
+We'll regroup at **Wine Bar Bistro (333 Lygon Street, Carlton)**—a quick five-minute walk from Redmond Barry. Lunch is supported by **Templeton Religion Trust Grant 0418** for participants attending the full workshop.
+:::
+
+::: callout-tip
+### Morning meet-up · 08:10 am
+Meet in the **Rydges Melbourne lobby (Exhibition Street)** and we'll walk (~1.5 km) to campus together. Great if you'd like company (or directions) before we kick off.
+:::
+
+::: {.callout-important appearance="minimal"}
+### Lecture links
+Slides and recordings live under **“Workshop Content”** in the site navigation.
+:::
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+#| column: body-outset
+#| fig-cap: "Route between the workshop venue (Redmond Barry Building) and Wine Bar Bistro, 333 Lygon Street, Carlton."
+
+library(leaflet)
+
+workshop <- list(lng = 144.9617, lat = -37.7971)
+lunch <- list(lng = 144.9687, lat = -37.7989)
+
+leaflet() %>%
+  addTiles() %>%
+  addMarkers(
+    lng = workshop$lng,
+    lat = workshop$lat,
+    popup = "Workshop Venue<br>Redmond Barry Building (Building 115)"
+  ) %>%
+  addMarkers(
+    lng = lunch$lng,
+    lat = lunch$lat,
+    popup = "Wine Bar Bistro<br>333 Lygon Street, Carlton"
+  ) %>%
+  addPolylines(
+    lng = c(workshop$lng, lunch$lng),
+    lat = c(workshop$lat, lunch$lat),
+    color = "#E4572E",
+    weight = 4,
+    opacity = 0.8
+  )
+```
 
 ## Venue Location
 
-We'll meet on Level 5 of the Redmond Barry Building (Building 115). See the campus map for map for detail by clicking the arrow in the centre of the OpenStreetMap. The sessions will start at 9am.
+We'll meet on Level 5 of the Redmond Barry Building. Click the map marker for the official campus map—sessions start promptly at 9 am, so plan a little buffer.
 
 ```{r}
 #| echo: false
@@ -70,6 +115,8 @@ leaflet() %>%
     popup = "Redmond Barry Building (Building 115)<br>L5 Room 516<br><a href='https://maps.unimelb.edu.au/parkville/building/115' target='_blank'>View on campus map</a>"
   )
 ```
+
+
 
 ## Why is causal inference important?
 

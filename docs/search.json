@@ -74,14 +74,21 @@
     "href": "index.html",
     "title": "Beyond Correlation: A Practical Introduction to Causal Inference in Observational Social Psychology",
     "section": "",
-    "text": "NoteWorkshop location\n\n\n\nDate: Wednesday, 19 November 2025, 09:00–16:00\nLocation: University of Melbourne (Parkville campus), Redmond Barry Building (Building 115), Level 5 Room 516\nFormat: Registration via SASP abstract submission; in-person.\nBefore lunch we’ll cover average treatment effects. This module is self-sufficient, and will culminate with student presentations. If you just want to get a sense of causal inference, and learn about causal graphs, the morning will be sufficient.\nIf you want to be mighty, stick around. After lunch we’ll get into estimation of heterogeneous treatment effects, and walk through a data exercise that will show you how to do causal inference with using causal machine learning. You deserve to be empowered.\nPreparation: Bring your curiosity and attention. For the morning session, bring a writing instrument and some paper, or software that allows free hand writing, as we’ll draw graphs together.\nIf you want to do the data exercise, download R and Rstudio (or your favourite IDE) and then download the workshop R package (bottom 👇).\nImportant: make sure you install the package before the workshop. Ping me if you need help."
+    "text": "NoteWorkshop snapshot\n\n\n\n\nWhen: Wednesday 19 November 2025, 09:00–16:00\n\nWhere: Redmond Barry Building (Building 115), Level 5 Room 516, University of Melbourne\n\nFormat: In-person via SASP abstract submission\n\nMorning: Average treatment effects + student presentations\n\nAfternoon: Heterogeneous effects & hands-on causal machine learning\n\nIf you want a sense of causal inference, the morning stands alone. Stick around after lunch to flex causal ML muscles.\nJump to: Logistics • Venue • Why causal inference? • Workshop plan • Setup"
+  },
+  {
+    "objectID": "index.html#logistics",
+    "href": "index.html#logistics",
+    "title": "Beyond Correlation: A Practical Introduction to Causal Inference in Observational Social Psychology",
+    "section": "Logistics",
+    "text": "Logistics\n\n\n\n\n\n\nImportantLunch · 12:15 pm\n\n\n\nWe’ll regroup at Wine Bar Bistro (333 Lygon Street, Carlton)—a quick five-minute walk from Redmond Barry. Lunch is supported by Templeton Religion Trust Grant 0418 for participants attending the full workshop.\n\n\n\n\n\n\n\n\nTipMorning meet-up · 08:10 am\n\n\n\nMeet in the Rydges Melbourne lobby (Exhibition Street) and we’ll walk (~1.5 km) to campus together. Great if you’d like company (or directions) before we kick off.\n\n\n\n\n\n\n\n\nImportantLecture links\n\n\n\nSlides and recordings live under “Workshop Content” in the site navigation.\n\n\n\n\n\n\nRoute between the workshop venue (Redmond Barry Building) and Wine Bar Bistro, 333 Lygon Street, Carlton."
   },
   {
     "objectID": "index.html#venue-location",
     "href": "index.html#venue-location",
     "title": "Beyond Correlation: A Practical Introduction to Causal Inference in Observational Social Psychology",
     "section": "Venue Location",
-    "text": "Venue Location\nWe’ll meet on Level 5 of the Redmond Barry Building (Building 115). See the campus map for map for detail by clicking the arrow in the centre of the OpenStreetMap. The sessions will start at 9am."
+    "text": "Venue Location\nWe’ll meet on Level 5 of the Redmond Barry Building. Click the map marker for the official campus map—sessions start promptly at 9 am, so plan a little buffer."
   },
   {
     "objectID": "index.html#why-is-causal-inference-important",
