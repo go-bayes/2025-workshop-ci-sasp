@@ -48,18 +48,18 @@ If you want a sense of causal inference, the morning stands alone. Stick around 
 ## Logistics
 
 ::: {.callout-important appearance="minimal"}
-### Lunch · 12:15 pm
-We'll regroup at **Wine Bar Bistro (333 Lygon Street, Carlton)**—a quick five-minute walk from Redmond Barry. Lunch is supported by **Templeton Religion Trust Grant 0418** for participants attending the full workshop.
+### Lunch: 12:15 pm
+We'll regroup at **Jimmy Watson's Wine Bar Bistro (333 Lygon Street, Carlton)**, a quick five-minute walk from Redmond Barry. Lunch is supported by **Templeton Religion Trust Grant 0418** for participants attending the full workshop.
 :::
 
 ::: callout-tip
-### Morning meet-up · 08:10 am
+### Morning meet-up:  08:10 am
 Meet in the **Rydges Melbourne lobby (Exhibition Street)** and we'll walk (~1.5 km) to campus together. Great if you'd like company (or directions) before we kick off.
 :::
 
 ::: {.callout-important appearance="minimal"}
 ### Lecture links
-Slides and recordings live under **“Workshop Content”** in the site navigation.
+Slides and recordings live under **"Workshop Content"** in the site navigation.
 :::
 
 ```{r}
@@ -84,7 +84,7 @@ leaflet() %>%
   addMarkers(
     lng = lunch$lng,
     lat = lunch$lat,
-    popup = "Wine Bar Bistro<br>333 Lygon Street, Carlton"
+    popup = "Jimmy Watson's Wine Bar Bistro<br>333 Lygon Street, Carlton"
   ) %>%
   addPolylines(
     lng = c(workshop$lng, lunch$lng),
@@ -228,23 +228,19 @@ library(kableExtra)
 schedule <- tibble(
   Time = c(
     "09:00–09:45",
-    "09:45–10:30",
-    "10:30–11:00",
+    "09:45–11:00",
     "11:00–11:30",
-    "11:30–12:00",
-    "12:00–12:30",
-    "12:30–13:45",
+    "11:30–12:15",
+    "12:15–13:45",
     "13:45–14:30",
     "14:30–15:00",
     "15:00–16:00"
   ),
   Session = c(
     "How to ask a causal question",
-    "The causal workflow: from question to answer",
-    "Causal diagrams and the identification problem",
+    "The causal workflow + causal diagrams (from question to answer)",
     "Coffee break & discussion (you might need to bring a your own coffee)",
-    "Worked example: employer gratitude and worker wellbeing (Zahle Wisely)",
-    "Worked example: religious service attendance and personality change (Hannah Robinson)",
+    "Worked examples: employer gratitude & religious service attendance (Zahle Wisely & Hannah Robinson)",
     "Lunch",
     "Beyond averages: heterogeneous treatment effects and policy trees",
     "Revisiting our examples: policy tree analyses",
@@ -252,11 +248,9 @@ schedule <- tibble(
   ),
   `Learning goals & activities` = c(
     "State precise causal questions with the potential outcomes framework; focus on the average treatment effect (ATE).",
-    "Trace the causal workflow: define populations, build causal diagrams, assess assumptions, analyse data, conduct sensitivity analysis, and communicate results.",
-    "Use causal diagrams (DAGs) to identify bias from confounding, colliders, and mediators.",
+    "Trace the full causal workflow: define populations, build causal diagrams, assess assumptions, analyse data, conduct sensitivity analysis, and communicate results—using DAGs to expose bias from confounding, colliders, and mediators.",
     "Informal space for questions, clarifying assumptions, and networking.",
-    "Presenter: Zahle Wisely. Apply the causal workflow to estimate the effects of employer gratitude on employee wellbeing; Q&A follows.",
-    "Presenter: Hannah Robinson. Apply the causal workflow to estimate the effects of religious service attendance on personality; Q&A follows.",
+    "Presenters: Zahle Wisely & Hannah Robinson. Apply the causal workflow to estimate how employer gratitude shapes wellbeing and how religious service attendance influences personality; joint Q&A follows.",
     "Break.",
     "Introduce heterogeneous treatment effects (HTE), conditional ATEs, and policy trees; discuss when effects differ across people.",
     "Analyse heterogeneity in Zahle and Hannah's case studies; interpret tree-based decision rules useful for obtaining *policies*.",
