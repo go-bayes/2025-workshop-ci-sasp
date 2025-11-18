@@ -25,14 +25,14 @@ editor_options:
 ---
 
 ::: callout-note
-### Workshop snapshot
+### Workshop Essentials
 - **When:** Wednesday 19 November 2025, 09:00–16:00
 - **Where:** Redmond Barry Building (Building 115), Level 5 Room 516, University of Melbourne
 - **Format:** In-person via SASP abstract submission
 - **Morning:** Average treatment effects + student presentations
 - **Afternoon:** Heterogeneous effects & hands-on causal machine learning
 
-If you want a sense of causal inference, the morning stands alone. Stick around after lunch to flex causal ML muscles.
+If you want a sense of causal inference, the morning is good enough. Causal machine learning + analysis of heterogenity in the afternoon. 
 :::
 
 ::: callout-tip
@@ -166,7 +166,7 @@ The workshop assumes familiarity with regression and R, but no prior training in
 
 ::: callout-tip
 ### A note on pace
-Please do not worry if the math or code looks intimidating at first glance. We'll slow everything down, build each idea together from first principles, and keep the focus on intuition before symbols. Bring your curiosity. If you want to do the data exercise, bring a computer pre-loaded with the workshop R (see👇).  By the end of the day you'll understand that causal workflow is manageable, and even fun, when we unpack it step by step.
+Please do not worry if the math or code looks intimidating at first glance. We'll slow everything down.
 :::
 
 ## Setup
@@ -249,12 +249,12 @@ schedule <- tibble(
   `Learning goals & activities` = c(
     "State precise causal questions with the potential outcomes framework; focus on the average treatment effect (ATE).",
     "Trace the full causal workflow: define populations, build causal diagrams, assess assumptions, analyse data, conduct sensitivity analysis, and communicate results—using DAGs to expose bias from confounding, colliders, and mediators.",
-    "Informal space for questions, clarifying assumptions, and networking.",
-    "Walk through two applied studies from the NZAVS. First, Zahle Wisely’s employer gratitude analysis; then a deep dive on religious service attendance and personality—drawing directly on the lecture linked under \"Workshop Content.\" Joint Q&A follows.",
+    "Group Activities",
+    "Walk through two applied studies from the NZAVS. Zahle Wisely's employer gratitude analysis; then Hannah Robinson's religious service attendance and personality Q&A follows.",
     "Break.",
-    "Introduce heterogeneous treatment effects (HTE), conditional ATEs, and policy trees; discuss when effects differ across people.",
-    "Analyse heterogeneity in Zahle and Hannah's case studies; interpret tree-based decision rules useful for obtaining *policies*.",
-    "R demonstration using causal forests; interpret simulated ATEs and HTEs, graphs, reporting & etc."
+    "Introduce heterogeneous treatment effects (Conditional Average Treatment Effects) and policy trees; discuss when effects differ across people.",
+    "Case study 2; interpret tree-based decision rules useful for obtaining *policies*.",
+    "R demonstrahion using causal forests; interpret simulated ATEs and HTEs, graphs, reporting & etc."
   )
 )
 
