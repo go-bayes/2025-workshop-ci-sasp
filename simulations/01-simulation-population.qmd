@@ -26,7 +26,7 @@ cap-location: margin
 #| include: false
 #| eval: false
 #  fig-pos: 'htb'
-#   html:
+# https  html:
 #    html-math-method: katex
 
 # Include in YAML for Latex
@@ -70,8 +70,8 @@ push_mods <-
 ::: {.callout-note}
 **Suggested Readings**\
 
-- [@westreich2013] [link](https://pubmed.ncbi.nlm.nih.gov/23371353/)
-- [@bulbulia2024swigstime] [link](https://www.cambridge.org/core/journals/evolutionary-human-sciences/article/methods-in-causal-inference-part-2-interaction-mediation-and-timevarying-treatments/D7FD95D3ED64FE0FBBEC37AC6CEAFBC1)
+- [@westreich2013]  The table 2 fallacy: presenting and interpreting confounder and modifier coefficients [link](https://pubmed.ncbi.nlm.nih.gov/23371353/)
+- [@bulbulia2024swigstime] Methods in causal inference. Part 2: Interaction, mediation, and time-varying treatments [link](https://www.cambridge.org/core/journals/evolutionary-human-sciences/article/methods-in-causal-inference-part-2-interaction-mediation-and-timevarying-treatments/D7FD95D3ED64FE0FBBEC37AC6CEAFBC1)
 :::
 
 

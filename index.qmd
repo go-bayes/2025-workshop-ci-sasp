@@ -26,19 +26,19 @@ editor_options:
 
 ::: callout-note
 ### Workshop location
-**Date:** Wednesday, 19 November 2025, 09:00–16:00  
+**Date:** Wednesday, 19 November 2025, 09:00–16:00
 
-**Location:** University of Melbourne (Parkville campus), Redmond Barry Building (Building 115), Level 5 Room 516  
+**Location:** University of Melbourne (Parkville campus), Redmond Barry Building (Building 115), Level 5 Room 516
 
-**Format:** Registration via SASP abstract submission; in-person. 
+**Format:** Registration via SASP abstract submission; in-person.
 
-Before lunch we'll cover average treatment effects.  This module is self-sufficient, and will culminate with student presentations. If you just want to get a sense of causal inference, and learn about causal graphs, the morning will be sufficient. 
+Before lunch we'll cover average treatment effects.  This module is self-sufficient, and will culminate with student presentations. If you just want to get a sense of causal inference, and learn about causal graphs, the morning will be sufficient.
 
-If you want to be mighty, stick around. After lunch we'll get into estimation of heterogeneous treatment effects, and walk through a data exercise that will show you how to do causal inference with using **causal machine learning**. You deserve to be empowered. 
+If you want to be mighty, stick around. After lunch we'll get into estimation of heterogeneous treatment effects, and walk through a data exercise that will show you how to do causal inference with using **causal machine learning**. You deserve to be empowered.
 
-**Preparation**: Bring your curiosity and attention. For the morning session, bring a writing instrument and some paper, or software that allows free hand writing, as we'll draw graphs together. 
+**Preparation**: Bring your curiosity and attention. For the morning session, bring a writing instrument and some paper, or software that allows free hand writing, as we'll draw graphs together.
 
-If you want to do the data exercise, download R and Rstudio (or your favourite IDE) and then download the workshop R package (bottom 👇). 
+If you want to do the data exercise, download R and Rstudio (or your favourite IDE) and then download the workshop R package (bottom 👇).
 
 Important: make sure you install the package **before** the workshop. Ping me if you need help.
 
@@ -46,13 +46,13 @@ Important: make sure you install the package **before** the workshop. Ping me if
 
 
 ::: {.callout-important}
-## Links to Lectures 
-In the weeks before the workshop, I'll be **simplifying the background lectures** and adding some background videos.  Check back here ~ week before. 
+## Links to Lectures
+See links to lecture segments in top bar "Worshop Content"
 :::
 
 ## Venue Location
 
-We'll meet on Level 5 of the Redmond Barry Building (Building 115). See the campus map for map for detail by clicking the arrow in the centre of the OpenStreetMap. The sessions will start at 9am. 
+We'll meet on Level 5 of the Redmond Barry Building (Building 115). See the campus map for map for detail by clicking the arrow in the centre of the OpenStreetMap. The sessions will start at 9am.
 
 ```{r}
 #| echo: false
@@ -71,24 +71,24 @@ leaflet() %>%
   )
 ```
 
-## Why is causal inference important? 
+## Why is causal inference important?
 
 Suppose you observe that psychology graduate students who own expensive espresso machines publish more papers. Should your department invest in high-end coffee equipment for all incoming students?
 
-Probably not. **This is the difference between prognostic and causal knowledge**.  
+Probably not. **This is the difference between prognostic and causal knowledge**.
 
-Observational psychology typically recovers prognostic knowledge -- which factors predict which others. The word 'predictor' is engrained in our vocabulary. And we have a great tolerance for it. Should we?  Predictions don't tell us what would happen if we intervened. 
+Observational psychology typically recovers prognostic knowledge -- which factors predict which others. The word 'predictor' is engrained in our vocabulary. And we have a great tolerance for it. Should we?  Predictions don't tell us what would happen if we intervened.
 
-Consider: Owning an expensive coffee machine predicts publication success, but giving someone an expensive machine wouldn't cause their productivity to increase. The machine is likely a marker for other factors: being further along in candidature, having more disposable income, or possessing pre-existing caffeinated ambition. Of course the machines might help, but how much?  
+Consider: Owning an expensive coffee machine predicts publication success, but giving someone an expensive machine wouldn't cause their productivity to increase. The machine is likely a marker for other factors: being further along in candidature, having more disposable income, or possessing pre-existing caffeinated ambition. Of course the machines might help, but how much?
 
 
 **The distinction between prediction and causation**, which is often stated only to be ignored, **has serious implications for conduct in psychological science**
 
-1) We might observe that adolescents with higher self-esteem have better academic outcomes. But if we were to intervene to boost self-esteem directly (through positive affirmations or praise), would grades improve? Or is self-esteem mostly a marker for other causal factors like stable family environments or prior academic success?  
+1) We might observe that adolescents with higher self-esteem have better academic outcomes. But if we were to intervene to boost self-esteem directly (through positive affirmations or praise), would grades improve? Or is self-esteem mostly a marker for other causal factors like stable family environments or prior academic success?
 
 2) We might find that people who practice mindfulness meditation report lower anxiety. But does meditation cause reduced anxiety, or are less anxious people simply more likely to maintain a meditation practice -- i.e. to sit, for long periods of time, still?
 
-3) We might observe that children who attend preschool show better social skills. But before recommending universal preschool, we need to ask: would sending any child to preschool produce these benefits, or do families who can afford and prioritise preschool differ in ways that independently foster social development?  
+3) We might observe that children who attend preschool show better social skills. But before recommending universal preschool, we need to ask: would sending any child to preschool produce these benefits, or do families who can afford and prioritise preschool differ in ways that independently foster social development?
 
 **Prognostic models tell us what to expect. Causal models tell us what we can change. For psychologists aiming to improve human welfare, that distinction is everything.**
 
@@ -98,10 +98,10 @@ This full-day, practice-oriented workshop introduces modern causal inference for
 
 We will:
 
-- Unveil a **causal workflow** that starts with asking a clearly formulated causal question. 
-- Before answering a causal question we must consider and explicate **identification assumptions**. We will consider these assumptions and introduce graphical tools for addressing them. You will discover that clarifying assumptions is not a statistical task. 
-- **Only after stating our questions and assumptions do we turn to the data and their analysis**. By the end of the workshop, you will conduct an analysis using doubly robust machine learning -- which has many advantages over standard estimators.  
-- After estimation there is **communication**.  I'll describe how to graphical tools to clarify results audiences with applied interests.  
+- Unveil a **causal workflow** that starts with asking a clearly formulated causal question.
+- Before answering a causal question we must consider and explicate **identification assumptions**. We will consider these assumptions and introduce graphical tools for addressing them. You will discover that clarifying assumptions is not a statistical task.
+- **Only after stating our questions and assumptions do we turn to the data and their analysis**. By the end of the workshop, you will conduct an analysis using doubly robust machine learning -- which has many advantages over standard estimators.
+- After estimation there is **communication**.  I'll describe how to graphical tools to clarify results audiences with applied interests.
 
 
 ### Objectives
@@ -109,8 +109,8 @@ We will:
 You will leave with:
 
 - An understanding of how to ask, and answer, causal questions.
-- Annotated R code for simulating and estimating average and heterogeneous treatment effects.  
-- A curated reading list for self-study.  
+- Annotated R code for simulating and estimating average and heterogeneous treatment effects.
+- A curated reading list for self-study.
 - Examples of how to communicate causal results to academic, policy, and organisational audiences.
 
 ## My assumptions about you.
@@ -126,7 +126,7 @@ Please do not worry if the math or code looks intimidating at first glance. We'l
 
 1. Install the current version of R (free) from <https://cran.r-project.org/>
 
-2. Install RStudio Desktop (free) from <https://posit.co/download/rstudio-desktop/>  
+2. Install RStudio Desktop (free) from <https://posit.co/download/rstudio-desktop/>
 
 (Or pick your favourite IDE -- I use neovim Lazy -- the code doesn't care.)
 
@@ -164,7 +164,7 @@ Work through scripts 01–05 **Prior to the workshop** (06 is optional).
 ## Workshop materials
 
 - The lectures are somewhat technical at the moment. I'll be simplifying them before the workshop and posting YouTube videos prior to the workshop. Stay tuned here for updates.
-- Student presentations will be posted here **after** the workshop.  
+- Student presentations will be posted here **after** the workshop.
 - Previous talks and examples remain available for reference; we will link to them from the relevant sections.
 
 
@@ -227,4 +227,4 @@ schedule %>%
 
 ## Contact
 
-Questions before the workshop? Email me at [joseph.bulbulia@vuw.ac.nz](mailto:joseph.bulbulia@vuw.ac.nz). 
+Questions before the workshop? Email me at [joseph.bulbulia@vuw.ac.nz](mailto:joseph.bulbulia@vuw.ac.nz).
