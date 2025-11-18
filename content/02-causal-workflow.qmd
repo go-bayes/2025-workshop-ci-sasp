@@ -25,10 +25,10 @@ cap-location: margin
 # reference-location: margin
 # citation-location: margin
 # WARNING:  COMMENT THIS OUT. JB DOES THIS FOR WORKING WITHOUT WIFI
-#source("/Users/joseph/GIT/templates/functions/libs2.R")
+# source("/Users/joseph/GIT/templates/functions/libs2.R")
 
 # WARNING:  COMMENT THIS OUT. JB DOES THIS FOR WORKING WITHOUT WIFI
-#source("/Users/joseph/GIT/templates/functions/funs.R")
+# source("/Users/joseph/GIT/templates/functions/funs.R")
 
 # ALERT: UNCOMMENT THIS AND DOWNLOAD THE FUNCTIONS FROM JB's GITHUB
 # source(
@@ -690,3 +690,8 @@ report::cite_packages()
 ```
 
 ---
+
+## Group discussion
+
+- Walk through a current project using the workflow steps (design $\to$ identification $\to$ estimation $\to$  interpretation). Where does your team usually get stuck, and which diagnostic would unlock progress?
+- In your own words, explain the key challenges to mediation analysis as it is presently taught in psychological science programmes? 

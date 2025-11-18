@@ -19,7 +19,6 @@ html-math-method: katex
 cap-location: margin
 ---
 
-
 ```{=html}
 <style>
   .boxedblue {
@@ -46,9 +45,7 @@ cap-location: margin
 library("tinytex")
 library(extrafont)
 loadfonts(device = "win") # Adjust device based on OS if using extrafont
-source("/Users/joseph/GIT/templates/functions/funs.R") 
-
-
+source("/Users/joseph/GIT/templates/functions/funs.R")
 ```
 
 ::: {.callout-note}
@@ -120,7 +117,8 @@ Variables used to define exposures, outcomes, and confounders are measured witho
 
 The study sample is representative of the target population with respect to the causal effect of interest, or differences are accounted for through design or analysis. In longitudinal settings, attrition or loss to follow-up must not depend jointly on treatment and outcome in ways not captured by measured covariates; otherwise, the estimated effect may differ systematically from the true population effect.
 
-
+#### Correctly Specified Model
+This assumption is probably always violated in standard regression models
 
 ### Basic counterfactual logic
 
@@ -141,7 +139,6 @@ is the average change in scores if the whole population switched from $a$ to $a^
 
 Confounding—common causes of $A$ and $Y$—must be addressed for valid inference.
 
-⸻
 
 ### Interaction vs. effect modification
 
@@ -152,26 +149,30 @@ Effect modification: Variation in the effect of a single intervention across sub
 
 Let $A$ = teaching method, $B$ = tutoring, $Y$ = test score.
 We compare:
-  • Effect of both: $\mathbb{E}[Y(1,1)] - \mathbb{E}[Y(0,0)]$
-  • Sum of individual effects: $\big(\mathbb{E}[Y(1,0)] - \mathbb{E}[Y(0,0)]\big) + \big(\mathbb{E}[Y(0,1)] - \mathbb{E}[Y(0,0)]\big)$.
+- Effect of both: $\mathbb{E}[Y(1,1)] - \mathbb{E}[Y(0,0)]$
+- Sum of individual effects: $\big(\mathbb{E}[Y(1,0)] - \mathbb{E}[Y(0,0)]\big) + \big(\mathbb{E}[Y(0,1)] - \mathbb{E}[Y(0,0)]\big)$.
 
 #### Additive interaction exists if:
 
 $$
 \mathbb{E}[Y(1,1)] - \mathbb{E}[Y(1,0)] - \mathbb{E}[Y(0,1)] + \mathbb{E}[Y(0,0)] \neq 0.
 $$
+
+
 Positive values indicate synergy; negative values, antagonism.
 Identification requires controlling for all confounders of $A \to Y$ ($L$) and $B \to Y$ ($Q$), i.e., $L \coprod Q$.
 
-⸻
 
 #### Effect modification and $\tau(x)$
 
 Effect modification examines whether the effect of a single intervention $A$ on $Y$ differs by baseline characteristics $X$.
 The conditional average treatment effect (CATE) is:
+
 $$
 \tau(x) = \mathbb{E}[Y(1) - Y(0) \mid X = x],
 $$
+
+
 the average effect for the subgroup with $X = x$.
 Comparing $\tau(x)$ across $x$ quantifies effect modification.
 
@@ -182,21 +183,61 @@ $$
 and effect modification exists if $\delta_{g_1} - \delta_{g_2} \neq 0$.
 Identification requires adjusting for $A \to Y$ confounders within each group.
 
-⸻
 
-## HTE, CATE, and estimated $\hat{\tau}(x)$
+### Why psychology keeps confusing interactions with effect modification
 
-- HTE: The fact that $\tau(x)$ varies with $x$.
-- CATE, $\tau(x)$: The true subgroup-average effect.
-- Estimated CATE, $\hat{\tau}(x)$: The model-based prediction for a subgroup with features $x$.
+Psychological papers typically fit linear models with multiplicative terms (e.g., `Y ~ A * M`) and call the coefficient on `A:M` “the interaction”. That coefficient is:
 
-For unit $i$ with profile $X_i = x$:
+$$
+\beta_{AM} = \frac{\partial^2 \mathbb{E}[Y \mid A, M]}{\partial A \, \partial M}
+$$
 
--  Unobservable individual effect: $Y_i(1) - Y_i(0)$.
-- $\hat{\tau}(x)$: Our estimate of $\tau(x)$, the average effect for all units with profile $x$.
+It captures how the *statistical mean function* bends when we move both $A$ and $M$. This is useful for prediction, but it **is not** automatically an effect modifier because:
 
-High-dimensional $X$ makes manual interaction modeling **impractical.**
-Modern ML methods such as causal forests (grf in R) [@grf2024] are designed to estimate $\hat{\tau}(x)$ flexibly.
+1. The cross-term blends confounding, scaling, and model misspecification. Unless the model is correctly specified and all confounders are solved, $\beta_{AM}$ has no causal meaning.
+2. Even with perfect specification, $\beta_{AM}$ is a property of the *conditional mean*, not of potential outcome contrasts like $Y(1)-Y(0)$.
+3. Psychologists often interact treatment with post-treatment mediators, which cannot identify effect modification because the mediator is itself altered by $A$.
+
+Effect modification is about contrasts of potential outcomes stratified (or smoothed) over baseline features $X$; it is a *causal estimand*. Interactions in a single regression equation rarely align with that estimand.
+
+**Rule of thumb** 
+
+> If you cannot write your estimand as $\mathbb{E}[Y(1)-Y(0)\mid X]$ for baseline $X$, you are not estimating a CATE. You're fitting a predictive surface with interaction terms.
+
+
+### Causal forests pivot directly to $\tau(x)$
+
+Generalised random forests (the `grf` package) estimate $\tau(x)$ without ever fitting a single interaction coefficient. Instead they:
+
+1. Build trees that split on baseline covariates $X$ to expose treatment heterogeneity while enforcing honesty (separate subsamples for splits vs. estimation).
+2. Average leaf-level treatment contrasts to produce $\hat{\tau}(x)$ for every unit.
+3. Provide diagnostics (variance estimates, forest weights) so we can aggregate $\hat{\tau}(x)$ into interpretable summaries—RATE/Qini curves, policy trees, etc.
+
+BIG implications:
+
+- We no longer guess which pairwise interactions to include. The forest *discovers* the nonlinear combination of age and baseline charity in our simulation.
+- $\hat{\tau}(x)$ respects causal identification (we still need consistency/positivity/exchangeability) but does not require a parametric regression form.
+- CATE inference is local: we can report estimates (and uncertainty) for subgroups defined by the split structure rather than global $\beta_{AM}$ coefficients.
+
+
+## HTE, CATE, and estimated $\hat{\tau}(x)$ in practice
+
+- **HTE** means $\tau(x)$ is not constant; psychology often assumes it is.
+- **CATE, $\tau(x)$** is the target: the average causal effect among units with baseline profile $x$.
+- **Estimated CATE, $\hat{\tau}(x)$** is what `grf::causal_forest()` returns for each observation; we aggregate these to describe how effects vary.
+
+For unit $i$ with profile $X_i=x$:
+
+- The individual effect $Y_i(1)-Y_i(0)$ remains unobservable.
+- $\hat{\tau}(x)$ is our best estimate of $\tau(x)$, derived from nearby observations that share $x$-like features in the forest’s learned metric.
+
+Because $X$ is typically high-dimensional, manual interaction modeling is brittle. Causal forests—and the broader Margot workflow built around them—let us:
+
+1. Estimate $\hat{\tau}(x)$ flexibly.
+2. Diagnose whether detected heterogeneity is actionable (RATE/Qini, policy value).
+3. Communicate effect modification in language policymakers understand (e.g., “Older, high-charity baseline participants benefit the most”).
+
+This is the bridge between the theory of effect modification and the empirical machinery psychologists need to stop conflating statistical models results with causal moderation.
 
 
 | Concept | Notation | Definition | Scope | Requirements |
@@ -469,4 +510,8 @@ Thus ,it is essential to understand that when we control for confounding along t
 <!-- © 2025 Joseph Bulbulia. This work is licensed under a [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License](https://creativecommons.org/licenses/by-nc-sa/4.0/). -->
 <!-- ::: -->
 
+## Group discussion 
 
+- Where in your field have 'interaction effects' been over-interpreted as causal moderation? Find an example and diagnose which assumption (baseline covariate, post-treatment mediator, model form) was actually violated.
+- How would you explain to a collaborator the difference between $\beta_{AM}$ in a regression and $\tau(x)$ from a causal forest, without using equations: what metaphors would work in psychology?
+- Suppose CATE estimates show that a subgroup benefits less. What ethical or practical considerations arise before recommending differentiated treatment, and how will you communicate that uncertainty?

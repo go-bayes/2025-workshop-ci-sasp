@@ -654,3 +654,10 @@ tribble(
 <!-- ## Are longitudinal data + sensitivity analysis enough? -->
 <!-- {Too obvious} this is wrong? -->
 <!-- $$Y \to A$$ -->
+
+## Group discussion
+
+- Where in your own research program would an average treatment effect be the right estimand, and when would it hide disparities that stakeholders actually care about?
+- Which of the three core identification assumptions (consistency, exchangeability, positivity) is most fragile in your field settings, and what concrete designs or measurements could shore it up?
+- What are examples of post-treatment variables you have been tempted to adjust for, and how would doing so bias the total effect you are trying to interpret?
+- Measurement error and selection bias were noted as “silent killers.” Share a case where either one flipped the sign or magnitude of an estimate, and outline how you’d redesign that study today.
