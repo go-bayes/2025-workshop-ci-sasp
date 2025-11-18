@@ -10,10 +10,13 @@ suppressPackageStartupMessages({
   library(tidyverse)
   library(kableExtra)
 })
+
+
 devtools::load_all("/Users/joseph/GIT/margot/")
-here::i_am("workshop-scripts/06-margot-analysis.R")
 
-
+# only use for nvim
+setwd("/Users/joseph/GIT/2025-workshop-ci-sasp/")
+here::i_am("index.qmd")
 
 cli_rule("Margot causal forest analysis")
 

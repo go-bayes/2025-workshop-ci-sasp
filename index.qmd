@@ -25,18 +25,18 @@ editor_options:
 ---
 
 ::: callout-note
-### Workshop Essentials
+### Essentials
 - **When:** Wednesday 19 November 2025, 09:00–16:00
 - **Where:** Redmond Barry Building (Building 115), Level 5 Room 516, University of Melbourne
 - **Format:** In-person via SASP abstract submission
 - **Morning:** Average treatment effects + student presentations
 - **Afternoon:** Heterogeneous effects & hands-on causal machine learning
 
-If you want a sense of causal inference, the morning is good enough. Causal machine learning + analysis of heterogenity in the afternoon. 
+If you want a sense of causal inference, the morning is good enough. Causal machine learning + analysis of heterogenity in the afternoon.
 :::
 
 ::: callout-tip
-### Preparation checklist
+###  Checklist
 - Bring something for sketching graphs (paper/tablet)
 - Install R + RStudio (or your preferred IDE)
 - Pre-install the workshop package (see Setup)
@@ -53,7 +53,7 @@ We'll regroup at **Jimmy Watson's Wine Bar Bistro (333 Lygon Street, Carlton)**,
 :::
 
 ::: callout-tip
-### Morning meet-up:  08:10 am
+### Morning meet-up:  08:10am
 Meet in the **Rydges Melbourne lobby (Exhibition Street)** and we'll walk (~1.5 km) to campus together. Great if you'd like company (or directions) before we kick off.
 :::
 
@@ -67,7 +67,7 @@ Slides and recordings live under **"Workshop Content"** in the site navigation.
 #| message: false
 #| warning: false
 #| column: body-outset
-#| fig-cap: "Route between the workshop venue (Redmond Barry Building) and Wine Bar Bistro, 333 Lygon Street, Carlton."
+#| fig-cap: "Route between the workshop venue (Redmond Barry Building) and Wine Bar Bistro, 333 Lygon Street, Carlton. Do not follow this exact route."
 
 library(leaflet)
 
