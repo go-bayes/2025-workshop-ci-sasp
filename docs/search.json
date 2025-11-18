@@ -70,452 +70,39 @@
     "text": "For more resources on causal inference, visit the EPIC Lab Resources page."
   },
   {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Beyond Correlation: A Practical Introduction to Causal Inference in Observational Social Psychology",
+    "objectID": "just.html",
+    "href": "just.html",
+    "title": "Simulations: Just the R Code",
     "section": "",
-    "text": "NoteWorkshop Essentials\n\n\n\n\nWhen: Wednesday 19 November 2025, 09:00–16:00\nWhere: Redmond Barry Building (Building 115), Level 5 Room 516, University of Melbourne\nFormat: In-person via SASP abstract submission\nMorning: Average treatment effects + student presentations\nAfternoon: Heterogeneous effects & hands-on causal machine learning\n\nIf you want a sense of causal inference, the morning is good enough. Causal machine learning + analysis of heterogenity in the afternoon.\nJump to: Logistics • Venue • Why causal inference? • Workshop plan • Setup"
+    "text": "Download full script\n\n\n# ==============================================================================\n# simulation script: population estimates and causal inference\n# adapted from quarto document\n# ==============================================================================\n\n# load required libraries --------------------------------------------------\nlibrary(tidyverse)\nlibrary(stdReg)\nlibrary(skimr)\nlibrary(parameters)\nlibrary(kableExtra)\nlibrary(gtsummary)\nlibrary(clarify)\nlibrary(grf)\nlibrary(glue)\n\n# check for margot package\nif (!require(margot, quietly = TRUE)) {\n  devtools::install_github(\"go-bayes/margot\")\n  library(\"margot\")\n}\n\n# ==============================================================================\n# s2/s3: generalisability and transportability simulation\n# ==============================================================================\n\n# simulate data with different distributions of effect modifiers\n# between sample and population\nset.seed(123)\n\ndata &lt;- margot::simulate_ate_data_with_weights(\n  n_sample = 10000,\n  n_population = 100000,\n  p_z_sample = 0.1,\n  p_z_population = 0.5,\n  beta_a = 1,\n  beta_z = 2.5,\n  noise_sd = 0.5\n)\n\n# extract sample and population data\nsample_data &lt;- data$sample_data\npopulation_data &lt;- data$population_data\n\n# check imbalance in effect modifier distribution\ncat(\"\\nSample distribution of effect modifier:\\n\")\nprint(table(sample_data$z_sample))\n\ncat(\"\\nPopulation distribution of effect modifier:\\n\")\nprint(table(population_data$z_population))\n\n# model coefficients: sample\nmodel_sample &lt;- glm(y_sample ~ a_sample * z_sample,\n  data = sample_data\n)\n\ncat(\"\\n=== Model coefficients: Sample ===\\n\")\nprint(parameters::model_parameters(model_sample, ci_method = \"wald\"))\n\n# model coefficients: weighted sample\nmodel_weighted_sample &lt;- glm(y_sample ~ a_sample * z_sample,\n  data = sample_data, weights = weights\n)\n\ncat(\"\\n=== Model coefficients: Weighted Sample ===\\n\")\nprint(parameters::model_parameters(model_weighted_sample, ci_method = \"wald\"))\n\n# model coefficients: population\nmodel_population &lt;- glm(y_population ~ a_population * z_population,\n  data = population_data\n)\n\ncat(\"\\n=== Model coefficients: Population ===\\n\")\nprint(parameters::model_parameters(model_population, ci_method = \"wald\"))\n\n# marginal effect estimates using stdreg\n# sample ate\nfit_std_sample &lt;- stdReg::stdGlm(model_sample,\n  data = sample_data, X = \"a_sample\"\n)\n\ncat(\"\\n=== Sample ATE ===\\n\")\nprint(summary(fit_std_sample, contrast = \"difference\", reference = 0))\n\n# population ate (oracle)\nfit_std_population &lt;- stdReg::stdGlm(model_population,\n  data = population_data, X = \"a_population\"\n)\n\ncat(\"\\n=== Population ATE (Oracle) ===\\n\")\nprint(summary(fit_std_population, contrast = \"difference\", reference = 0))\n\n# weighted sample ate\nfit_std_weighted_sample_weights &lt;- stdReg::stdGlm(model_weighted_sample,\n  data = sample_data, X = \"a_sample\"\n)\n\ncat(\"\\n=== Weighted Sample ATE ===\\n\")\nprint(summary(fit_std_weighted_sample_weights, contrast = \"difference\", reference = 0))\n\n# ==============================================================================\n# s2/s3 alternative: manual ate calculation using predict function\n# ==============================================================================\n\ncat(\"\\n=== Manual ATE Calculation Using Predict Function ===\\n\")\ncat(\"This section explicitly shows what stdReg is doing under the hood\\n\\n\")\n\n# sample ate using predict\n# create counterfactual datasets where everyone gets a = 0 and a = 1\nsample_data_a0 &lt;- sample_data %&gt;% mutate(a_sample = 0)\nsample_data_a1 &lt;- sample_data %&gt;% mutate(a_sample = 1)\n\n# predict outcomes under each treatment level\ny_pred_a0_sample &lt;- predict(model_sample, newdata = sample_data_a0)\ny_pred_a1_sample &lt;- predict(model_sample, newdata = sample_data_a1)\n\n# calculate ate as mean difference in predicted outcomes\nate_sample_manual &lt;- mean(y_pred_a1_sample - y_pred_a0_sample)\n\ncat(\"Sample ATE (manual calculation):\", round(ate_sample_manual, 3), \"\\n\")\n\n# population ate using predict\npopulation_data_a0 &lt;- population_data %&gt;% mutate(a_population = 0)\npopulation_data_a1 &lt;- population_data %&gt;% mutate(a_population = 1)\n\ny_pred_a0_population &lt;- predict(model_population, newdata = population_data_a0)\ny_pred_a1_population &lt;- predict(model_population, newdata = population_data_a1)\n\nate_population_manual &lt;- mean(y_pred_a1_population - y_pred_a0_population)\n\ncat(\"Population ATE (manual calculation):\", round(ate_population_manual, 3), \"\\n\")\n\n# weighted sample ate using predict\n# use the sample model with weighted regression\ny_pred_a0_weighted &lt;- predict(model_weighted_sample, newdata = sample_data_a0)\ny_pred_a1_weighted &lt;- predict(model_weighted_sample, newdata = sample_data_a1)\n\nate_weighted_sample_manual &lt;- mean(y_pred_a1_weighted - y_pred_a0_weighted)\n\ncat(\"Weighted Sample ATE (manual calculation):\", round(ate_weighted_sample_manual, 3), \"\\n\")\n\n# show the key insight: coefficients are the same but ates differ\ncat(\"\\n=== Key Insight ===\\n\")\ncat(\"Notice that:\\n\")\ncat(\"1. Model coefficients are nearly identical across sample, weighted sample, and population\\n\")\ncat(\n  \"2. BUT the marginal ATEs differ between sample (\", round(ate_sample_manual, 3),\n  \") and population (\", round(ate_population_manual, 3), \")\\n\"\n)\ncat(\"3. Weighting corrects this, giving ATE = \", round(ate_weighted_sample_manual, 3), \"\\n\")\ncat(\"4. This happens because the distribution of the effect modifier differs\\n\")\ncat(\"   Sample: z=1 is rare; Population: z=1 is common\\n\\n\")\n\n# optional: show distribution of predicted potential outcomes\ncat(\"=== Distribution of Predicted Potential Outcomes ===\\n\")\n\n# sample\ncat(\n  \"Sample - Mean Y(a=0):\", round(mean(y_pred_a0_sample), 3),\n  \" | Mean Y(a=1):\", round(mean(y_pred_a1_sample), 3), \"\\n\"\n)\n\n# population\ncat(\n  \"Population - Mean Y(a=0):\", round(mean(y_pred_a0_population), 3),\n  \" | Mean Y(a=1):\", round(mean(y_pred_a1_population), 3), \"\\n\"\n)\n\n# weighted sample\ncat(\n  \"Weighted Sample - Mean Y(a=0):\", round(mean(y_pred_a0_weighted), 3),\n  \" | Mean Y(a=1):\", round(mean(y_pred_a1_weighted), 3), \"\\n\\n\"\n)\n\n# ==============================================================================\n# s4: cross-sectional data ambiguity simulation\n# ==============================================================================\n\n# simulate data where l is a mediator between a and y\nset.seed(123)\n\nn &lt;- 1000\np &lt;- 0.5\nalpha &lt;- 0\nbeta &lt;- 2\ngamma &lt;- 1\ndelta &lt;- 1.5\nsigma_L &lt;- 1\nsigma_Y &lt;- 1.5\n\n# simulate the data: fully mediated effect by l\nA &lt;- rbinom(n, 1, p)\nL &lt;- alpha + beta * A + rnorm(n, 0, sigma_L)\nY &lt;- gamma + delta * L + rnorm(n, 0, sigma_Y)\n\n# create data frame\ndata_cross &lt;- data.frame(A = A, L = L, Y = Y)\n\n# fit regression models\n# model 1: control for l (assuming l is confounder)\nfit_1 &lt;- lm(Y ~ A + L, data = data_cross)\n\n# model 2: omit l (assuming l is mediator)\nfit_2 &lt;- lm(Y ~ A, data = data_cross)\n\n# create comparison table\ntable1 &lt;- gtsummary::tbl_regression(fit_1)\ntable2 &lt;- gtsummary::tbl_regression(fit_2)\n\ntable_comparison &lt;- gtsummary::tbl_merge(\n  list(table1, table2),\n  tab_spanner = c(\n    \"Model: L assumed confounder\",\n    \"Model: L assumed mediator\"\n  )\n)\n\ncat(\"\\n=== Cross-sectional Model Comparison ===\\n\")\nprint(as_kable_extra(table_comparison, format = \"markdown\"))\n\n# calculate ate using clarify\nset.seed(2025)\nsim_coefs_fit_1 &lt;- sim(fit_1)\nsim_coefs_fit_2 &lt;- sim(fit_2)\n\nsim_est_fit_1 &lt;- sim_ame(\n  sim_coefs_fit_1,\n  var = \"A\",\n  subset = A == 1,\n  contrast = \"RD\",\n  verbose = FALSE\n)\n\nsim_est_fit_2 &lt;- sim_ame(\n  sim_coefs_fit_2,\n  var = \"A\",\n  subset = A == 1,\n  contrast = \"RD\",\n  verbose = FALSE\n)\n\nsummary_sim_est_fit_1 &lt;- summary(sim_est_fit_1, null = c(`RD` = 0))\nsummary_sim_est_fit_2 &lt;- summary(sim_est_fit_2, null = c(`RD` = 0))\n\nATE_fit_1 &lt;- glue::glue(\n  \"ATE = {round(summary_sim_est_fit_1[3, 1], 2)}, \",\n  \"CI = [{round(summary_sim_est_fit_1[3, 2], 2)}, \",\n  \"{round(summary_sim_est_fit_1[3, 3], 2)}]\"\n)\n\nATE_fit_2 &lt;- glue::glue(\n  \"ATE = {round(summary_sim_est_fit_2[3, 1], 2)}, \",\n  \"CI = [{round(summary_sim_est_fit_2[3, 2], 2)}, \",\n  \"{round(summary_sim_est_fit_2[3, 3], 2)}]\"\n)\n\ncat(\"\\n=== ATE Estimates ===\\n\")\ncat(\"Model 1 (L as confounder):\", ATE_fit_1, \"\\n\")\ncat(\"Model 2 (L as mediator):\", ATE_fit_2, \"\\n\")\n\n# ==============================================================================\n# appendix d: confounding control strategies simulation\n# ==============================================================================\n\nset.seed(123)\nn &lt;- 10000\n\n# baseline covariates\nU &lt;- rnorm(n)\nA_0 &lt;- rbinom(n, 1, prob = plogis(U))\nY_0 &lt;- rnorm(n, mean = U, sd = 1)\nL_0 &lt;- rnorm(n, mean = U, sd = 1)\n\n# coefficients for treatment assignment\nbeta_A0 &lt;- 0.25\nbeta_Y0 &lt;- 0.3\nbeta_L0 &lt;- 0.2\nbeta_U &lt;- 0.1\n\n# simulate treatment assignment\nA_1 &lt;- rbinom(n, 1, prob = plogis(\n  -0.5 +\n    beta_A0 * A_0 +\n    beta_Y0 * Y_0 +\n    beta_L0 * L_0 +\n    beta_U * U\n))\n\n# coefficients for continuous outcome\ndelta_A1 &lt;- 0.3\ndelta_Y0 &lt;- 0.9\ndelta_A0 &lt;- 0.1\ndelta_L0 &lt;- 0.3\ntheta_A0Y0L0 &lt;- 0.5\ndelta_U &lt;- 0.05\n\n# simulate continuous outcome\nY_2 &lt;- rnorm(n,\n  mean = 0 +\n    delta_A1 * A_1 +\n    delta_Y0 * Y_0 +\n    delta_A0 * A_0 +\n    delta_L0 * L_0 +\n    theta_A0Y0L0 * Y_0 * A_0 * L_0 +\n    delta_U * U,\n  sd = .5\n)\n\n# create data frame\ndata_confound &lt;- data.frame(Y_2, A_0, A_1, L_0, Y_0, U)\n\n# fit models\nfit_no_control &lt;- lm(Y_2 ~ A_1, data = data_confound)\nfit_standard &lt;- lm(Y_2 ~ A_1 + L_0, data = data_confound)\nfit_interaction &lt;- lm(Y_2 ~ A_1 * (L_0 + A_0 + Y_0), data = data_confound)\n\n# create gtsummary tables\ntbl_fit_no_control &lt;- tbl_regression(fit_no_control)\ntbl_fit_standard &lt;- tbl_regression(fit_standard)\ntbl_fit_interaction &lt;- tbl_regression(fit_interaction)\n\n# filter to show only treatment variable\ntbl_list_modified &lt;- lapply(\n  list(tbl_fit_no_control, tbl_fit_standard, tbl_fit_interaction),\n  function(tbl) {\n    tbl %&gt;%\n      modify_table_body(~ .x %&gt;% dplyr::filter(variable == \"A_1\"))\n  }\n)\n\n# merge tables\ntable_comparison_confound &lt;- tbl_merge(\n  tbls = tbl_list_modified,\n  tab_spanner = c(\"No Control\", \"Standard\", \"Interaction\")\n) %&gt;%\n  modify_table_styling(\n    column = c(p.value_1, p.value_2, p.value_3),\n    hide = TRUE\n  )\n\ncat(\"\\n=== Confounding Control Strategy Comparison ===\\n\")\nprint(as_kable_extra(table_comparison_confound, format = \"markdown\"))\n\n# calculate ate using clarify\nset.seed(123)\nsim_coefs_fit_no_control &lt;- sim(fit_no_control)\nsim_coefs_fit_std &lt;- sim(fit_standard)\nsim_coefs_fit_int &lt;- sim(fit_interaction)\n\nsim_est_fit_no_control &lt;- sim_ame(\n  sim_coefs_fit_no_control,\n  var = \"A_1\",\n  subset = A_1 == 1,\n  contrast = \"RD\",\n  verbose = FALSE\n)\n\nsim_est_fit_std &lt;- sim_ame(\n  sim_coefs_fit_std,\n  var = \"A_1\",\n  subset = A_1 == 1,\n  contrast = \"RD\",\n  verbose = FALSE\n)\n\nsim_est_fit_int &lt;- sim_ame(\n  sim_coefs_fit_int,\n  var = \"A_1\",\n  subset = A_1 == 1,\n  contrast = \"RD\",\n  verbose = FALSE\n)\n\nsummary_sim_coefs_fit_no_control &lt;- summary(sim_est_fit_no_control, null = c(`RD` = 0))\nsummary_sim_est_fit_std &lt;- summary(sim_est_fit_std, null = c(`RD` = 0))\nsummary_sim_est_fit_int &lt;- summary(sim_est_fit_int, null = c(`RD` = 0))\n\nATE_fit_no_control &lt;- glue::glue(\n  \"ATE = {round(summary_sim_coefs_fit_no_control[3, 1], 2)}, \",\n  \"CI = [{round(summary_sim_coefs_fit_no_control[3, 2], 2)}, \",\n  \"{round(summary_sim_coefs_fit_no_control[3, 3], 2)}]\"\n)\n\nATE_fit_std &lt;- glue::glue(\n  \"ATE = {round(summary_sim_est_fit_std[3, 1], 2)}, \",\n  \"CI = [{round(summary_sim_est_fit_std[3, 2], 2)}, \",\n  \"{round(summary_sim_est_fit_std[3, 3], 2)}]\"\n)\n\nATE_fit_int &lt;- glue::glue(\n  \"ATE = {round(summary_sim_est_fit_int[3, 1], 2)}, \",\n  \"CI = [{round(summary_sim_est_fit_int[3, 2], 2)}, \",\n  \"{round(summary_sim_est_fit_int[3, 3], 2)}]\"\n)\n\ncat(\"\\n=== ATE Estimates for Confounding Control Strategies ===\\n\")\ncat(\"No Control:\", ATE_fit_no_control, \"\\n\")\ncat(\"Standard Control:\", ATE_fit_std, \"\\n\")\ncat(\"Interaction Model:\", ATE_fit_int, \"\\n\")\n\n# ==============================================================================\n# appendix e: causal forest estimation\n# ==============================================================================\n\n# prepare data for causal forest\nW &lt;- as.matrix(data_confound$A_1)\nY &lt;- as.matrix(data_confound$Y_2)\nX &lt;- as.matrix(data_confound[, c(\"L_0\", \"A_0\", \"Y_0\")])\n\n# fit causal forest model\nfit_causal_forest &lt;- causal_forest(X, Y, W)\n\n# estimate average treatment effect\nate_cf &lt;- average_treatment_effect(fit_causal_forest)\nate_cf_df &lt;- data.frame(ate_cf)\n\nATE_fit_causal_forest &lt;- glue::glue(\n  \"ATE = {round(ate_cf_df[1, 1], 2)}, se = {round(ate_cf_df[2, 1], 2)}\"\n)\n\ncat(\"\\n=== Causal Forest ATE Estimate ===\\n\")\ncat(ATE_fit_causal_forest, \"\\n\")\n\n# ==============================================================================\n# end of script\n# ==============================================================================\n\ncat(\"\\n=== All simulations completed successfully ===\\n\")"
   },
   {
-    "objectID": "index.html#logistics",
-    "href": "index.html#logistics",
-    "title": "Beyond Correlation: A Practical Introduction to Causal Inference in Observational Social Psychology",
-    "section": "Logistics",
-    "text": "Logistics\n\n\n\n\n\n\nImportantLunch: 12:15 pm\n\n\n\nWe’ll regroup at Jimmy Watson’s Wine Bar Bistro (333 Lygon Street, Carlton), a quick five-minute walk from Redmond Barry. Lunch is supported by Templeton Religion Trust Grant 0418 for participants attending the full workshop.\n\n\n\n\n\n\n\n\nTipMorning meet-up: 08:10 am\n\n\n\nMeet in the Rydges Melbourne lobby (Exhibition Street) and we’ll walk (~1.5 km) to campus together. Great if you’d like company (or directions) before we kick off.\n\n\n\n\n\n\n\n\nImportantLecture links\n\n\n\nSlides and recordings live under “Workshop Content” in the site navigation.\n\n\n\n\n\n\nRoute between the workshop venue (Redmond Barry Building) and Wine Bar Bistro, 333 Lygon Street, Carlton."
-  },
-  {
-    "objectID": "index.html#venue-location",
-    "href": "index.html#venue-location",
-    "title": "Beyond Correlation: A Practical Introduction to Causal Inference in Observational Social Psychology",
-    "section": "Venue Location",
-    "text": "Venue Location\nWe’ll meet on Level 5 of the Redmond Barry Building. Click the map marker for the official campus map—sessions start promptly at 9 am, so plan a little buffer."
-  },
-  {
-    "objectID": "index.html#why-is-causal-inference-important",
-    "href": "index.html#why-is-causal-inference-important",
-    "title": "Beyond Correlation: A Practical Introduction to Causal Inference in Observational Social Psychology",
-    "section": "Why is causal inference important?",
-    "text": "Why is causal inference important?\nSuppose you observe that psychology graduate students who own expensive espresso machines publish more papers. Should your department invest in high-end coffee equipment for all incoming students?\nProbably not. This is the difference between prognostic and causal knowledge.\nObservational psychology typically recovers prognostic knowledge – which factors predict which others. The word ‘predictor’ is engrained in our vocabulary. And we have a great tolerance for it. Should we? Predictions don’t tell us what would happen if we intervened.\nConsider: Owning an expensive coffee machine predicts publication success, but giving someone an expensive machine wouldn’t cause their productivity to increase. The machine is likely a marker for other factors: being further along in candidature, having more disposable income, or possessing pre-existing caffeinated ambition. Of course the machines might help, but how much?\nThe distinction between prediction and causation, which is often stated only to be ignored, has serious implications for conduct in psychological science\n\nWe might observe that adolescents with higher self-esteem have better academic outcomes. But if we were to intervene to boost self-esteem directly (through positive affirmations or praise), would grades improve? Or is self-esteem mostly a marker for other causal factors like stable family environments or prior academic success?\nWe might find that people who practice mindfulness meditation report lower anxiety. But does meditation cause reduced anxiety, or are less anxious people simply more likely to maintain a meditation practice – i.e. to sit, for long periods of time, still?\nWe might observe that children who attend preschool show better social skills. But before recommending universal preschool, we need to ask: would sending any child to preschool produce these benefits, or do families who can afford and prioritise preschool differ in ways that independently foster social development?\n\nPrognostic models tell us what to expect. Causal models tell us what we can change. For psychologists aiming to improve human welfare, that distinction is everything."
-  },
-  {
-    "objectID": "index.html#the-workshop",
-    "href": "index.html#the-workshop",
-    "title": "Beyond Correlation: A Practical Introduction to Causal Inference in Observational Social Psychology",
-    "section": "The workshop",
-    "text": "The workshop\nThis full-day, practice-oriented workshop introduces modern causal inference for observational data, with an emphasis on discovering for whom effects are strongest (afternoon).\nWe will:\n\nUnveil a causal workflow that starts with asking a clearly formulated causal question.\nBefore answering a causal question we must consider and explicate identification assumptions. We will consider these assumptions and introduce graphical tools for addressing them. You will discover that clarifying assumptions is not a statistical task.\nOnly after stating our questions and assumptions do we turn to the data and their analysis. By the end of the workshop, you will conduct an analysis using doubly robust machine learning – which has many advantages over standard estimators.\nAfter estimation there is communication. I’ll describe how to graphical tools to clarify results audiences with applied interests.\n\n\nObjectives\nYou will leave with:\n\nAn understanding of how to ask, and answer, causal questions.\nAnnotated R code for simulating and estimating average and heterogeneous treatment effects.\nA curated reading list for self-study.\nExamples of how to communicate causal results to academic, policy, and organisational audiences."
-  },
-  {
-    "objectID": "index.html#my-assumptions-about-you.",
-    "href": "index.html#my-assumptions-about-you.",
-    "title": "Beyond Correlation: A Practical Introduction to Causal Inference in Observational Social Psychology",
-    "section": "My assumptions about you.",
-    "text": "My assumptions about you.\nThe workshop assumes familiarity with regression and R, but no prior training in causal inference.\n\n\n\n\n\n\nTipA note on pace\n\n\n\nPlease do not worry if the math or code looks intimidating at first glance. We’ll slow everything down."
-  },
-  {
-    "objectID": "index.html#setup",
-    "href": "index.html#setup",
-    "title": "Beyond Correlation: A Practical Introduction to Causal Inference in Observational Social Psychology",
-    "section": "Setup",
-    "text": "Setup\n\nInstall the current version of R (free) from https://cran.r-project.org/\nInstall RStudio Desktop (free) from https://posit.co/download/rstudio-desktop/\n\n(Or pick your favourite IDE – I use neovim Lazy – the code doesn’t care.)\n\nInstall the workshop packages:\n\nif (!requireNamespace(\"devtools\", quietly = TRUE)) {\n  install.packages(\"devtools\")\n}\n\ndevtools::install_github(\"go-bayes/causalworkshop\")\n\n# optional packages for extended demonstrations\ndevtools::install_github(\"go-bayes/margot\")\nOnce installed, run:\nlibrary(causalworkshop)\ncheck_workshop_prerequisites()\nDownload the R scripts:\nlibrary(causalworkshop)\n\nget_workshop_scripts()  # copies scripts into ./workshop-scripts\nlist_workshop_scripts()\nWork through scripts 01–05 Prior to the workshop (06 is optional)."
-  },
-  {
-    "objectID": "index.html#workshop-materials",
-    "href": "index.html#workshop-materials",
-    "title": "Beyond Correlation: A Practical Introduction to Causal Inference in Observational Social Psychology",
-    "section": "Workshop materials",
-    "text": "Workshop materials\n\nThe lectures are somewhat technical at the moment. I’ll be simplifying them before the workshop and posting YouTube videos prior to the workshop. Stay tuned here for updates.\nStudent presentations will be posted here after the workshop.\nPrevious talks and examples remain available for reference; we will link to them from the relevant sections."
-  },
-  {
-    "objectID": "index.html#agenda",
-    "href": "index.html#agenda",
-    "title": "Beyond Correlation: A Practical Introduction to Causal Inference in Observational Social Psychology",
-    "section": "Agenda",
-    "text": "Agenda\n\n\n\n\nTable 1: Schedule and Learning Goals\n\n\n\n\n\n\nTime\nSession\nLearning goals & activities\n\n\n\n\n09:00–09:45\nHow to ask a causal question\nState precise causal questions with the potential outcomes framework; focus on the average treatment effect (ATE).\n\n\n09:45–11:00\nThe causal workflow + causal diagrams (from question to answer)\nTrace the full causal workflow: define populations, build causal diagrams, assess assumptions, analyse data, conduct sensitivity analysis, and communicate results—using DAGs to expose bias from confounding, colliders, and mediators.\n\n\n11:00–11:30\nCoffee break & discussion (you might need to bring your own coffee)\nGroup Activities\n\n\n11:30–12:15\nWorked examples: employer gratitude & religious service attendance\nWalk through two applied studies from the NZAVS. Zahle Wisely's employer gratitude analysis; then Hannah Robinson's religious service attendance and personality Q&A follows.\n\n\n12:15–13:45\nLunch\nBreak.\n\n\n13:45–14:30\nBeyond averages: heterogeneous treatment effects and policy trees\nIntroduce heterogeneous treatment effects (Conditional Average Treatment Effects) and policy trees; discuss when effects differ across people.\n\n\n14:30–15:00\nRevisiting our examples: policy tree analyses\nCase study 2; interpret tree-based decision rules useful for obtaining *policies*.\n\n\n15:00–16:00\nHands-on demonstration: formulating questions and estimating effects in R\nR demonstrahion using causal forests; interpret simulated ATEs and HTEs, graphs, reporting & etc."
-  },
-  {
-    "objectID": "index.html#contact",
-    "href": "index.html#contact",
-    "title": "Beyond Correlation: A Practical Introduction to Causal Inference in Observational Social Psychology",
-    "section": "Contact",
-    "text": "Contact\nQuestions before the workshop? Email me at joseph.bulbulia@vuw.ac.nz."
-  },
-  {
-    "objectID": "content/talking-points.html",
-    "href": "content/talking-points.html",
-    "title": "Three Types of Self-Inflicted Injuries in Observational Research",
+    "objectID": "glossary-and-dags.html",
+    "href": "glossary-and-dags.html",
+    "title": "Glossary and Causal DAGs",
     "section": "",
-    "text": "NoteIn the 1980s and 1990s estrogen treatments appeared to benefit postmenopausal women\n\n\n\nHazard ratio for all-cause mortality: 0.68 current users vs. never users [@grodstein2006hormone]\n\n\n\n\n\n\n\n1992 American College of Obstetricians and Gynecologists \n1992 American College of Physicians \n1993 National Cholesterol Education Program \n1996 American Heart Association \n\n\n\n\n\n\n\nMassive randomised, double-blind, placebo-controlled trial\n16,000 U.S. women aged 50-79 years\nAssigned to Estrogen plus Progestin therapy\nWomen followed approximately every year for up to 8 years.\n\n\n\n\n\n\n\n\n\n\n\nWarningExperimental Findings: opposite of observational findings\n\n\n\nAll-cause mortality Hazard Ratio: 1.23 for initiators vs non-initiators. [@manson2003estrogen]\n\n\n\n\n\n\n\nCan observational studies ever be trusted?\nShould observational studies ever be funded again?\n\n\n\n\n\n\n\n\n\n\n\n\nWe may define a cause to be an object followed by another, and where all the objects, similar to the first, are followed by objects similar to the second…\n\n\n\n\n\nOr, in other words, where, \n\nEnquiries Concerning Human Understanding, and Concerning the Principles of Morals 1751\n\n\n\n\n\n\n\n\n\n\n\n\nTo quantify a causal effect requires a counterfactual contrast:\n\\[\\tau_{you} = \\Big[Y_{\\text{you}}(a =1) - Y_{\\text{you}}(a=0)\\Big]\\]\nWhere, \\(Y(a)\\) denotes the potential outcome under an intervention \\(A = a\\). Here, we assume a binary intervention. At any time, we may observe the outcome of only \n\n\n\n\\[\nY_i|A_i = 1 \\implies Y_i(0)|A_i = 1~ \\textcolor{red}{\\text{is counterfactual}}\n\\]\n\n“And sorry I could not travel both. And be one traveller, long I stood \\(\\dots\\)”\n\n\n\n\n\\[\n\\text{Average Treatment Effect} = \\left[ \\begin{aligned}\n&\\left( \\underbrace{\\mathbb{E}[Y(1)|A = 1]}_{\\text{observed}} + \\textcolor{cyan}{\\underbrace{\\mathbb{E}[Y(1)|A = 0]}_{\\text{unobserved}}} \\right) \\\\\n&- \\left( \\underbrace{\\mathbb{E}[Y(0)|A = 0]}_{\\text{observed}} + \\textcolor{cyan}{\\underbrace{\\mathbb{E}[Y(0)|A = 1]}_{\\text{unobserved}}} \\right)\n\\end{aligned} \\right]\n\\]\n\n\n\n\\[\n\\text{ATE} = \\sum_{l} \\left( \\mathbb{E}[Y|A=1, \\textcolor{cyan}{L=l}] - \\mathbb{E}[Y|A=0, \\textcolor{cyan}{L=l}] \\right) \\times \\textcolor{cyan}{\\Pr(L=l)}\n\\]\nWhere \\(L\\) is a set of measured covariates and \\(A\\coprod Y(a)|L\\)"
+    "text": "Navitaging the jargon"
   },
   {
-    "objectID": "content/talking-points.html#s-observational-studies-indicated-30-all-cause-mortality-reduction-from-estrogen-therapies",
-    "href": "content/talking-points.html#s-observational-studies-indicated-30-all-cause-mortality-reduction-from-estrogen-therapies",
-    "title": "Three Types of Self-Inflicted Injuries in Observational Research",
+    "objectID": "glossary-and-dags.html#causal-inference-glossary",
+    "href": "glossary-and-dags.html#causal-inference-glossary",
+    "title": "Glossary and Causal DAGs",
+    "section": "Causal Inference Glossary",
+    "text": "Causal Inference Glossary\n\n📖 Terminology Guide\nCausal inference is anchored on mathematical proofs. This brings wide agreement about its foundations. The proofs give us confidence. However, the words people use to describe concepts vary. The terminology invites confusion. Linked here is a glossary of terminology. Where terminology differs, I’ve added a note.\nDownload Glossary (PDF)\nThis glossary contains essential definitions for terms including: - Average Treatment Effect (ATE), Conditional Average Treatment Effect (CATE) - Backdoor paths, confounders, and colliders - Instrumental variables and propensity scores - Time-varying confounding and measurement error - Causal estimands, estimators, and identification strategies - Words whose meanings differ – sometimes with opposite meanings – include “selection”, “fixed effects”, “standardisation”, “estimand”, “moderator”, “structural equation model”, and “identification”.\nEssential reference for understanding causal inference methodology and terminology."
+  },
+  {
+    "objectID": "glossary-and-dags.html#causal-directed-acyclic-graph",
+    "href": "glossary-and-dags.html#causal-directed-acyclic-graph",
+    "title": "Glossary and Causal DAGs",
+    "section": "Causal Directed Acyclic Graph",
+    "text": "Causal Directed Acyclic Graph\n\n1. Our Conventions Here\n1a. Local Conventions\nEssential local conventions for causal diagram construction and interpretation\n1b. Directed Graph Terminology\nCore terminology specific to directed acyclic graphs (DAGs)\nS1. Graphical Key\nVisual reference guide for interpreting causal diagram symbols and notation\n\n\nCommon Applications\n\n2. Practical Applications\n2. Common Causal Questions\nFrequently encountered causal questions and how to approach them\n6. Effect Modification\nUnderstanding when and how treatment effects vary across subgroups\n9. External Validity\nApproaches to generalising causal findings across populations and contexts\n\n\n\nTime Series & Confounding\n\n3. Keeping Time on Your Side\n3. Time Series Approaches\nHow longitudinal data help address confounding bias\n4. Three-Wave Panel Methods\nUsing three-wave panel data for causal inference\n5. Time Series Limitations\nWhen time series approaches may not resolve confounding\nS3. Time-Resolved Confounding\nAdvanced approaches to time-varying confounding\n\n\n\nAdvanced Topics\n\n4. Complex Methodological Issues\n7. Selection Bias Focus\nDetailed examination of selection bias in longitudinal studies\n8. Measurement Error Focus\nStructural approaches to representing and addressing measurement error\n10. Experimental Design\nHow experiments address confounding and selection bias challenges\n\n\n\nSupplementary Materials\n\n5. Additional Resources\nS5. Timing Examples\nPractical examples of confounding and timing issues\nS6. Detailed Panel Examples\nWhat can go wrong in a three-wave panel.\nS7. Cross-Sectional Approaches When to report multiple DAGs in cross-sectional studies\nS8. Bias Correction\nQuantitative approaches to bias correction\nS9. Mediator Bias\nUnderstanding confounding bias in mediation analysis\nS10. Misclassification Bias\nExamples of misclassification bias and bias towards the nulls"
+  },
+  {
+    "objectID": "content/just.html",
+    "href": "content/just.html",
+    "title": "Simulations: Just the R Code",
     "section": "",
-    "text": "NoteIn the 1980s and 1990s estrogen treatments appeared to benefit postmenopausal women\n\n\n\nHazard ratio for all-cause mortality: 0.68 current users vs. never users [@grodstein2006hormone]"
-  },
-  {
-    "objectID": "content/talking-points.html#standard-medical-advice",
-    "href": "content/talking-points.html#standard-medical-advice",
-    "title": "Three Types of Self-Inflicted Injuries in Observational Research",
-    "section": "",
-    "text": "1992 American College of Obstetricians and Gynecologists \n1992 American College of Physicians \n1993 National Cholesterol Education Program \n1996 American Heart Association"
-  },
-  {
-    "objectID": "content/talking-points.html#womens-health-initiative-evaluate-estrogens-experimentally",
-    "href": "content/talking-points.html#womens-health-initiative-evaluate-estrogens-experimentally",
-    "title": "Three Types of Self-Inflicted Injuries in Observational Research",
-    "section": "",
-    "text": "Massive randomised, double-blind, placebo-controlled trial\n16,000 U.S. women aged 50-79 years\nAssigned to Estrogen plus Progestin therapy\nWomen followed approximately every year for up to 8 years."
-  },
-  {
-    "objectID": "content/talking-points.html#findings-clear-discrepancy",
-    "href": "content/talking-points.html#findings-clear-discrepancy",
-    "title": "Three Types of Self-Inflicted Injuries in Observational Research",
-    "section": "",
-    "text": "WarningExperimental Findings: opposite of observational findings\n\n\n\nAll-cause mortality Hazard Ratio: 1.23 for initiators vs non-initiators. [@manson2003estrogen]"
-  },
-  {
-    "objectID": "content/talking-points.html#medical-community-response-reject-all-observational-studies",
-    "href": "content/talking-points.html#medical-community-response-reject-all-observational-studies",
-    "title": "Three Types of Self-Inflicted Injuries in Observational Research",
-    "section": "",
-    "text": "Can observational studies ever be trusted?\nShould observational studies ever be funded again?"
-  },
-  {
-    "objectID": "content/talking-points.html#david-humes-two-definitions-in-enquiries-1751",
-    "href": "content/talking-points.html#david-humes-two-definitions-in-enquiries-1751",
-    "title": "Three Types of Self-Inflicted Injuries in Observational Research",
-    "section": "",
-    "text": "We may define a cause to be an object followed by another, and where all the objects, similar to the first, are followed by objects similar to the second…\n\n\n\n\n\nOr, in other words, where, \n\nEnquiries Concerning Human Understanding, and Concerning the Principles of Morals 1751"
-  },
-  {
-    "objectID": "content/talking-points.html#the-fundamental-problem-of-causal-inference",
-    "href": "content/talking-points.html#the-fundamental-problem-of-causal-inference",
-    "title": "Three Types of Self-Inflicted Injuries in Observational Research",
-    "section": "",
-    "text": "To quantify a causal effect requires a counterfactual contrast:\n\\[\\tau_{you} = \\Big[Y_{\\text{you}}(a =1) - Y_{\\text{you}}(a=0)\\Big]\\]\nWhere, \\(Y(a)\\) denotes the potential outcome under an intervention \\(A = a\\). Here, we assume a binary intervention. At any time, we may observe the outcome of only"
-  },
-  {
-    "objectID": "content/talking-points.html#however-we-only-observe-facts-not-counterfactuals",
-    "href": "content/talking-points.html#however-we-only-observe-facts-not-counterfactuals",
-    "title": "Three Types of Self-Inflicted Injuries in Observational Research",
-    "section": "",
-    "text": "\\[\nY_i|A_i = 1 \\implies Y_i(0)|A_i = 1~ \\textcolor{red}{\\text{is counterfactual}}\n\\]\n\n“And sorry I could not travel both. And be one traveller, long I stood \\(\\dots\\)”"
-  },
-  {
-    "objectID": "content/talking-points.html#average-treatment-effect-in-randomised-controlled-experiments-work-from-assumptions",
-    "href": "content/talking-points.html#average-treatment-effect-in-randomised-controlled-experiments-work-from-assumptions",
-    "title": "Three Types of Self-Inflicted Injuries in Observational Research",
-    "section": "",
-    "text": "\\[\n\\text{Average Treatment Effect} = \\left[ \\begin{aligned}\n&\\left( \\underbrace{\\mathbb{E}[Y(1)|A = 1]}_{\\text{observed}} + \\textcolor{cyan}{\\underbrace{\\mathbb{E}[Y(1)|A = 0]}_{\\text{unobserved}}} \\right) \\\\\n&- \\left( \\underbrace{\\mathbb{E}[Y(0)|A = 0]}_{\\text{observed}} + \\textcolor{cyan}{\\underbrace{\\mathbb{E}[Y(0)|A = 1]}_{\\text{unobserved}}} \\right)\n\\end{aligned} \\right]\n\\]"
-  },
-  {
-    "objectID": "content/talking-points.html#under-identifying-assumptions-we-may-infer-causal-effects-from-associations",
-    "href": "content/talking-points.html#under-identifying-assumptions-we-may-infer-causal-effects-from-associations",
-    "title": "Three Types of Self-Inflicted Injuries in Observational Research",
-    "section": "",
-    "text": "\\[\n\\text{ATE} = \\sum_{l} \\left( \\mathbb{E}[Y|A=1, \\textcolor{cyan}{L=l}] - \\mathbb{E}[Y|A=0, \\textcolor{cyan}{L=l}] \\right) \\times \\textcolor{cyan}{\\Pr(L=l)}\n\\]\nWhere \\(L\\) is a set of measured covariates and \\(A\\coprod Y(a)|L\\)"
-  },
-  {
-    "objectID": "content/talking-points.html#paradigmatic-concern-confounding-by-common-cause",
-    "href": "content/talking-points.html#paradigmatic-concern-confounding-by-common-cause",
-    "title": "Three Types of Self-Inflicted Injuries in Observational Research",
-    "section": "Paradigmatic Concern: Confounding by Common Cause",
-    "text": "Paradigmatic Concern: Confounding by Common Cause\n\\[\\commoncauseT\\]"
-  },
-  {
-    "objectID": "content/talking-points.html#where-assumptions-justify-we-may-condition-on-measured-confounders-to-obtain-balance.",
-    "href": "content/talking-points.html#where-assumptions-justify-we-may-condition-on-measured-confounders-to-obtain-balance.",
-    "title": "Three Types of Self-Inflicted Injuries in Observational Research",
-    "section": "Where assumptions justify, we may condition on measured confounders to obtain balance.",
-    "text": "Where assumptions justify, we may condition on measured confounders to obtain balance.\n\n\n\\[\n\\commoncauseT\n\\]\n\n\\[\n\\commoncausesolvedT\n\\]"
-  },
-  {
-    "objectID": "content/talking-points.html#what-error-1-mediator-bias",
-    "href": "content/talking-points.html#what-error-1-mediator-bias",
-    "title": "Three Types of Self-Inflicted Injuries in Observational Research",
-    "section": "“What Error #1”: Mediator Bias",
-    "text": "“What Error #1”: Mediator Bias\n\\[\\mediatorT\\]"
-  },
-  {
-    "objectID": "content/talking-points.html#data-generating-process",
-    "href": "content/talking-points.html#data-generating-process",
-    "title": "Three Types of Self-Inflicted Injuries in Observational Research",
-    "section": "Data Generating Process",
-    "text": "Data Generating Process\n\n\nCode\nlibrary(tidyverse)\n\nset.seed(123)                           # reproducibility\nn        &lt;- 1000\nservice  &lt;- rbinom(n, 1, 0.5)          # A\nwealth   &lt;- 2 * service + rnorm(n)     # L\ncharity  &lt;- 1.5 * wealth + rnorm(n, sd = 1.5)  # Y\n\nsim1 &lt;- tibble(service, wealth, charity)"
-  },
-  {
-    "objectID": "content/talking-points.html#model-comparison",
-    "href": "content/talking-points.html#model-comparison",
-    "title": "Three Types of Self-Inflicted Injuries in Observational Research",
-    "section": "Model comparison",
-    "text": "Model comparison\n\n\n\n\n\n\nControlling for the mediator reverses the sign of the service coefficient.\n\n\n\n\n\n\n\n\n\n\n\nCharacteristic\n\nModel A: Omit L\n\n\nModel B: Control for L\n\n\n\nBeta\n95% CI\np-value\nBeta\n95% CI\np-value\n\n\n\n\nservice\n2.9\n2.6, 3.2\n&lt;0.001\n-0.27\n-0.53, -0.01\n0.043\n\n\nwealth\n\n\n\n\n\n\n1.6\n1.5, 1.7\n&lt;0.001\n\n\n\nAbbreviation: CI = Confidence Interval"
-  },
-  {
-    "objectID": "content/talking-points.html#which-model-looks-better",
-    "href": "content/talking-points.html#which-model-looks-better",
-    "title": "Three Types of Self-Inflicted Injuries in Observational Research",
-    "section": "Which model looks better?",
-    "text": "Which model looks better?\n\n\nCode\nlibrary(performance)\n\ncompare_performance(fit_adjust, fit_omit, rank = TRUE)\n\n\n# Comparison of Model Performance Indices\n\nName       | Model |    R2 | R2 (adj.) |  RMSE | Sigma | AIC weights\n--------------------------------------------------------------------\nfit_adjust |    lm | 0.682 |     0.682 | 1.473 | 1.475 |        1.00\nfit_omit   |    lm | 0.312 |     0.311 | 2.169 | 2.171 |   2.88e-168\n\nName       | AICc weights | BIC weights | Performance-Score\n-----------------------------------------------------------\nfit_adjust |         1.00 |        1.00 |           100.00%\nfit_omit   |    2.91e-168 |   3.35e-167 |             0.00%\n\n\nCode\n# BIC(fit_adjust) - BIC(fit_omit)  # negative → \"better\" fit"
-  },
-  {
-    "objectID": "content/talking-points.html#what-error-2-collider-bias",
-    "href": "content/talking-points.html#what-error-2-collider-bias",
-    "title": "Three Types of Self-Inflicted Injuries in Observational Research",
-    "section": "“What Error #2”: Collider Bias",
-    "text": "“What Error #2”: Collider Bias\n\\[\\colliderT\\]"
-  },
-  {
-    "objectID": "content/talking-points.html#data-generating-process-1",
-    "href": "content/talking-points.html#data-generating-process-1",
-    "title": "Three Types of Self-Inflicted Injuries in Observational Research",
-    "section": "Data Generating Process",
-    "text": "Data Generating Process\n\n\nCode\nset.seed(2025)\n\nn          &lt;- 1000\nservice    &lt;- rbinom(n, 1, 0.5)                            # A\ndonations  &lt;- rnorm(n)                                     # Y\nwealth     &lt;- rnorm(n, mean = service + donations, sd = 1) # collider L\n\nsim2 &lt;- tibble(service, wealth, donations)"
-  },
-  {
-    "objectID": "content/talking-points.html#model-comparison-1",
-    "href": "content/talking-points.html#model-comparison-1",
-    "title": "Three Types of Self-Inflicted Injuries in Observational Research",
-    "section": "Model Comparison",
-    "text": "Model Comparison\n\n\n\n\n\n\nAdding the collider creates a spurious, significant effect of A.\n\n\n\n\n\n\n\n\n\n\n\nCharacteristic\n\nModel A: Omit L\n\n\nModel B: Control for L (collider)\n\n\n\nBeta\n95% CI\np-value\nBeta\n95% CI\np-value\n\n\n\n\nservice\n0.00\n-0.12, 0.13\n&gt;0.9\n-0.53\n-0.63, -0.44\n&lt;0.001\n\n\nwealth\n\n\n\n\n\n\n0.51\n0.48, 0.54\n&lt;0.001\n\n\n\nAbbreviation: CI = Confidence Interval"
-  },
-  {
-    "objectID": "content/talking-points.html#which-model-looks-better-1",
-    "href": "content/talking-points.html#which-model-looks-better-1",
-    "title": "Three Types of Self-Inflicted Injuries in Observational Research",
-    "section": "Which model looks better?",
-    "text": "Which model looks better?\n\n\nCode\ncompare_performance(fit_biased, fit_correct, rank = TRUE)\n\n\n# Comparison of Model Performance Indices\n\nName        | Model |        R2 |  R2 (adj.) |  RMSE | Sigma | AIC weights\n--------------------------------------------------------------------------\nfit_biased  |    lm |     0.526 |      0.525 | 0.707 | 0.708 |        1.00\nfit_correct |    lm | 3.722e-06 | -9.983e-04 | 1.028 | 1.029 |   1.42e-162\n\nName        | AICc weights | BIC weights | Performance-Score\n------------------------------------------------------------\nfit_biased  |         1.00 |        1.00 |           100.00%\nfit_correct |    1.43e-162 |   1.65e-161 |             0.00%\n\n\nCode\nBIC(fit_biased) - BIC(fit_correct)\n\n\n[1] -740.425"
-  },
-  {
-    "objectID": "content/talking-points.html#take-home",
-    "href": "content/talking-points.html#take-home",
-    "title": "Three Types of Self-Inflicted Injuries in Observational Research",
-    "section": "Take-Home",
-    "text": "Take-Home\n\n\n\n\n\n\nImportant\n\n\n\nRelying on model fit perpetuates the causality crisis in psychology [@bulbulia2022].\nDraw the DAG first; decide what belongs in the model before looking at numbers."
-  },
-  {
-    "objectID": "content/talking-points.html#the-what-error-is-widespread-in-experimental-studies-in-the-social-sciences",
-    "href": "content/talking-points.html#the-what-error-is-widespread-in-experimental-studies-in-the-social-sciences",
-    "title": "Three Types of Self-Inflicted Injuries in Observational Research",
-    "section": "The What Error is widespread in experimental studies in the social sciences",
-    "text": "The What Error is widespread in experimental studies in the social sciences\n\n“Overall, we find that 46.7% of the experimental studies published in APSR, AJPS, and JOP from 2012 to 2014 engaged in posttreatment conditioning (35 of 75 studies) …”\n“About 1 in 4 drop cases or subset the data based on post-treatment criteria, and nearly a third include post-treatment variables as covariates”\n“Most tellingly, nearly 1 in 8 articles directly conditions on variables that the authors themselves show as being an outcome of the experiment – an unambiguous indicator of a fundamental lack of understanding … that conditioning on posttreatment variables can invalidate results from randomized experiments.”\n“Empirically, then, the answer to the question of whether the discipline already understands posttreatment bias is clear: It does not.” [@montgomery2018]"
-  },
-  {
-    "objectID": "content/talking-points.html#mediator-bias-control-strategy-longitudinal-hygiene",
-    "href": "content/talking-points.html#mediator-bias-control-strategy-longitudinal-hygiene",
-    "title": "Three Types of Self-Inflicted Injuries in Observational Research",
-    "section": "Mediator Bias control strategy: Longitudinal Hygiene",
-    "text": "Mediator Bias control strategy: Longitudinal Hygiene\n\n\n\\[\n\\mediatorT\n\\]\n\n\\[\n\\commoncausesolvedT\n\\]"
-  },
-  {
-    "objectID": "content/talking-points.html#how-to-tame-the-what-error-hide-your-future",
-    "href": "content/talking-points.html#how-to-tame-the-what-error-hide-your-future",
-    "title": "Three Types of Self-Inflicted Injuries in Observational Research",
-    "section": "How to Tame The What Error? Hide your future",
-    "text": "How to Tame The What Error? Hide your future\nUse Repeated Measures on the Same Individuals"
-  },
-  {
-    "objectID": "content/talking-points.html#collider-bias-control-strategy-hide-your-future",
-    "href": "content/talking-points.html#collider-bias-control-strategy-hide-your-future",
-    "title": "Three Types of Self-Inflicted Injuries in Observational Research",
-    "section": "Collider bias control strategy: Hide your future",
-    "text": "Collider bias control strategy: Hide your future\n\n\n\\[\\colliderT\\]\n\n\\[\\commoncausesolvedT\\]"
-  },
-  {
-    "objectID": "content/talking-points.html#collider-bias-by-proxy-control-strategy-hide-your-future",
-    "href": "content/talking-points.html#collider-bias-by-proxy-control-strategy-hide-your-future",
-    "title": "Three Types of Self-Inflicted Injuries in Observational Research",
-    "section": "Collider bias by proxy control strategy: Hide your future",
-    "text": "Collider bias by proxy control strategy: Hide your future\n\n\n\\[\\commoncausechildT\\]\n\n\\[\\commoncausesolvedchildT\\]"
-  },
-  {
-    "objectID": "content/talking-points.html#post-exposure-collider-bias-control-strategy-hide-your-future",
-    "href": "content/talking-points.html#post-exposure-collider-bias-control-strategy-hide-your-future",
-    "title": "Three Types of Self-Inflicted Injuries in Observational Research",
-    "section": "Post-exposure collider bias control strategy: Hide your future",
-    "text": "Post-exposure collider bias control strategy: Hide your future\n\n\n\\[\\mediatorcolliderT\\]\n\n\\[\\commoncausesolvedT\\]"
-  },
-  {
-    "objectID": "content/talking-points.html#finally-our-biggest-worry-unmeasured-common-causes",
-    "href": "content/talking-points.html#finally-our-biggest-worry-unmeasured-common-causes",
-    "title": "Three Types of Self-Inflicted Injuries in Observational Research",
-    "section": "Finally, our biggest worry: Unmeasured Common Causes",
-    "text": "Finally, our biggest worry: Unmeasured Common Causes\n\\[\\downstreamT\\]"
-  },
-  {
-    "objectID": "content/talking-points.html#unmeasured-common-cause-strategy-hide-your-future",
-    "href": "content/talking-points.html#unmeasured-common-cause-strategy-hide-your-future",
-    "title": "Three Types of Self-Inflicted Injuries in Observational Research",
-    "section": "Unmeasured common cause strategy: Hide your future",
-    "text": "Unmeasured common cause strategy: Hide your future\n\n\n\\[\\downstreamT\\]\n\n\\[\\commoncausesolvedT\\]\n\n\nAnd because , we should consistently report sensitivity analyses."
-  },
-  {
-    "objectID": "content/talking-points.html#are-longitudinal-data-sensitivity-analysis-enough",
-    "href": "content/talking-points.html#are-longitudinal-data-sensitivity-analysis-enough",
-    "title": "Three Types of Self-Inflicted Injuries in Observational Research",
-    "section": "Are longitudinal data + sensitivity analysis enough?",
-    "text": "Are longitudinal data + sensitivity analysis enough?\n\n\nIf the data we collect were like this: \\[Y_{\\text{time 0}} ~~...~~ A_{\\text{time 1}}\\]\n\nWe should not be tempted to model this.\n\\[\\ytoacrazyT\\]"
-  },
-  {
-    "objectID": "content/talking-points.html#are-longitudinal-data-sensitivity-analysis-enough-1",
-    "href": "content/talking-points.html#are-longitudinal-data-sensitivity-analysis-enough-1",
-    "title": "Three Types of Self-Inflicted Injuries in Observational Research",
-    "section": "Are longitudinal data + sensitivity analysis enough?",
-    "text": "Are longitudinal data + sensitivity analysis enough?\n this is wrong?\n\\[\\ytoacrazyT\\]"
-  },
-  {
-    "objectID": "content/talking-points.html#longitudinal-data-are-not-enough",
-    "href": "content/talking-points.html#longitudinal-data-are-not-enough",
-    "title": "Three Types of Self-Inflicted Injuries in Observational Research",
-    "section": "Longitudinal data are not enough",
-    "text": "Longitudinal data are not enough\nTemporal ordering was with the observational hormone studies in the 80s/90s that modelled .\nHow?"
-  },
-  {
-    "objectID": "content/talking-points.html#researchers-failed-to-emulate-an-experiment-in-their-data-target-trial",
-    "href": "content/talking-points.html#researchers-failed-to-emulate-an-experiment-in-their-data-target-trial",
-    "title": "Three Types of Self-Inflicted Injuries in Observational Research",
-    "section": "Researchers failed to emulate an experiment in their data (Target Trial)",
-    "text": "Researchers failed to emulate an experiment in their data (Target Trial)\n\nWomen’s Health Initiative: overall hazard ratio 1.23 (0.99, 1.53)\nWomen’s Health Initiative: when broken down by years to follow-up:\n\n0-2 years 1.51 (1.06, 2.14)\n2-5 years 1.31 (0.93, 1.83)\n5 or more years 0.67 (0.41, 1.09)\n\n\n\n\n\n\n\n\nNoteSurvivor Bias.\n\n\n\nThe observational results can be \n\n\n\n\n\n\n\n\nNoteEmulating a target trial with observational data recovers experimental effects.\n\n\n\nRe-modelling recovers experimental findings [@hernan2016]."
-  },
-  {
-    "objectID": "content/talking-points.html#visualising-the-when-error",
-    "href": "content/talking-points.html#visualising-the-when-error",
-    "title": "Three Types of Self-Inflicted Injuries in Observational Research",
-    "section": "Visualising the When Error",
-    "text": "Visualising the When Error\n\n\n\n\n\n\n\n\nFigure 1: Three ways to start the clock. Only one is right."
-  },
-  {
-    "objectID": "content/talking-points.html#target-trial-check-list",
-    "href": "content/talking-points.html#target-trial-check-list",
-    "title": "Three Types of Self-Inflicted Injuries in Observational Research",
-    "section": "Target Trial Check List",
-    "text": "Target Trial Check List\n\n\n\n\nTable 1: Target-trial specification for the hormone-therapy example.\n\n\n\n\n\n\nelement\ndefinition\n\n\n\n\nEligibility\nPost-menopausal women aged 50–79, no prior CHD\n\n\nTreatment\nInitiate oestrogen + progestin on day of Rx pickup\n\n\nComparison\nNo hormone-therapy initiation on that day\n\n\nOutcome\nAll-cause mortality\n\n\nFollow-up\n8 years or until death / loss to follow-up"
-  },
-  {
-    "objectID": "content/talking-points.html#illustration",
-    "href": "content/talking-points.html#illustration",
-    "title": "Three Types of Self-Inflicted Injuries in Observational Research",
-    "section": "Illustration",
-    "text": "Illustration"
-  },
-  {
-    "objectID": "content/talking-points.html#the-new-zealand-attitudes-and-values-study",
-    "href": "content/talking-points.html#the-new-zealand-attitudes-and-values-study",
-    "title": "Three Types of Self-Inflicted Injuries in Observational Research",
-    "section": "The New Zealand Attitudes and Values Study:",
-    "text": "The New Zealand Attitudes and Values Study:\n\nPlanned 20-year longitudinal study, currently in its 14th year, &gt; 77k measured\nSample frame is drawn randomly from the NZ Electoral Roll."
-  },
-  {
-    "objectID": "content/talking-points.html#causal-questions",
-    "href": "content/talking-points.html#causal-questions",
-    "title": "Three Types of Self-Inflicted Injuries in Observational Research",
-    "section": "Causal Questions",
-    "text": "Causal Questions\n\nAverage Treatment Effect: Difference in averages of social outcomes (a) if everyone in New Zealand were to attend religious service at least 1x per month (b) if everyone were not to attend religious service at all.\nHeterogeneous Treatment Effects: Machine learning of groups who differ in such effects. Focus here on Qini Curve at 20% and 30% of full “budget”.\nUse Qini results to select for Policy Trees: Clarify who responds strongly/weakly.\n\nNote: all results use “honest” learning – sample is split into training/test sets (here 70/30)."
-  },
-  {
-    "objectID": "content/talking-points.html#outcomes",
-    "href": "content/talking-points.html#outcomes",
-    "title": "Three Types of Self-Inflicted Injuries in Observational Research",
-    "section": "Outcomes",
-    "text": "Outcomes\n\nSense of Belonging\nSocial Support\nCharitable Donations (annual)\nVolunteering (weekly)\n\nAll outcomes measured one year after the intervention"
-  },
-  {
-    "objectID": "content/talking-points.html#three-wave-panel-design-control-for-baseline-exposure-and-outcome-among-confounder-set.",
-    "href": "content/talking-points.html#three-wave-panel-design-control-for-baseline-exposure-and-outcome-among-confounder-set.",
-    "title": "Three Types of Self-Inflicted Injuries in Observational Research",
-    "section": "Three-wave Panel Design: control for baseline exposure and outcome among confounder set.",
-    "text": "Three-wave Panel Design: control for baseline exposure and outcome among confounder set.\n\\[\n\\threeLONG\n\\]"
-  },
-  {
-    "objectID": "content/talking-points.html#target-population-residents-of-new-zealand-in-2018-had-they-not-been-censored-through-2021.",
-    "href": "content/talking-points.html#target-population-residents-of-new-zealand-in-2018-had-they-not-been-censored-through-2021.",
-    "title": "Three Types of Self-Inflicted Injuries in Observational Research",
-    "section": "Target Population: Residents of New Zealand in 2018 had they not been censored through 2021.",
-    "text": "Target Population: Residents of New Zealand in 2018 had they not been censored through 2021.\n\nCensus Weights (Age X Gender X Ethnicity)\n\n\n\n(IPCW Stabilised & Trimmed)"
-  },
-  {
-    "objectID": "content/talking-points.html#religious-service-intervention",
-    "href": "content/talking-points.html#religious-service-intervention",
-    "title": "Three Types of Self-Inflicted Injuries in Observational Research",
-    "section": "Religious Service Intervention",
-    "text": "Religious Service Intervention\n\\[f(A) = \\begin{cases} 1 & \\text{if } a \\ge 0 \\text{ At least 1 x per month Religious Attendance} \\\\ 0 & \\text{if } a = 0 \\text{ Monthly Religious Service} \\end{cases}\\]"
-  },
-  {
-    "objectID": "content/talking-points.html#histogram-showing-split",
-    "href": "content/talking-points.html#histogram-showing-split",
-    "title": "Three Types of Self-Inflicted Injuries in Observational Research",
-    "section": "Histogram Showing Split",
-    "text": "Histogram Showing Split"
-  },
-  {
-    "objectID": "content/talking-points.html#love-plot-of-propensity-scores",
-    "href": "content/talking-points.html#love-plot-of-propensity-scores",
-    "title": "Three Types of Self-Inflicted Injuries in Observational Research",
-    "section": "Love Plot of Propensity Scores",
-    "text": "Love Plot of Propensity Scores"
-  },
-  {
-    "objectID": "content/talking-points.html#average-treatment-effect-results",
-    "href": "content/talking-points.html#average-treatment-effect-results",
-    "title": "Three Types of Self-Inflicted Injuries in Observational Research",
-    "section": "Average Treatment Effect Results:",
-    "text": "Average Treatment Effect Results:"
-  },
-  {
-    "objectID": "content/talking-points.html#workflow",
-    "href": "content/talking-points.html#workflow",
-    "title": "Three Types of Self-Inflicted Injuries in Observational Research",
-    "section": "Workflow",
-    "text": "Workflow\n\nTarget population: New Zealand Population by 2018 census weights\nOutcomes: all NZAVS outcomes relating to pro-sociality (outcome-wide study)\nMissing data: inverse-probability of censoring weights non-parametrically estimated/ causal forests permit missing data at baseline\nEligibility: participated in NZAVS 2018 (wave-10) and 2019 (wave 11, exposure wave) may have been lost to follow-up in wave 12, 46,377.\nBonferroni correct for multiple comparisons / E-value threshold = 1.2"
-  },
-  {
-    "objectID": "content/talking-points.html#transition-table-religious-attendance",
-    "href": "content/talking-points.html#transition-table-religious-attendance",
-    "title": "Three Types of Self-Inflicted Injuries in Observational Research",
-    "section": "Transition table: Religious Attendance",
-    "text": "Transition table: Religious Attendance\n\n\n\nFrom / To\nState 0\nState 1\nTotal\n\n\n\n\nState 0\n28545\n681\n29226\n\n\nState 1\n887\n3593\n4480"
-  },
-  {
-    "objectID": "content/talking-points.html#average-treatment-effect",
-    "href": "content/talking-points.html#average-treatment-effect",
-    "title": "Three Types of Self-Inflicted Injuries in Observational Research",
-    "section": "Average Treatment Effect",
-    "text": "Average Treatment Effect\nThe following outcomes showed reliable causal evidence (E‑value lower bound &gt; 1.2): - Volunteering (weekly, log): 0.154(0.056,0.252); on the original scale, 11.264 minutes(3.943,19.158). E‑value bound = 1.287 - log Charity Donate: 0.13(0.045,0.215); on the original scale, 39.935 (12.247,74.883). E‑value bound = 1.25"
-  },
-  {
-    "objectID": "content/talking-points.html#how-much-better-if-we-treated-by-cate",
-    "href": "content/talking-points.html#how-much-better-if-we-treated-by-cate",
-    "title": "Three Types of Self-Inflicted Injuries in Observational Research",
-    "section": "How Much Better if We Treated by CATE?",
-    "text": "How Much Better if We Treated by CATE?"
-  },
-  {
-    "objectID": "content/talking-points.html#who-should-we-treat-first-belonging",
-    "href": "content/talking-points.html#who-should-we-treat-first-belonging",
-    "title": "Three Types of Self-Inflicted Injuries in Observational Research",
-    "section": "Who Should We Treat First? Belonging",
-    "text": "Who Should We Treat First? Belonging"
-  },
-  {
-    "objectID": "content/talking-points.html#who-should-we-treat-first-charitable-donations",
-    "href": "content/talking-points.html#who-should-we-treat-first-charitable-donations",
-    "title": "Three Types of Self-Inflicted Injuries in Observational Research",
-    "section": "Who Should We Treat First? Charitable Donations",
-    "text": "Who Should We Treat First? Charitable Donations"
-  },
-  {
-    "objectID": "content/talking-points.html#closing",
-    "href": "content/talking-points.html#closing",
-    "title": "Three Types of Self-Inflicted Injuries in Observational Research",
-    "section": "Closing",
-    "text": "Closing\n\n\n\n\n\n\n\n\nError\nNeed\nRemedy\n\n\n\n\nWhat\nControl the right variables\nDraw a DAG first\n\n\nWhen\nStart the clock on time\nEmulate a target trial\n\n\nWho\nTreat the right people\nWeight to target + investigate heterogeneity"
-  },
-  {
-    "objectID": "content/talking-points.html#thanks",
-    "href": "content/talking-points.html#thanks",
-    "title": "Three Types of Self-Inflicted Injuries in Observational Research",
-    "section": "Thanks",
-    "text": "Thanks\n\n\nTRT Grant 0418 & Max Planck Institute for Evolutionary Anthropology for support.\nChris G. Sibley (NZAVS lead Investigator) for the heavy data lifting\n77,490 NZAVS participants for their time\n with questions or if you would like to become involved: \n\n\n\n\n\n\nNZAVS"
+    "text": "Download full script\n\n\n# ==============================================================================\n# simulation script: population estimates and causal inference\n# adapted from quarto document\n# ==============================================================================\n\n# load required libraries --------------------------------------------------\nlibrary(tidyverse)\nlibrary(stdReg)\nlibrary(skimr)\nlibrary(parameters)\nlibrary(kableExtra)\nlibrary(gtsummary)\nlibrary(clarify)\nlibrary(grf)\nlibrary(glue)\n\n# check for margot package\nif (!require(margot, quietly = TRUE)) {\n  devtools::install_github(\"go-bayes/margot\")\n  library(\"margot\")\n}\n\n# ==============================================================================\n# s2/s3: generalisability and transportability simulation\n# ==============================================================================\n\n# simulate data with different distributions of effect modifiers\n# between sample and population\nset.seed(123)\n\ndata &lt;- margot::simulate_ate_data_with_weights(\n  n_sample = 10000,\n  n_population = 100000,\n  p_z_sample = 0.1,\n  p_z_population = 0.5,\n  beta_a = 1,\n  beta_z = 2.5,\n  noise_sd = 0.5\n)\n\n# extract sample and population data\nsample_data &lt;- data$sample_data\npopulation_data &lt;- data$population_data\n\n# check imbalance in effect modifier distribution\ncat(\"\\nSample distribution of effect modifier:\\n\")\nprint(table(sample_data$z_sample))\n\ncat(\"\\nPopulation distribution of effect modifier:\\n\")\nprint(table(population_data$z_population))\n\n# model coefficients: sample\nmodel_sample &lt;- glm(y_sample ~ a_sample * z_sample,\n  data = sample_data\n)\n\ncat(\"\\n=== Model coefficients: Sample ===\\n\")\nprint(parameters::model_parameters(model_sample, ci_method = \"wald\"))\n\n# model coefficients: weighted sample\nmodel_weighted_sample &lt;- glm(y_sample ~ a_sample * z_sample,\n  data = sample_data, weights = weights\n)\n\ncat(\"\\n=== Model coefficients: Weighted Sample ===\\n\")\nprint(parameters::model_parameters(model_weighted_sample, ci_method = \"wald\"))\n\n# model coefficients: population\nmodel_population &lt;- glm(y_population ~ a_population * z_population,\n  data = population_data\n)\n\ncat(\"\\n=== Model coefficients: Population ===\\n\")\nprint(parameters::model_parameters(model_population, ci_method = \"wald\"))\n\n# marginal effect estimates using stdreg\n# sample ate\nfit_std_sample &lt;- stdReg::stdGlm(model_sample,\n  data = sample_data, X = \"a_sample\"\n)\n\ncat(\"\\n=== Sample ATE ===\\n\")\nprint(summary(fit_std_sample, contrast = \"difference\", reference = 0))\n\n# population ate (oracle)\nfit_std_population &lt;- stdReg::stdGlm(model_population,\n  data = population_data, X = \"a_population\"\n)\n\ncat(\"\\n=== Population ATE (Oracle) ===\\n\")\nprint(summary(fit_std_population, contrast = \"difference\", reference = 0))\n\n# weighted sample ate\nfit_std_weighted_sample_weights &lt;- stdReg::stdGlm(model_weighted_sample,\n  data = sample_data, X = \"a_sample\"\n)\n\ncat(\"\\n=== Weighted Sample ATE ===\\n\")\nprint(summary(fit_std_weighted_sample_weights, contrast = \"difference\", reference = 0))\n\n# ==============================================================================\n# s2/s3 alternative: manual ate calculation using predict function\n# ==============================================================================\n\ncat(\"\\n=== Manual ATE Calculation Using Predict Function ===\\n\")\ncat(\"This section explicitly shows what stdReg is doing under the hood\\n\\n\")\n\n# sample ate using predict\n# create counterfactual datasets where everyone gets a = 0 and a = 1\nsample_data_a0 &lt;- sample_data %&gt;% mutate(a_sample = 0)\nsample_data_a1 &lt;- sample_data %&gt;% mutate(a_sample = 1)\n\n# predict outcomes under each treatment level\ny_pred_a0_sample &lt;- predict(model_sample, newdata = sample_data_a0)\ny_pred_a1_sample &lt;- predict(model_sample, newdata = sample_data_a1)\n\n# calculate ate as mean difference in predicted outcomes\nate_sample_manual &lt;- mean(y_pred_a1_sample - y_pred_a0_sample)\n\ncat(\"Sample ATE (manual calculation):\", round(ate_sample_manual, 3), \"\\n\")\n\n# population ate using predict\npopulation_data_a0 &lt;- population_data %&gt;% mutate(a_population = 0)\npopulation_data_a1 &lt;- population_data %&gt;% mutate(a_population = 1)\n\ny_pred_a0_population &lt;- predict(model_population, newdata = population_data_a0)\ny_pred_a1_population &lt;- predict(model_population, newdata = population_data_a1)\n\nate_population_manual &lt;- mean(y_pred_a1_population - y_pred_a0_population)\n\ncat(\"Population ATE (manual calculation):\", round(ate_population_manual, 3), \"\\n\")\n\n# weighted sample ate using predict\n# use the sample model with weighted regression\ny_pred_a0_weighted &lt;- predict(model_weighted_sample, newdata = sample_data_a0)\ny_pred_a1_weighted &lt;- predict(model_weighted_sample, newdata = sample_data_a1)\n\nate_weighted_sample_manual &lt;- mean(y_pred_a1_weighted - y_pred_a0_weighted)\n\ncat(\"Weighted Sample ATE (manual calculation):\", round(ate_weighted_sample_manual, 3), \"\\n\")\n\n# show the key insight: coefficients are the same but ates differ\ncat(\"\\n=== Key Insight ===\\n\")\ncat(\"Notice that:\\n\")\ncat(\"1. Model coefficients are nearly identical across sample, weighted sample, and population\\n\")\ncat(\n  \"2. BUT the marginal ATEs differ between sample (\", round(ate_sample_manual, 3),\n  \") and population (\", round(ate_population_manual, 3), \")\\n\"\n)\ncat(\"3. Weighting corrects this, giving ATE = \", round(ate_weighted_sample_manual, 3), \"\\n\")\ncat(\"4. This happens because the distribution of the effect modifier differs\\n\")\ncat(\"   Sample: z=1 is rare; Population: z=1 is common\\n\\n\")\n\n# optional: show distribution of predicted potential outcomes\ncat(\"=== Distribution of Predicted Potential Outcomes ===\\n\")\n\n# sample\ncat(\n  \"Sample - Mean Y(a=0):\", round(mean(y_pred_a0_sample), 3),\n  \" | Mean Y(a=1):\", round(mean(y_pred_a1_sample), 3), \"\\n\"\n)\n\n# population\ncat(\n  \"Population - Mean Y(a=0):\", round(mean(y_pred_a0_population), 3),\n  \" | Mean Y(a=1):\", round(mean(y_pred_a1_population), 3), \"\\n\"\n)\n\n# weighted sample\ncat(\n  \"Weighted Sample - Mean Y(a=0):\", round(mean(y_pred_a0_weighted), 3),\n  \" | Mean Y(a=1):\", round(mean(y_pred_a1_weighted), 3), \"\\n\\n\"\n)\n\n# ==============================================================================\n# s4: cross-sectional data ambiguity simulation\n# ==============================================================================\n\n# simulate data where l is a mediator between a and y\nset.seed(123)\n\nn &lt;- 1000\np &lt;- 0.5\nalpha &lt;- 0\nbeta &lt;- 2\ngamma &lt;- 1\ndelta &lt;- 1.5\nsigma_L &lt;- 1\nsigma_Y &lt;- 1.5\n\n# simulate the data: fully mediated effect by l\nA &lt;- rbinom(n, 1, p)\nL &lt;- alpha + beta * A + rnorm(n, 0, sigma_L)\nY &lt;- gamma + delta * L + rnorm(n, 0, sigma_Y)\n\n# create data frame\ndata_cross &lt;- data.frame(A = A, L = L, Y = Y)\n\n# fit regression models\n# model 1: control for l (assuming l is confounder)\nfit_1 &lt;- lm(Y ~ A + L, data = data_cross)\n\n# model 2: omit l (assuming l is mediator)\nfit_2 &lt;- lm(Y ~ A, data = data_cross)\n\n# create comparison table\ntable1 &lt;- gtsummary::tbl_regression(fit_1)\ntable2 &lt;- gtsummary::tbl_regression(fit_2)\n\ntable_comparison &lt;- gtsummary::tbl_merge(\n  list(table1, table2),\n  tab_spanner = c(\n    \"Model: L assumed confounder\",\n    \"Model: L assumed mediator\"\n  )\n)\n\ncat(\"\\n=== Cross-sectional Model Comparison ===\\n\")\nprint(as_kable_extra(table_comparison, format = \"markdown\"))\n\n# calculate ate using clarify\nset.seed(2025)\nsim_coefs_fit_1 &lt;- sim(fit_1)\nsim_coefs_fit_2 &lt;- sim(fit_2)\n\nsim_est_fit_1 &lt;- sim_ame(\n  sim_coefs_fit_1,\n  var = \"A\",\n  subset = A == 1,\n  contrast = \"RD\",\n  verbose = FALSE\n)\n\nsim_est_fit_2 &lt;- sim_ame(\n  sim_coefs_fit_2,\n  var = \"A\",\n  subset = A == 1,\n  contrast = \"RD\",\n  verbose = FALSE\n)\n\nsummary_sim_est_fit_1 &lt;- summary(sim_est_fit_1, null = c(`RD` = 0))\nsummary_sim_est_fit_2 &lt;- summary(sim_est_fit_2, null = c(`RD` = 0))\n\nATE_fit_1 &lt;- glue::glue(\n  \"ATE = {round(summary_sim_est_fit_1[3, 1], 2)}, \",\n  \"CI = [{round(summary_sim_est_fit_1[3, 2], 2)}, \",\n  \"{round(summary_sim_est_fit_1[3, 3], 2)}]\"\n)\n\nATE_fit_2 &lt;- glue::glue(\n  \"ATE = {round(summary_sim_est_fit_2[3, 1], 2)}, \",\n  \"CI = [{round(summary_sim_est_fit_2[3, 2], 2)}, \",\n  \"{round(summary_sim_est_fit_2[3, 3], 2)}]\"\n)\n\ncat(\"\\n=== ATE Estimates ===\\n\")\ncat(\"Model 1 (L as confounder):\", ATE_fit_1, \"\\n\")\ncat(\"Model 2 (L as mediator):\", ATE_fit_2, \"\\n\")\n\n# ==============================================================================\n# appendix d: confounding control strategies simulation\n# ==============================================================================\n\nset.seed(123)\nn &lt;- 10000\n\n# baseline covariates\nU &lt;- rnorm(n)\nA_0 &lt;- rbinom(n, 1, prob = plogis(U))\nY_0 &lt;- rnorm(n, mean = U, sd = 1)\nL_0 &lt;- rnorm(n, mean = U, sd = 1)\n\n# coefficients for treatment assignment\nbeta_A0 &lt;- 0.25\nbeta_Y0 &lt;- 0.3\nbeta_L0 &lt;- 0.2\nbeta_U &lt;- 0.1\n\n# simulate treatment assignment\nA_1 &lt;- rbinom(n, 1, prob = plogis(\n  -0.5 +\n    beta_A0 * A_0 +\n    beta_Y0 * Y_0 +\n    beta_L0 * L_0 +\n    beta_U * U\n))\n\n# coefficients for continuous outcome\ndelta_A1 &lt;- 0.3\ndelta_Y0 &lt;- 0.9\ndelta_A0 &lt;- 0.1\ndelta_L0 &lt;- 0.3\ntheta_A0Y0L0 &lt;- 0.5\ndelta_U &lt;- 0.05\n\n# simulate continuous outcome\nY_2 &lt;- rnorm(n,\n  mean = 0 +\n    delta_A1 * A_1 +\n    delta_Y0 * Y_0 +\n    delta_A0 * A_0 +\n    delta_L0 * L_0 +\n    theta_A0Y0L0 * Y_0 * A_0 * L_0 +\n    delta_U * U,\n  sd = .5\n)\n\n# create data frame\ndata_confound &lt;- data.frame(Y_2, A_0, A_1, L_0, Y_0, U)\n\n# fit models\nfit_no_control &lt;- lm(Y_2 ~ A_1, data = data_confound)\nfit_standard &lt;- lm(Y_2 ~ A_1 + L_0, data = data_confound)\nfit_interaction &lt;- lm(Y_2 ~ A_1 * (L_0 + A_0 + Y_0), data = data_confound)\n\n# create gtsummary tables\ntbl_fit_no_control &lt;- tbl_regression(fit_no_control)\ntbl_fit_standard &lt;- tbl_regression(fit_standard)\ntbl_fit_interaction &lt;- tbl_regression(fit_interaction)\n\n# filter to show only treatment variable\ntbl_list_modified &lt;- lapply(\n  list(tbl_fit_no_control, tbl_fit_standard, tbl_fit_interaction),\n  function(tbl) {\n    tbl %&gt;%\n      modify_table_body(~ .x %&gt;% dplyr::filter(variable == \"A_1\"))\n  }\n)\n\n# merge tables\ntable_comparison_confound &lt;- tbl_merge(\n  tbls = tbl_list_modified,\n  tab_spanner = c(\"No Control\", \"Standard\", \"Interaction\")\n) %&gt;%\n  modify_table_styling(\n    column = c(p.value_1, p.value_2, p.value_3),\n    hide = TRUE\n  )\n\ncat(\"\\n=== Confounding Control Strategy Comparison ===\\n\")\nprint(as_kable_extra(table_comparison_confound, format = \"markdown\"))\n\n# calculate ate using clarify\nset.seed(123)\nsim_coefs_fit_no_control &lt;- sim(fit_no_control)\nsim_coefs_fit_std &lt;- sim(fit_standard)\nsim_coefs_fit_int &lt;- sim(fit_interaction)\n\nsim_est_fit_no_control &lt;- sim_ame(\n  sim_coefs_fit_no_control,\n  var = \"A_1\",\n  subset = A_1 == 1,\n  contrast = \"RD\",\n  verbose = FALSE\n)\n\nsim_est_fit_std &lt;- sim_ame(\n  sim_coefs_fit_std,\n  var = \"A_1\",\n  subset = A_1 == 1,\n  contrast = \"RD\",\n  verbose = FALSE\n)\n\nsim_est_fit_int &lt;- sim_ame(\n  sim_coefs_fit_int,\n  var = \"A_1\",\n  subset = A_1 == 1,\n  contrast = \"RD\",\n  verbose = FALSE\n)\n\nsummary_sim_coefs_fit_no_control &lt;- summary(sim_est_fit_no_control, null = c(`RD` = 0))\nsummary_sim_est_fit_std &lt;- summary(sim_est_fit_std, null = c(`RD` = 0))\nsummary_sim_est_fit_int &lt;- summary(sim_est_fit_int, null = c(`RD` = 0))\n\nATE_fit_no_control &lt;- glue::glue(\n  \"ATE = {round(summary_sim_coefs_fit_no_control[3, 1], 2)}, \",\n  \"CI = [{round(summary_sim_coefs_fit_no_control[3, 2], 2)}, \",\n  \"{round(summary_sim_coefs_fit_no_control[3, 3], 2)}]\"\n)\n\nATE_fit_std &lt;- glue::glue(\n  \"ATE = {round(summary_sim_est_fit_std[3, 1], 2)}, \",\n  \"CI = [{round(summary_sim_est_fit_std[3, 2], 2)}, \",\n  \"{round(summary_sim_est_fit_std[3, 3], 2)}]\"\n)\n\nATE_fit_int &lt;- glue::glue(\n  \"ATE = {round(summary_sim_est_fit_int[3, 1], 2)}, \",\n  \"CI = [{round(summary_sim_est_fit_int[3, 2], 2)}, \",\n  \"{round(summary_sim_est_fit_int[3, 3], 2)}]\"\n)\n\ncat(\"\\n=== ATE Estimates for Confounding Control Strategies ===\\n\")\ncat(\"No Control:\", ATE_fit_no_control, \"\\n\")\ncat(\"Standard Control:\", ATE_fit_std, \"\\n\")\ncat(\"Interaction Model:\", ATE_fit_int, \"\\n\")\n\n# ==============================================================================\n# appendix e: causal forest estimation\n# ==============================================================================\n\n# prepare data for causal forest\nW &lt;- as.matrix(data_confound$A_1)\nY &lt;- as.matrix(data_confound$Y_2)\nX &lt;- as.matrix(data_confound[, c(\"L_0\", \"A_0\", \"Y_0\")])\n\n# fit causal forest model\nfit_causal_forest &lt;- causal_forest(X, Y, W)\n\n# estimate average treatment effect\nate_cf &lt;- average_treatment_effect(fit_causal_forest)\nate_cf_df &lt;- data.frame(ate_cf)\n\nATE_fit_causal_forest &lt;- glue::glue(\n  \"ATE = {round(ate_cf_df[1, 1], 2)}, se = {round(ate_cf_df[2, 1], 2)}\"\n)\n\ncat(\"\\n=== Causal Forest ATE Estimate ===\\n\")\ncat(ATE_fit_causal_forest, \"\\n\")\n\n# ==============================================================================\n# end of script\n# ==============================================================================\n\ncat(\"\\n=== All simulations completed successfully ===\\n\")"
   },
   {
     "objectID": "content/discussion-points.html",
@@ -1351,25 +938,452 @@
     "text": "Taxonomy of confounding\nThere is good news. Remember, ultimately are only four basic types of confounding:\n\nThe Fork (omitted variable bias)\n\nconfounder_triangle(x = \"Coffee\",\n                    y = \"Lung Cancer\",\n                    z = \"Smoking\") |&gt;\n  ggdag_dconnected(text = FALSE,\n                   use_labels = \"label\")\n\n\n\n\n\n\n\n\n\n\nThe Pipe (fully mediated effects)\n\nmediation_triangle(\n  x = NULL,\n  y = NULL,\n  m = NULL,\n  x_y_associated = FALSE\n) |&gt;\n  tidy_dagitty(layout = \"nicely\") |&gt;\n  ggdag()\n\n\n\n\n\n\n\n\n\n\nThe Collider\n\n\nConfounding by proxy\nIf we “control for” a descendant of a collider, we will introduce collider bias.\n\ndag_sd &lt;- dagify(\n  Z ~ X,\n  Z ~ Y,\n  D ~ Z,\n  labels = c(\n    \"Z\" = \"Collider\",\n    \"D\" = \"Descendant\",\n    \"X\" = \"X\",\n    \"Y\" = \"Y\"\n  ),\n  exposure = \"X\",\n  outcome = \"Y\"\n) |&gt;\n  control_for(\"D\") \n\ndag_sd |&gt;\n  ggdag_dseparated(\n    from = \"X\",\n    to = \"Y\",\n    controlling_for = \"D\",\n    text = FALSE,\n    use_labels = \"label\"\n  )  +\n  ggtitle(\"X --&gt; Y, controlling for D\",\n          subtitle = \"D induces collider bias\")"
   },
   {
-    "objectID": "glossary-and-dags.html",
-    "href": "glossary-and-dags.html",
-    "title": "Glossary and Causal DAGs",
+    "objectID": "content/talking-points.html",
+    "href": "content/talking-points.html",
+    "title": "Three Types of Self-Inflicted Injuries in Observational Research",
     "section": "",
-    "text": "Navitaging the jargon"
+    "text": "NoteIn the 1980s and 1990s estrogen treatments appeared to benefit postmenopausal women\n\n\n\nHazard ratio for all-cause mortality: 0.68 current users vs. never users [@grodstein2006hormone]\n\n\n\n\n\n\n\n1992 American College of Obstetricians and Gynecologists \n1992 American College of Physicians \n1993 National Cholesterol Education Program \n1996 American Heart Association \n\n\n\n\n\n\n\nMassive randomised, double-blind, placebo-controlled trial\n16,000 U.S. women aged 50-79 years\nAssigned to Estrogen plus Progestin therapy\nWomen followed approximately every year for up to 8 years.\n\n\n\n\n\n\n\n\n\n\n\nWarningExperimental Findings: opposite of observational findings\n\n\n\nAll-cause mortality Hazard Ratio: 1.23 for initiators vs non-initiators. [@manson2003estrogen]\n\n\n\n\n\n\n\nCan observational studies ever be trusted?\nShould observational studies ever be funded again?\n\n\n\n\n\n\n\n\n\n\n\n\nWe may define a cause to be an object followed by another, and where all the objects, similar to the first, are followed by objects similar to the second…\n\n\n\n\n\nOr, in other words, where, \n\nEnquiries Concerning Human Understanding, and Concerning the Principles of Morals 1751\n\n\n\n\n\n\n\n\n\n\n\n\nTo quantify a causal effect requires a counterfactual contrast:\n\\[\\tau_{you} = \\Big[Y_{\\text{you}}(a =1) - Y_{\\text{you}}(a=0)\\Big]\\]\nWhere, \\(Y(a)\\) denotes the potential outcome under an intervention \\(A = a\\). Here, we assume a binary intervention. At any time, we may observe the outcome of only \n\n\n\n\\[\nY_i|A_i = 1 \\implies Y_i(0)|A_i = 1~ \\textcolor{red}{\\text{is counterfactual}}\n\\]\n\n“And sorry I could not travel both. And be one traveller, long I stood \\(\\dots\\)”\n\n\n\n\n\\[\n\\text{Average Treatment Effect} = \\left[ \\begin{aligned}\n&\\left( \\underbrace{\\mathbb{E}[Y(1)|A = 1]}_{\\text{observed}} + \\textcolor{cyan}{\\underbrace{\\mathbb{E}[Y(1)|A = 0]}_{\\text{unobserved}}} \\right) \\\\\n&- \\left( \\underbrace{\\mathbb{E}[Y(0)|A = 0]}_{\\text{observed}} + \\textcolor{cyan}{\\underbrace{\\mathbb{E}[Y(0)|A = 1]}_{\\text{unobserved}}} \\right)\n\\end{aligned} \\right]\n\\]\n\n\n\n\\[\n\\text{ATE} = \\sum_{l} \\left( \\mathbb{E}[Y|A=1, \\textcolor{cyan}{L=l}] - \\mathbb{E}[Y|A=0, \\textcolor{cyan}{L=l}] \\right) \\times \\textcolor{cyan}{\\Pr(L=l)}\n\\]\nWhere \\(L\\) is a set of measured covariates and \\(A\\coprod Y(a)|L\\)"
   },
   {
-    "objectID": "glossary-and-dags.html#causal-inference-glossary",
-    "href": "glossary-and-dags.html#causal-inference-glossary",
-    "title": "Glossary and Causal DAGs",
-    "section": "Causal Inference Glossary",
-    "text": "Causal Inference Glossary\n\n📖 Terminology Guide\nCausal inference is anchored on mathematical proofs. This brings wide agreement about its foundations. The proofs give us confidence. However, the words people use to describe concepts vary. The terminology invites confusion. Linked here is a glossary of terminology. Where terminology differs, I’ve added a note.\nDownload Glossary (PDF)\nThis glossary contains essential definitions for terms including: - Average Treatment Effect (ATE), Conditional Average Treatment Effect (CATE) - Backdoor paths, confounders, and colliders - Instrumental variables and propensity scores - Time-varying confounding and measurement error - Causal estimands, estimators, and identification strategies - Words whose meanings differ – sometimes with opposite meanings – include “selection”, “fixed effects”, “standardisation”, “estimand”, “moderator”, “structural equation model”, and “identification”.\nEssential reference for understanding causal inference methodology and terminology."
+    "objectID": "content/talking-points.html#s-observational-studies-indicated-30-all-cause-mortality-reduction-from-estrogen-therapies",
+    "href": "content/talking-points.html#s-observational-studies-indicated-30-all-cause-mortality-reduction-from-estrogen-therapies",
+    "title": "Three Types of Self-Inflicted Injuries in Observational Research",
+    "section": "",
+    "text": "NoteIn the 1980s and 1990s estrogen treatments appeared to benefit postmenopausal women\n\n\n\nHazard ratio for all-cause mortality: 0.68 current users vs. never users [@grodstein2006hormone]"
   },
   {
-    "objectID": "glossary-and-dags.html#causal-directed-acyclic-graph",
-    "href": "glossary-and-dags.html#causal-directed-acyclic-graph",
-    "title": "Glossary and Causal DAGs",
-    "section": "Causal Directed Acyclic Graph",
-    "text": "Causal Directed Acyclic Graph\n\n1. Our Conventions Here\n1a. Local Conventions\nEssential local conventions for causal diagram construction and interpretation\n1b. Directed Graph Terminology\nCore terminology specific to directed acyclic graphs (DAGs)\nS1. Graphical Key\nVisual reference guide for interpreting causal diagram symbols and notation\n\n\nCommon Applications\n\n2. Practical Applications\n2. Common Causal Questions\nFrequently encountered causal questions and how to approach them\n6. Effect Modification\nUnderstanding when and how treatment effects vary across subgroups\n9. External Validity\nApproaches to generalising causal findings across populations and contexts\n\n\n\nTime Series & Confounding\n\n3. Keeping Time on Your Side\n3. Time Series Approaches\nHow longitudinal data help address confounding bias\n4. Three-Wave Panel Methods\nUsing three-wave panel data for causal inference\n5. Time Series Limitations\nWhen time series approaches may not resolve confounding\nS3. Time-Resolved Confounding\nAdvanced approaches to time-varying confounding\n\n\n\nAdvanced Topics\n\n4. Complex Methodological Issues\n7. Selection Bias Focus\nDetailed examination of selection bias in longitudinal studies\n8. Measurement Error Focus\nStructural approaches to representing and addressing measurement error\n10. Experimental Design\nHow experiments address confounding and selection bias challenges\n\n\n\nSupplementary Materials\n\n5. Additional Resources\nS5. Timing Examples\nPractical examples of confounding and timing issues\nS6. Detailed Panel Examples\nWhat can go wrong in a three-wave panel.\nS7. Cross-Sectional Approaches When to report multiple DAGs in cross-sectional studies\nS8. Bias Correction\nQuantitative approaches to bias correction\nS9. Mediator Bias\nUnderstanding confounding bias in mediation analysis\nS10. Misclassification Bias\nExamples of misclassification bias and bias towards the nulls"
+    "objectID": "content/talking-points.html#standard-medical-advice",
+    "href": "content/talking-points.html#standard-medical-advice",
+    "title": "Three Types of Self-Inflicted Injuries in Observational Research",
+    "section": "",
+    "text": "1992 American College of Obstetricians and Gynecologists \n1992 American College of Physicians \n1993 National Cholesterol Education Program \n1996 American Heart Association"
+  },
+  {
+    "objectID": "content/talking-points.html#womens-health-initiative-evaluate-estrogens-experimentally",
+    "href": "content/talking-points.html#womens-health-initiative-evaluate-estrogens-experimentally",
+    "title": "Three Types of Self-Inflicted Injuries in Observational Research",
+    "section": "",
+    "text": "Massive randomised, double-blind, placebo-controlled trial\n16,000 U.S. women aged 50-79 years\nAssigned to Estrogen plus Progestin therapy\nWomen followed approximately every year for up to 8 years."
+  },
+  {
+    "objectID": "content/talking-points.html#findings-clear-discrepancy",
+    "href": "content/talking-points.html#findings-clear-discrepancy",
+    "title": "Three Types of Self-Inflicted Injuries in Observational Research",
+    "section": "",
+    "text": "WarningExperimental Findings: opposite of observational findings\n\n\n\nAll-cause mortality Hazard Ratio: 1.23 for initiators vs non-initiators. [@manson2003estrogen]"
+  },
+  {
+    "objectID": "content/talking-points.html#medical-community-response-reject-all-observational-studies",
+    "href": "content/talking-points.html#medical-community-response-reject-all-observational-studies",
+    "title": "Three Types of Self-Inflicted Injuries in Observational Research",
+    "section": "",
+    "text": "Can observational studies ever be trusted?\nShould observational studies ever be funded again?"
+  },
+  {
+    "objectID": "content/talking-points.html#david-humes-two-definitions-in-enquiries-1751",
+    "href": "content/talking-points.html#david-humes-two-definitions-in-enquiries-1751",
+    "title": "Three Types of Self-Inflicted Injuries in Observational Research",
+    "section": "",
+    "text": "We may define a cause to be an object followed by another, and where all the objects, similar to the first, are followed by objects similar to the second…\n\n\n\n\n\nOr, in other words, where, \n\nEnquiries Concerning Human Understanding, and Concerning the Principles of Morals 1751"
+  },
+  {
+    "objectID": "content/talking-points.html#the-fundamental-problem-of-causal-inference",
+    "href": "content/talking-points.html#the-fundamental-problem-of-causal-inference",
+    "title": "Three Types of Self-Inflicted Injuries in Observational Research",
+    "section": "",
+    "text": "To quantify a causal effect requires a counterfactual contrast:\n\\[\\tau_{you} = \\Big[Y_{\\text{you}}(a =1) - Y_{\\text{you}}(a=0)\\Big]\\]\nWhere, \\(Y(a)\\) denotes the potential outcome under an intervention \\(A = a\\). Here, we assume a binary intervention. At any time, we may observe the outcome of only"
+  },
+  {
+    "objectID": "content/talking-points.html#however-we-only-observe-facts-not-counterfactuals",
+    "href": "content/talking-points.html#however-we-only-observe-facts-not-counterfactuals",
+    "title": "Three Types of Self-Inflicted Injuries in Observational Research",
+    "section": "",
+    "text": "\\[\nY_i|A_i = 1 \\implies Y_i(0)|A_i = 1~ \\textcolor{red}{\\text{is counterfactual}}\n\\]\n\n“And sorry I could not travel both. And be one traveller, long I stood \\(\\dots\\)”"
+  },
+  {
+    "objectID": "content/talking-points.html#average-treatment-effect-in-randomised-controlled-experiments-work-from-assumptions",
+    "href": "content/talking-points.html#average-treatment-effect-in-randomised-controlled-experiments-work-from-assumptions",
+    "title": "Three Types of Self-Inflicted Injuries in Observational Research",
+    "section": "",
+    "text": "\\[\n\\text{Average Treatment Effect} = \\left[ \\begin{aligned}\n&\\left( \\underbrace{\\mathbb{E}[Y(1)|A = 1]}_{\\text{observed}} + \\textcolor{cyan}{\\underbrace{\\mathbb{E}[Y(1)|A = 0]}_{\\text{unobserved}}} \\right) \\\\\n&- \\left( \\underbrace{\\mathbb{E}[Y(0)|A = 0]}_{\\text{observed}} + \\textcolor{cyan}{\\underbrace{\\mathbb{E}[Y(0)|A = 1]}_{\\text{unobserved}}} \\right)\n\\end{aligned} \\right]\n\\]"
+  },
+  {
+    "objectID": "content/talking-points.html#under-identifying-assumptions-we-may-infer-causal-effects-from-associations",
+    "href": "content/talking-points.html#under-identifying-assumptions-we-may-infer-causal-effects-from-associations",
+    "title": "Three Types of Self-Inflicted Injuries in Observational Research",
+    "section": "",
+    "text": "\\[\n\\text{ATE} = \\sum_{l} \\left( \\mathbb{E}[Y|A=1, \\textcolor{cyan}{L=l}] - \\mathbb{E}[Y|A=0, \\textcolor{cyan}{L=l}] \\right) \\times \\textcolor{cyan}{\\Pr(L=l)}\n\\]\nWhere \\(L\\) is a set of measured covariates and \\(A\\coprod Y(a)|L\\)"
+  },
+  {
+    "objectID": "content/talking-points.html#paradigmatic-concern-confounding-by-common-cause",
+    "href": "content/talking-points.html#paradigmatic-concern-confounding-by-common-cause",
+    "title": "Three Types of Self-Inflicted Injuries in Observational Research",
+    "section": "Paradigmatic Concern: Confounding by Common Cause",
+    "text": "Paradigmatic Concern: Confounding by Common Cause\n\\[\\commoncauseT\\]"
+  },
+  {
+    "objectID": "content/talking-points.html#where-assumptions-justify-we-may-condition-on-measured-confounders-to-obtain-balance.",
+    "href": "content/talking-points.html#where-assumptions-justify-we-may-condition-on-measured-confounders-to-obtain-balance.",
+    "title": "Three Types of Self-Inflicted Injuries in Observational Research",
+    "section": "Where assumptions justify, we may condition on measured confounders to obtain balance.",
+    "text": "Where assumptions justify, we may condition on measured confounders to obtain balance.\n\n\n\\[\n\\commoncauseT\n\\]\n\n\\[\n\\commoncausesolvedT\n\\]"
+  },
+  {
+    "objectID": "content/talking-points.html#what-error-1-mediator-bias",
+    "href": "content/talking-points.html#what-error-1-mediator-bias",
+    "title": "Three Types of Self-Inflicted Injuries in Observational Research",
+    "section": "“What Error #1”: Mediator Bias",
+    "text": "“What Error #1”: Mediator Bias\n\\[\\mediatorT\\]"
+  },
+  {
+    "objectID": "content/talking-points.html#data-generating-process",
+    "href": "content/talking-points.html#data-generating-process",
+    "title": "Three Types of Self-Inflicted Injuries in Observational Research",
+    "section": "Data Generating Process",
+    "text": "Data Generating Process\n\n\nCode\nlibrary(tidyverse)\n\nset.seed(123)                           # reproducibility\nn        &lt;- 1000\nservice  &lt;- rbinom(n, 1, 0.5)          # A\nwealth   &lt;- 2 * service + rnorm(n)     # L\ncharity  &lt;- 1.5 * wealth + rnorm(n, sd = 1.5)  # Y\n\nsim1 &lt;- tibble(service, wealth, charity)"
+  },
+  {
+    "objectID": "content/talking-points.html#model-comparison",
+    "href": "content/talking-points.html#model-comparison",
+    "title": "Three Types of Self-Inflicted Injuries in Observational Research",
+    "section": "Model comparison",
+    "text": "Model comparison\n\n\n\n\n\n\nControlling for the mediator reverses the sign of the service coefficient.\n\n\n\n\n\n\n\n\n\n\n\nCharacteristic\n\nModel A: Omit L\n\n\nModel B: Control for L\n\n\n\nBeta\n95% CI\np-value\nBeta\n95% CI\np-value\n\n\n\n\nservice\n2.9\n2.6, 3.2\n&lt;0.001\n-0.27\n-0.53, -0.01\n0.043\n\n\nwealth\n\n\n\n\n\n\n1.6\n1.5, 1.7\n&lt;0.001\n\n\n\nAbbreviation: CI = Confidence Interval"
+  },
+  {
+    "objectID": "content/talking-points.html#which-model-looks-better",
+    "href": "content/talking-points.html#which-model-looks-better",
+    "title": "Three Types of Self-Inflicted Injuries in Observational Research",
+    "section": "Which model looks better?",
+    "text": "Which model looks better?\n\n\nCode\nlibrary(performance)\n\ncompare_performance(fit_adjust, fit_omit, rank = TRUE)\n\n\n# Comparison of Model Performance Indices\n\nName       | Model |    R2 | R2 (adj.) |  RMSE | Sigma | AIC weights\n--------------------------------------------------------------------\nfit_adjust |    lm | 0.682 |     0.682 | 1.473 | 1.475 |        1.00\nfit_omit   |    lm | 0.312 |     0.311 | 2.169 | 2.171 |   2.88e-168\n\nName       | AICc weights | BIC weights | Performance-Score\n-----------------------------------------------------------\nfit_adjust |         1.00 |        1.00 |           100.00%\nfit_omit   |    2.91e-168 |   3.35e-167 |             0.00%\n\n\nCode\n# BIC(fit_adjust) - BIC(fit_omit)  # negative → \"better\" fit"
+  },
+  {
+    "objectID": "content/talking-points.html#what-error-2-collider-bias",
+    "href": "content/talking-points.html#what-error-2-collider-bias",
+    "title": "Three Types of Self-Inflicted Injuries in Observational Research",
+    "section": "“What Error #2”: Collider Bias",
+    "text": "“What Error #2”: Collider Bias\n\\[\\colliderT\\]"
+  },
+  {
+    "objectID": "content/talking-points.html#data-generating-process-1",
+    "href": "content/talking-points.html#data-generating-process-1",
+    "title": "Three Types of Self-Inflicted Injuries in Observational Research",
+    "section": "Data Generating Process",
+    "text": "Data Generating Process\n\n\nCode\nset.seed(2025)\n\nn          &lt;- 1000\nservice    &lt;- rbinom(n, 1, 0.5)                            # A\ndonations  &lt;- rnorm(n)                                     # Y\nwealth     &lt;- rnorm(n, mean = service + donations, sd = 1) # collider L\n\nsim2 &lt;- tibble(service, wealth, donations)"
+  },
+  {
+    "objectID": "content/talking-points.html#model-comparison-1",
+    "href": "content/talking-points.html#model-comparison-1",
+    "title": "Three Types of Self-Inflicted Injuries in Observational Research",
+    "section": "Model Comparison",
+    "text": "Model Comparison\n\n\n\n\n\n\nAdding the collider creates a spurious, significant effect of A.\n\n\n\n\n\n\n\n\n\n\n\nCharacteristic\n\nModel A: Omit L\n\n\nModel B: Control for L (collider)\n\n\n\nBeta\n95% CI\np-value\nBeta\n95% CI\np-value\n\n\n\n\nservice\n0.00\n-0.12, 0.13\n&gt;0.9\n-0.53\n-0.63, -0.44\n&lt;0.001\n\n\nwealth\n\n\n\n\n\n\n0.51\n0.48, 0.54\n&lt;0.001\n\n\n\nAbbreviation: CI = Confidence Interval"
+  },
+  {
+    "objectID": "content/talking-points.html#which-model-looks-better-1",
+    "href": "content/talking-points.html#which-model-looks-better-1",
+    "title": "Three Types of Self-Inflicted Injuries in Observational Research",
+    "section": "Which model looks better?",
+    "text": "Which model looks better?\n\n\nCode\ncompare_performance(fit_biased, fit_correct, rank = TRUE)\n\n\n# Comparison of Model Performance Indices\n\nName        | Model |        R2 |  R2 (adj.) |  RMSE | Sigma | AIC weights\n--------------------------------------------------------------------------\nfit_biased  |    lm |     0.526 |      0.525 | 0.707 | 0.708 |        1.00\nfit_correct |    lm | 3.722e-06 | -9.983e-04 | 1.028 | 1.029 |   1.42e-162\n\nName        | AICc weights | BIC weights | Performance-Score\n------------------------------------------------------------\nfit_biased  |         1.00 |        1.00 |           100.00%\nfit_correct |    1.43e-162 |   1.65e-161 |             0.00%\n\n\nCode\nBIC(fit_biased) - BIC(fit_correct)\n\n\n[1] -740.425"
+  },
+  {
+    "objectID": "content/talking-points.html#take-home",
+    "href": "content/talking-points.html#take-home",
+    "title": "Three Types of Self-Inflicted Injuries in Observational Research",
+    "section": "Take-Home",
+    "text": "Take-Home\n\n\n\n\n\n\nImportant\n\n\n\nRelying on model fit perpetuates the causality crisis in psychology [@bulbulia2022].\nDraw the DAG first; decide what belongs in the model before looking at numbers."
+  },
+  {
+    "objectID": "content/talking-points.html#the-what-error-is-widespread-in-experimental-studies-in-the-social-sciences",
+    "href": "content/talking-points.html#the-what-error-is-widespread-in-experimental-studies-in-the-social-sciences",
+    "title": "Three Types of Self-Inflicted Injuries in Observational Research",
+    "section": "The What Error is widespread in experimental studies in the social sciences",
+    "text": "The What Error is widespread in experimental studies in the social sciences\n\n“Overall, we find that 46.7% of the experimental studies published in APSR, AJPS, and JOP from 2012 to 2014 engaged in posttreatment conditioning (35 of 75 studies) …”\n“About 1 in 4 drop cases or subset the data based on post-treatment criteria, and nearly a third include post-treatment variables as covariates”\n“Most tellingly, nearly 1 in 8 articles directly conditions on variables that the authors themselves show as being an outcome of the experiment – an unambiguous indicator of a fundamental lack of understanding … that conditioning on posttreatment variables can invalidate results from randomized experiments.”\n“Empirically, then, the answer to the question of whether the discipline already understands posttreatment bias is clear: It does not.” [@montgomery2018]"
+  },
+  {
+    "objectID": "content/talking-points.html#mediator-bias-control-strategy-longitudinal-hygiene",
+    "href": "content/talking-points.html#mediator-bias-control-strategy-longitudinal-hygiene",
+    "title": "Three Types of Self-Inflicted Injuries in Observational Research",
+    "section": "Mediator Bias control strategy: Longitudinal Hygiene",
+    "text": "Mediator Bias control strategy: Longitudinal Hygiene\n\n\n\\[\n\\mediatorT\n\\]\n\n\\[\n\\commoncausesolvedT\n\\]"
+  },
+  {
+    "objectID": "content/talking-points.html#how-to-tame-the-what-error-hide-your-future",
+    "href": "content/talking-points.html#how-to-tame-the-what-error-hide-your-future",
+    "title": "Three Types of Self-Inflicted Injuries in Observational Research",
+    "section": "How to Tame The What Error? Hide your future",
+    "text": "How to Tame The What Error? Hide your future\nUse Repeated Measures on the Same Individuals"
+  },
+  {
+    "objectID": "content/talking-points.html#collider-bias-control-strategy-hide-your-future",
+    "href": "content/talking-points.html#collider-bias-control-strategy-hide-your-future",
+    "title": "Three Types of Self-Inflicted Injuries in Observational Research",
+    "section": "Collider bias control strategy: Hide your future",
+    "text": "Collider bias control strategy: Hide your future\n\n\n\\[\\colliderT\\]\n\n\\[\\commoncausesolvedT\\]"
+  },
+  {
+    "objectID": "content/talking-points.html#collider-bias-by-proxy-control-strategy-hide-your-future",
+    "href": "content/talking-points.html#collider-bias-by-proxy-control-strategy-hide-your-future",
+    "title": "Three Types of Self-Inflicted Injuries in Observational Research",
+    "section": "Collider bias by proxy control strategy: Hide your future",
+    "text": "Collider bias by proxy control strategy: Hide your future\n\n\n\\[\\commoncausechildT\\]\n\n\\[\\commoncausesolvedchildT\\]"
+  },
+  {
+    "objectID": "content/talking-points.html#post-exposure-collider-bias-control-strategy-hide-your-future",
+    "href": "content/talking-points.html#post-exposure-collider-bias-control-strategy-hide-your-future",
+    "title": "Three Types of Self-Inflicted Injuries in Observational Research",
+    "section": "Post-exposure collider bias control strategy: Hide your future",
+    "text": "Post-exposure collider bias control strategy: Hide your future\n\n\n\\[\\mediatorcolliderT\\]\n\n\\[\\commoncausesolvedT\\]"
+  },
+  {
+    "objectID": "content/talking-points.html#finally-our-biggest-worry-unmeasured-common-causes",
+    "href": "content/talking-points.html#finally-our-biggest-worry-unmeasured-common-causes",
+    "title": "Three Types of Self-Inflicted Injuries in Observational Research",
+    "section": "Finally, our biggest worry: Unmeasured Common Causes",
+    "text": "Finally, our biggest worry: Unmeasured Common Causes\n\\[\\downstreamT\\]"
+  },
+  {
+    "objectID": "content/talking-points.html#unmeasured-common-cause-strategy-hide-your-future",
+    "href": "content/talking-points.html#unmeasured-common-cause-strategy-hide-your-future",
+    "title": "Three Types of Self-Inflicted Injuries in Observational Research",
+    "section": "Unmeasured common cause strategy: Hide your future",
+    "text": "Unmeasured common cause strategy: Hide your future\n\n\n\\[\\downstreamT\\]\n\n\\[\\commoncausesolvedT\\]\n\n\nAnd because , we should consistently report sensitivity analyses."
+  },
+  {
+    "objectID": "content/talking-points.html#are-longitudinal-data-sensitivity-analysis-enough",
+    "href": "content/talking-points.html#are-longitudinal-data-sensitivity-analysis-enough",
+    "title": "Three Types of Self-Inflicted Injuries in Observational Research",
+    "section": "Are longitudinal data + sensitivity analysis enough?",
+    "text": "Are longitudinal data + sensitivity analysis enough?\n\n\nIf the data we collect were like this: \\[Y_{\\text{time 0}} ~~...~~ A_{\\text{time 1}}\\]\n\nWe should not be tempted to model this.\n\\[\\ytoacrazyT\\]"
+  },
+  {
+    "objectID": "content/talking-points.html#are-longitudinal-data-sensitivity-analysis-enough-1",
+    "href": "content/talking-points.html#are-longitudinal-data-sensitivity-analysis-enough-1",
+    "title": "Three Types of Self-Inflicted Injuries in Observational Research",
+    "section": "Are longitudinal data + sensitivity analysis enough?",
+    "text": "Are longitudinal data + sensitivity analysis enough?\n this is wrong?\n\\[\\ytoacrazyT\\]"
+  },
+  {
+    "objectID": "content/talking-points.html#longitudinal-data-are-not-enough",
+    "href": "content/talking-points.html#longitudinal-data-are-not-enough",
+    "title": "Three Types of Self-Inflicted Injuries in Observational Research",
+    "section": "Longitudinal data are not enough",
+    "text": "Longitudinal data are not enough\nTemporal ordering was with the observational hormone studies in the 80s/90s that modelled .\nHow?"
+  },
+  {
+    "objectID": "content/talking-points.html#researchers-failed-to-emulate-an-experiment-in-their-data-target-trial",
+    "href": "content/talking-points.html#researchers-failed-to-emulate-an-experiment-in-their-data-target-trial",
+    "title": "Three Types of Self-Inflicted Injuries in Observational Research",
+    "section": "Researchers failed to emulate an experiment in their data (Target Trial)",
+    "text": "Researchers failed to emulate an experiment in their data (Target Trial)\n\nWomen’s Health Initiative: overall hazard ratio 1.23 (0.99, 1.53)\nWomen’s Health Initiative: when broken down by years to follow-up:\n\n0-2 years 1.51 (1.06, 2.14)\n2-5 years 1.31 (0.93, 1.83)\n5 or more years 0.67 (0.41, 1.09)\n\n\n\n\n\n\n\n\nNoteSurvivor Bias.\n\n\n\nThe observational results can be \n\n\n\n\n\n\n\n\nNoteEmulating a target trial with observational data recovers experimental effects.\n\n\n\nRe-modelling recovers experimental findings [@hernan2016]."
+  },
+  {
+    "objectID": "content/talking-points.html#visualising-the-when-error",
+    "href": "content/talking-points.html#visualising-the-when-error",
+    "title": "Three Types of Self-Inflicted Injuries in Observational Research",
+    "section": "Visualising the When Error",
+    "text": "Visualising the When Error\n\n\n\n\n\n\n\n\nFigure 1: Three ways to start the clock. Only one is right."
+  },
+  {
+    "objectID": "content/talking-points.html#target-trial-check-list",
+    "href": "content/talking-points.html#target-trial-check-list",
+    "title": "Three Types of Self-Inflicted Injuries in Observational Research",
+    "section": "Target Trial Check List",
+    "text": "Target Trial Check List\n\n\n\n\nTable 1: Target-trial specification for the hormone-therapy example.\n\n\n\n\n\n\nelement\ndefinition\n\n\n\n\nEligibility\nPost-menopausal women aged 50–79, no prior CHD\n\n\nTreatment\nInitiate oestrogen + progestin on day of Rx pickup\n\n\nComparison\nNo hormone-therapy initiation on that day\n\n\nOutcome\nAll-cause mortality\n\n\nFollow-up\n8 years or until death / loss to follow-up"
+  },
+  {
+    "objectID": "content/talking-points.html#illustration",
+    "href": "content/talking-points.html#illustration",
+    "title": "Three Types of Self-Inflicted Injuries in Observational Research",
+    "section": "Illustration",
+    "text": "Illustration"
+  },
+  {
+    "objectID": "content/talking-points.html#the-new-zealand-attitudes-and-values-study",
+    "href": "content/talking-points.html#the-new-zealand-attitudes-and-values-study",
+    "title": "Three Types of Self-Inflicted Injuries in Observational Research",
+    "section": "The New Zealand Attitudes and Values Study:",
+    "text": "The New Zealand Attitudes and Values Study:\n\nPlanned 20-year longitudinal study, currently in its 14th year, &gt; 77k measured\nSample frame is drawn randomly from the NZ Electoral Roll."
+  },
+  {
+    "objectID": "content/talking-points.html#causal-questions",
+    "href": "content/talking-points.html#causal-questions",
+    "title": "Three Types of Self-Inflicted Injuries in Observational Research",
+    "section": "Causal Questions",
+    "text": "Causal Questions\n\nAverage Treatment Effect: Difference in averages of social outcomes (a) if everyone in New Zealand were to attend religious service at least 1x per month (b) if everyone were not to attend religious service at all.\nHeterogeneous Treatment Effects: Machine learning of groups who differ in such effects. Focus here on Qini Curve at 20% and 30% of full “budget”.\nUse Qini results to select for Policy Trees: Clarify who responds strongly/weakly.\n\nNote: all results use “honest” learning – sample is split into training/test sets (here 70/30)."
+  },
+  {
+    "objectID": "content/talking-points.html#outcomes",
+    "href": "content/talking-points.html#outcomes",
+    "title": "Three Types of Self-Inflicted Injuries in Observational Research",
+    "section": "Outcomes",
+    "text": "Outcomes\n\nSense of Belonging\nSocial Support\nCharitable Donations (annual)\nVolunteering (weekly)\n\nAll outcomes measured one year after the intervention"
+  },
+  {
+    "objectID": "content/talking-points.html#three-wave-panel-design-control-for-baseline-exposure-and-outcome-among-confounder-set.",
+    "href": "content/talking-points.html#three-wave-panel-design-control-for-baseline-exposure-and-outcome-among-confounder-set.",
+    "title": "Three Types of Self-Inflicted Injuries in Observational Research",
+    "section": "Three-wave Panel Design: control for baseline exposure and outcome among confounder set.",
+    "text": "Three-wave Panel Design: control for baseline exposure and outcome among confounder set.\n\\[\n\\threeLONG\n\\]"
+  },
+  {
+    "objectID": "content/talking-points.html#target-population-residents-of-new-zealand-in-2018-had-they-not-been-censored-through-2021.",
+    "href": "content/talking-points.html#target-population-residents-of-new-zealand-in-2018-had-they-not-been-censored-through-2021.",
+    "title": "Three Types of Self-Inflicted Injuries in Observational Research",
+    "section": "Target Population: Residents of New Zealand in 2018 had they not been censored through 2021.",
+    "text": "Target Population: Residents of New Zealand in 2018 had they not been censored through 2021.\n\nCensus Weights (Age X Gender X Ethnicity)\n\n\n\n(IPCW Stabilised & Trimmed)"
+  },
+  {
+    "objectID": "content/talking-points.html#religious-service-intervention",
+    "href": "content/talking-points.html#religious-service-intervention",
+    "title": "Three Types of Self-Inflicted Injuries in Observational Research",
+    "section": "Religious Service Intervention",
+    "text": "Religious Service Intervention\n\\[f(A) = \\begin{cases} 1 & \\text{if } a \\ge 0 \\text{ At least 1 x per month Religious Attendance} \\\\ 0 & \\text{if } a = 0 \\text{ Monthly Religious Service} \\end{cases}\\]"
+  },
+  {
+    "objectID": "content/talking-points.html#histogram-showing-split",
+    "href": "content/talking-points.html#histogram-showing-split",
+    "title": "Three Types of Self-Inflicted Injuries in Observational Research",
+    "section": "Histogram Showing Split",
+    "text": "Histogram Showing Split"
+  },
+  {
+    "objectID": "content/talking-points.html#love-plot-of-propensity-scores",
+    "href": "content/talking-points.html#love-plot-of-propensity-scores",
+    "title": "Three Types of Self-Inflicted Injuries in Observational Research",
+    "section": "Love Plot of Propensity Scores",
+    "text": "Love Plot of Propensity Scores"
+  },
+  {
+    "objectID": "content/talking-points.html#average-treatment-effect-results",
+    "href": "content/talking-points.html#average-treatment-effect-results",
+    "title": "Three Types of Self-Inflicted Injuries in Observational Research",
+    "section": "Average Treatment Effect Results:",
+    "text": "Average Treatment Effect Results:"
+  },
+  {
+    "objectID": "content/talking-points.html#workflow",
+    "href": "content/talking-points.html#workflow",
+    "title": "Three Types of Self-Inflicted Injuries in Observational Research",
+    "section": "Workflow",
+    "text": "Workflow\n\nTarget population: New Zealand Population by 2018 census weights\nOutcomes: all NZAVS outcomes relating to pro-sociality (outcome-wide study)\nMissing data: inverse-probability of censoring weights non-parametrically estimated/ causal forests permit missing data at baseline\nEligibility: participated in NZAVS 2018 (wave-10) and 2019 (wave 11, exposure wave) may have been lost to follow-up in wave 12, 46,377.\nBonferroni correct for multiple comparisons / E-value threshold = 1.2"
+  },
+  {
+    "objectID": "content/talking-points.html#transition-table-religious-attendance",
+    "href": "content/talking-points.html#transition-table-religious-attendance",
+    "title": "Three Types of Self-Inflicted Injuries in Observational Research",
+    "section": "Transition table: Religious Attendance",
+    "text": "Transition table: Religious Attendance\n\n\n\nFrom / To\nState 0\nState 1\nTotal\n\n\n\n\nState 0\n28545\n681\n29226\n\n\nState 1\n887\n3593\n4480"
+  },
+  {
+    "objectID": "content/talking-points.html#average-treatment-effect",
+    "href": "content/talking-points.html#average-treatment-effect",
+    "title": "Three Types of Self-Inflicted Injuries in Observational Research",
+    "section": "Average Treatment Effect",
+    "text": "Average Treatment Effect\nThe following outcomes showed reliable causal evidence (E‑value lower bound &gt; 1.2): - Volunteering (weekly, log): 0.154(0.056,0.252); on the original scale, 11.264 minutes(3.943,19.158). E‑value bound = 1.287 - log Charity Donate: 0.13(0.045,0.215); on the original scale, 39.935 (12.247,74.883). E‑value bound = 1.25"
+  },
+  {
+    "objectID": "content/talking-points.html#how-much-better-if-we-treated-by-cate",
+    "href": "content/talking-points.html#how-much-better-if-we-treated-by-cate",
+    "title": "Three Types of Self-Inflicted Injuries in Observational Research",
+    "section": "How Much Better if We Treated by CATE?",
+    "text": "How Much Better if We Treated by CATE?"
+  },
+  {
+    "objectID": "content/talking-points.html#who-should-we-treat-first-belonging",
+    "href": "content/talking-points.html#who-should-we-treat-first-belonging",
+    "title": "Three Types of Self-Inflicted Injuries in Observational Research",
+    "section": "Who Should We Treat First? Belonging",
+    "text": "Who Should We Treat First? Belonging"
+  },
+  {
+    "objectID": "content/talking-points.html#who-should-we-treat-first-charitable-donations",
+    "href": "content/talking-points.html#who-should-we-treat-first-charitable-donations",
+    "title": "Three Types of Self-Inflicted Injuries in Observational Research",
+    "section": "Who Should We Treat First? Charitable Donations",
+    "text": "Who Should We Treat First? Charitable Donations"
+  },
+  {
+    "objectID": "content/talking-points.html#closing",
+    "href": "content/talking-points.html#closing",
+    "title": "Three Types of Self-Inflicted Injuries in Observational Research",
+    "section": "Closing",
+    "text": "Closing\n\n\n\n\n\n\n\n\nError\nNeed\nRemedy\n\n\n\n\nWhat\nControl the right variables\nDraw a DAG first\n\n\nWhen\nStart the clock on time\nEmulate a target trial\n\n\nWho\nTreat the right people\nWeight to target + investigate heterogeneity"
+  },
+  {
+    "objectID": "content/talking-points.html#thanks",
+    "href": "content/talking-points.html#thanks",
+    "title": "Three Types of Self-Inflicted Injuries in Observational Research",
+    "section": "Thanks",
+    "text": "Thanks\n\n\nTRT Grant 0418 & Max Planck Institute for Evolutionary Anthropology for support.\nChris G. Sibley (NZAVS lead Investigator) for the heavy data lifting\n77,490 NZAVS participants for their time\n with questions or if you would like to become involved: \n\n\n\n\n\n\nNZAVS"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Beyond Correlation: A Practical Introduction to Causal Inference in Observational Social Psychology",
+    "section": "",
+    "text": "NoteEssentials\n\n\n\n\nWhen: Wednesday 19 November 2025, 09:00–16:00\nWhere: Redmond Barry Building (Building 115), Level 5 Room 516, University of Melbourne\nFormat: In-person via SASP abstract submission\nMorning: Average treatment effects + student presentations\nAfternoon: Heterogeneous effects & hands-on causal machine learning\n\nIf you want a sense of causal inference, the morning is good enough. Causal machine learning + analysis of heterogenity in the afternoon.\nJump to: Logistics • Venue • Why causal inference? • Workshop plan • Setup"
+  },
+  {
+    "objectID": "index.html#logistics",
+    "href": "index.html#logistics",
+    "title": "Beyond Correlation: A Practical Introduction to Causal Inference in Observational Social Psychology",
+    "section": "Logistics",
+    "text": "Logistics\n\n\n\n\n\n\nImportantLunch: 12:15 pm\n\n\n\nWe’ll regroup at Jimmy Watson’s Wine Bar Bistro (333 Lygon Street, Carlton), a quick five-minute walk from Redmond Barry. Lunch is supported by Templeton Religion Trust Grant 0418 for participants attending the full workshop.\n\n\n\n\n\n\n\n\nTipMorning meet-up: 08:10am\n\n\n\nMeet in the Rydges Melbourne lobby (Exhibition Street) and we’ll walk (~1.5 km) to campus together. Great if you’d like company (or directions) before we kick off.\n\n\n\n\n\n\n\n\nImportantLecture links\n\n\n\nSlides and recordings live under “Workshop Content” in the site navigation.\n\n\n\n\n\n\nRoute between the workshop venue (Redmond Barry Building) and Wine Bar Bistro, 333 Lygon Street, Carlton. Do not follow this exact route."
+  },
+  {
+    "objectID": "index.html#venue-location",
+    "href": "index.html#venue-location",
+    "title": "Beyond Correlation: A Practical Introduction to Causal Inference in Observational Social Psychology",
+    "section": "Venue Location",
+    "text": "Venue Location\nWe’ll meet on Level 5 of the Redmond Barry Building. Click the map marker for the official campus map—sessions start promptly at 9 am, so plan a little buffer."
+  },
+  {
+    "objectID": "index.html#why-is-causal-inference-important",
+    "href": "index.html#why-is-causal-inference-important",
+    "title": "Beyond Correlation: A Practical Introduction to Causal Inference in Observational Social Psychology",
+    "section": "Why is causal inference important?",
+    "text": "Why is causal inference important?\nSuppose you observe that psychology graduate students who own expensive espresso machines publish more papers. Should your department invest in high-end coffee equipment for all incoming students?\nProbably not. This is the difference between prognostic and causal knowledge.\nObservational psychology typically recovers prognostic knowledge – which factors predict which others. The word ‘predictor’ is engrained in our vocabulary. And we have a great tolerance for it. Should we? Predictions don’t tell us what would happen if we intervened.\nConsider: Owning an expensive coffee machine predicts publication success, but giving someone an expensive machine wouldn’t cause their productivity to increase. The machine is likely a marker for other factors: being further along in candidature, having more disposable income, or possessing pre-existing caffeinated ambition. Of course the machines might help, but how much?\nThe distinction between prediction and causation, which is often stated only to be ignored, has serious implications for conduct in psychological science\n\nWe might observe that adolescents with higher self-esteem have better academic outcomes. But if we were to intervene to boost self-esteem directly (through positive affirmations or praise), would grades improve? Or is self-esteem mostly a marker for other causal factors like stable family environments or prior academic success?\nWe might find that people who practice mindfulness meditation report lower anxiety. But does meditation cause reduced anxiety, or are less anxious people simply more likely to maintain a meditation practice – i.e. to sit, for long periods of time, still?\nWe might observe that children who attend preschool show better social skills. But before recommending universal preschool, we need to ask: would sending any child to preschool produce these benefits, or do families who can afford and prioritise preschool differ in ways that independently foster social development?\n\nPrognostic models tell us what to expect. Causal models tell us what we can change. For psychologists aiming to improve human welfare, that distinction is everything."
+  },
+  {
+    "objectID": "index.html#the-workshop",
+    "href": "index.html#the-workshop",
+    "title": "Beyond Correlation: A Practical Introduction to Causal Inference in Observational Social Psychology",
+    "section": "The workshop",
+    "text": "The workshop\nThis full-day, practice-oriented workshop introduces modern causal inference for observational data, with an emphasis on discovering for whom effects are strongest (afternoon).\nWe will:\n\nUnveil a causal workflow that starts with asking a clearly formulated causal question.\nBefore answering a causal question we must consider and explicate identification assumptions. We will consider these assumptions and introduce graphical tools for addressing them. You will discover that clarifying assumptions is not a statistical task.\nOnly after stating our questions and assumptions do we turn to the data and their analysis. By the end of the workshop, you will conduct an analysis using doubly robust machine learning – which has many advantages over standard estimators.\nAfter estimation there is communication. I’ll describe how to graphical tools to clarify results audiences with applied interests.\n\n\nObjectives\nYou will leave with:\n\nAn understanding of how to ask, and answer, causal questions.\nAnnotated R code for simulating and estimating average and heterogeneous treatment effects.\nA curated reading list for self-study.\nExamples of how to communicate causal results to academic, policy, and organisational audiences."
+  },
+  {
+    "objectID": "index.html#my-assumptions-about-you.",
+    "href": "index.html#my-assumptions-about-you.",
+    "title": "Beyond Correlation: A Practical Introduction to Causal Inference in Observational Social Psychology",
+    "section": "My assumptions about you.",
+    "text": "My assumptions about you.\nThe workshop assumes familiarity with regression and R, but no prior training in causal inference.\n\n\n\n\n\n\nTipA note on pace\n\n\n\nPlease do not worry if the math or code looks intimidating at first glance. We’ll slow everything down."
+  },
+  {
+    "objectID": "index.html#setup",
+    "href": "index.html#setup",
+    "title": "Beyond Correlation: A Practical Introduction to Causal Inference in Observational Social Psychology",
+    "section": "Setup",
+    "text": "Setup\n\nInstall the current version of R (free) from https://cran.r-project.org/\nInstall RStudio Desktop (free) from https://posit.co/download/rstudio-desktop/\n\n(Or pick your favourite IDE – I use neovim Lazy – the code doesn’t care.)\n\nInstall the workshop packages:\n\nif (!requireNamespace(\"devtools\", quietly = TRUE)) {\n  install.packages(\"devtools\")\n}\n\ndevtools::install_github(\"go-bayes/causalworkshop\")\n\n# optional packages for extended demonstrations\ndevtools::install_github(\"go-bayes/margot\")\nOnce installed, run:\nlibrary(causalworkshop)\ncheck_workshop_prerequisites()\nDownload the R scripts:\nlibrary(causalworkshop)\n\nget_workshop_scripts()  # copies scripts into ./workshop-scripts\nlist_workshop_scripts()\nWork through scripts 01–05 Prior to the workshop (06 is optional)."
+  },
+  {
+    "objectID": "index.html#workshop-materials",
+    "href": "index.html#workshop-materials",
+    "title": "Beyond Correlation: A Practical Introduction to Causal Inference in Observational Social Psychology",
+    "section": "Workshop materials",
+    "text": "Workshop materials\n\nThe lectures are somewhat technical at the moment. I’ll be simplifying them before the workshop and posting YouTube videos prior to the workshop. Stay tuned here for updates.\nStudent presentations will be posted here after the workshop.\nPrevious talks and examples remain available for reference; we will link to them from the relevant sections."
+  },
+  {
+    "objectID": "index.html#agenda",
+    "href": "index.html#agenda",
+    "title": "Beyond Correlation: A Practical Introduction to Causal Inference in Observational Social Psychology",
+    "section": "Agenda",
+    "text": "Agenda\n\n\n\n\nTable 1: Schedule and Learning Goals\n\n\n\n\n\n\nTime\nSession\nLearning goals & activities\n\n\n\n\n09:00–09:45\nHow to ask a causal question\nState precise causal questions with the potential outcomes framework; focus on the average treatment effect (ATE).\n\n\n09:45–11:00\nThe causal workflow + causal diagrams (from question to answer)\nTrace the full causal workflow: define populations, build causal diagrams, assess assumptions, analyse data, conduct sensitivity analysis, and communicate results—using DAGs to expose bias from confounding, colliders, and mediators.\n\n\n11:00–11:30\nCoffee break & discussion (you might need to bring your own coffee)\nGroup Activities\n\n\n11:30–12:15\nWorked examples: employer gratitude & religious service attendance\nWalk through two applied studies from the NZAVS. Zahle Wisely's employer gratitude analysis; then Hannah Robinson's religious service attendance and personality Q&A follows.\n\n\n12:15–13:45\nLunch\nBreak.\n\n\n13:45–14:30\nBeyond averages: heterogeneous treatment effects and policy trees\nIntroduce heterogeneous treatment effects (Conditional Average Treatment Effects) and policy trees; discuss when effects differ across people.\n\n\n14:30–15:00\nRevisiting our examples: policy tree analyses\nCase study 2; interpret tree-based decision rules useful for obtaining *policies*.\n\n\n15:00–16:00\nHands-on demonstration: formulating questions and estimating effects in R\nR demonstrahion using causal forests; interpret simulated ATEs and HTEs, graphs, reporting & etc."
+  },
+  {
+    "objectID": "index.html#contact",
+    "href": "index.html#contact",
+    "title": "Beyond Correlation: A Practical Introduction to Causal Inference in Observational Social Psychology",
+    "section": "Contact",
+    "text": "Contact\nQuestions before the workshop? Email me at joseph.bulbulia@vuw.ac.nz."
   },
   {
     "objectID": "presentations/presentations-page.html",
@@ -1404,7 +1418,7 @@
     "href": "simulations/01-simulation-population.html#id-app-c",
     "title": "Simulation: Population Estimate",
     "section": "S3. A Mathematical Explanation for the Difference in Marginal Effects between Censored and Uncensored Populations",
-    "text": "S3. A Mathematical Explanation for the Difference in Marginal Effects between Censored and Uncensored Populations\nThis appendix explains why marginal effects may differ between censored and uncensored populations, even in the absence of unmeasured confounding.\n\nDefinitions\nLet A denote the exposure variable, where a represents the reference level and a^* represents the comparison level.\nLet Y denote the outcome variable.\nLet F denote an effect modifier.\nLet C denote an indicator for membership in the uncensored or censored population, where C = 0 indicates the uncensored population and C = 1 indicates the censored population.\n\n\nAverage Treatment Effects\nThe average treatment effects for the uncensored and censored populations are defined as\n\n\\Delta_{\\text{uncensored}} = \\mathbb{E}\\bigl[Y(a^*) - Y(a) \\mid C = 0\\bigr],\n\n\n\\Delta_{\\text{censored}} = \\mathbb{E}\\bigl[Y(a^*) - Y(a) \\mid C = 1\\bigr].\n\n\n\nPotential Outcomes and Causal Consistency\nBy causal consistency, potential outcomes can be expressed in terms of observed outcomes:\n\n\\Delta_{\\text{uncensored}} = \\mathbb{E}[Y \\mid A = a^*, C = 0] - \\mathbb{E}[Y \\mid A = a, C = 0],\n\n\n\\Delta_{\\text{censored}} = \\mathbb{E}[Y \\mid A = a^*, C = 1] - \\mathbb{E}[Y \\mid A = a, C = 1].\n\n\n\nLaw of Total Probability\nBy the law of total probability, we can decompose these average treatment effects over the distribution of the effect modifier F:\n\n\\Delta_{\\text{uncensored}}\n= \\sum_{f}\n\\Bigl\\{\n\\mathbb{E}[Y \\mid A = a^*, F = f, C = 0]\n-\n\\mathbb{E}[Y \\mid A = a, F = f, C = 0]\n\\Bigr\\}\n\\times \\Pr(F = f \\mid C = 0),\n\n\n\\Delta_{\\text{censored}}\n= \\sum_{f}\n\\Bigl\\{\n\\mathbb{E}[Y \\mid A = a^*, F = f, C = 1]\n-\n\\mathbb{E}[Y \\mid A = a, F = f, C = 1]\n\\Bigr\\}\n\\times \\Pr(F = f \\mid C = 1).\n\nThese expressions show that the marginal effects are weighted averages of stratum-specific effects, where the weights are given by the distribution of F in each population.\n\n\nInformative Censoring and Effect Modification\nAssume that censoring is informative with respect to the effect modifier F, in the sense that\n\n\\Pr(F = f \\mid C = 0) \\neq \\Pr(F = f \\mid C = 1).\n\nUnder this assumption, the weights used to calculate the marginal effects differ between the uncensored and censored populations. Consequently, unless the effect of A on Y is identical across all levels of F, we should not expect the marginal effects to coincide.\nIn general, we cannot guarantee that\n\n\\Delta_{\\text{uncensored}} = \\Delta_{\\text{censored}}.\n\nEquality of marginal effects between the two populations would only hold in special cases, such as a universal null effect (no effect of the exposure on the outcome for any individual), by chance, or under specific conditions discussed by VanderWeele and Robins (2007) and further elucidated by Suzuki et al. (2013). Otherwise,\n\n\\Delta_{\\text{uncensored}} \\neq \\Delta_{\\text{censored}}.\n\nFurthermore, VanderWeele (2012) proved that if there is effect modification of A by F, then there will be a difference in at least one scale of causal contrast. That is, either\n\n\\Delta^{\\text{risk ratio}}_{\\text{uncensored}} \\neq\n\\Delta^{\\text{risk ratio}}_{\\text{censored}},\n\nor\n\n\\Delta^{\\text{difference}}_{\\text{uncensored}} \\neq\n\\Delta^{\\text{difference}}_{\\text{censored}}.\n\nThus, even under no unmeasured confounding, informative censoring combined with effect modification can generate genuine differences in marginal effects between censored and uncensored populations. For comprehensive discussions on sampling, transport, and inference, see Issa J. Dahabreh and Hernán (2019) and Issa J. Dahabreh et al. (2021).\n ## S4. R Simulation to Clarify Why The Distribution of Effect Modifiers Matters For Estimating Treatment Effects For A Target Population {#id-app-d}\nFirst, we load the stdReg library, which obtains marginal effect estimates by simulating counterfactuals under different levels of treatment (Sjölander 2016). If a treatment is continuous, the levels can be specified.\nWe also load the parameters library, which creates nice tables (Lüdecke et al. 2020).\n\n#|label: loadlibs\n\n# to obtain marginal effects\nif (!requireNamespace(\"stdReg\", quietly = TRUE)) install.packages(\"stdReg\")\nlibrary(stdReg)\n\n#  to view data\nif (!requireNamespace(\"skimr\", quietly = TRUE)) install.packages(\"skimr\")\nlibrary(skimr)\n\n# to create nice tables\nif (!requireNamespace(\"parameters\", quietly = TRUE)) install.packages(\"parameters\")\nlibrary(parameters)\n\n\nif (!require(margot, quietly = TRUE)) {\n  devtools::install_github(\"go-bayes/margot\") # ensure version is at least 1.0.45\n  library(\"margot\")\n}\n\nmargot 1.0.280\n\n\nNext, we write a function to simulate data for the sample and target populations.\nWe assume the treatment effect is the same in the sample and target populations, that the coefficient for the effect modifier and the coefficient for interaction are the same, that there is no unmeasured confounding throughout the study, and that there is only selective attrition of one effect modifier such that the baseline population differs from the analytic sample population at the end of the study.\nThat is: the distribution of effect modifiers is the only respect in which the sample will differ from the target population.\nThis function will generate data under a range of scenarios. Refer to documentation in the margot package: Bulbulia (2024a)\n\n# function to generate data for the sample and population,\n# Along with precise sample weights for the population, there are differences\n# in the distribution of the true effect modifier but no differences in the treatment effect\n# or the effect modification. all that differs between the sample and the population is\n# the distribution of effect modifiers.\n# seed\nset.seed(123)\n\n# simulate data -- you can use different parameters\ndata &lt;- margot::simulate_ate_data_with_weights(\n  n_sample = 10000,\n  n_population = 100000,\n  p_z_sample = 0.1,\n  p_z_population = 0.5,\n  beta_a = 1,\n  beta_z = 2.5,\n  noise_sd = 0.5\n)\n\n# inspect\n# skimr::skim(data)\n\nWe have generated both sample and population data.\nNext, we verify that the distributions of effect modifiers differ in the sample and in the target population:\n\n# obtain the generated data\nsample_data &lt;- data$sample_data\npopulation_data &lt;- data$population_data\n\n# check imbalance\ntable(sample_data$z_sample) # type 1 is rare\n\n\n   0    1 \n9041  959 \n\ntable(population_data$z_population) # type 1 is common\n\n\n    0     1 \n49785 50215 \n\n\nThe sample and population distributions differ.\nNext, consider the question: ‘What are the differences in the coefficients that we obtain from the study population at the end of the study, compared with those we would obtain for the target population?’\nFirst, we obtain the regression coefficients for the sample. They are as follows:\n\n# model coefficients sample\nmodel_sample &lt;- glm(y_sample ~ a_sample * z_sample,\n  data = sample_data\n)\n\n# summary\nparameters::model_parameters(model_sample, ci_method = \"wald\")\n\nParameter           | Coefficient |       SE |        95% CI | t(9996) |      p\n-------------------------------------------------------------------------------\n(Intercept)         |   -2.10e-03 | 7.30e-03 | [-0.02, 0.01] |   -0.29 | 0.774 \na sample            |        1.00 |     0.01 | [ 0.98, 1.02] |   96.38 | &lt; .001\nz sample            |        2.53 |     0.02 | [ 2.49, 2.58] |  107.68 | &lt; .001\na sample × z sample |        0.45 |     0.03 | [ 0.39, 0.52] |   13.46 | &lt; .001\n\n\n\nUncertainty intervals (equal-tailed) and p-values (two-tailed) computed\n  using a Wald t-distribution approximation.\n\n\nNext, we obtain the regression coefficients for the weighted regression of the sample. Notice that the coefficients are virtually the same:\n\n# model the sample weighted to the population, again note that these coefficients are similar\nmodel_weighted_sample &lt;- glm(y_sample ~ a_sample * z_sample,\n  data = sample_data, weights = weights\n)\n\n# summary\nsummary(parameters::model_parameters(model_weighted_sample,\n  ci_method = \"wald\"\n))\n\nParameter           | Coefficient |        95% CI |      p\n----------------------------------------------------------\n(Intercept)         |   -2.10e-03 | [-0.02, 0.02] | 0.827 \na sample            |        1.00 | [ 0.97, 1.03] | &lt; .001\nz sample            |        2.53 | [ 2.51, 2.56] | &lt; .001\na sample × z sample |        0.45 | [ 0.41, 0.49] | &lt; .001\n\nModel: y_sample ~ a_sample * z_sample (10000 Observations)\nSigma: 0.483 (df = 9996)\n\n\n\nUncertainty intervals (equal-tailed) and p-values (two-tailed) computed\n  using a Wald t-distribution approximation.\n\n\nWe might be tempted to infer that weighting wasn’t relevant to the analysis. However, we’ll see that such an interpretation would be a mistake.\nNext, we obtain model coefficients for the population. Note again there is no difference – only narrower errors owing to the large sample size.\n\n# model coefficients population -- note that these coefficients are very similar.\nmodel_population &lt;- glm(y_population ~ a_population * z_population,\n  data = population_data\n)\n\nparameters::model_parameters(model_population, ci_method = \"wald\")\n\nParameter                   | Coefficient |       SE |        95% CI | t(99996) |      p\n----------------------------------------------------------------------------------------\n(Intercept)                 |   -7.10e-04 | 3.19e-03 | [-0.01, 0.01] |    -0.22 | 0.824 \na population                |        1.00 | 4.49e-03 | [ 0.99, 1.01] |   222.88 | &lt; .001\nz population                |        2.50 | 4.49e-03 | [ 2.50, 2.51] |   557.23 | &lt; .001\na population × z population |        0.50 | 6.34e-03 | [ 0.49, 0.51] |    78.46 | &lt; .001\n\n\n\nUncertainty intervals (equal-tailed) and p-values (two-tailed) computed\n  using a Wald t-distribution approximation.\n\n\nAgain, there is no difference. That is, we find that all model coefficients are practically equivalent. The different distribution of effect modifiers does not result in different coefficient values for the treatment effect, the effect-modifier ‘effect,’ or the interaction of the effect modifier and treatment.\nConsider why this is the case: in a large sample where the causal effects are invariant – as we have simulated them to be – we will have good replication in the effect modifiers within the sample, so our statistical model can recover the coefficients for the population without challenge.\nHowever, in causal inference, we are interested in the marginal effect of the treatment for a target population. That is, we seek an estimate for the counterfactual contrast in which everyone in a pre-specified population or stratum of a population was subject to one level of treatment compared with a counterfactual condition in which everyone in this same population was subject to another level of the same treatment.\nThe marginal effect estimates will differ in at least one measure of effect when the analytic sample population has a different distribution of effect modifiers compared to the target population.\nTo see this, we use the stdReg package to recover marginal effect estimates, comparing (1) the sample ATE, (2) the true oracle ATE for the population, and (3) the weighted sample ATE. We will use the outputs of the same models above. The only difference is that we will calculate marginal effects from these outputs. We will contrast a difference from an intervention in which everyone receives treatment = 0 with one in which everyone receives treatment = 1; however, this choice is arbitrary, and the general lessons apply irrespective of the estimand.\nFirst, consider this Average Treatment Effect for the analytic population:\n\n# What inference do we draw?\n# we cannot say the models are unbiased for the marginal effect estimates.\n# regression standardisation\nlibrary(stdReg) # to obtain marginal effects\n\n# obtain sample ate\nfit_std_sample &lt;- stdReg::stdGlm(model_sample,\n  data = sample_data, X = \"a_sample\"\n)\n\n# summary\nsummary(fit_std_sample, contrast = \"difference\", reference = 0)\n\n\nFormula: y_sample ~ a_sample * z_sample\nFamily: gaussian \nLink function: identity \nExposure:  a_sample \nReference level:  a_sample = 0 \nContrast:  difference \n\n  Estimate Std. Error lower 0.95 upper 0.95\n0     0.00    0.00000       0.00       0.00\n1     1.04    0.00996       1.02       1.06\n\n\nThe treatment effect is given as a 1.04 unit change in the outcome across the analytic population, with a confidence interval from 1.02 to 1.06.\nNext, we obtain the true (oracle) treatment effect for the target population under the same intervention:\n\n## note the population effect is different\n\n# obtain true ate\nfit_std_population &lt;- stdReg::stdGlm(model_population,\n  data = population_data, X = \"a_population\"\n)\n\n# summary\nsummary(fit_std_population, contrast = \"difference\", reference = 0)\n\n\nFormula: y_population ~ a_population * z_population\nFamily: gaussian \nLink function: identity \nExposure:  a_population \nReference level:  a_population = 0 \nContrast:  difference \n\n  Estimate Std. Error lower 0.95 upper 0.95\n0     0.00    0.00000       0.00       0.00\n1     1.25    0.00327       1.24       1.26\n\n\nNote that the true treatment effect is a 1.25-unit change in the population, with a confidence bound between 1.24 and 1.26. This is well outside the ATE that we obtain from the analytic population!\nNext, consider the ATE in the weighted regression, where the analytic sample was weighted to the target population’s true distribution of effect modifiers:\n\n## next try weights adjusted ate where we correctly assign population weights to the sample\nfit_std_weighted_sample_weights &lt;- stdReg::stdGlm(model_weighted_sample,\n  data = sample_data, X = \"a_sample\"\n)\n\n# this gives us the right answer\nsummary(fit_std_weighted_sample_weights, contrast = \"difference\", reference = 0)\n\n\nFormula: y_sample ~ a_sample * z_sample\nFamily: gaussian \nLink function: identity \nExposure:  a_sample \nReference level:  a_sample = 0 \nContrast:  difference \n\n  Estimate Std. Error lower 0.95 upper 0.95\n0     0.00     0.0000       0.00       0.00\n1     1.22     0.0165       1.19       1.25\n\n\nWe find that we obtain the population-level causal effect estimate with accurate coverage by weighting the sample to the target population. So with appropriate weights, our results generalise from the sample to the target population."
+    "text": "S3. A Mathematical Explanation for the Difference in Marginal Effects between Censored and Uncensored Populations\nThis appendix explains why marginal effects may differ between censored and uncensored populations, even in the absence of unmeasured confounding.\n\nDefinitions\nLet A denote the exposure variable, where a represents the reference level and a^* represents the comparison level.\nLet Y denote the outcome variable.\nLet F denote an effect modifier.\nLet C denote an indicator for membership in the uncensored or censored population, where C = 0 indicates the uncensored population and C = 1 indicates the censored population.\n\n\nAverage Treatment Effects\nThe average treatment effects for the uncensored and censored populations are defined as\n\n\\Delta_{\\text{uncensored}} = \\mathbb{E}\\bigl[Y(a^*) - Y(a) \\mid C = 0\\bigr],\n\n\n\\Delta_{\\text{censored}} = \\mathbb{E}\\bigl[Y(a^*) - Y(a) \\mid C = 1\\bigr].\n\n\n\nPotential Outcomes and Causal Consistency\nBy causal consistency, potential outcomes can be expressed in terms of observed outcomes:\n\n\\Delta_{\\text{uncensored}} = \\mathbb{E}[Y \\mid A = a^*, C = 0] - \\mathbb{E}[Y \\mid A = a, C = 0],\n\n\n\\Delta_{\\text{censored}} = \\mathbb{E}[Y \\mid A = a^*, C = 1] - \\mathbb{E}[Y \\mid A = a, C = 1].\n\n\n\nLaw of Total Probability\nBy the law of total probability, we can decompose these average treatment effects over the distribution of the effect modifier F:\n\n\\Delta_{\\text{uncensored}}\n= \\sum_{f}\n\\Bigl\\{\n\\mathbb{E}[Y \\mid A = a^*, F = f, C = 0]\n-\n\\mathbb{E}[Y \\mid A = a, F = f, C = 0]\n\\Bigr\\}\n\\times \\Pr(F = f \\mid C = 0),\n\n\n\\Delta_{\\text{censored}}\n= \\sum_{f}\n\\Bigl\\{\n\\mathbb{E}[Y \\mid A = a^*, F = f, C = 1]\n-\n\\mathbb{E}[Y \\mid A = a, F = f, C = 1]\n\\Bigr\\}\n\\times \\Pr(F = f \\mid C = 1).\n\nThese expressions show that the marginal effects are weighted averages of stratum-specific effects, where the weights are given by the distribution of F in each population.\n\n\nInformative Censoring and Effect Modification\nAssume that censoring is informative with respect to the effect modifier F, in the sense that\n\n\\Pr(F = f \\mid C = 0) \\neq \\Pr(F = f \\mid C = 1).\n\nUnder this assumption, the weights used to calculate the marginal effects differ between the uncensored and censored populations. Consequently, unless the effect of A on Y is identical across all levels of F, we should not expect the marginal effects to coincide.\nIn general, we cannot guarantee that\n\n\\Delta_{\\text{uncensored}} = \\Delta_{\\text{censored}}.\n\nEquality of marginal effects between the two populations would only hold in special cases, such as a universal null effect (no effect of the exposure on the outcome for any individual), by chance, or under specific conditions discussed by VanderWeele and Robins (2007) and further elucidated by Suzuki et al. (2013). Otherwise,\n\n\\Delta_{\\text{uncensored}} \\neq \\Delta_{\\text{censored}}.\n\nFurthermore, VanderWeele (2012) proved that if there is effect modification of A by F, then there will be a difference in at least one scale of causal contrast. That is, either\n\n\\Delta^{\\text{risk ratio}}_{\\text{uncensored}} \\neq\n\\Delta^{\\text{risk ratio}}_{\\text{censored}},\n\nor\n\n\\Delta^{\\text{difference}}_{\\text{uncensored}} \\neq\n\\Delta^{\\text{difference}}_{\\text{censored}}.\n\nThus, even under no unmeasured confounding, informative censoring combined with effect modification can generate genuine differences in marginal effects between censored and uncensored populations. For comprehensive discussions on sampling, transport, and inference, see Issa J. Dahabreh and Hernán (2019) and Issa J. Dahabreh et al. (2021).\n ## S4. R Simulation to Clarify Why The Distribution of Effect Modifiers Matters For Estimating Treatment Effects For A Target Population {#id-app-d}\nFirst, we load the stdReg library, which obtains marginal effect estimates by simulating counterfactuals under different levels of treatment (Sjölander 2016). If a treatment is continuous, the levels can be specified.\nWe also load the parameters library, which creates nice tables (Lüdecke et al. 2020).\n\n#|label: loadlibs\n\n# to obtain marginal effects\nif (!requireNamespace(\"stdReg\", quietly = TRUE)) install.packages(\"stdReg\")\nlibrary(stdReg)\n\n#  to view data\nif (!requireNamespace(\"skimr\", quietly = TRUE)) install.packages(\"skimr\")\nlibrary(skimr)\n\n# to create nice tables\nif (!requireNamespace(\"parameters\", quietly = TRUE)) install.packages(\"parameters\")\nlibrary(parameters)\n\n\nif (!require(margot, quietly = TRUE)) {\n  devtools::install_github(\"go-bayes/margot\") # ensure version is at least 1.0.45\n  library(\"margot\")\n}\n\nmargot 1.0.281\n\n\nNext, we write a function to simulate data for the sample and target populations.\nWe assume the treatment effect is the same in the sample and target populations, that the coefficient for the effect modifier and the coefficient for interaction are the same, that there is no unmeasured confounding throughout the study, and that there is only selective attrition of one effect modifier such that the baseline population differs from the analytic sample population at the end of the study.\nThat is: the distribution of effect modifiers is the only respect in which the sample will differ from the target population.\nThis function will generate data under a range of scenarios. Refer to documentation in the margot package: Bulbulia (2024a)\n\n# function to generate data for the sample and population,\n# Along with precise sample weights for the population, there are differences\n# in the distribution of the true effect modifier but no differences in the treatment effect\n# or the effect modification. all that differs between the sample and the population is\n# the distribution of effect modifiers.\n# seed\nset.seed(123)\n\n# simulate data -- you can use different parameters\ndata &lt;- margot::simulate_ate_data_with_weights(\n  n_sample = 10000,\n  n_population = 100000,\n  p_z_sample = 0.1,\n  p_z_population = 0.5,\n  beta_a = 1,\n  beta_z = 2.5,\n  noise_sd = 0.5\n)\n\n# inspect\n# skimr::skim(data)\n\nWe have generated both sample and population data.\nNext, we verify that the distributions of effect modifiers differ in the sample and in the target population:\n\n# obtain the generated data\nsample_data &lt;- data$sample_data\npopulation_data &lt;- data$population_data\n\n# check imbalance\ntable(sample_data$z_sample) # type 1 is rare\n\n\n   0    1 \n9041  959 \n\ntable(population_data$z_population) # type 1 is common\n\n\n    0     1 \n49785 50215 \n\n\nThe sample and population distributions differ.\nNext, consider the question: ‘What are the differences in the coefficients that we obtain from the study population at the end of the study, compared with those we would obtain for the target population?’\nFirst, we obtain the regression coefficients for the sample. They are as follows:\n\n# model coefficients sample\nmodel_sample &lt;- glm(y_sample ~ a_sample * z_sample,\n  data = sample_data\n)\n\n# summary\nparameters::model_parameters(model_sample, ci_method = \"wald\")\n\nParameter           | Coefficient |       SE |        95% CI | t(9996) |      p\n-------------------------------------------------------------------------------\n(Intercept)         |   -2.10e-03 | 7.30e-03 | [-0.02, 0.01] |   -0.29 | 0.774 \na sample            |        1.00 |     0.01 | [ 0.98, 1.02] |   96.38 | &lt; .001\nz sample            |        2.53 |     0.02 | [ 2.49, 2.58] |  107.68 | &lt; .001\na sample × z sample |        0.45 |     0.03 | [ 0.39, 0.52] |   13.46 | &lt; .001\n\n\n\nUncertainty intervals (equal-tailed) and p-values (two-tailed) computed\n  using a Wald t-distribution approximation.\n\n\nNext, we obtain the regression coefficients for the weighted regression of the sample. Notice that the coefficients are virtually the same:\n\n# model the sample weighted to the population, again note that these coefficients are similar\nmodel_weighted_sample &lt;- glm(y_sample ~ a_sample * z_sample,\n  data = sample_data, weights = weights\n)\n\n# summary\nsummary(parameters::model_parameters(model_weighted_sample,\n  ci_method = \"wald\"\n))\n\nParameter           | Coefficient |        95% CI |      p\n----------------------------------------------------------\n(Intercept)         |   -2.10e-03 | [-0.02, 0.02] | 0.827 \na sample            |        1.00 | [ 0.97, 1.03] | &lt; .001\nz sample            |        2.53 | [ 2.51, 2.56] | &lt; .001\na sample × z sample |        0.45 | [ 0.41, 0.49] | &lt; .001\n\nModel: y_sample ~ a_sample * z_sample (10000 Observations)\nSigma: 0.483 (df = 9996)\n\n\n\nUncertainty intervals (equal-tailed) and p-values (two-tailed) computed\n  using a Wald t-distribution approximation.\n\n\nWe might be tempted to infer that weighting wasn’t relevant to the analysis. However, we’ll see that such an interpretation would be a mistake.\nNext, we obtain model coefficients for the population. Note again there is no difference – only narrower errors owing to the large sample size.\n\n# model coefficients population -- note that these coefficients are very similar.\nmodel_population &lt;- glm(y_population ~ a_population * z_population,\n  data = population_data\n)\n\nparameters::model_parameters(model_population, ci_method = \"wald\")\n\nParameter                   | Coefficient |       SE |        95% CI | t(99996) |      p\n----------------------------------------------------------------------------------------\n(Intercept)                 |   -7.10e-04 | 3.19e-03 | [-0.01, 0.01] |    -0.22 | 0.824 \na population                |        1.00 | 4.49e-03 | [ 0.99, 1.01] |   222.88 | &lt; .001\nz population                |        2.50 | 4.49e-03 | [ 2.50, 2.51] |   557.23 | &lt; .001\na population × z population |        0.50 | 6.34e-03 | [ 0.49, 0.51] |    78.46 | &lt; .001\n\n\n\nUncertainty intervals (equal-tailed) and p-values (two-tailed) computed\n  using a Wald t-distribution approximation.\n\n\nAgain, there is no difference. That is, we find that all model coefficients are practically equivalent. The different distribution of effect modifiers does not result in different coefficient values for the treatment effect, the effect-modifier ‘effect,’ or the interaction of the effect modifier and treatment.\nConsider why this is the case: in a large sample where the causal effects are invariant – as we have simulated them to be – we will have good replication in the effect modifiers within the sample, so our statistical model can recover the coefficients for the population without challenge.\nHowever, in causal inference, we are interested in the marginal effect of the treatment for a target population. That is, we seek an estimate for the counterfactual contrast in which everyone in a pre-specified population or stratum of a population was subject to one level of treatment compared with a counterfactual condition in which everyone in this same population was subject to another level of the same treatment.\nThe marginal effect estimates will differ in at least one measure of effect when the analytic sample population has a different distribution of effect modifiers compared to the target population.\nTo see this, we use the stdReg package to recover marginal effect estimates, comparing (1) the sample ATE, (2) the true oracle ATE for the population, and (3) the weighted sample ATE. We will use the outputs of the same models above. The only difference is that we will calculate marginal effects from these outputs. We will contrast a difference from an intervention in which everyone receives treatment = 0 with one in which everyone receives treatment = 1; however, this choice is arbitrary, and the general lessons apply irrespective of the estimand.\nFirst, consider this Average Treatment Effect for the analytic population:\n\n# What inference do we draw?\n# we cannot say the models are unbiased for the marginal effect estimates.\n# regression standardisation\nlibrary(stdReg) # to obtain marginal effects\n\n# obtain sample ate\nfit_std_sample &lt;- stdReg::stdGlm(model_sample,\n  data = sample_data, X = \"a_sample\"\n)\n\n# summary\nsummary(fit_std_sample, contrast = \"difference\", reference = 0)\n\n\nFormula: y_sample ~ a_sample * z_sample\nFamily: gaussian \nLink function: identity \nExposure:  a_sample \nReference level:  a_sample = 0 \nContrast:  difference \n\n  Estimate Std. Error lower 0.95 upper 0.95\n0     0.00    0.00000       0.00       0.00\n1     1.04    0.00996       1.02       1.06\n\n\nThe treatment effect is given as a 1.04 unit change in the outcome across the analytic population, with a confidence interval from 1.02 to 1.06.\nNext, we obtain the true (oracle) treatment effect for the target population under the same intervention:\n\n## note the population effect is different\n\n# obtain true ate\nfit_std_population &lt;- stdReg::stdGlm(model_population,\n  data = population_data, X = \"a_population\"\n)\n\n# summary\nsummary(fit_std_population, contrast = \"difference\", reference = 0)\n\n\nFormula: y_population ~ a_population * z_population\nFamily: gaussian \nLink function: identity \nExposure:  a_population \nReference level:  a_population = 0 \nContrast:  difference \n\n  Estimate Std. Error lower 0.95 upper 0.95\n0     0.00    0.00000       0.00       0.00\n1     1.25    0.00327       1.24       1.26\n\n\nNote that the true treatment effect is a 1.25-unit change in the population, with a confidence bound between 1.24 and 1.26. This is well outside the ATE that we obtain from the analytic population!\nNext, consider the ATE in the weighted regression, where the analytic sample was weighted to the target population’s true distribution of effect modifiers:\n\n## next try weights adjusted ate where we correctly assign population weights to the sample\nfit_std_weighted_sample_weights &lt;- stdReg::stdGlm(model_weighted_sample,\n  data = sample_data, X = \"a_sample\"\n)\n\n# this gives us the right answer\nsummary(fit_std_weighted_sample_weights, contrast = \"difference\", reference = 0)\n\n\nFormula: y_sample ~ a_sample * z_sample\nFamily: gaussian \nLink function: identity \nExposure:  a_sample \nReference level:  a_sample = 0 \nContrast:  difference \n\n  Estimate Std. Error lower 0.95 upper 0.95\n0     0.00     0.0000       0.00       0.00\n1     1.22     0.0165       1.19       1.25\n\n\nWe find that we obtain the population-level causal effect estimate with accurate coverage by weighting the sample to the target population. So with appropriate weights, our results generalise from the sample to the target population."
   },
   {
     "objectID": "simulations/01-simulation-population.html#lessons",
