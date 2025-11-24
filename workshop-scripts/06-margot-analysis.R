@@ -204,7 +204,7 @@ cat(qini_gain$qini_explanation, "\n")
 
 reliable_ids <- qini_gain$reliable_model_ids
 
-# ---- Policy trees ----------------------------------------------------------
+# ---- Policy trees -----------------------------------------------------------
 if (length(reliable_ids) > 0) {
   cli_alert_success("Reliable heterogeneous effects detected: {paste(reliable_ids, collapse = ', ')}")
 
