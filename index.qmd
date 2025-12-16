@@ -28,11 +28,11 @@ editor_options:
 ### Essentials
 - **When:** Wednesday 19 November 2025, 09:00–16:00
 - **Where:** Redmond Barry Building (Building 115), Level 5 Room 516, University of Melbourne
-- **Format:** In-person via SASP abstract submission
+- **Format:** In-person through the SASP portal
 - **Morning:** Average treatment effects + student presentations
 - **Afternoon:** Heterogeneous effects & hands-on causal machine learning
 
-If you want a sense of causal inference, the morning is good enough. Causal machine learning + analysis of heterogenity in the afternoon.
+If you want a sense of causal inference, the morning is probably good enough. Causal machine learning + analysis of heterogenity in the afternoon.
 :::
 
 ::: callout-tip
@@ -40,7 +40,7 @@ If you want a sense of causal inference, the morning is good enough. Causal mach
 - Bring something for sketching graphs (paper/tablet)
 - Install R + RStudio (or your preferred IDE)
 - Pre-install the workshop package (see Setup)
-- Ping me ahead of time if you need a hand
+- Contact me ahead of time if you get stuck
 :::
 
 **Jump to:** [Logistics](#logistics) • [Venue](#venue-location) • [Why causal inference?](#why-is-causal-inference-important) • [Workshop plan](#the-workshop) • [Setup](#setup)
@@ -54,12 +54,12 @@ We'll regroup at **Jimmy Watson's Wine Bar Bistro (333 Lygon Street, Carlton)**,
 
 ::: callout-tip
 ### Morning meet-up:  08:10am
-Meet in the **Rydges Melbourne lobby (Exhibition Street)** and we'll walk (~1.5 km) to campus together. Great if you'd like company (or directions) before we kick off.
+Meet in the **Rydges Melbourne lobby (Exhibition Street)** and we'll walk (~1.5 km) to campus together.
 :::
 
 ::: {.callout-important appearance="minimal"}
 ### Lecture links
-Slides and recordings live under **"Workshop Content"** in the site navigation.
+See **"Workshop Content"** on the site navigation.
 :::
 
 ```{r}
@@ -97,8 +97,7 @@ leaflet() %>%
 
 ## Venue Location
 
-We'll meet on Level 5 of the Redmond Barry Building. Click the map marker for the official campus map—sessions start promptly at 9 am, so plan a little buffer.
-
+We'll meet on Level 5 of the Redmond Barry Building.
 ```{r}
 #| echo: false
 #| message: false
@@ -145,8 +144,8 @@ This full-day, practice-oriented workshop introduces modern causal inference for
 
 We will:
 
-- Unveil a **causal workflow** that starts with asking a clearly formulated causal question.
-- Before answering a causal question we must consider and explicate **identification assumptions**. We will consider these assumptions and introduce graphical tools for addressing them. You will discover that clarifying assumptions is not a statistical task.
+- Demonstrate a **causal workflow** that starts with asking a clearly formulated causal question.
+- Before answering a causal question, we must consider and explicate **identification assumptions**. We will consider these assumptions and introduce graphical tools for addressing them. You will discover that clarifying assumptions is not a statistical task.
 - **Only after stating our questions and assumptions do we turn to the data and their analysis**. By the end of the workshop, you will conduct an analysis using doubly robust machine learning -- which has many advantages over standard estimators.
 - After estimation there is **communication**.  I'll describe how to graphical tools to clarify results audiences with applied interests.
 
@@ -175,7 +174,7 @@ Please do not worry if the math or code looks intimidating at first glance. We'l
 
 2. Install RStudio Desktop (free) from <https://posit.co/download/rstudio-desktop/>
 
-(Or pick your favourite IDE -- I use neovim Lazy -- the code doesn't care.)
+(Or pick your favourite IDE -- I use neovim, by the way -- but the code doesn't care.)
 
 3. Install the workshop packages:
 
@@ -206,13 +205,10 @@ get_workshop_scripts()  # copies scripts into ./workshop-scripts
 list_workshop_scripts()
 ```
 
-Work through scripts 01–05 **Prior to the workshop** (06 is optional).
-
 ## Workshop materials
 
-- The lectures are somewhat technical at the moment. I'll be simplifying them before the workshop and posting YouTube videos prior to the workshop. Stay tuned here for updates.
-- Student presentations will be posted here **after** the workshop.
-- Previous talks and examples remain available for reference; we will link to them from the relevant sections.
+Work through scripts 01–05 **Prior to the workshop** (06 is optional).
+
 
 
 ## Agenda
@@ -248,7 +244,7 @@ schedule <- tibble(
   ),
   `Learning goals & activities` = c(
     "State precise causal questions with the potential outcomes framework; focus on the average treatment effect (ATE).",
-    "Trace the full causal workflow: define populations, build causal diagrams, assess assumptions, analyse data, conduct sensitivity analysis, and communicate results—using DAGs to expose bias from confounding, colliders, and mediators.",
+    "Trace the full causal workflow: define populations, build causal diagrams, assess assumptions, analyse data, conduct sensitivity analysis, and communicate results—using causal DAGs to expose bias from confounding, colliders, and mediators.",
     "Group Activities",
     "Walk through two applied studies from the NZAVS. Zahle Wisely's employer gratitude analysis; then Hannah Robinson's religious service attendance and personality Q&A follows.",
     "Break.",

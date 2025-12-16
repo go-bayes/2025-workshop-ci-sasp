@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.25">
+<meta name="generator" content="quarto-99.9.9">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -92,9 +92,9 @@ div.csl-indent {
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-ebbede3f255f00f2ca408d38e0ffdffb.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-e8037f2bc2526f669e41ff66c54b8017.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-ebbede3f255f00f2ca408d38e0ffdffb.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-31cf5729ce52919b86d5a4293cba5a13.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-70c19afc57be00288e43819bcb83105d.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-31cf5729ce52919b86d5a4293cba5a13.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../site_libs/bootstrap/bootstrap-85592f46f02699c0b075a727a9ec8145.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
@@ -344,8 +344,6 @@ window.Quarto = {
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a href="../index.html" class="navbar-brand navbar-brand-logo">
-    </a>
     <a class="navbar-brand" href="../index.html">
     <span class="navbar-title">Beyond Correlation: Causal Inference Workshop</span>
     </a>
@@ -880,14 +878,14 @@ Figure&nbsp;5: Policy Trees for Treatment Assignment
 <h3 class="anchored" data-anchor-id="policy-tree-interpretations-depth-1">Policy Tree Interpretations (depth 1)</h3>
 <section id="findings-for-charitable-giving-at-the-end-of-study" class="level4">
 <h4 class="anchored" data-anchor-id="findings-for-charitable-giving-at-the-end-of-study">Findings for Charitable Giving at the end of study</h4>
-<p>The policy-tree analysis divides cases on baseline Age. Those who score ≤ -0.726 (original: -0.726) are advised Control. Those above -0.726 (original: -0.726) are advised Treated.</p>
+<p>The policy-tree analysis divides cases on baseline Age. Those who score &lt;= -0.726 (original: -0.726) are advised Control. Those above -0.726 (original: -0.726) are advised Treated.</p>
 </section>
 <section id="treatment-effect-heterogeneity" class="level4">
 <h4 class="anchored" data-anchor-id="treatment-effect-heterogeneity">Treatment-effect heterogeneity</h4>
 <p>The policy tree produces two terminal leaves. Conditional average treatment effects (CATEs) are estimated within each leaf:</p>
 <ul>
-<li><p><strong>Leaf 1—baseline age ≤ -0.726</strong> (n = 2,357; 23.6% of the test set): 68.1% were recommended control. The mean outcome under control was -0.101, the mean under treatment was 0.090, yielding a CATE of 0.191.</p></li>
-<li><p><strong>Leaf 2—baseline age &gt; -0.726</strong> (n = 7,643; 76.4% of the test set): 97.1% were recommended treated. The mean outcome under control was -0.108, the mean under treatment was 0.088, yielding a CATE of 0.196.</p></li>
+<li><p><strong>Leaf 1 - baseline age &lt;= -0.726</strong> (n = 2,357; 23.6% of the test set): 68.1% were recommended control. The mean outcome under control was -0.101, the mean under treatment was 0.090, yielding a CATE of 0.191.</p></li>
+<li><p><strong>Leaf 2 - baseline age &gt; -0.726</strong> (n = 7,643; 76.4% of the test set): 97.1% were recommended treated. The mean outcome under control was -0.108, the mean under treatment was 0.088, yielding a CATE of 0.196.</p></li>
 </ul>
 </section>
 <section id="overall-policy-performance" class="level4">

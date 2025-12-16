@@ -10,6 +10,8 @@ project:
     - "!content/04-causal-forests.qmd"
     - "!content/04-causal-forests.rmarkdown"
     - "!content/04-worked-example.qmd"
+    - "!content/discussion-points.qmd"     # beamer slides (PDF); exclude from site build
+    - "!content/talking-points.qmd"        # beamer slides (PDF); exclude from site build
   resources:
     - "content/*.pdf"
     - "content/**/*.pdf"
